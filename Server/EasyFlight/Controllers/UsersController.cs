@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EasyFlight.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("users/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class UsersController : ControllerBase
     {
         // GET api/values
         [HttpGet]
