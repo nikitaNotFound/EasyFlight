@@ -11,31 +11,31 @@
     <div class="wrapper container-fluid content">
         <header class="rounded-bottom">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-sm-8 col-lg-6">
                     <h1 class="display-4 company-icon">easy flight</h1>
                 </div>
 
-                <div class="col-md-2" name="admin-panel" id="admin-panel">
-                        <!--<form class="form-inline pull-right login-bar" name="admin-switcher" id="admin-switcher">
-                            <div class="input-group switcher">
-                                <button type="submit" class="btn btn-primary">User</button>
-                                <button type="submit" class="btn btn-primary button-red">Admin</button>
-                            </div>
-                        </form>-->
+                <div class="col-sm-4 col-lg-2" name="admin-panel" id="admin-panel">
+                    <!--<form class="form-inline pull-right login-bar" name="admin-switcher" id="admin-switcher">
+                        <div class="input-group switcher">
+                            <button type="submit" class="btn btn-primary">User</button>
+                            <button type="submit" class="btn btn-primary button-red">Admin</button>
+                        </div>-->
+                    </form>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-sm-12 col-lg-4">
                     <form class="form-inline pull-right login-bar">
                         <div class="input-group">
-                            <input class="form-control" name="email" id="email" placeholder="Email">
-                            <input class="form-control" name="password" id="password" placeholder="Password">
+                            <input class="form-control login-item" name="email" id="email" placeholder="Email">
+                            <input class="form-control login-item" name="password" id="password" placeholder="Password">
                             <div class="input-group-btn">
-                                <button type="submit" class="btn btn-primary button-dark">Login</button>
-                                <button type="submit" class="btn btn-primary button-dark">
-                                    <img src="icons/google-icon.png" width="22px" height="22px">
+                                <button type="submit" class="btn btn-primary button-dark login-item login-container">Login</button>
+                                <button type="submit" class="btn btn-primary button-dark login-container">
+                                    <img src="icons/google-icon.png" class="login-item-img">
                                 </button>
-                                <button type="submit" class="btn btn-primary button-dark">
-                                    <img src="icons/facebook-icon.png" width="22px" height="22px">
+                                <button type="submit" class="btn btn-primary button-dark login-container">
+                                    <img src="icons/facebook-icon.png" class="login-item-img">
                                 </button>
                             </div>
                         </div>
@@ -49,7 +49,12 @@
 
         <main class="rounded">
             <div class="row" name="page-content" id="page-content">
-                <div class="float-left list rounded">
+                <div class="content-filter-switcher rounded-circle" name="content-filter-switcher" id="content-filter-switcher">
+                    filter
+                </div>
+
+
+                <div class="list rounded" name="flights-list" id="flights-list">
                     <div class="container-fluid list-header" name="list-header" id="list-header">
                         <h4>Flights list</h4>
                     </div>
@@ -57,51 +62,51 @@
                     <div class="container-fluid list-body" name="list-body" id="list-body">
 
                         <div class="row list-item rounded">
-                            <div class="col-md-2" name="item-image">
-                                <img src="icons/test-company.jpg" height="150px" width="150px">
+                            <div class="col-sm-2" name="item-image">
+                                <img src="icons/test-company.jpg" class="list-item-img">
                             </div>
-                            <div class="col-md-8" name="item-content">
-                                <div class="row" name="item-header">
+                            <div class="col-sm-8" name="item-content">
+                                <div class="container-fluid">
                                     <h5>From: testCounty1 To: testCounty2</h5>
                                 </div>
 
-                                <div class="row" name="item-description">
+                                <div class="container-fluid">
                                     This is a test flight. You can get tickes to it by free.
                                     It would be nice if you make a good comment to our company.
                                 </div>
                             </div>
-                            <div class="col-md-2" name="item-buy">
+                            <div class="col-sm-2" name="item-buy">
                                 <div class="item-cost" name="item-cost">
                                         0$
                                 </div>
                                 <button type="submit" class="btn btn-primary button-buy">
-                                    <img src="icons/buy-icon.png" height="30px" width="30px">
-                                    To book
+                                    <img src="icons/buy-icon.png">
+                                    Book
                                 </button>
                             </div>
                         </div>
 
                         <div class="row list-item rounded">
-                            <div class="col-md-2" name="item-image">
-                                <img src="icons/test-company-2.jpg" height="150px" width="150px">
+                            <div class="col-sm-2" name="item-image">
+                                <img src="icons/test-company-2.jpg" class="list-item-img">
                             </div>
-                            <div class="col-md-8" name="item-content">
-                                <div class="row" name="item-header">
+                            <div class="col-sm-8" name="item-content">
+                                <div class="container-fluid">
                                     <h5>From: testCounty3 To: testCounty4</h5>
                                 </div>
 
-                                <div class="row" name="item-description">
+                                <div class="container-fluid">
                                     This is a test flight. You can get tickes to it only by 100$.
                                     It would be nice if you make a good comment to our company.
                                 </div>
                             </div>
-                            <div class="col-md-2" name="item-buy">
+                            <div class="col-sm-2" name="item-buy">
                                 <div class="item-cost" name="item-cost">
                                         100$
                                 </div>
                                 <button type="submit" class="btn btn-primary button-buy">
-                                    <img src="icons/buy-icon.png" height="30px" width="30px">
-                                    To book
+                                    <img src="icons/buy-icon.png">
+                                    Book
                                 </button>
                             </div>
                         </div>
@@ -109,7 +114,7 @@
                     </div>
                 </div>
 
-                <div class="float-right list-filter rounded">
+                <div class="list-filter rounded" name="list-filter" id="list-filter">
                         <div class="container-fluid" name="filter-header" id="filter-id">
                             <h4>Filter</h4>
                         </div>
@@ -162,12 +167,14 @@
 
         <footer class="rounded-top">
             <div class="row">
-                <div class="col-md-9"></div>
+                <div class="col-sm-9"></div>
 
-                <div class="container-fluid col-md-3">
+                <div class="container-fluid col-sm-3">
                     created by Nikita Ivanov
                 </div>
             </div>
         </footer>
     </div>
+
+    <script src="js/content-filter-switcher.js"></script>
 </body>
