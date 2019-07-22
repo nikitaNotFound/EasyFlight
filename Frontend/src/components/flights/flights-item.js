@@ -1,5 +1,5 @@
 import React from "react";
-import buyIcon from "../icons/buy-icon.png";
+import buyIcon from "../../icons/buy-icon.png";
 
 class FlightsListItem extends React.Component {
     render () {
