@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 
-class FlightsListSwitcher extends Component {
+class Switcher extends Component {
     render () {
         return (
             <div class="content-filter-switcher rounded-circle" name="content-filter-switcher" id="content-filter-switcher">
@@ -10,4 +10,4 @@ class FlightsListSwitcher extends Component {
     }
 }
 
-export default FlightsListSwitcher;
+export default Switcher;
