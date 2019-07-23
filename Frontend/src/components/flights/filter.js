@@ -1,6 +1,6 @@
-import React from "react";
+import React, {Component} from "react";
 
-class FlightsListFilter extends React.Component {
+class Filter extends Component {
     render () {
         return (
             <div class="list-filter rounded" name="list-filter" id="list-filter">
@@ -28,11 +28,11 @@ class FlightsListFilter extends React.Component {
                     <div class="row filter-item">
                         <div class="col filter-col">
                             Departure
-                            <input class="form-control filter-control" type="datetime-local" placeholder="Date" />
+                            <input class="form-control filter-control" type="date" placeholder="Date" />
                         </div>
                         <div class="col filter-col">
                             Departure back
-                            <input class="form-control filter-control" type="datetime-local" placeholder="Date" />
+                            <input class="form-control filter-control" type="date" placeholder="Date" />
                         </div>
                     </div>
 
@@ -55,4 +55,4 @@ class FlightsListFilter extends React.Component {
     }
 }
 
-export default FlightsListFilter;
+export default Filter;

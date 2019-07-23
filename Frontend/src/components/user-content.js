@@ -1,18 +1,18 @@
 import React from "react";
-import FlightsListFilter from "./flights/flights-filter";
-import FlightsListBody from "./flights/flights-body";
-import FlightsListSwitcher from "./flights/flights-switcher";
+import Filter from "./flights/filter";
+import Body from "./flights/body";
+import Switcher from "./flights/switcher";
 
 class UserContent extends React.Component {
     render () {
         return (
-        <div class="row">
-            <FlightsListSwitcher />
+            <div class="row">
+                <Switcher />
 
-            <FlightsListBody />
+                <Body />
 
-            <FlightsListFilter />
-        </div>
+                <Filter />
+            </div>
         );
     }
 }
