@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from './components/header';
 import Footer from './components/footer';
-import UserContent from './components/user-content';
+import Content from './components/content';
 
 
 function App() {
@@ -10,7 +10,7 @@ function App() {
       <Header />
 
       <main class="rounded" ame="page-content" id="page-content">
-        <UserContent />
+        <Content />
       </main>
 
       <Footer />

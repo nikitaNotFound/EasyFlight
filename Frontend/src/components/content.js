@@ -3,7 +3,7 @@ import Filter from "./flights/filter";
 import Body from "./flights/body";
 import Switcher from "./flights/switcher";
 
-class UserContent extends React.Component {
+class Content extends React.Component {
     render () {
         return (
             <div class="row">
@@ -17,4 +17,4 @@ class UserContent extends React.Component {
     }
 }
 
-export default UserContent;
+export default Content;

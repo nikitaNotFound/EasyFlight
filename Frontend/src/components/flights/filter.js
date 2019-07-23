@@ -4,11 +4,11 @@ class Filter extends Component {
     render () {
         return (
             <div class="list-filter rounded" name="list-filter" id="list-filter">
-                <div class="container-fluid" name="filter-header" id="filter-id">
+                <div class="container-fluid">
                     <h4>Filter</h4>
                 </div>
 
-                <div class="container-fluid" name="filter-body" id="filter-body">
+                <div class="container-fluid">
                     <div class="row filter-item">
                         Flight Airport
                         <input class="form-control filter-control" placeholder="Airport name" />
