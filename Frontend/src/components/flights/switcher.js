@@ -1,9 +1,9 @@
-import React, {Component} from "react";
+import React, {Component} from 'react';
 
 class Switcher extends Component {
     render () {
         return (
-            <div class="content-filter-switcher rounded-circle" name="content-filter-switcher" id="content-filter-switcher">
+            <div class="content-filter-switcher rounded-circle" onClick={this.props.switcher}>
                 filter
             </div>
         );

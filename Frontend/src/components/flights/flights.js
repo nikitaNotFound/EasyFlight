@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import Item from './list-item';
+import Flight from './flight';
 import ComponentHeadline from './component-headline';
-import FlightsController from '../../services/FlightsController';
+import * as FlightsService from '../../services/FlightsService';
 
-class Body extends Component {
-    flights = FlightsController.getAll();
+class Flights extends Component {
+    flights = FlightsService.getAll();
 
     render () {
         return (
@@ -14,7 +14,7 @@ class Body extends Component {
                 <div class="container-fluid list-body">
                     {this.flights.map(
                         (item, index) => 
-                            <Item 
+                            <Flight 
                                 key={index} 
                                 fromCountry={item.fromCountry} 
                                 toCountry={item.toCountry} 
@@ -29,4 +29,4 @@ class Body extends Component {
     }
 }
 
-export default Body;
+export default Flights;

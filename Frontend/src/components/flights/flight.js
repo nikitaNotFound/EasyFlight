@@ -1,7 +1,7 @@
-import React, {Component} from "react";
-import buyIcon from "../../icons/buy-icon.png";
+import React, {Component} from 'react';
+import buyIcon from '../../icons/buy-icon.png';
 
-class ListItem extends Component {
+class Flight extends Component {
     render () {
         return (
             <div class="row list-item rounded">
@@ -31,4 +31,4 @@ class ListItem extends Component {
     }
 }
 
-export default ListItem;
+export default Flight;

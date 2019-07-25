@@ -1,6 +1,6 @@
-import React, {Component} from "react";
-import googleIcon from "../icons/google-icon.png";
-import facebookIcon from "../icons/facebook-icon.png";
+import React, {Component} from 'react';
+import googleIcon from '../icons/google-icon.png';
+import facebookIcon from '../icons/facebook-icon.png';
 
 class Header extends Component {
     render() {
