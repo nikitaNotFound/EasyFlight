@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import Item from './item';
+import Item from './list-item';
+import ComponentHeadline from './component-headline';
 import FlightsController from '../../services/FlightsController';
 
 class Body extends Component {
@@ -7,8 +8,8 @@ class Body extends Component {
 
     render () {
         return (
-            <div class="list rounded" name="flights-list" id="flights-list">
-                <h4>Flights list</h4>
+            <div class="list rounded">
+                <ComponentHeadline content="Flights list" />
 
                 <div class="container-fluid list-body">
                     {this.flights.map(

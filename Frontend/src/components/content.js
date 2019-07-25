@@ -1,6 +1,6 @@
 import React from "react";
 import Filter from "./flights/filter";
-import Body from "./flights/body";
+import List from "./flights/list";
 import Switcher from "./flights/switcher";
 
 class Content extends React.Component {
@@ -9,7 +9,7 @@ class Content extends React.Component {
             <div class="row">
                 <Switcher />
 
-                <Body />
+                <List />
 
                 <Filter />
             </div>

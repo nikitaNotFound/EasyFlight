@@ -7,13 +7,8 @@ class Header extends Component {
         return (
             <header class="rounded-bottom">
                 <div class="row">
-                    <div class="col-sm-8 col-lg-6">
+                    <div class="col-sm-12 col-lg-8">
                         <h1 class="display-4 company-icon">easy flight</h1>
-                    </div>
-
-                    
-                    <div class="col-sm-4 col-lg-2" name="admin-panel" id="admin-panel">
-                        
                     </div>
 
                     <div class="col-sm-12 col-lg-4">

@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import buyIcon from "../../icons/buy-icon.png";
 
-class Item extends Component {
+class ListItem extends Component {
     render () {
         return (
             <div class="row list-item rounded">
@@ -31,4 +31,4 @@ class Item extends Component {
     }
 }
 
-export default Item;
+export default ListItem;

@@ -1,12 +1,11 @@
 import React, {Component} from "react";
+import ComponentHeadline from './component-headline';
 
 class Filter extends Component {
     render () {
         return (
-            <div class="list-filter rounded" name="list-filter" id="list-filter">
-                <div class="container-fluid">
-                    <h4>Filter</h4>
-                </div>
+            <div class="list-filter rounded">
+                <ComponentHeadline content="Filter" />
 
                 <div class="container-fluid">
                     <div class="row filter-item">
