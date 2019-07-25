@@ -1,11 +1,14 @@
-import React, {Component} from 'react';
+import React, { Component }  from 'react';
+import PropsTypes from 'prop-types';
 
-class ComponentHeadline extends Component {
-    render () {
-        return (
-            <h4>{this.props.content}</h4>
-        );
-    }
+function ComponentHeadline(props) {
+    return (
+        <h4>{props.content}</h4>
+    );
+}
+
+ComponentHeadline.propsTypes = {
+    content: PropsTypes.string
 }
 
 export default ComponentHeadline;

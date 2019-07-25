@@ -17,7 +17,7 @@ class Content extends React.Component {
     render () {
         return (
             <div class="row">
-                <Switcher/>  switcher={this.swapFilterList.bind(this)}/>
+                <Switcher/>
                 <Flights/>
                 <Filter/>
             </div>

@@ -1,7 +1,15 @@
 import React, {Component} from 'react';
 import buyIcon from '../../icons/buy-icon.png';
+import PropsTypes from 'prop-types';
 
 class Flight extends Component {
+    static propsTypes = {
+        fromCountry: PropsTypes.string,
+        toCountry: PropsTypes.string,
+        desc: PropsTypes.string,
+        cost: PropsTypes.oneOfType([PropsTypes.string, PropsTypes.number])
+    }
+
     render () {
         return (
             <div class="row list-item rounded">
