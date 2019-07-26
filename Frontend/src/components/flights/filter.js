@@ -4,49 +4,49 @@ import ComponentHeadline from './component-headline';
 class Filter extends Component {
     render () {
         return (
-            <div class="list-filter rounded">
+            <div className="list-filter rounded">
                 <ComponentHeadline content="Filter" />
 
-                <div class="container-fluid">
-                    <div class="row filter-item">
+                <div className="container-fluid">
+                    <div className="row filter-item">
                         Flight Airport
-                        <input class="form-control filter-control" placeholder="Airport name" />
+                        <input className="form-control filter-control" placeholder="Airport name" />
                     </div>
 
-                    <div class="row filter-item">
-                        <div class="col filter-col">
+                    <div className="row filter-item">
+                        <div className="col filter-col">
                             From city
-                            <input class="form-control filter-control" placeholder="City name" />
+                            <input className="form-control filter-control" placeholder="City name" />
                         </div>
-                        <div class="col filter-col">
+                        <div className="col filter-col">
                             To city
-                            <input class="form-control filter-control" placeholder="City name" />
+                            <input className="form-control filter-control" placeholder="City name" />
                         </div>
                     </div>
 
-                    <div class="row filter-item">
-                        <div class="col filter-col">
+                    <div className="row filter-item">
+                        <div className="col filter-col">
                             Departure
-                            <input class="form-control filter-control" type="date" placeholder="Date" />
+                            <input className="form-control filter-control" type="date" placeholder="Date" />
                         </div>
-                        <div class="col filter-col">
+                        <div className="col filter-col">
                             Departure back
-                            <input class="form-control filter-control" type="date" placeholder="Date" />
+                            <input className="form-control filter-control" type="date" placeholder="Date" />
                         </div>
                     </div>
 
-                    <div class="row filter-item">
+                    <div className="row filter-item">
                         Trevel time (minimum)
-                        <input class="form-control filter-control" placeholder="Days count" />
+                        <input className="form-control filter-control" placeholder="Days count" />
                     </div>
 
-                    <div class="row filter-item">
+                    <div className="row filter-item">
                         Amount of tickets
-                        <input class="form-control filter-control" placeholder="Count" />
+                        <input className="form-control filter-control" placeholder="Count" />
                     </div>
 
-                    <div class="row filter-item">
-                        <button class="btn btn-primary button-filter">Apply filter</button>
+                    <div className="row filter-item">
+                        <button className="btn btn-primary button-filter">Apply filter</button>
                     </div>
                 </div>
             </div>

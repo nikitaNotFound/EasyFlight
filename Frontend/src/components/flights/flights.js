@@ -8,10 +8,10 @@ class Flights extends Component {
 
     render () {
         return (
-            <div class="list rounded">
+            <div className="list rounded">
                 <ComponentHeadline content="Flights list" />
 
-                <div class="container-fluid list-body">
+                <div className="container-fluid list-body">
                     {this.flights.map(
                         (item, index) => 
                             <Flight 
