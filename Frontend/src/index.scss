@@ -97,7 +97,6 @@ main {
 /**********************FLIGHTS LIST********************/
 
 .list {
-  width: 71%;
   background: rgb(243, 243, 243);
   min-height: 81vh;
   box-shadow: 0 0 2px rgba(0,0,0,0.5);
@@ -108,10 +107,27 @@ main {
 .list-filter {
   box-shadow: 0 0 2px rgba(0,0,0,0.5);
   background: rgb(211, 211, 211);
-  min-height: 700px;
-  width: 23%;
+  min-height: 600px;
   padding: 1%;
   margin: 0% 1.5%;
+}
+
+.list-only .list-filter {
+  width: 0%;
+  display: none;
+}
+
+.list-only .list {
+  width: 100%;
+}
+
+.filter-only .list {
+  width: 0%;
+  display: none;
+}
+
+.filter-only .list-filter {
+  width: 100%;
 }
 
 .list-item {
@@ -138,7 +154,7 @@ main {
 
 .filter-item {
   margin: 0% 1%;
-  margin-top: 3%;
+  margin-top: 2%;
 }
 
 .filter-control {
@@ -239,10 +255,6 @@ main {
 }
 
 @media screen and (max-width: 1080px) {
-  .list {
-      width: 100%;
-  }
-
   .button-buy {
       font-size: 13px;
   }
@@ -264,18 +276,9 @@ main {
   .list-item h5 {
       font-size: 25px;
   }
-
-  .list-filter {
-      display: none;
-      width: 0px;
-  }
 }
 
 @media screen and (max-width: 960px) {
-  .list {
-      width: 100%;
-  }
-
   .button-buy {
       font-size: 12px;
       padding-right: 0%;
@@ -303,12 +306,6 @@ main {
   .list-item h5 {
       font-size: 20px;
   }
-
-  .list-filter {
-      display: none;
-      width: 0px;
-      height: 0px;
-  }
 }
 
 /****************CONTENT/FILTER SWITCHER***************/
@@ -319,24 +316,30 @@ main {
   z-index: 999;
   height: 90px;
   width: 90px;
-  bottom: 60px;
+  top: 150px;
   right: 30px;
   position: fixed;
   box-shadow: 0 0 4px rgba(0,0,0,0.5);
   padding: 30px;
   padding-left: 19px;
   font-family: 'Russo One', sans-serif;
-  display: none;
+}
+
+@media screen and (max-width: 1660px) {
+  .content-filter-switcher {
+    top: 100px;
+    right: 130px;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .content-filter-switcher {
+    top: 180px;
+  }
 }
 
 .content-filter-switcher:hover {
   background: rgb(206, 206, 206);
-}
-
-@media screen and (max-width: 1080px) {
-  .content-filter-switcher {
-      display: block;
-  }
 }
 
 @font-face {

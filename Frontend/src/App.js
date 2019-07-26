@@ -6,10 +6,10 @@ import Content from './components/content';
 
 function App() {
   return (
-    <div class="wrapper container-fluid content">
+    <div className="wrapper container-fluid content">
       <Header />
 
-      <main class="rounded" ame="page-content" id="page-content">
+      <main className="rounded" ame="page-content" id="page-content">
         <Content />
       </main>
 
