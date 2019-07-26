@@ -7,7 +7,7 @@ class Flight extends Component {
         fromCountry: PropsTypes.string,
         toCountry: PropsTypes.string,
         desc: PropsTypes.string,
-        cost: PropsTypes.oneOfType(PropsTypes.number)
+        cost: PropsTypes.number
     }
 
     render () {
