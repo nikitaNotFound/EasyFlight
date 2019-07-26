@@ -1,3 +1,5 @@
+@import '~bootstrap/scss/bootstrap.scss';
+
 body {
   color: rgb(108, 117, 121);
   background: rgb(255, 255, 255);
@@ -346,5 +348,3 @@ main {
   font-family: 'Russo One';
   src: url(fonts/Russo_One.ttf);
 }
-
-@import '~bootstrap/scss/bootstrap.scss';
