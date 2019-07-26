@@ -4,7 +4,7 @@ import Flights from './flights/flights';
 import Switcher from './flights/switcher';
 
 function Content () {
-    let layoutMode = {
+    const layoutMode = {
         List: 'list-only',
         Filter: 'filter-only'
     };
@@ -21,7 +21,7 @@ function Content () {
 
     return (
         <div className={`row ${mode}`}>
-            <Switcher switcher= {swapFilterList}/>
+            <Switcher switcher={swapFilterList}/>
             <Flights/>
             <Filter/>
         </div>
