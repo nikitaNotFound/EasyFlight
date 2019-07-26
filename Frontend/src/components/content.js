@@ -12,12 +12,15 @@ function Content () {
     const [mode, changeMode] = useState(layoutMode.List);
 
     function swapFilterList () {
-        changeMode(mode === layoutMode.List ? 
-            layoutMode.Filter : layoutMode.List);
+        const newMode = mode === layoutMode.List 
+            ? layoutMode.Filter 
+            : layoutMode.List;
+
+        changeMode(newMode);
     }
 
     return (
-        <div className={"row " + mode}>
+        <div className={`row ${mode}`}>
             <Switcher switcher= {swapFilterList}/>
             <Flights/>
             <Filter/>
