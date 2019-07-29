@@ -28,7 +28,7 @@ class Adding extends Component {
                             <textarea placeholder="description"/>
                         </div>
                     </div>
-                            <input type="submit" value="Add" className="add-button"/>
+                    <input type="submit" value="Add" className="add-button"/>
                 </form>
             </div>
         );
