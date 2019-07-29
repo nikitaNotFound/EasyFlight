@@ -20,11 +20,11 @@ function Content () {
     }
 
     return (
-        <div className={`row ${mode}`}>
+        <main className={`rounded ${mode}`}>
             <Switcher switcher= {swapFilterList}/>
             <Flights/>
             <Filter/>
-        </div>
+        </main>
     );
 }
 

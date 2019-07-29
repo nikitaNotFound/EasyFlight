@@ -8,11 +8,7 @@ class User extends Component {
         return (
             <div className="wrapper container-fluid content">
                 <Header />
-
-                <main className="rounded" ame="page-content" id="page-content">
-                    <Content />
-                </main>
-
+                <Content />
                 <Footer />
             </div>
         );

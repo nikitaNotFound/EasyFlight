@@ -19,10 +19,6 @@ footer {
   
 }
 
-main {
-  min-height: 83vh;
-}
-
 .company-icon{
   font-size: 60px;
   font-weight: 450;
@@ -100,10 +96,8 @@ main {
 
 .list {
   background: rgb(243, 243, 243);
-  min-height: 81vh;
   box-shadow: 0 0 2px rgba(0,0,0,0.5);
   padding: 1%;
-  margin: 0% 1.5%;
 }
 
 .list-filter {
@@ -111,7 +105,24 @@ main {
   background: rgb(211, 211, 211);
   min-height: 600px;
   padding: 1%;
-  margin: 0% 1.5%;
+}
+
+.list-only .list-filter {
+  width: 0%;
+  display: none;
+}
+
+.list-only .list {
+  width: 100%;
+}
+
+.filter-only .list {
+  width: 0%;
+  display: none;
+}
+
+.filter-only .list-filter {
+  width: 100%;
 }
 
 .list-only .list-filter {
@@ -346,5 +357,5 @@ main {
 
 @font-face {
   font-family: 'Russo One';
-  src: url(fonts/Russo_One.ttf);
+  src: url(../fonts/Russo_One.ttf);
 }
