@@ -21,7 +21,7 @@ function Content () {
 
     return (
         <main className={`rounded ${mode}`}>
-            <Switcher switcher= {swapFilterList}/>
+            <Switcher switcher={swapFilterList}/>
             <Flights/>
             <Filter/>
         </main>
