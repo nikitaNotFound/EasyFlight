@@ -1,6 +1,4 @@
 import React from 'react';
-import googleIcon from '../../icons/google-icon.png';
-import facebookIcon from '../../icons/facebook-icon.png';
 
 function Header () {
     return (

@@ -22,7 +22,6 @@ class Flights extends Component {
                                 desc={item.desc}
                             />
                     )}
-                    
                 </div>
             </div>
         );

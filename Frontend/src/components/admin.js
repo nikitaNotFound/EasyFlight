@@ -7,7 +7,7 @@ import '../styles/admin.css';
 class Admin extends Component {
     render () {
         return (
-            <div class="wrapper container-fluid content">
+            <div className="wrapper container-fluid content">
                 <Header />
                 <Content />
                 <Footer />

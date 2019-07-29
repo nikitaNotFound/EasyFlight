@@ -230,7 +230,7 @@ footer {
       height: 125px;
   }
 
-  .list-item h5 {
+  .list-item h4 {
       font-size: 23px;
   }
   
@@ -258,7 +258,7 @@ footer {
       height: 100px;
   }
 
-  .list-item h5 {
+  .list-item h4 {
       font-size: 22px;
   }
 
@@ -286,7 +286,7 @@ footer {
       height: 100px;
   }
   
-  .list-item h5 {
+  .list-item h4 {
       font-size: 25px;
   }
 }
@@ -316,7 +316,7 @@ footer {
       font-size: 32px;
   }
   
-  .list-item h5 {
+  .list-item h4 {
       font-size: 20px;
   }
 }
@@ -336,6 +336,7 @@ footer {
   padding: 30px;
   padding-left: 19px;
   font-family: 'Russo One', sans-serif;
+  user-select: none;
 }
 
 @media screen and (max-width: 1660px) {

@@ -1,6 +1,7 @@
 .tabs {
     clear: both;
     margin-left: 1%;
+    margin-top: 1%;
 }
 
 .tabs-item {
@@ -10,11 +11,88 @@
     background: rgb(211, 211, 211);
 }
 
-.tabs-item link {
-    text-decoration: none;
+.tab-content {
+    margin-top: calc(1vh + 10px);
 }
 
-.content {
-    margin-top: 1%;
-    margin-left: 1%;
+/*****************************AIRPORTS LIST********************/
+.airports {
+    margin: 0% calc(1.5vh);
+    margin-top: calc(1vh + 10px);
+}
+
+.airports-item {
+    min-height: 100px;
+    background: rgb(211, 211, 211);
+    box-shadow: 0 0 2px rgba(0,0,0,0.5);
+    margin-bottom: 1%;
+}
+
+.airports-item-img {
+    width: 100px;
+    height: 100px;
+}
+
+.add-airport {
+    width: 100%;
+    background: rgb(231, 231, 231);
+    box-shadow: 0 0 2px rgba(0,0,0,0.5);
+    padding: 0.2%;
+    font-size: 32px;
+    text-align: center;
+    user-select: none;
+}
+
+.add-airport:hover {
+    background: rgb(211, 211, 211);
+}
+
+.airports-item-action {
+    z-index: 100;
+    background: rgb(231, 231, 231);
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    width: 90%;
+    min-height: 400px;
+    outline: solid rgba(0, 0, 0, .25) 10000px;
+    padding: 1%;
+    display: none;
+}
+
+.adding-mode .adding {
+    display: block;
+}
+
+.editing-mode .editing {
+    display: block;
+}
+
+.adding-form {
+    margin-top: 3%;
+}
+
+.adding-form textarea{
+    margin-top: 2%;
+    width: 100%;
+}
+
+.form-item {
+    display: inline;
+    margin-right: 10%;
+}
+
+.adding-form-img {
+    width: 100%;
+}
+
+.file-upload {
+    display: none;
+}
+
+.add-button {
+    width: 100px;
+    height: 50px;
+    position: relative;
+    left: 70vw;
 }

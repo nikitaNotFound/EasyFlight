@@ -1,12 +1,12 @@
 import React from 'react';
 import {BrowserRouter as Router, Route, Switch, Link, BrowserRouter} from 'react-router-dom';
-import Airports from './tabs/airports';
-import Airplanes from './tabs/airplanes';
-import Flights from './tabs/flights';
+import AirportsPage from './tabs/airports-page';
+import AirplanesPage from './tabs/airplanes-page';
+import FlightsPage from './tabs/flights-page';
 
 function Content () {
     return (
-        <main className="rounded">
+        <main className="rounded none-mode">
             <BrowserRouter>
                 <div className="tabs">
                     <div className="tabs-item">
@@ -20,13 +20,11 @@ function Content () {
                     </div>
                 </div>
 
-                <div className="content">
-                    <Switch>
-                        <Route path="/admin/airplanes" component={Airplanes}/>                     
-                        <Route path="/admin/airports" component={Airports}/>
-                        <Route path="/admin/flights" component={Flights}/> 
-                    </Switch>
-                </div>
+                <Switch>
+                    <Route path="/admin/airplanes" component={AirplanesPage}/>                     
+                    <Route path="/admin/airports" component={AirportsPage}/>
+                    <Route path="/admin/flights" component={FlightsPage}/> 
+                </Switch>
             </BrowserRouter>
         </main>
     );
