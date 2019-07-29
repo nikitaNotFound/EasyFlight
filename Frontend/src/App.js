@@ -1,20 +1,17 @@
 import React from 'react';
-import Header from './components/header';
-import Footer from './components/footer';
-import Content from './components/content';
+import User from './components/user';
+import Admin from './components/admin';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 
 function App() {
   return (
-    <div className="wrapper container-fluid content">
-      <Header />
-
-      <main className="rounded" ame="page-content" id="page-content">
-        <Content />
-      </main>
-
-      <Footer />
-    </div>
+    <Router>
+      <Switch>
+        <Route path="/admin" component={Admin}/>
+        <Route path="/" component={User}/>
+      </Switch>
+    </Router>
   );
 }
 

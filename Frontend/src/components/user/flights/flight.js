@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import buyIcon from '../../icons/buy-icon.png';
+import buyIcon from '../../../icons/buy-icon.png';
 import PropsTypes from 'prop-types';
 
 class Flight extends Component {

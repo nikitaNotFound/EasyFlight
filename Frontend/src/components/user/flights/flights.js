@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Flight from './flight';
 import ComponentHeadline from './component-headline';
-import * as FlightsService from '../../services/FlightsService';
+import * as FlightsService from '../../../services/FlightsService';
 
 class Flights extends Component {
     flights = FlightsService.getAll();
@@ -22,7 +22,6 @@ class Flights extends Component {
                                 desc={item.desc}
                             />
                     )}
-                    
                 </div>
             </div>
         );
