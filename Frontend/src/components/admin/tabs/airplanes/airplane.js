@@ -1,13 +1,12 @@
 import React, {Component} from 'react';
-import AirportHeadline from './airport-headline';
+import AirplaneHeadline from './airplane-headline';
 import PropsTypes from 'prop-types';
 
-class Airport extends Component {
+class Airplane extends Component {
     static propsTypes = {
         name: PropsTypes.string,
-        city: PropsTypes.string,
-        country: PropsTypes.string,
-        desc: PropsTypes.string
+        sitsCount: PropsTypes.number,
+        maxMass: PropsTypes.number
     }
 
     render () {
@@ -18,11 +17,11 @@ class Airport extends Component {
                 </div>
 
                 <div className="col-9">
-                    <AirportHeadline 
+                    <AirplaneHeadline 
                         name={this.props.name}
-                        location={`${this.props.city}, ${this.props.country}`}
+                        sitsCount={`${this.props.sitsCount} sits`}
                     />
-                    {this.props.desc}
+                    {`max mass = ${this.props.maxMass}kg`}
                 </div>
 
                 <div className="col-1">
@@ -33,4 +32,4 @@ class Airport extends Component {
     }
 }
 
-export default Airport;
+export default Airplane;

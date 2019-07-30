@@ -360,3 +360,7 @@ footer {
   font-family: 'Russo One';
   src: url(../fonts/Russo_One.ttf);
 }
+
+.non-selectable {
+  user-select: none;
+}
