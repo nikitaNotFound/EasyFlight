@@ -13,7 +13,7 @@ class Airplanes extends Component {
                             <Airplane 
                                 key={index} 
                                 name={item.name} 
-                                sitsCount={item.xSize * item.ySize}
+                                sitsCount={item.sitsInfo.length * item.sitsInfo[0].length}
                                 maxMass={item.maxMass}
                             />
                     )}

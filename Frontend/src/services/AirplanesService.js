@@ -6,11 +6,11 @@ export function getAll () {
     }
 
     return [
-        {name:"F300", xSize:2, ySize:6, rows:2, maxMass: 1000, sitsInfo:[
+        {name:"F300", rows:2, maxMass: 1000, sitsInfo:[
             [sitsTypes.economClass, sitsTypes.economClass, sitsTypes.economClass, sitsTypes.economClass, sitsTypes.economClass, sitsTypes.economClass],
             [sitsTypes.economClass, sitsTypes.economClass, sitsTypes.economClass, sitsTypes.economClass, sitsTypes.economClass, sitsTypes.economClass]
         ]},
-        {name:"Keksik", xSize:1, ySize:4, rows:1, maxMass: 500, sitsInfo:[
+        {name:"Keksik", rows:1, maxMass: 500, sitsInfo:[
             [sitsTypes.firstClass, sitsTypes.firstClass, sitsTypes.firstClass, sitsTypes.businesClass]
         ]}
     ];

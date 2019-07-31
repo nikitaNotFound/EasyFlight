@@ -10,7 +10,7 @@ class AirplanesPage extends Component {
         adding: "adding-mode",
         editing: "editing-mode"
     }
-    actionMode = this.actionModes.adding;
+    actionMode = this.actionModes.none;
 
     render () {
         return (
