@@ -11,10 +11,8 @@ class Editing extends Component {
     airplanes = AirplanesService.getAll();
 
     propsTypes = {
-        from: PropsTypes.string,
-        to: PropsTypes.string, 
-        departureTime: PropsTypes.string,
-        airplane: PropsTypes.string
+        object: PropsTypes.object,
+        cancel: PropsTypes.func
     }
 
     render () {
@@ -32,20 +30,21 @@ class Editing extends Component {
                         </div>
                         <div className="col-10">
                             <div className="row">
-                                <SearchList array={this.airports} placeholder="from" value={this.props.from}/>
-                                <SearchList array={this.airports} placeholder="to" value={this.props.to}/>
+                                <SearchList array={this.airports} placeholder="from" value={this.props.object.from}/>
+                                <SearchList array={this.airports} placeholder="to" value={this.props.object.to}/>
                                 <div className="form-item">
                                     <label>departure time</label><br/>
                                     <input type="time" value={this.props.departureTime}/>
                                 </div>
-                                <SearchList array={this.airplanes} placeholder="airplane" value={this.props.airplane}/>
+                                <SearchList array={this.airplanes} placeholder="airplane" value={this.props.object.airplane}/>
                             </div>
                             <br/>
-                            <textarea placeholder="description"/>
+                            <textarea placeholder="description" value={this.props.object.desc}/>
                         </div>
                     </div>
                     <input type="submit" value="Add" className="add-button"/>
                 </form>
+                <button onClick={this.props.cancel} className="cancel-button">Cancel</button>
             </div>
         );
     }

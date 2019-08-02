@@ -9,14 +9,16 @@ class Flights extends Component {
         return (
             <div className="items-list">
                  {this.flights.map(
-                        (item, index) => 
+                        (item) => 
                             <Flight
-                                key={index}
                                 name={item.name}
                                 from={item.from}
                                 to={item.to}
                                 cost={item.cost}
                                 desc={item.desc}
+                                flightId={item.id}
+                                onEdit={this.props.onEdit}
+                                displayLayout={this.props.displayLayout}
                             />
                     )}
             </div>

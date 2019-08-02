@@ -6,7 +6,10 @@ class Airplane extends Component {
     static propsTypes = {
         name: PropsTypes.string,
         sitsCount: PropsTypes.number,
-        maxMass: PropsTypes.number
+        maxMass: PropsTypes.number,
+        airplaneId: PropsTypes.number,
+        onEdit: PropsTypes.func,
+        displayLayout: PropsTypes.func
     }
 
     render () {
@@ -25,7 +28,13 @@ class Airplane extends Component {
                 </div>
 
                 <div className="col-1">
-                    <button>Edit</button>
+                    <button onClick={
+                        () => {
+                            this.props.onEdit(this.props.airplaneId);
+                            this.props.displayLayout();
+                        }}>
+                        Edit
+                    </button>
                 </div>
             </div>
         );

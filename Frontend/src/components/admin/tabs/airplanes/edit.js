@@ -6,11 +6,8 @@ import SitsEditor from './sits-editor';
 
 class Edit extends Component {
     static propsTypes = {
-        name: PropsTypes.string,
-        xSize: PropsTypes.number,
-        ySize: PropsTypes.number,
-        maxMass: PropsTypes.number,
-        img: PropsTypes.string
+        object: PropsTypes.object,
+        cancel: PropsTypes.func
     }
 
     render () {
@@ -28,22 +25,21 @@ class Edit extends Component {
                         </div>
                         <div className="col-10">
                             <div className="form-item">
-                                <input type="text" value={this.props.name} name="name"/>
+                                <input type="text" value={this.props.object.name} name="name"/>
                             </div>
                             <div className="form-item">
-                                <input type="text" value={this.props.xSize} name="xSize"/>
-                                <input type="text" value={this.props.ySize} name="ySize"/>
-                                <input type="text" placeholder="sits count" readOnly/>
+                                <input type="text" value={this.props.object.sits.length} readOnly/>
                             </div>
                             <div className="form-item">
-                                <input value={this.props.maxMass}/>
+                                <input value={this.props.object.maxMass}/>
                             </div>
                             <br/>
                             <SitsEditor/>
                         </div>
                     </div>
-                    <input type="submit" value="Add" className="add-button"/>
+                    <input type="submit" value="Save" className="add-button"/>
                 </form>
+                <button onClick={this.props.cancel} className="cancel-button">Cancel</button>
             </div>
         );
     }

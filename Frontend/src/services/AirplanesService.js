@@ -7,7 +7,7 @@ export function getAll () {
 
     return [
         {
-            name:'F300', maxMass: 1000, sits: [
+            id: 1, name:'F300', maxMass: 1000, sits: [
                 new Sit(1, 1, 1, 1, sitsTypes.economClass), new Sit(1, 1, 1, 2, sitsTypes.economClass),
                 new Sit(1, 1, 2, 1, sitsTypes.economClass), new Sit(1, 1, 2, 2, sitsTypes.economClass),
 
@@ -16,11 +16,22 @@ export function getAll () {
             ]
         },
         {
-            name:'Keksik', maxMass: 500, sits: [
+            id: 2, name:'Keksik', maxMass: 500, sits: [
                 new Sit(1, 1, 1, 1, sitsTypes.economClass), new Sit(1, 1, 1, 2, sitsTypes.economClass)
             ]
         }
     ];
+}
+
+export function getById(id) {
+    const storage = getAll();
+    for (let i = 0, len = storage.length; i < len; i++) {
+        if (storage[i].id == id) {
+            return storage[i];
+        }
+    }
+
+    return false; //IN FUTURE I NEED TO RETURN ERROR MESSAGE OBJECT
 }
 
 class Sit {

@@ -7,7 +7,10 @@ class Airport extends Component {
         name: PropsTypes.string,
         city: PropsTypes.string,
         country: PropsTypes.string,
-        desc: PropsTypes.string
+        desc: PropsTypes.string,
+        airportId: PropsTypes.number,
+        onEdit: PropsTypes.func,
+        displayLayout: PropsTypes.func
     }
 
     render () {
@@ -26,7 +29,14 @@ class Airport extends Component {
                 </div>
 
                 <div className="col-1">
-                    <button>Edit</button>
+                    <button onClick={
+                        () => {
+                            this.props.onEdit(this.props.airportId);
+                            this.props.displayLayout();
+                        }
+                    }>
+                        Edit
+                    </button>
                 </div>
             </div>
         );

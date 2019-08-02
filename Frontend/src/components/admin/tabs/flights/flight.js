@@ -4,11 +4,13 @@ import PropsTypes from 'prop-types';
 
 class Airport extends Component {
     static propsTypes = {
-        name: PropsTypes.string,
         from: PropsTypes.string,
         to: PropsTypes.string,
         cost: PropsTypes.number,
-        desc: PropsTypes.string
+        desc: PropsTypes.string,
+        flightId: PropsTypes.number,
+        onEdit: PropsTypes.func,
+        displayLayout: PropsTypes.func
     }
 
     render () {
@@ -20,7 +22,6 @@ class Airport extends Component {
 
                 <div className="col-9">
                     <FlightHeadline 
-                        name={this.props.name}
                         from={this.props.from}
                         to={this.props.to}
                         cost={this.props.cost}
@@ -29,7 +30,14 @@ class Airport extends Component {
                 </div>
 
                 <div className="col-1">
-                    <button>Edit</button>
+                    <button onClick={
+                        () => {
+                            this.props.onEdit(this.props.flightId);
+                            this.props.displayLayout();
+                        }
+                    }>
+                        Edit
+                    </button>
                 </div>
             </div>
         );

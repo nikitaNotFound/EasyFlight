@@ -71,8 +71,8 @@ class Adding extends Component {
                         </div>
                     </div>
                     <input type="submit" value="Add" className="add-button"/>
-                    <button value="Cancel" onClick={this.props.cancel}/>
                 </form>
+                <button onClick={this.props.cancel} className="cancel-button">Cancel</button>
             </div>
         );
     }

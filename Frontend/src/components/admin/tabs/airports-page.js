@@ -3,6 +3,7 @@ import AddButton from './common/add-button';
 import Airports from './airports/airports';
 import Add from './airports/add';
 import Edit from './airports/edit'
+import * as AirportsService from '../../../services/AirportsService';
 
 function AirportsPage () {
     const actionModes = {
@@ -11,13 +12,19 @@ function AirportsPage () {
         editing: 'editing-mode'
     }
     const [actionMode, changeMode] = useState(actionModes.none);
+    const [editingAirportId, setEditingAirport] = useState(1);
+    const editingObject = AirportsService.getById(editingAirportId);
 
     return (
         <div className={`tab-content ${actionMode}`}>
             <AddButton onClick={() => changeMode(actionModes.adding)}/>
-            <Airports />
-            <Add />
-            <Edit />
+            <Airports
+                onEdit={setEditingAirport} 
+                displayLayout={() => changeMode(actionModes.editing)}/>
+            <Add cancel={() => changeMode(actionModes.none)}/>
+            <Edit 
+                object={editingObject}
+                cancel={() => changeMode(actionModes.none)}/>
         </div>
     );
 }
