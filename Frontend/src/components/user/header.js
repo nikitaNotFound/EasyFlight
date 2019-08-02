@@ -7,7 +7,7 @@ function Header () {
         <header className="rounded-bottom">
             <div className="row">
                 <div className="col-sm-12 col-lg-8">
-                    <h1 className="display-4 company-icon">easy flight</h1>
+                    <h1 className="display-4 company-icon non-selectable">easy flight</h1>
                 </div>
 
                 <div className="col-sm-12 col-lg-4">

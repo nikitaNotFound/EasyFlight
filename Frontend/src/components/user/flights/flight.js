@@ -4,8 +4,8 @@ import PropsTypes from 'prop-types';
 
 class Flight extends Component {
     static propsTypes = {
-        fromCountry: PropsTypes.string,
-        toCountry: PropsTypes.string,
+        from: PropsTypes.string,
+        to: PropsTypes.string,
         desc: PropsTypes.string,
         cost: PropsTypes.number
     }
@@ -18,7 +18,7 @@ class Flight extends Component {
                 </div>
                 <div className="col-sm-8" name="item-content">
                     <div className="container-fluid">
-                        <h5>From: {this.props.fromCountry} To: {this.props.toCountry}</h5>
+                        <h5>From: {this.props.from} To: {this.props.to}</h5>
                     </div>
 
                     <div className="container-fluid">
