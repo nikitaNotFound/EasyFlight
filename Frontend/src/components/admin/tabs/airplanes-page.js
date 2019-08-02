@@ -6,9 +6,9 @@ import Edit from './airplanes/edit';
 
 class AirplanesPage extends Component {
     actionModes = {
-        none: "",
-        adding: "adding-mode",
-        editing: "editing-mode"
+        none: '',
+        adding: 'adding-mode',
+        editing: 'editing-mode'
     }
     actionMode = this.actionModes.none;
 
