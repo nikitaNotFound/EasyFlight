@@ -16,8 +16,8 @@ class Flights extends Component {
                         (item, index) => 
                             <Flight 
                                 key={index} 
-                                fromCountry={item.fromCountry} 
-                                toCountry={item.toCountry} 
+                                from={item.from} 
+                                to={item.to} 
                                 cost={item.cost} 
                                 desc={item.desc}
                             />
