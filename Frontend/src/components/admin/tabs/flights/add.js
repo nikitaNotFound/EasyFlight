@@ -1,3 +1,4 @@
+import PropsTypes from 'prop-types';
 import React, {Component} from 'react';
 import Headline from '../common/headline';
 import BuyIcon from '../../../../icons/add-image.png';
@@ -8,6 +9,10 @@ import * as AirplanesService from '../../../../services/AirplanesService';
 class Adding extends Component {
     airports = AirportsService.getAll();
     airplanes = AirplanesService.getAll();
+
+    propsTypes = {
+        cancel: PropsTypes.func
+    }
 
     render () {
         return (
@@ -38,6 +43,7 @@ class Adding extends Component {
                     </div>
                     <input type="submit" value="Add" className="add-button"/>
                 </form>
+                <button onClick={this.props.cancel} className="cancel-button">Cancel</button>
             </div>
         );
     }

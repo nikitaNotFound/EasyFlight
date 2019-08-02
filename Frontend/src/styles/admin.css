@@ -78,7 +78,7 @@
 
 .form-item {
     display: inline;
-    margin-right: 10%;
+    margin: 0 5%;
 }
 
 .adding-form-img {
@@ -90,13 +90,40 @@
 }
 
 .add-button {
-    width: 100px;
+    width: 30%;
     height: 50px;
     position: relative;
-    left: 70vw;
+    left: 60vw;
+}
+
+.cancel-button {
+    width: 30%;
+    height: 50px;
+    position: relative;
+    left: 60vw;
 }
 
 /*****************************SITS EDITOR*****************************/
 .sits-editor {
     background: rgb(231, 231, 231);
+}
+
+/******************************SEARCH LIST****************************/
+.search-list {
+    width: 194px;
+    position: absolute;
+    z-index: 1000;
+    background: rgb(211, 211, 211);
+    padding: 5px;
+}
+
+.search-item {
+    font-family: serif;
+    font-size: 16px;
+    margin-top: 5px;
+    background: white;
+}
+
+.search-item-hide {
+    display: none;
 }

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropsTypes from 'prop-types';
 import Headline from '../common/headline';
 import AddIcon from '../../../../icons/add-image.png';
 import SitsEditor from './sits-editor';
@@ -14,6 +15,10 @@ class Adding extends Component {
     }
     xSize = 0;
     ySize = 0;
+
+    propsTypes = {
+        cancel: PropsTypes.func
+    }
 
     xSizeChangedHandler (event) {
         this.xSize = event.target.value;
@@ -41,7 +46,7 @@ class Adding extends Component {
                         <div className="col-2">
                             <input type="file" name="image" id="file-input" className="file-upload"/>
                             <label htmlFor="file-input">
-                                <img src={AddIcon} className="adding-form-img"/>
+                                <img src={AddIcon} className="adding-form-img" alt="add"/>
                             </label>
                         </div>
                         <div className="col-10">
@@ -66,6 +71,7 @@ class Adding extends Component {
                         </div>
                     </div>
                     <input type="submit" value="Add" className="add-button"/>
+                    <button value="Cancel" onClick={this.props.cancel}/>
                 </form>
             </div>
         );
