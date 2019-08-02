@@ -2,7 +2,7 @@ import React from 'react';
 
 function AddAirport () {
     return (
-        <div className="add-airport rounded">
+        <div className="add-airport rounded non-selectable">
             +
         </div>
     );

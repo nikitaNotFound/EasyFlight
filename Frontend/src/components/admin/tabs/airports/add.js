@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import Headline from './headline';
+import Headline from '../common/headline';
 import BuyIcon from '../../../../icons/add-image.png';
 
 class Adding extends Component {
     render () {
         return (
-            <div className="airports-item-action rounded adding">
+            <div className="list-item-action adding">
                 <Headline name="Adding new airport"/>
 
                 <form method="post" className="adding-form">

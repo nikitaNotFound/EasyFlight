@@ -7,7 +7,7 @@ class Airports extends Component {
 
     render () {
         return (
-            <div className="airports">
+            <div className="items-list">
                  {this.airports.map(
                         (item, index) => 
                             <Airport 
