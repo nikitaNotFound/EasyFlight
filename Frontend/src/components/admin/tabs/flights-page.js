@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import AddButton from './common/add-button';
 import Flights from './flights/flights';
 import Adding from './flights/add';
@@ -10,13 +10,13 @@ function FlightsPage () {
         adding: 'adding-mode',
         editing: 'editing-mode'
     }
-    const [actionMode, changeMode] = useState(actionModes.none);
+    const actionMode = actionModes.none;
 
     return (
         <div className={`tab-content ${actionMode}`}>
-            <AddButton onClick={() => changeMode(actionModes.adding)}/>
+            <AddButton/>
             <Flights/>
-            <Adding cancel={() => changeMode(actionModes.none)}/>
+            <Adding/>
             <Editing/>
         </div>
     );
