@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import AirplaneHeadline from './airplane-headline';
 import PropsTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 class Airplane extends Component {
     static propsTypes = {
@@ -8,8 +9,6 @@ class Airplane extends Component {
         sitsCount: PropsTypes.number,
         maxMass: PropsTypes.number,
         airplaneId: PropsTypes.number,
-        onEdit: PropsTypes.func,
-        displayLayout: PropsTypes.func
     }
 
     render () {
@@ -28,13 +27,11 @@ class Airplane extends Component {
                 </div>
 
                 <div className="col-1">
-                    <button onClick={
-                        () => {
-                            this.props.onEdit(this.props.airplaneId);
-                            this.props.displayLayout();
-                        }}>
-                        Edit
-                    </button>
+                    <Link to={`/admin/airplanes/edit/${this.props.airplaneId}`}>
+                        <div className="edit-button rounded non-selectable">
+                            Edit
+                        </div>
+                    </Link>
                 </div>
             </div>
         );

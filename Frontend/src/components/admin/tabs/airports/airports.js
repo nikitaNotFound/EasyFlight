@@ -8,13 +8,14 @@ class Airports extends Component {
 
     propsTypes = {
         onEdit: PropsTypes.func,
-        displayLayout: PropsTypes.func
+        displayLayout: PropsTypes.func,
+        airports: PropsTypes.array
     }
 
     render () {
         return (
             <div className="items-list">
-                 {this.airports.map(
+                 {this.props.airports.map(
                         (item) => 
                             <Airport 
                                 name={item.name} 

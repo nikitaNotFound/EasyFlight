@@ -12,6 +12,4 @@ export function getById(id) {
             return storage[i];
         }
     }
-
-    return false; //IN FUTURE I NEED TO RETURN ERROR MESSAGE OBJECT
 }

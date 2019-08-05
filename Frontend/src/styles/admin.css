@@ -47,24 +47,13 @@
 }
 
 .list-item-action {
-    z-index: 100;
     background: rgb(231, 231, 231);
-    position: absolute;
-    top: 5%;
-    left: 5%;
     width: 90%;
     min-height: 400px;
-    outline: solid rgba(0, 0, 0, .25) 10000px;
     padding: 1%;
-    display: none;
-}
-
-.adding-mode .adding {
-    display: block;
-}
-
-.editing-mode .editing {
-    display: block;
+    margin: 0 5%;
+    margin-top: 1%;
+    box-shadow: 0 0 2px rgba(0,0,0,0.5);
 }
 
 .adding-form {
@@ -101,6 +90,17 @@
     height: 50px;
     position: relative;
     left: 60vw;
+}
+
+.edit-button {
+    background: rgb(207, 207, 207);
+    padding: 4px;
+    text-align: center;
+    color: black;
+}
+
+.edit-button:hover {
+    background: rgb(236, 236, 236);
 }
 
 /*****************************SITS EDITOR*****************************/

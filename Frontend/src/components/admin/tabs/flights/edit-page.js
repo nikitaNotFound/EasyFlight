@@ -1,23 +1,21 @@
-import PropsTypes from 'prop-types';
 import React, {Component} from 'react';
 import Headline from '../common/headline';
 import BuyIcon from '../../../../icons/add-image.png';
+import PropsTypes from 'prop-types';
 import SearchList from './search-list';
 import * as AirportsService from '../../../../services/AirportsService';
 import * as AirplanesService from '../../../../services/AirplanesService';
+import * as FlightsService from '../../../../services/FlightsService';
 
-class Adding extends Component {
+class Editing extends Component {
     airports = AirportsService.getAll();
     airplanes = AirplanesService.getAll();
-
-    propsTypes = {
-        cancel: PropsTypes.func
-    }
+    flight = FlightsService.getById(this.props.match.params.id);
 
     render () {
         return (
-            <div className="list-item-action adding">
-                <Headline name="Adding new flight"/>
+            <div className="list-item-action editing">
+                <Headline name="Editing flight"/>
 
                 <form method="post" className="adding-form">
                     <div className="row">
@@ -29,24 +27,23 @@ class Adding extends Component {
                         </div>
                         <div className="col-10">
                             <div className="row">
-                                <SearchList array={this.airports} placeholder="from"/>
-                                <SearchList array={this.airports} placeholder="to"/>
+                                <SearchList array={this.airports} placeholder="from" value={this.flight.from}/>
+                                <SearchList array={this.airports} placeholder="to" value={this.flight.to}/>
                                 <div className="form-item">
                                     <label>departure time</label><br/>
-                                    <input type="time"/>
+                                    <input type="time" value={this.props.departureTime}/>
                                 </div>
-                                <SearchList array={this.airplanes} placeholder="airplane"/>
+                                <SearchList array={this.airplanes} placeholder="airplane" value={this.flight.airplane}/>
                             </div>
                             <br/>
-                            <textarea placeholder="description"/>
+                            <textarea placeholder="description" value={this.flight.desc}/>
                         </div>
                     </div>
                     <input type="submit" value="Add" className="add-button"/>
                 </form>
-                <button onClick={this.props.cancel} className="cancel-button">Cancel</button>
             </div>
         );
     }
 }
 
-export default Adding;
+export default Editing;

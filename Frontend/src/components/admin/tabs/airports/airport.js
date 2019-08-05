@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import AirportHeadline from './airport-headline';
 import PropsTypes from 'prop-types';
+import { Link } from 'react-router-dom'
 
 class Airport extends Component {
     static propsTypes = {
@@ -9,8 +10,6 @@ class Airport extends Component {
         country: PropsTypes.string,
         desc: PropsTypes.string,
         airportId: PropsTypes.number,
-        onEdit: PropsTypes.func,
-        displayLayout: PropsTypes.func
     }
 
     render () {
@@ -29,14 +28,11 @@ class Airport extends Component {
                 </div>
 
                 <div className="col-1">
-                    <button onClick={
-                        () => {
-                            this.props.onEdit(this.props.airportId);
-                            this.props.displayLayout();
-                        }
-                    }>
-                        Edit
-                    </button>
+                    <Link to={`/admin/airports/edit/${this.props.airportId}`}>
+                        <div className="edit-button rounded non-selectable">
+                            Edit
+                        </div>
+                    </Link>
                 </div>
             </div>
         );

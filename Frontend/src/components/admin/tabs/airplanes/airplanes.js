@@ -1,20 +1,18 @@
 import React, {Component} from 'react';
 import Airplane from './airplane';
-import * as AirplanesService from '../../../../services/AirplanesService';
 import PropsTypes from 'prop-types';
 
 class Airplanes extends Component {
-    airports = AirplanesService.getAll();
-
     propsTypes = {
         onEdit: PropsTypes.func,
-        displayLayout: PropsTypes.func
+        displayLayout: PropsTypes.func,
+        airplanes: PropsTypes.array
     }
 
     render () {
         return (
             <div className="items-list">
-                 {this.airports.map(
+                 {this.props.airplanes.map(
                         (item) => 
                             <Airplane 
                                 name={item.name} 

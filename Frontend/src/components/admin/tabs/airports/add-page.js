@@ -1,13 +1,8 @@
 import React, {Component} from 'react';
-import PropsTypes from 'prop-types';
 import Headline from '../common/headline';
 import BuyIcon from '../../../../icons/add-image.png';
 
 class Adding extends Component {
-    propsTypes = {
-        cancel: PropsTypes.func
-    }
-
     render () {
         return (
             <div className="list-item-action adding">
@@ -35,7 +30,6 @@ class Adding extends Component {
                     </div>
                     <input type="submit" value="Add" className="add-button"/>
                 </form>
-                <button onClick={this.props.cancel} className="cancel-button">Cancel</button>
             </div>
         );
     }

@@ -1,41 +1,9 @@
 import React, {Component} from 'react';
-import PropsTypes from 'prop-types';
 import Headline from '../common/headline';
 import AddIcon from '../../../../icons/add-image.png';
 import SitsEditor from './sits-editor';
 
 class Adding extends Component {
-    constructor (props) {
-        super(props)
-        this.state = {
-            sitsCount: 0
-        }
-        this.xSizeChangedHandler = this.xSizeChangedHandler.bind(this);
-        this.ySizeChangedHandler = this.ySizeChangedHandler.bind(this);
-    }
-    xSize = 0;
-    ySize = 0;
-
-    propsTypes = {
-        cancel: PropsTypes.func
-    }
-
-    xSizeChangedHandler (event) {
-        this.xSize = event.target.value;
-        this.sitsCountChange();
-    }
-
-    ySizeChangedHandler (event) {
-        this.ySize = event.target.value;
-        this.sitsCountChange();
-    }
-
-    sitsCountChange () {
-        this.setState({
-            sitsCount: this.xSize * this.ySize
-        });
-    }
-
     render () {
         return (
             <div className="list-item-action adding">
@@ -55,15 +23,6 @@ class Adding extends Component {
                                 <input type="text" placeholder="airplane name" name="name"/>
                             </div>
                             <div className="form-item">
-                                <input type="text" placeholder="xSize" name="city"
-                                    onChange={this.xSizeChangedHandler}
-                                />
-                                <input type="text" placeholder="ySize" name="country"
-                                    onChange={this.ySizeChangedHandler}
-                                />
-                                <input type="text" value={this.state.sitsCount} readOnly/>
-                            </div>
-                            <div className="form-item">
                                 <input placeholder="max mass"/>
                             </div>
                             <br/>
@@ -72,7 +31,6 @@ class Adding extends Component {
                     </div>
                     <input type="submit" value="Add" className="add-button"/>
                 </form>
-                <button onClick={this.props.cancel} className="cancel-button">Cancel</button>
             </div>
         );
     }

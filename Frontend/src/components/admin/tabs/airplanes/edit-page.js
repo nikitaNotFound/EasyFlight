@@ -1,14 +1,11 @@
 import React, {Component} from 'react';
 import Headline from '../common/headline';
-import PropsTypes from 'prop-types';
 import AddIcon from '../../../../icons/add-image.png';
 import SitsEditor from './sits-editor';
+import * as AirplanesService from '../../../../services/AirplanesService';
 
 class Edit extends Component {
-    static propsTypes = {
-        object: PropsTypes.object,
-        cancel: PropsTypes.func
-    }
+    airplane = AirplanesService.getById(this.props.match.params.id);
 
     render () {
         return (
@@ -25,13 +22,13 @@ class Edit extends Component {
                         </div>
                         <div className="col-10">
                             <div className="form-item">
-                                <input type="text" value={this.props.object.name} name="name"/>
+                                <input type="text" value={this.airplane.name} name="name"/>
                             </div>
                             <div className="form-item">
-                                <input type="text" value={this.props.object.sits.length} readOnly/>
+                                <input type="text" value={this.airplane.sits.length} readOnly/>
                             </div>
                             <div className="form-item">
-                                <input value={this.props.object.maxMass}/>
+                                <input value={this.airplane.maxMass}/>
                             </div>
                             <br/>
                             <SitsEditor/>
@@ -39,7 +36,6 @@ class Edit extends Component {
                     </div>
                     <input type="submit" value="Save" className="add-button"/>
                 </form>
-                <button onClick={this.props.cancel} className="cancel-button">Cancel</button>
             </div>
         );
     }
