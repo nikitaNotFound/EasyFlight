@@ -1,5 +1,5 @@
 export function getAll () {
-    const sitsTypes = {
+    const seatTypes = {
         economClass: 0,
         businesClass: 1,
         firstClass: 2
@@ -8,16 +8,16 @@ export function getAll () {
     return [
         {
             id: 1, name:'F300', maxMass: 1000, seats: [
-                new Seat(1, 1, 1, 1, sitsTypes.economClass), new Seat(1, 1, 1, 2, sitsTypes.economClass),
-                new Seat(1, 1, 2, 1, sitsTypes.economClass), new Seat(1, 1, 2, 2, sitsTypes.economClass),
+                new Seat(1, 1, 1, 1, seatTypes.economClass), new Seat(1, 1, 1, 2, seatTypes.economClass),
+                new Seat(1, 1, 2, 1, seatTypes.economClass), new Seat(1, 1, 2, 2, seatTypes.economClass),
 
-                new Seat(1, 2, 1, 1, sitsTypes.businesClass), new Seat(1, 2, 1, 2, sitsTypes.businesClass),
-                new Seat(1, 2, 2, 1, sitsTypes.businesClass), new Seat(1, 2, 2, 2, sitsTypes.businesClass)
+                new Seat(1, 2, 1, 1, seatTypes.businesClass), new Seat(1, 2, 1, 2, seatTypes.businesClass),
+                new Seat(1, 2, 2, 1, seatTypes.businesClass), new Seat(1, 2, 2, 2, seatTypes.businesClass)
             ]
         },
         {
             id: 2, name:'Keksik', maxMass: 500, seats: [
-                new Seat(1, 1, 1, 1, sitsTypes.economClass), new Seat(1, 1, 1, 2, sitsTypes.economClass)
+                new Seat(1, 1, 1, 1, seatTypes.economClass), new Seat(1, 1, 1, 2, seatTypes.economClass)
             ]
         }
     ];

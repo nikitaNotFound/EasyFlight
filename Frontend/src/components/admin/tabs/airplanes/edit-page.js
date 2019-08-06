@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Headline from '../common/headline';
 import AddIcon from '../../../../icons/add-image.png';
-import SeatsEditor from './seat-editor';
+import SeatEditor from './seat-editor';
 import * as AirplaneService from '../../../../services/AirplaneService';
 
 class Edit extends Component {
@@ -31,7 +31,7 @@ class Edit extends Component {
                                 <input value={this.airplane.maxMass}/>
                             </div>
                             <br/>
-                            <SeatsEditor/>
+                            <SeatEditor/>
                         </div>
                     </div>
                     <input type="submit" value="Save" className="add-button"/>

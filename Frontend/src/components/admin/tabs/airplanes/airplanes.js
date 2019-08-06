@@ -16,7 +16,7 @@ class Airplanes extends Component {
                         (item) => 
                             <Airplane 
                                 name={item.name} 
-                                seatsCount={item.seats.length}
+                                seatCount={item.seats.length}
                                 maxMass={item.maxMass}
                                 airplaneId={item.id}
                                 onEdit={this.props.onEdit}
