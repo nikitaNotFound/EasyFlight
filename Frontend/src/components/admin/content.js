@@ -6,7 +6,7 @@ import FlightRouter from './tabs/flight-router';
 
 function Content () {
     return (
-        <main className="rounded none-mode">
+        <main className="rounded">
             <div className="tabs">
                 <div className="tabs-item">
                     <Link to="/admin/airports">Airports</Link>

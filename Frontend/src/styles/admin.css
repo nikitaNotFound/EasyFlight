@@ -127,3 +127,21 @@
 .search-item-hide {
     display: none;
 }
+
+/*********************************SIGN UP*******************************/
+.form-sign-up {
+    width: 70%;
+    margin-left: 15%;
+}
+
+.main-button {
+    width: 100%;
+}
+
+.sec-button {
+    width: 50%;
+}
+
+.form-sign-up input {
+    margin: 1% 0%;
+}
