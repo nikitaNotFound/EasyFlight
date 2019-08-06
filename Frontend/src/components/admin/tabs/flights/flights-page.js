@@ -1,10 +1,10 @@
 import React from 'react';
 import AddButton from '../common/add-button';
 import Flights from './flights';
-import * as FlightsService from '../../../../services/FlightsService';
+import * as FlightService from '../../../../services/FlightService';
 
 function FlightsPage () {
-    const flights = FlightsService.getAll();
+    const flights = FlightService.getAll();
 
     return (
         <div className="tab-content">

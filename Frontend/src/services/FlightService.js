@@ -12,4 +12,5 @@ export function getById(id) {
             return storage[i];
         }
     }
+    return undefined;
 }

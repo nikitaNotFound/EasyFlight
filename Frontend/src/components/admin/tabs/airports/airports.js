@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import Airport from './airport';
 import PropsTypes from 'prop-types';
-import * as AirportsService from '../../../../services/AirportsService';
+import * as AirportService from '../../../../services/AirportService';
 
 class Airports extends Component {
-    airports = AirportsService.getAll();
+    airports = AirportService.getAll();
 
     propsTypes = {
         onEdit: PropsTypes.func,

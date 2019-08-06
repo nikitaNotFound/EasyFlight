@@ -1,8 +1,8 @@
 import React from 'react';
 import {BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom';
-import AirplanesRouter from './tabs/airplanes-router';
-import AirportsRouter from './tabs/airports-router';
-import FlightsRouter from './tabs/flights-router';
+import AirplaneRouter from './tabs/airplane-router';
+import AirportRouter from './tabs/airport-router';
+import FlightRouter from './tabs/flight-router';
 
 function Content () {
     return (
@@ -20,9 +20,9 @@ function Content () {
             </div>
 
             <Switch>
-                <Route path="/admin/airplanes" component={AirplanesRouter}/>
-                <Route path="/admin/airports" component={AirportsRouter}/>
-                <Route path="/admin/flights" component={FlightsRouter}/> 
+                <Route path="/admin/airplanes" component={AirplaneRouter}/>
+                <Route path="/admin/airports" component={AirportRouter}/>
+                <Route path="/admin/flights" component={FlightRouter}/> 
             </Switch>
         </main>
     );

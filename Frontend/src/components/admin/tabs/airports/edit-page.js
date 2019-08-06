@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import Headline from '../common/headline';
-import * as AirportsService from '../../../../services/AirportsService';
+import * as AirportService from '../../../../services/AirportService';
 
 class Edit extends Component {
-    airport = AirportsService.getById(this.props.match.params.id);
+    airport = AirportService.getById(this.props.match.params.id);
 
     render () {
         return (

@@ -2,12 +2,12 @@ import React, {Component} from 'react';
 import Headline from '../common/headline';
 import BuyIcon from '../../../../icons/add-image.png';
 import SearchList from './search-list';
-import * as AirportsService from '../../../../services/AirportsService';
-import * as AirplanesService from '../../../../services/AirplanesService';
+import * as AirportService from '../../../../services/AirportService';
+import * as AirplaneService from '../../../../services/AirplaneService';
 
 class Adding extends Component {
-    airports = AirportsService.getAll();
-    airplanes = AirplanesService.getAll();
+    airports = AirportService.getAll();
+    airplanes = AirplaneService.getAll();
 
     render () {
         return (

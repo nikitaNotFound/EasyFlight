@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import Headline from '../common/headline';
 import AddIcon from '../../../../icons/add-image.png';
-import SitsEditor from './seats-editor';
-import * as AirplanesService from '../../../../services/AirplanesService';
+import SeatsEditor from './seat-editor';
+import * as AirplaneService from '../../../../services/AirplaneService';
 
 class Edit extends Component {
-    airplane = AirplanesService.getById(this.props.match.params.id);
+    airplane = AirplaneService.getById(this.props.match.params.id);
 
     render () {
         return (
@@ -31,7 +31,7 @@ class Edit extends Component {
                                 <input value={this.airplane.maxMass}/>
                             </div>
                             <br/>
-                            <SitsEditor/>
+                            <SeatsEditor/>
                         </div>
                     </div>
                     <input type="submit" value="Save" className="add-button"/>

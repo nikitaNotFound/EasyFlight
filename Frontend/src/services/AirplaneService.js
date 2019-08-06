@@ -8,16 +8,16 @@ export function getAll () {
     return [
         {
             id: 1, name:'F300', maxMass: 1000, seats: [
-                new Sit(1, 1, 1, 1, sitsTypes.economClass), new Sit(1, 1, 1, 2, sitsTypes.economClass),
-                new Sit(1, 1, 2, 1, sitsTypes.economClass), new Sit(1, 1, 2, 2, sitsTypes.economClass),
+                new Seat(1, 1, 1, 1, sitsTypes.economClass), new Seat(1, 1, 1, 2, sitsTypes.economClass),
+                new Seat(1, 1, 2, 1, sitsTypes.economClass), new Seat(1, 1, 2, 2, sitsTypes.economClass),
 
-                new Sit(1, 2, 1, 1, sitsTypes.businesClass), new Sit(1, 2, 1, 2, sitsTypes.businesClass),
-                new Sit(1, 2, 2, 1, sitsTypes.businesClass), new Sit(1, 2, 2, 2, sitsTypes.businesClass)
+                new Seat(1, 2, 1, 1, sitsTypes.businesClass), new Seat(1, 2, 1, 2, sitsTypes.businesClass),
+                new Seat(1, 2, 2, 1, sitsTypes.businesClass), new Seat(1, 2, 2, 2, sitsTypes.businesClass)
             ]
         },
         {
             id: 2, name:'Keksik', maxMass: 500, seats: [
-                new Sit(1, 1, 1, 1, sitsTypes.economClass), new Sit(1, 1, 1, 2, sitsTypes.economClass)
+                new Seat(1, 1, 1, 1, sitsTypes.economClass), new Seat(1, 1, 1, 2, sitsTypes.economClass)
             ]
         }
     ];
@@ -33,7 +33,7 @@ export function getById(id) {
     return undefined;
 }
 
-class Sit {
+class Seat {
     floor;
     section;
     row;
@@ -49,4 +49,4 @@ class Sit {
     }
 }
 
-export default Sit;
+export default Seat;

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Headline from '../common/headline';
 import AddIcon from '../../../../icons/add-image.png';
-import SitsEditor from './seats-editor';
+import SeatEditor from './seat-editor';
 
 class Adding extends Component {
     render () {
@@ -26,7 +26,7 @@ class Adding extends Component {
                                 <input placeholder="max mass"/>
                             </div>
                             <br/>
-                            <SitsEditor/>
+                            <SeatEditor/>
                         </div>
                     </div>
                     <input type="submit" value="Add" className="add-button"/>
