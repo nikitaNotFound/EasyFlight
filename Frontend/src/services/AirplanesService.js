@@ -7,7 +7,7 @@ export function getAll () {
 
     return [
         {
-            id: 1, name:'F300', maxMass: 1000, sits: [
+            id: 1, name:'F300', maxMass: 1000, seats: [
                 new Sit(1, 1, 1, 1, sitsTypes.economClass), new Sit(1, 1, 1, 2, sitsTypes.economClass),
                 new Sit(1, 1, 2, 1, sitsTypes.economClass), new Sit(1, 1, 2, 2, sitsTypes.economClass),
 
@@ -16,7 +16,7 @@ export function getAll () {
             ]
         },
         {
-            id: 2, name:'Keksik', maxMass: 500, sits: [
+            id: 2, name:'Keksik', maxMass: 500, seats: [
                 new Sit(1, 1, 1, 1, sitsTypes.economClass), new Sit(1, 1, 1, 2, sitsTypes.economClass)
             ]
         }
@@ -30,6 +30,7 @@ export function getById(id) {
             return storage[i];
         }
     }
+    return undefined;
 }
 
 class Sit {

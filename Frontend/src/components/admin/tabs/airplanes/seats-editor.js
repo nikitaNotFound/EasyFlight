@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-class SitsEditor extends Component {
+class SeatsEditor extends Component {
     render () {
         return (
             <div className="sits-editor">
@@ -10,4 +10,4 @@ class SitsEditor extends Component {
     }
 }
 
-export default SitsEditor;
+export default SeatsEditor;

@@ -4,7 +4,7 @@ import PropsTypes from 'prop-types';
 class AirportHeadline extends Component {
     static propsTypes = {
         name: PropsTypes.string,
-        sitsCount: PropsTypes.number
+        seatsCount: PropsTypes.number
     }
 
     render () {
@@ -14,7 +14,7 @@ class AirportHeadline extends Component {
                     <h5>{this.props.name}</h5>
                 </div>
                 <div className="col-6">
-                    <h6>{this.props.sitsCount}</h6>
+                    <h6>{this.props.seatsCount}</h6>
                 </div>
             </div>
         );

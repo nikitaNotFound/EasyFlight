@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Headline from '../common/headline';
 import AddIcon from '../../../../icons/add-image.png';
-import SitsEditor from './sits-editor';
+import SitsEditor from './seats-editor';
 import * as AirplanesService from '../../../../services/AirplanesService';
 
 class Edit extends Component {
@@ -25,7 +25,7 @@ class Edit extends Component {
                                 <input type="text" value={this.airplane.name} name="name"/>
                             </div>
                             <div className="form-item">
-                                <input type="text" value={this.airplane.sits.length} readOnly/>
+                                <input type="text" value={this.airplane.seats.length} readOnly/>
                             </div>
                             <div className="form-item">
                                 <input value={this.airplane.maxMass}/>

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Headline from '../common/headline';
 import AddIcon from '../../../../icons/add-image.png';
-import SitsEditor from './sits-editor';
+import SitsEditor from './seats-editor';
 
 class Adding extends Component {
     render () {
