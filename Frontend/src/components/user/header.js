@@ -27,7 +27,7 @@ function Header () {
                         </div>
                     </form>
                     <div className="sing-up">
-                        or <a href="#">singup</a>
+                        or <a href="#">sign up</a>
                     </div>
                 </div>
             </div>

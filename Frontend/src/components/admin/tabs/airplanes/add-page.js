@@ -1,36 +1,9 @@
 import React, {Component} from 'react';
 import Headline from '../common/headline';
 import AddIcon from '../../../../icons/add-image.png';
-import SitsEditor from './sits-editor';
+import SeatEditor from './seat-editor';
 
 class Adding extends Component {
-    constructor (props) {
-        super(props)
-        this.state = {
-            sitsCount: 0
-        }
-        this.xSizeChangedHandler = this.xSizeChangedHandler.bind(this);
-        this.ySizeChangedHandler = this.ySizeChangedHandler.bind(this);
-    }
-    xSize = 0;
-    ySize = 0;
-
-    xSizeChangedHandler (event) {
-        this.xSize = event.target.value;
-        this.sitsCountChange();
-    }
-
-    ySizeChangedHandler (event) {
-        this.ySize = event.target.value;
-        this.sitsCountChange();
-    }
-
-    sitsCountChange () {
-        this.setState({
-            sitsCount: this.xSize * this.ySize
-        });
-    }
-
     render () {
         return (
             <div className="list-item-action adding">
@@ -41,7 +14,7 @@ class Adding extends Component {
                         <div className="col-2">
                             <input type="file" name="image" id="file-input" className="file-upload"/>
                             <label htmlFor="file-input">
-                                <img src={AddIcon} className="adding-form-img"/>
+                                <img src={AddIcon} className="adding-form-img" alt="add"/>
                             </label>
                         </div>
                         <div className="col-10">
@@ -50,19 +23,10 @@ class Adding extends Component {
                                 <input type="text" placeholder="airplane name" name="name"/>
                             </div>
                             <div className="form-item">
-                                <input type="text" placeholder="xSize" name="city"
-                                    onChange={this.xSizeChangedHandler}
-                                />
-                                <input type="text" placeholder="ySize" name="country"
-                                    onChange={this.ySizeChangedHandler}
-                                />
-                                <input type="text" value={this.state.sitsCount} readOnly/>
-                            </div>
-                            <div className="form-item">
                                 <input placeholder="max mass"/>
                             </div>
                             <br/>
-                            <SitsEditor/>
+                            <SeatEditor/>
                         </div>
                     </div>
                     <input type="submit" value="Add" className="add-button"/>

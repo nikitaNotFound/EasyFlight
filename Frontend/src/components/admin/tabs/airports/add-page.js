@@ -13,7 +13,7 @@ class Adding extends Component {
                         <div className="col-2">
                             <input type="file" name="image" id="file-input" className="file-upload"/>
                             <label htmlFor="file-input">
-                                <img src={BuyIcon} className="adding-form-img"/>
+                                <img src={BuyIcon} className="adding-form-img" alt="add"/>
                             </label>
                         </div>
                         <div className="col-10">

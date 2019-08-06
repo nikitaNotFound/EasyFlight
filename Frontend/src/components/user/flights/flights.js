@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import Flight from './flight';
 import ComponentHeadline from './component-headline';
-import * as FlightsService from '../../../services/FlightsService';
+import * as FlightService from '../../../services/FlightService';
 
 class Flights extends Component {
-    flights = FlightsService.getAll();
+    flights = FlightService.getAll();
 
     render () {
         return (

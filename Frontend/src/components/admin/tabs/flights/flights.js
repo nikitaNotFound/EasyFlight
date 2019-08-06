@@ -1,22 +1,26 @@
 import React, {Component} from 'react';
 import Flight from './flight';
-import * as FlightsService from '../../../../services/FlightsService';
+import PropsTypes from 'prop-types';
 
 class Flights extends Component {
-    flights = FlightsService.getAll();
+    propsTypes = {
+        flights: PropsTypes.array
+    }
 
     render () {
         return (
             <div className="items-list">
-                 {this.flights.map(
-                        (item, index) => 
+                 {this.props.flights.map(
+                        (item) => 
                             <Flight
-                                key={index}
                                 name={item.name}
                                 from={item.from}
                                 to={item.to}
                                 cost={item.cost}
                                 desc={item.desc}
+                                flightId={item.id}
+                                onEdit={this.props.onEdit}
+                                displayLayout={this.props.displayLayout}
                             />
                     )}
             </div>

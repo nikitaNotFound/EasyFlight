@@ -1,26 +1,18 @@
 import React, {Component} from 'react';
 import Headline from '../common/headline';
 import BuyIcon from '../../../../icons/add-image.png';
-import PropsTypes from 'prop-types';
 import SearchList from './search-list';
-import * as AirportsService from '../../../../services/AirportsService';
-import * as AirplanesService from '../../../../services/AirplanesService';
+import * as AirportService from '../../../../services/AirportService';
+import * as AirplaneService from '../../../../services/AirplaneService';
 
-class Editing extends Component {
-    airports = AirportsService.getAll();
-    airplanes = AirplanesService.getAll();
-
-    propsTypes = {
-        from: PropsTypes.string,
-        to: PropsTypes.string, 
-        departureTime: PropsTypes.string,
-        airplane: PropsTypes.string
-    }
+class Adding extends Component {
+    airports = AirportService.getAll();
+    airplanes = AirplaneService.getAll();
 
     render () {
         return (
-            <div className="list-item-action editing">
-                <Headline name="Editing flight"/>
+            <div className="list-item-action">
+                <Headline name="Adding new flight"/>
 
                 <form method="post" className="adding-form">
                     <div className="row">
@@ -32,13 +24,13 @@ class Editing extends Component {
                         </div>
                         <div className="col-10">
                             <div className="row">
-                                <SearchList array={this.airports} placeholder="from" value={this.props.from}/>
-                                <SearchList array={this.airports} placeholder="to" value={this.props.to}/>
+                                <SearchList array={this.airports} placeholder="from"/>
+                                <SearchList array={this.airports} placeholder="to"/>
                                 <div className="form-item">
                                     <label>departure time</label><br/>
-                                    <input type="time" value={this.props.departureTime}/>
+                                    <input type="time"/>
                                 </div>
-                                <SearchList array={this.airplanes} placeholder="airplane" value={this.props.airplane}/>
+                                <SearchList array={this.airplanes} placeholder="airplane"/>
                             </div>
                             <br/>
                             <textarea placeholder="description"/>
@@ -51,4 +43,4 @@ class Editing extends Component {
     }
 }
 
-export default Editing;
+export default Adding;

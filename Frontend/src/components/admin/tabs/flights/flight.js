@@ -1,14 +1,17 @@
 import React, {Component} from 'react';
 import FlightHeadline from './flight-headline';
 import PropsTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 class Airport extends Component {
     static propsTypes = {
-        name: PropsTypes.string,
         from: PropsTypes.string,
         to: PropsTypes.string,
         cost: PropsTypes.number,
-        desc: PropsTypes.string
+        desc: PropsTypes.string,
+        flightId: PropsTypes.number,
+        onEdit: PropsTypes.func,
+        displayLayout: PropsTypes.func
     }
 
     render () {
@@ -20,7 +23,6 @@ class Airport extends Component {
 
                 <div className="col-9">
                     <FlightHeadline 
-                        name={this.props.name}
                         from={this.props.from}
                         to={this.props.to}
                         cost={this.props.cost}
@@ -29,7 +31,11 @@ class Airport extends Component {
                 </div>
 
                 <div className="col-1">
-                    <button>Edit</button>
+                    <Link to={`/admin/flights/edit/${this.props.flightId}`}>
+                        <div className="edit-button rounded non-selectable">
+                            Edit
+                        </div>
+                    </Link>
                 </div>
             </div>
         );

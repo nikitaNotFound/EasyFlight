@@ -1,21 +1,30 @@
 import React, {Component} from 'react';
 import Airport from './airport';
-import * as AirportsService from '../../../../services/AirportsService';
+import PropsTypes from 'prop-types';
+import * as AirportService from '../../../../services/AirportService';
 
 class Airports extends Component {
-    airports = AirportsService.getAll();
+    airports = AirportService.getAll();
+
+    propsTypes = {
+        onEdit: PropsTypes.func,
+        displayLayout: PropsTypes.func,
+        airports: PropsTypes.array
+    }
 
     render () {
         return (
             <div className="items-list">
-                 {this.airports.map(
-                        (item, index) => 
+                 {this.props.airports.map(
+                        (item) => 
                             <Airport 
-                                key={index} 
                                 name={item.name} 
                                 city={item.city} 
                                 country={item.country} 
                                 desc={item.desc}
+                                airportId={item.id}
+                                onEdit={this.props.onEdit}
+                                displayLayout={this.props.displayLayout}
                             />
                     )}
             </div>

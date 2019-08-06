@@ -1,11 +1,19 @@
+import PropsTypes from 'prop-types';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-function AddAirport () {
+function AddButton (props) {
     return (
-        <div className="add-airport rounded non-selectable">
-            +
-        </div>
+        <Link to={`/admin/${props.catalog}/add`}>
+            <div className="add-airport rounded non-selectable">
+                    +
+            </div>
+        </Link>
     );
 }
 
-export default AddAirport;
+AddButton.propsTypes = {
+    catalog: PropsTypes.string
+}
+
+export default AddButton;

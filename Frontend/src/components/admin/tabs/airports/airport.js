@@ -1,13 +1,15 @@
 import React, {Component} from 'react';
 import AirportHeadline from './airport-headline';
 import PropsTypes from 'prop-types';
+import { Link } from 'react-router-dom'
 
 class Airport extends Component {
     static propsTypes = {
         name: PropsTypes.string,
         city: PropsTypes.string,
         country: PropsTypes.string,
-        desc: PropsTypes.string
+        desc: PropsTypes.string,
+        airportId: PropsTypes.number,
     }
 
     render () {
@@ -26,7 +28,11 @@ class Airport extends Component {
                 </div>
 
                 <div className="col-1">
-                    <button>Edit</button>
+                    <Link to={`/admin/airports/edit/${this.props.airportId}`}>
+                        <div className="edit-button rounded non-selectable">
+                            Edit
+                        </div>
+                    </Link>
                 </div>
             </div>
         );
