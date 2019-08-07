@@ -1,6 +1,7 @@
 import React from 'react';
 import googleIcon from '../../icons/google-icon.png';
 import facebookIcon from '../../icons/facebook-icon.png';
+import { Link } from 'react-router-dom';
 
 function Header () {
     return (
@@ -27,7 +28,7 @@ function Header () {
                         </div>
                     </form>
                     <div className="sing-up">
-                        or <a href="#">sign up</a>
+                        or <Link to="/signup">sign up</Link>
                     </div>
                 </div>
             </div>
