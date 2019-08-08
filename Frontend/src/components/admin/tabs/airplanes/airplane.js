@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 class Airplane extends Component {
     static propsTypes = {
         name: PropsTypes.string,
-        seatsCount: PropsTypes.number,
+        seatCount: PropsTypes.number,
         maxMass: PropsTypes.number,
         airplaneId: PropsTypes.number,
     }
@@ -21,7 +21,7 @@ class Airplane extends Component {
                 <div className="col-9">
                     <AirplaneHeadline 
                         name={this.props.name}
-                        sitsCount={`${this.props.seatsCount} sits`}
+                        seatCount={`${this.props.seatCount} seats`}
                     />
                     {`max mass = ${this.props.maxMass}kg`}
                 </div>

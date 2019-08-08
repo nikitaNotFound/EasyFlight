@@ -1,8 +1,18 @@
 export function getAll () {
-    return [
-        {id: 1, name:"Minsk airport", country:"Belarus", city:"Minsk", desc:"Biggest airport in Belarus"},
-        {id: 2, name:"Kiev airport", country:"Ukraine", city:"Kiev", desc:"Biggest airport in Ukraine"}
-    ];
+    return new Promise (
+        (resolve, reject) => {
+            const data = [
+                {id: 1, name:"Minsk airport", country:"Belarus", city:"Minsk", desc:"Biggest airport in Belarus"},
+                {id: 2, name:"Kiev airport", country:"Ukraine", city:"Kiev", desc:"Biggest airport in Ukraine"}
+            ];
+            if (data === undefined) {
+                reject("Error");
+            }
+            else {
+                setTimeout(resolve, 1000, data);
+            }
+        }
+    );
 }
 
 export function getById(id) {

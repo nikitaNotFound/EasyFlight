@@ -5,22 +5,32 @@ export function getAll () {
         firstClass: 2
     }
 
-    return [
-        {
-            id: 1, name:'F300', maxMass: 1000, seats: [
-                new Seat(1, 1, 1, 1, seatTypes.economClass), new Seat(1, 1, 1, 2, seatTypes.economClass),
-                new Seat(1, 1, 2, 1, seatTypes.economClass), new Seat(1, 1, 2, 2, seatTypes.economClass),
-
-                new Seat(1, 2, 1, 1, seatTypes.businesClass), new Seat(1, 2, 1, 2, seatTypes.businesClass),
-                new Seat(1, 2, 2, 1, seatTypes.businesClass), new Seat(1, 2, 2, 2, seatTypes.businesClass)
-            ]
-        },
-        {
-            id: 2, name:'Keksik', maxMass: 500, seats: [
-                new Seat(1, 1, 1, 1, seatTypes.economClass), new Seat(1, 1, 1, 2, seatTypes.economClass)
-            ]
+    return new Promise (
+        (resolve, reject) => {
+            const data = [
+                {
+                    id: 1, name:'F300', maxMass: 1000, seats: [
+                        new Seat(1, 1, 1, 1, seatTypes.economClass), new Seat(1, 1, 1, 2, seatTypes.economClass),
+                        new Seat(1, 1, 2, 1, seatTypes.economClass), new Seat(1, 1, 2, 2, seatTypes.economClass),
+        
+                        new Seat(1, 2, 1, 1, seatTypes.businesClass), new Seat(1, 2, 1, 2, seatTypes.businesClass),
+                        new Seat(1, 2, 2, 1, seatTypes.businesClass), new Seat(1, 2, 2, 2, seatTypes.businesClass)
+                    ]
+                },
+                {
+                    id: 2, name:'Keksik', maxMass: 500, seats: [
+                        new Seat(1, 1, 1, 1, seatTypes.economClass), new Seat(1, 1, 1, 2, seatTypes.economClass)
+                    ]
+                }
+            ];
+            if (data === undefined) {
+                reject("Error");
+            }
+            else {
+                setTimeout(resolve, 1000, data);
+            }
         }
-    ];
+    );
 }
 
 export function getById(id) {
