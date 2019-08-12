@@ -28,7 +28,7 @@ function AirportPage () {
     if (!isLoading) {
         return (
             <div className="tab-content">
-                <AddButton catalog="flights"/>
+                <AddButton catalog="airports"/>
                 <Airports airports={airports}/>
             </div>
         );

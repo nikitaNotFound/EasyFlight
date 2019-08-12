@@ -1,15 +1,40 @@
-import React, {Component} from 'react';
+import React, {useState, useEffect} from 'react';
 import Headline from '../common/headline';
 import BuyIcon from '../../../../icons/add-image.png';
 import SearchList from './search-list';
+import Spinner from '../../../common/spinner';
 import * as AirportService from '../../../../services/AirportService';
 import * as AirplaneService from '../../../../services/AirplaneService';
 
-class Adding extends Component {
-    airports = AirportService.getAll();
-    airplanes = AirplaneService.getAll();
+function Adding () {
+    const [isLoading, changeLoadingMode] = useState(true);
+    const [airports, changeAirports] = useState([]);
+    const [airplanes, changeAirplanes] = useState([]);
 
-    render () {
+    useEffect(() => {
+        const airportsLoading = AirportService.getAll();
+        const airplanesLoading = AirplaneService.getAll();
+
+        Promise.all([airportsLoading, airplanesLoading])
+            .then(values => {
+                onDataSuccessful(values);
+            })
+            .catch(onDataFail);
+    }, []);
+
+    function onDataSuccessful (data) {
+        let [airports, airplanes] = data;
+        
+        changeAirports(airports);
+        changeAirplanes(airplanes);
+        changeLoadingMode(false);
+    }
+
+    function onDataFail (error) {
+        alert(error);
+    }
+
+    if(!isLoading) {
         return (
             <div className="list-item-action">
                 <Headline name="Adding new flight"/>
@@ -24,13 +49,13 @@ class Adding extends Component {
                         </div>
                         <div className="col-10">
                             <div className="row">
-                                <SearchList array={this.airports} placeholder="from"/>
-                                <SearchList array={this.airports} placeholder="to"/>
+                                <SearchList array={airports} placeholder="from"/>
+                                <SearchList array={airports} placeholder="to"/>
                                 <div className="form-item">
                                     <label>departure time</label><br/>
                                     <input type="time"/>
                                 </div>
-                                <SearchList array={this.airplanes} placeholder="airplane"/>
+                                <SearchList array={airplanes} placeholder="airplane"/>
                             </div>
                             <br/>
                             <textarea placeholder="description"/>
@@ -39,6 +64,11 @@ class Adding extends Component {
                     <input type="submit" value="Add" className="add-button"/>
                 </form>
             </div>
+        );
+    }
+    else {
+        return (
+            <Spinner/>
         );
     }
 }

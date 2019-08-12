@@ -28,7 +28,7 @@ function AirplanePage () {
     if (!isLoading) {
         return (
             <div className="tab-content">
-                <AddButton catalog="flights"/>
+                <AddButton catalog="airplanes"/>
                 <Airplanes airplanes={airplanes}/>
             </div>
         );
