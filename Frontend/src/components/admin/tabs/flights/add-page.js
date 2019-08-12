@@ -55,6 +55,10 @@ function Adding () {
                                     <label>departure time</label><br/>
                                     <input type="time"/>
                                 </div>
+                                <div className="form-item">
+                                    <label>cost</label><br/>
+                                    <input type="text"/>
+                                </div>
                                 <SearchList array={airplanes} placeholder="airplane"/>
                             </div>
                             <br/>
