@@ -54,7 +54,7 @@ function Edit (props) {
                                 <input value={airplane.maxMass}/>
                             </div>
                             <br/>
-                            <SeatEditor/>
+                            <SeatEditor seatInfo={airplane.seats}/>
                         </div>
                     </div>
                     <input type="submit" value="Save" className="add-button"/>
@@ -63,11 +63,9 @@ function Edit (props) {
         );
     }
 
-    else {
-        return (
-            <Spinner/>
-        );
-    }
+    return (
+        <Spinner/>
+    );
 }
 
 export default Edit;
