@@ -24,8 +24,20 @@ footer {
   font-weight: 450;
   margin-left: 1%;
   font-family: 'Russo One', sans-serif;
+  color: rgb(108, 117, 121);
 }
 
+.company-icon:hover {
+  color: rgb(108, 117, 121);
+}
+
+.non-dec-link {
+  text-decoration: none;
+}
+
+.non-dec-link:hover {
+  text-decoration: none;
+}
 /********************LOGIN AND REGISTRATION************/
 
 .sing-up {

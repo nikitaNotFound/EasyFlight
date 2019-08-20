@@ -15,6 +15,13 @@
     margin-top: calc(1vh + 10px);
 }
 
+.add-item-button {
+    color: rgb(108, 117, 121);
+}
+
+.add-item-button:hover {
+    color: rgb(108, 117, 121);
+}
 /*****************************AIRPORTS LIST********************/
 .items-list {
     margin: 0% calc(1.5vh);
@@ -48,10 +55,10 @@
 
 .list-item-action {
     background: rgb(231, 231, 231);
-    width: 90%;
+    width: 95%;
     min-height: 400px;
     padding: 1%;
-    margin: 0 5%;
+    margin: 0 2.5%;
     margin-top: 1%;
     box-shadow: 0 0 2px rgba(0,0,0,0.5);
 }
@@ -67,7 +74,7 @@
 
 .form-item {
     display: inline;
-    margin: 0 5%;
+    margin: 0 2.5%;
 }
 
 .adding-form-img {
@@ -106,6 +113,107 @@
 /*****************************SEAT EDITOR*****************************/
 .seat-editor {
     background: rgb(231, 231, 231);
+    margin-top: 1%;
+}
+
+.seat-editor-instruments {
+    margin-bottom: 1%;
+    padding: 1%;
+    background: rgb(212, 212, 212);
+}
+
+.seat-editor-layout {
+    background: rgb(212, 212, 212);
+    padding: 1%;
+    margin-bottom: 1%;
+}
+
+.seat-editor-row {
+    width: 100%;
+    margin-bottom: 1%;
+}
+
+.seat-editor-floor {
+    margin-bottom: 1%;
+    background: rgb(184, 179, 179);
+    padding: 1% 1%;
+}
+
+.seat-editor-floor-number {
+    background: rgb(228, 228, 228);
+    text-align: center;
+    font-size: 24px;
+    color: black;
+    width: 100%;
+    margin-bottom: 1%;
+}
+
+.seat-editor-number {
+    display: inline-block;
+    text-align: center;
+    width: 20%;
+    margin-right: 2%;
+    background: rgb(228, 228, 228);
+}
+
+.seat-editor-scheme {
+    display: inline-block;
+    width: 78%;
+    background: rgb(228, 228, 228);
+}
+
+.custom-button {
+    border: 1px solid black;
+    text-align: center;
+    background: rgb(201, 201, 201);
+    color: black;
+}
+
+.custom-button:hover {
+    background: rgb(228, 228, 228);
+}
+
+.airplane-rows {
+    width: 100%;
+    padding: 1%;
+    display: flex;
+    justify-content: center;
+}
+
+.airplane-row {
+    display: inline-block;
+    margin-right: 9px;
+}
+
+.airplane-string {
+    display: block;
+}
+
+.seat {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin: 2px;
+    background: none;
+}
+
+.seat-type-0 {
+    box-shadow: 0 0 1px rgba(148, 126, 126, 0.5);
+}
+
+.seat-type-1 {
+    background: rgb(89, 167, 79);
+    box-shadow: none;
+}
+
+.seat-type-2 {
+    background: rgb(179, 177, 70);
+    box-shadow: none;
+}
+
+.seat-type-3 {
+    background: rgb(173, 68, 68);
+    box-shadow: none;
 }
 
 /******************************SEARCH LIST****************************/
@@ -136,6 +244,7 @@
 
 .main-button {
     width: 100%;
+    margin-bottom: 1%;
 }
 
 .sec-button {

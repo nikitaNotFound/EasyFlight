@@ -1,5 +1,5 @@
 import { Switch, Route } from 'react-router-dom';
-import Page from './airplanes/airplanes-page';
+import Page from './airplanes';
 import Add from './airplanes/add-page';
 import Edit from './airplanes/edit-page';
 import React from 'react';

@@ -1,13 +1,36 @@
-import React, {Component} from 'react';
+import React, {useState, useEffect} from 'react';
 import Headline from '../common/headline';
 import AddIcon from '../../../../icons/add-image.png';
 import SeatEditor from './seat-editor';
+import Spinner from '../../../common/spinner';
 import * as AirplaneService from '../../../../services/AirplaneService';
 
-class Edit extends Component {
-    airplane = AirplaneService.getById(this.props.match.params.id);
+function Edit (props) {
+    const [isLoading, changeLoadingMode] = useState(true);
+    const [airplane, changeAirplane] = useState();
 
-    render () {
+    useEffect(() => {
+        const airplaneLoading = AirplaneService.getById(props.match.params.id);
+        airplaneLoading
+            .then(data => {
+                onDataSuccessful(data);
+            })
+            .catch(error => {
+                onDataFail(error);
+            });
+    }, []);
+
+    function onDataSuccessful (airplane) {
+        changeAirplane(airplane);
+        changeLoadingMode(false);
+    }
+
+    function onDataFail (error) {
+        alert(error);
+    }
+
+
+    if (!isLoading) { 
         return (
             <div className="list-item-action editing">
                 <Headline name="Editing airplane"/>
@@ -22,16 +45,16 @@ class Edit extends Component {
                         </div>
                         <div className="col-10">
                             <div className="form-item">
-                                <input type="text" value={this.airplane.name} name="name"/>
+                                <input type="text" value={airplane.name} name="name"/>
                             </div>
                             <div className="form-item">
-                                <input type="text" value={this.airplane.seats.length} readOnly/>
+                                <input type="text" value={airplane.seats.length} readOnly/>
                             </div>
                             <div className="form-item">
-                                <input value={this.airplane.maxMass}/>
+                                <input value={airplane.maxMass}/>
                             </div>
                             <br/>
-                            <SeatEditor/>
+                            <SeatEditor seatInfo={airplane.seats}/>
                         </div>
                     </div>
                     <input type="submit" value="Save" className="add-button"/>
@@ -39,6 +62,10 @@ class Edit extends Component {
             </div>
         );
     }
+
+    return (
+        <Spinner/>
+    );
 }
 
 export default Edit;

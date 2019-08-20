@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
 import Flight from './flight';
 import ComponentHeadline from './component-headline';
-import * as FlightService from '../../../services/FlightService';
+import PropsTypes from 'prop-types';
 
 class Flights extends Component {
-    flights = FlightService.getAll();
+    propsTypes = {
+        flights: PropsTypes.array
+    }
 
     render () {
         return (
@@ -12,7 +14,7 @@ class Flights extends Component {
                 <ComponentHeadline content="Flights list" />
 
                 <div className="container-fluid list-body">
-                    {this.flights.map(
+                    {this.props.flights.map(
                         (item, index) => 
                             <Flight 
                                 key={index} 
