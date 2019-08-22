@@ -9,6 +9,8 @@ function Edit (props) {
     const [isLoading, changeLoadingMode] = useState(true);
     const [airplane, changeAirplane] = useState();
 
+    /****************************************EVENTS********************************************************/
+    //reciving info about airplane with id getted from url
     useEffect(() => {
         const airplaneLoading = AirplaneService.getById(props.match.params.id);
         airplaneLoading
@@ -29,36 +31,61 @@ function Edit (props) {
         alert(error);
     }
 
+    //calls when user press save info
+    function onDataSave (data) {
+        data.push(airplane);
+        //HERE WILL BE HTTP REQUEST TO API
+        console.log(data);
+    }
 
+    function onAirplaneNameChange (event) {
+        const storage = {};
+        Object.assign(storage, airplane);
+
+        storage.name = event.target.value;
+        changeAirplane(storage);
+    }
+
+    function onMassMaxChange (event) {
+        const storage = {};
+        Object.assign(storage, airplane);
+
+        const newMaxMass = Number(event.target.value);
+        if (newMaxMass > 0) {
+            storage.maxMass = event.target.value;
+        }
+
+        changeAirplane(storage);
+    }
+
+    /****************************************RENDER********************************************************/
     if (!isLoading) { 
         return (
             <div className="list-item-action editing">
                 <Headline name="Editing airplane"/>
 
-                <form method="post" className="adding-form">
-                    <div className="row">
-                        <div className="col-2">
-                            <input type="file" name="image" id="file-input" className="file-upload"/>
-                            <label htmlFor="file-input">
-                                <img src={AddIcon} className="adding-form-img" alt="add"/>
-                            </label>
-                        </div>
-                        <div className="col-10">
-                            <div className="form-item">
-                                <input type="text" value={airplane.name} name="name"/>
-                            </div>
-                            <div className="form-item">
-                                <input type="text" value={airplane.seats.length} readOnly/>
-                            </div>
-                            <div className="form-item">
-                                <input value={airplane.maxMass}/>
-                            </div>
-                            <br/>
-                            <SeatEditor seatInfo={airplane.seats}/>
-                        </div>
+                <div className="row">
+                    <div className="col-2">
+                        <input type="file" name="image" id="file-input" className="file-upload"/>
+                        <label htmlFor="file-input">
+                            <img src={AddIcon} className="adding-form-img" alt="add"/>
+                        </label>
                     </div>
-                    <input type="submit" value="Save" className="add-button"/>
-                </form>
+                    <div className="col-10">
+                        <div className="row">
+                            <div className="form-item">
+                                <div className="label">Airplane name</div>
+                                <input type="text" value={airplane.name} onChange={onAirplaneNameChange} name="name"/>
+                            </div>
+                            <div className="form-item">
+                                <div className="label">Max mass</div>
+                                <input value={airplane.maxMass} onChange={onMassMaxChange}/>
+                            </div>
+                        </div>
+                        <br/>
+                        <SeatEditor seatInfo={airplane.seats} onDataSave={onDataSave}/>
+                    </div>
+                </div>
             </div>
         );
     }

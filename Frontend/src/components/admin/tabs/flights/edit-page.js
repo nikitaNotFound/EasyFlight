@@ -38,12 +38,7 @@ function Editing (props) {
         alert(error);
     }
 
-    if (isLoading) {
-        return (
-            <Spinner/>
-        );
-    }
-    else {
+    if (!isLoading) {
         return (
             <div className="list-item-action editing">
                 <Headline name="Editing flight"/>
@@ -75,6 +70,9 @@ function Editing (props) {
             </div>
         );
     }
+    return (
+        <Spinner/>
+    );
 }
 
 export default Editing;

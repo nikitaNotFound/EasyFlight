@@ -77,6 +77,11 @@
     margin: 0 2.5%;
 }
 
+.form-item .label {
+    width: 194px;
+    display: inherit;
+}
+
 .adding-form-img {
     width: 100%;
 }
@@ -120,6 +125,14 @@
     margin-bottom: 1%;
     padding: 1%;
     background: rgb(212, 212, 212);
+}
+
+.seat-editor-instruments input {
+    width: 25%;
+}
+.seat-editor-instruments .custom-button {
+    width: 50%;
+    display: inline-block;
 }
 
 .seat-editor-layout {
@@ -167,6 +180,12 @@
     text-align: center;
     background: rgb(201, 201, 201);
     color: black;
+}
+
+.big {
+    height: 60px;
+    background: rgb(223, 223, 223);
+    font-size: 32px;
 }
 
 .custom-button:hover {

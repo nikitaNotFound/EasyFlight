@@ -70,11 +70,9 @@ function Adding () {
             </div>
         );
     }
-    else {
-        return (
-            <Spinner/>
-        );
-    }
+    return (
+        <Spinner/>
+    );
 }
 
 export default Adding;

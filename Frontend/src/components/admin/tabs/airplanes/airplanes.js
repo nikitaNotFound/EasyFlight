@@ -13,7 +13,7 @@ class Airplanes extends Component {
         return (
             <div className="items-list">
                  {this.props.airplanes.map(
-                        (item) => 
+                        (item, index) => 
                             <Airplane 
                                 name={item.name} 
                                 seatCount={item.seats.length}
@@ -21,6 +21,7 @@ class Airplanes extends Component {
                                 airplaneId={item.id}
                                 onEdit={this.props.onEdit}
                                 displayLayout={this.props.displayLayout}
+                                key={index}
                             />
                     )}
             </div>

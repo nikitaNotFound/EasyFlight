@@ -57,11 +57,9 @@ function Edit (props) {
             </div>
         );
     }
-    else {
-        return (
-            <Spinner/>
-        );
-    }
+    return (
+        <Spinner/>
+    );
 }
 
 export default Edit;
