@@ -2,17 +2,14 @@ import React, {useState} from 'react';
 import PropsTypes from 'prop-types';
 import SeatString from './seat-string';
 
-/******************************************INIZIALIZE FUNCTIONS***************************************************/
 function inizializeStringSeats (props, maxLength) {
     let storage = [];
     Object.assign(storage, props.seats)
 
-    //in this for' block program sets all string length to the same value (maximum)
     for (let i = 0, len = storage.length; i < len; i++) {
         storage[i].length = maxLength;
     }
 
-    //in the last strings of code program adds one empty string to the end of row
     let lowerString = [];
     lowerString.length = maxLength;
     storage.push(lowerString);
@@ -41,7 +38,6 @@ function SeatRow (props) {
     const [globalStringLength, changeGlobalStringLength] = useState(inizializeGlobalStringLength(props));
     const [stringSeats, changeStringSeats] = useState(inizializeStringSeats(props, globalStringLength));
 
-    /*******************************************EVENTS***********************************************************/
     function onSeatDeleted (seatPosition) {
         let storage = [];
         Object.assign(storage, stringSeats);

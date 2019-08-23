@@ -5,7 +5,6 @@ import Instruments from './seat-editor-instruments';
 import Seat from '../../../../services/airplane-models/seat';
 import seatTypes from '../../../../services/airplane-models/seat-types';
 
-/******************************************INIZIALIZE FUNCTIONS***************************************************/
 function initializeSeatArray(props) {
     if (props.seatInfo === undefined) {
         return undefined;
@@ -37,11 +36,9 @@ function initializeSeatArray(props) {
    return seatsArray;
 }
 
-/*************************************************COMPONENT********************************************************/
 function SeatEditor (props) {
     const [seatArray, changeSeatArray] = useState(initializeSeatArray(props));
 
-    /****************************************EVENTS********************************************************/
     //calls when user press add row
     function onAddRow (floor, section) {
         let storage = [];
@@ -70,7 +67,6 @@ function SeatEditor (props) {
         props.onDataSave(seatArray);
     }
 
-    /****************************************RENDER********************************************************/
     //returns at the start; when user adds something, program will call the second return' block
     if (!seatArray) {
         return (

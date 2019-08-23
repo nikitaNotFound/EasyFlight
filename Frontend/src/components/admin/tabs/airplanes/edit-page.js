@@ -9,7 +9,6 @@ function Edit (props) {
     const [isLoading, changeLoadingMode] = useState(true);
     const [airplane, changeAirplane] = useState();
 
-    /****************************************EVENTS********************************************************/
     //reciving info about airplane with id getted from url
     useEffect(() => {
         const airplaneLoading = AirplaneService.getById(props.match.params.id);
@@ -58,7 +57,6 @@ function Edit (props) {
         changeAirplane(storage);
     }
 
-    /****************************************RENDER********************************************************/
     if (!isLoading) { 
         return (
             <div className="list-item-action editing">

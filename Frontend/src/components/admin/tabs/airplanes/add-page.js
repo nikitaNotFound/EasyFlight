@@ -6,16 +6,11 @@ import Airplane from '../../../../services/airplane-models/airplane';
 
 function Adding () {
     const [airplaneName, changeAirplaneName] = useState('');
-    const [airplaneMaxMass, changeAirplaneMaxMass] = useState('');
+    const [airplaneMaxMass, changeAirplaneMaxMass] = useState(0);
 
     function onDataSave (data) {
-        if (data === undefined) {
-            return;
-        }
         data.push(new Airplane(airplaneName, airplaneMaxMass, data));
         //HERE WILL BE HTTP REQUEST TO API
-        
-        console.log(data);
     }
 
     function onAirplaneNameChange (event) {
