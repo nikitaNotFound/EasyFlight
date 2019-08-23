@@ -6,11 +6,6 @@ import Seat from '../../../../services/airplane-models/seat';
 import seatTypes from '../../../../services/airplane-models/seat-types';
 
 /******************************************INIZIALIZE FUNCTIONS***************************************************/
-/**
- * inizialize the array of seats
- * @this {initializeSeatArray}
- * @param {object} props 
- */
 function initializeSeatArray(props) {
     if (props.seatInfo === undefined) {
         return undefined;
@@ -77,7 +72,7 @@ function SeatEditor (props) {
 
     /****************************************RENDER********************************************************/
     //returns at the start; when user adds something, program will call the second return' block
-    if (seatArray === undefined) {
+    if (!seatArray) {
         return (
         <div className="seat-editor">
             <Instruments onAddRow={onAddRow} onDataSave={props.onDataSave}/>

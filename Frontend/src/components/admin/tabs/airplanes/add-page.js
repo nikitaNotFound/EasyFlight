@@ -2,38 +2,31 @@ import React, {useState} from 'react';
 import Headline from '../common/headline';
 import AddIcon from '../../../../icons/add-image.png';
 import SeatEditor from './seat-editor';
+import Airplane from '../../../../services/airplane-models/airplane';
 
 function Adding () {
-    const [airplane, changeAirplane] = useState({name: '', maxMass: ''});
+    const [airplaneName, changeAirplaneName] = useState('');
+    const [airplaneMaxMass, changeAirplaneMaxMass] = useState('');
 
     function onDataSave (data) {
-        data.push(airplane);
-        //HERE WILL BE HTTP REQUEST TO API
         if (data === undefined) {
             return;
         }
+        data.push(new Airplane(airplaneName, airplaneMaxMass, data));
+        //HERE WILL BE HTTP REQUEST TO API
         
         console.log(data);
     }
 
     function onAirplaneNameChange (event) {
-        const storage = {};
-        Object.assign(storage, airplane);
-
-        storage.name = event.target.value;
-        changeAirplane(storage);
+        changeAirplaneName(event.target.value);
     }
 
     function onMassMaxChange (event) {
-        const storage = {};
-        Object.assign(storage, airplane);
-
         const newMaxMass = Number(event.target.value);
         if (newMaxMass > 0) {
-            storage.maxMass = event.target.value;
+            changeAirplaneMaxMass(newMaxMass);
         }
-
-        changeAirplane(storage);
     }
 
     return (
@@ -52,11 +45,11 @@ function Adding () {
                         <div className="row">
                             <div className="form-item">
                                 <div className="label">Airplane name</div>
-                                <input type="text" onChange={onAirplaneNameChange} value={airplane.name}/>
+                                <input type="text" onChange={onAirplaneNameChange} value={airplaneName}/>
                             </div>
                             <div className="form-item">
                                 <div className="label">Max mass</div>
-                                <input onChange={onMassMaxChange} value={airplane.maxMass}/>
+                                <input onChange={onMassMaxChange} value={airplaneMaxMass}/>
                             </div>
                         </div>
                         <br/>

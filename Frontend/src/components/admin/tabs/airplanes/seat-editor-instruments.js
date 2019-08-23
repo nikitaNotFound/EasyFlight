@@ -7,14 +7,14 @@ function Instruments (props) {
     const [section, changeSection] = useState();
 
     function onFloorChange(event) {
-        const newValue = event.target.value < 0 
+        const newValue = event.target.value < 0
             ? 0
             : Number(event.target.value);
         changeFloor(newValue);
     }
 
     function onSectionChange(event) {
-        const newValue = event.target.value < 0 
+        const newValue = event.target.value < 0
             ? 0
             : Number(event.target.value);
         changeSection(newValue);
@@ -28,9 +28,17 @@ function Instruments (props) {
 
     return (
         <div className="seat-editor-instruments">
-                <input type="text" onChange={onFloorChange} placeholder="floor"/>
-                <input type="text" onChange={onSectionChange} placeholder="section"/>
+            <div className="row">
+                <div className="form-item">
+                    <div className="label">Floor</div>
+                    <input type="text" onChange={onFloorChange} value={floor}/>
+                </div>
+                <div className="form-item">
+                    <div className="label">Section</div>
+                    <input type="text" onChange={onSectionChange} value={section}/>
+                </div>
                 <div className="custom-button" onClick={onAddRow}>add row</div>
+            </div>
         </div>
     );
 }

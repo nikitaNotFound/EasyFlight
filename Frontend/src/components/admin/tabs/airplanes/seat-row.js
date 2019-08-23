@@ -37,7 +37,6 @@ function inizializeGlobalStringLength (props) {
     return maxLength;
 }
 
-/***************************************************COMPONENT*******************************************************/
 function SeatRow (props) {
     const [globalStringLength, changeGlobalStringLength] = useState(inizializeGlobalStringLength(props));
     const [stringSeats, changeStringSeats] = useState(inizializeStringSeats(props, globalStringLength));
@@ -94,12 +93,7 @@ function SeatRow (props) {
         changeStringSeats(storage);
     }
     
-    /*******************************************SECONDARY FUNCTIONS**********************************************/
     function isColumnEmpty (array, columnIndex) {
-        if (array === undefined) {
-            return false;
-        }
-
         for (let i = 0, len = array.length; i < len; i++) {
             const stringElement = array[i];
             if (stringElement[columnIndex] !== undefined) {
@@ -111,10 +105,6 @@ function SeatRow (props) {
     }
 
     function isStringEmpty (string) {
-        if (string === undefined) {
-            return false;
-        }
-
         for (let i = 0, len = string.length; i < len; i++) {
             const element = string[i];
 
@@ -126,7 +116,6 @@ function SeatRow (props) {
         return true;
     }
 
-    /*********************************************RENDER*********************************************************/
     return (
         <div className="airplane-row">
             {stringSeats.map(

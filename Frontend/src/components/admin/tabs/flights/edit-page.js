@@ -38,40 +38,38 @@ function Editing (props) {
         alert(error);
     }
 
-    if (!isLoading) {
-        return (
-            <div className="list-item-action editing">
-                <Headline name="Editing flight"/>
-
-                <form method="post" className="adding-form">
-                    <div className="row">
-                        <div className="col-2">
-                            <input type="file" name="image" id="file-input" className="file-upload"/>
-                            <label htmlFor="file-input">
-                                <img src={BuyIcon} className="adding-form-img" alt="add"/>
-                            </label>
-                        </div>
-                        <div className="col-10">
-                            <div className="row">
-                                <SearchList array={airports} placeholder="from" value={flight.from}/>
-                                <SearchList array={airports} placeholder="to" value={flight.to}/>
-                                <div className="form-item">
-                                    <label>departure time</label><br/>
-                                    <input type="time" value={props.departureTime}/>
-                                </div>
-                                <SearchList array={airplanes} placeholder="airplane" value={flight.airplane}/>
-                            </div>
-                            <br/>
-                            <textarea placeholder="description" value={flight.desc}/>
-                        </div>
-                    </div>
-                    <input type="submit" value="Add" className="add-button"/>
-                </form>
-            </div>
-        );
+    if (isLoading) {
+        return (<Spinner/>);
     }
     return (
-        <Spinner/>
+        <div className="list-item-action editing">
+            <Headline name="Editing flight"/>
+
+            <form method="post" className="adding-form">
+                <div className="row">
+                    <div className="col-2">
+                        <input type="file" name="image" id="file-input" className="file-upload"/>
+                        <label htmlFor="file-input">
+                            <img src={BuyIcon} className="adding-form-img" alt="add"/>
+                        </label>
+                    </div>
+                    <div className="col-10">
+                        <div className="row">
+                            <SearchList array={airports} placeholder="from" value={flight.from}/>
+                            <SearchList array={airports} placeholder="to" value={flight.to}/>
+                            <div className="form-item">
+                                <label>departure time</label><br/>
+                                <input type="time" value={props.departureTime}/>
+                            </div>
+                            <SearchList array={airplanes} placeholder="airplane" value={flight.airplane}/>
+                        </div>
+                        <br/>
+                        <textarea placeholder="description" value={flight.desc}/>
+                    </div>
+                </div>
+                <input type="submit" value="Add" className="add-button"/>
+            </form>
+        </div>
     );
 }
 

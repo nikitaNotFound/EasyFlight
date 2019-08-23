@@ -128,11 +128,12 @@
 }
 
 .seat-editor-instruments input {
-    width: 25%;
+    width: 100%;
 }
 .seat-editor-instruments .custom-button {
-    width: 50%;
+    width: 60%;
     display: inline-block;
+    font-size: 26px;
 }
 
 .seat-editor-layout {
