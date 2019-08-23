@@ -52,11 +52,11 @@ function Adding () {
                                 <SearchList array={airports} placeholder="from"/>
                                 <SearchList array={airports} placeholder="to"/>
                                 <div className="form-item">
-                                    <label>departure time</label><br/>
+                                    <label>departure time</label>
                                     <input type="time"/>
                                 </div>
                                 <div className="form-item">
-                                    <label>cost</label><br/>
+                                    <label>cost</label>
                                     <input type="text"/>
                                 </div>
                                 <SearchList array={airplanes} placeholder="airplane"/>

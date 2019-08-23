@@ -41,15 +41,22 @@ function Edit (props) {
                             </label>
                         </div>
                         <div className="col-10">
-                            <div className="form-item">
-                                <input type="text" name="name" value={airport.name}/>
+                            <div className="row">
+                                <div className="form-item">
+                                    <label>airport name</label>
+                                    <input type="text" name="name" value={airport.name}/>
+                                </div>
+                                <div className="form-item">
+                                    <label>country</label>
+                                    <input type="text" name="country" value={airport.country}/>
+                                </div>
+                                <div className="form-item">
+                                    <label>city</label>
+                                    <input type="text" name="city" value={airport.city}/>
+                                </div>
+                                <br/>
+                                <textarea value={airport.desc}/>
                             </div>
-                            <div className="form-item">
-                                <input type="text" name="city" value={airport.city}/>
-                                <input type="text" name="country" value={airport.country}/>
-                            </div>
-                            <br/>
-                            <textarea value={airport.desc}/>
                         </div>
                     </div>
                     <input type="submit" value="Save" className="add-button"/>

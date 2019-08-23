@@ -16,15 +16,22 @@ function Adding () {
                         </label>
                     </div>
                     <div className="col-10">
-                        <div className="form-item">
-                            <input type="text" placeholder="airport name" name="name"/>
+                        <div className="row">
+                            <div className="form-item">
+                                <label>airport name</label>
+                                <input type="text" placeholder="airport name" name="name"/>
+                            </div>
+                            <div className="form-item">
+                                <label>country</label>
+                                <input type="text" placeholder="country" name="country"/>
+                            </div>
+                            <div className="form-item">
+                                <label>city</label>
+                                <input type="text" placeholder="city" name="city"/>
+                            </div>
+                            <br/>
+                            <textarea placeholder="description"/>
                         </div>
-                        <div className="form-item">
-                            <input type="text" placeholder="city" name="city"/>
-                            <input type="text" placeholder="country" name="country"/>
-                        </div>
-                        <br/>
-                        <textarea placeholder="description"/>
                     </div>
                 </div>
                 <input type="submit" value="Add" className="add-button"/>

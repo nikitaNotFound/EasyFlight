@@ -30,11 +30,11 @@ function Instruments (props) {
         <div className="seat-editor-instruments">
             <div className="row">
                 <div className="form-item">
-                    <div className="label">Floor</div>
+                    <label>Floor</label>
                     <input type="text" onChange={onFloorChange} value={floor}/>
                 </div>
                 <div className="form-item">
-                    <div className="label">Section</div>
+                    <label>Section</label>
                     <input type="text" onChange={onSectionChange} value={section}/>
                 </div>
                 <div className="custom-button" onClick={onAddRow}>add row</div>

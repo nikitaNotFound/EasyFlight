@@ -39,11 +39,11 @@ function Adding () {
                     <div className="col-10">
                         <div className="row">
                             <div className="form-item">
-                                <div className="label">Airplane name</div>
+                                <label>Airplane name</label>
                                 <input type="text" onChange={onAirplaneNameChange} value={airplaneName}/>
                             </div>
                             <div className="form-item">
-                                <div className="label">Max mass</div>
+                                <label>Max mass</label>
                                 <input onChange={onMassMaxChange} value={airplaneMaxMass}/>
                             </div>
                         </div>

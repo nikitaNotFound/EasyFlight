@@ -72,11 +72,11 @@ function Edit (props) {
                     <div className="col-10">
                         <div className="row">
                             <div className="form-item">
-                                <div className="label">Airplane name</div>
+                                <label>Airplane name</label>
                                 <input type="text" value={airplane.name} onChange={onAirplaneNameChange} name="name"/>
                             </div>
                             <div className="form-item">
-                                <div className="label">Max mass</div>
+                                <label>Max mass</label>
                                 <input value={airplane.maxMass} onChange={onMassMaxChange}/>
                             </div>
                         </div>
