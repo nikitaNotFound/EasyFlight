@@ -1,31 +1,5 @@
-class Seat {
-    floor;
-    section;
-    row;
-    string;
-    number;
-    type;
-
-    constructor(floor, section, row, string, number, type) {
-        this.floor = floor;
-        this.section = section;
-        this.row = row;
-        this.string = string;
-        this.number = number;
-        this.type = type;
-    }
-}
-
-export default Seat;
-
-const seatTypes = {
-    noneClass: 0,
-    economClass: 1,
-    businesClass: 2,
-    firstClass: 3
-}
-
-/******************************************************************************************/
+import Seat from './airplane-models/seat';
+import seatTypes from './airplane-models/seat-types';
 
 const airplanes = [
     {

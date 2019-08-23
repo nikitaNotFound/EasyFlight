@@ -49,14 +49,14 @@ function Adding () {
                         </div>
                         <div className="col-10">
                             <div className="row">
-                                <SearchList array={airports} placeholder="from"/>
-                                <SearchList array={airports} placeholder="to"/>
+                                <SearchList array={airports} placeholder="From"/>
+                                <SearchList array={airports} placeholder="To"/>
                                 <div className="form-item">
-                                    <label>departure time</label><br/>
+                                    <label>Departure time</label>
                                     <input type="time"/>
                                 </div>
                                 <div className="form-item">
-                                    <label>cost</label><br/>
+                                    <label>Cost</label>
                                     <input type="text"/>
                                 </div>
                                 <SearchList array={airplanes} placeholder="airplane"/>
@@ -70,11 +70,9 @@ function Adding () {
             </div>
         );
     }
-    else {
-        return (
-            <Spinner/>
-        );
-    }
+    return (
+        <Spinner/>
+    );
 }
 
 export default Adding;

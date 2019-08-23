@@ -6,7 +6,7 @@ function SearchList (props) {
 
     return (
         <div className="form-item">
-            <label>{props.placeholder}</label><br/>
+            <label>{props.placeholder}</label>
             <input type="text" value={props.value} autoComplete="off"
                 name={props.placeholder}
                 placeholder={props.placeholder}
