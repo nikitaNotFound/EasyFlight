@@ -18,15 +18,15 @@ function Adding () {
                     <div className="col-10">
                         <div className="row">
                             <div className="form-item">
-                                <label>airport name</label>
+                                <label>Airport name</label>
                                 <input type="text" placeholder="airport name" name="name"/>
                             </div>
                             <div className="form-item">
-                                <label>country</label>
+                                <label>Country</label>
                                 <input type="text" placeholder="country" name="country"/>
                             </div>
                             <div className="form-item">
-                                <label>city</label>
+                                <label>City</label>
                                 <input type="text" placeholder="city" name="city"/>
                             </div>
                             <br/>

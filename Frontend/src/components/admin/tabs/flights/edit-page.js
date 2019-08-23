@@ -55,10 +55,10 @@ function Editing (props) {
                     </div>
                     <div className="col-10">
                         <div className="row">
-                            <SearchList array={airports} placeholder="from" value={flight.from}/>
-                            <SearchList array={airports} placeholder="to" value={flight.to}/>
+                            <SearchList array={airports} placeholder="From" value={flight.from}/>
+                            <SearchList array={airports} placeholder="To" value={flight.to}/>
                             <div className="form-item">
-                                <label>departure time</label>
+                                <label>Departure time</label>
                                 <input type="time" value={props.departureTime}/>
                             </div>
                             <SearchList array={airplanes} placeholder="airplane" value={flight.airplane}/>

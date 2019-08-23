@@ -43,15 +43,15 @@ function Edit (props) {
                         <div className="col-10">
                             <div className="row">
                                 <div className="form-item">
-                                    <label>airport name</label>
+                                    <label>Airport name</label>
                                     <input type="text" name="name" value={airport.name}/>
                                 </div>
                                 <div className="form-item">
-                                    <label>country</label>
+                                    <label>Country</label>
                                     <input type="text" name="country" value={airport.country}/>
                                 </div>
                                 <div className="form-item">
-                                    <label>city</label>
+                                    <label>City</label>
                                     <input type="text" name="city" value={airport.city}/>
                                 </div>
                                 <br/>
