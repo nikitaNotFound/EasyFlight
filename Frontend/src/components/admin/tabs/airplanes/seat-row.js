@@ -84,7 +84,7 @@ function SeatRow (props) {
         let storage = [];
         Object.assign(storage, stringSeats);
 
-        storage[placeInfo.string - 1][placeInfo.number - 1].type = seatType;
+        storage[placeInfo.string - 1][placeInfo.number - 1].typeId = seatType;
         
         changeStringSeats(storage);
     }
@@ -121,8 +121,9 @@ function SeatRow (props) {
                     placeInfo.string = index + 1;
                     return (
                         <SeatString 
-                            seats={item}
                             key={index}
+                            seats={item}
+                            seatTypes={props.seatTypes}
                             onSeatAdded={onSeatAdded}
                             onSeatChanged={onSeatChanged}
                             onSeatDeleted={onSeatDeleted}
@@ -136,7 +137,8 @@ function SeatRow (props) {
 
 SeatRow.propsTypes = {
     seats: PropsTypes.array,
-    placeInfo: PropsTypes.object
+    placeInfo: PropsTypes.object,
+    seatTypes: PropsTypes.array
 }
 
 export default SeatRow;

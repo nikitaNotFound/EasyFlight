@@ -4,15 +4,15 @@ class Seat {
     row;
     string;
     number;
-    type;
+    typeId;
 
-    constructor(floor, section, row, string, number, type) {
+    constructor(floor, section, row, string, number, typeId) {
         this.floor = floor;
         this.section = section;
         this.row = row;
         this.string = string;
         this.number = number;
-        this.type = type;
+        this.typeId = typeId;
     }
 }
 

@@ -14,7 +14,13 @@ function SeatFloor (props) {
                     let placeInfo = {};
                     Object.assign(placeInfo, props.placeInfo);
                     placeInfo.section = index + 1;
-                    return (<SeatSection seats={item} placeInfo={placeInfo} key={index + 1}/>);
+                    return (
+                        <SeatSection 
+                            seats={item}
+                            placeInfo={placeInfo}
+                            seatTypes={props.seatTypes}
+                            key={index + 1}/>
+                    );
                 }
             )}
         </div>
@@ -23,7 +29,8 @@ function SeatFloor (props) {
 
 SeatFloor.propsTypes = {
     placeInfo: PropsTypes.object,
-    seats: PropsTypes.array
+    seats: PropsTypes.array,
+    seatTypes: PropsTypes.array
 }
 
 export default SeatFloor;

@@ -30,21 +30,17 @@ function Adding () {
 
             <form method="post" className="adding-form">
                 <div className="row">
-                    <div className="col-2">
-                        <input type="file" name="image" id="file-input" className="file-upload"/>
-                        <label htmlFor="file-input">
-                            <img src={AddIcon} className="adding-form-img" alt="add"/>
-                        </label>
-                    </div>
-                    <div className="col-10">
-                        <div className="row">
-                            <div className="form-item">
-                                <label>Airplane name</label>
-                                <input type="text" onChange={onAirplaneNameChange} value={airplaneName}/>
-                            </div>
-                            <div className="form-item">
-                                <label>Max mass</label>
-                                <input onChange={onMassMaxChange} value={airplaneMaxMass}/>
+                    <div className="col-12">
+                        <div className="editing-params-form">
+                            <div className="row">
+                                <div className="form-item">
+                                    <label>Airplane name</label>
+                                    <input type="text" onChange={onAirplaneNameChange} value={airplaneName}/>
+                                </div>
+                                <div className="form-item">
+                                    <label>Max mass</label>
+                                    <input onChange={onMassMaxChange} value={airplaneMaxMass}/>
+                                </div>
                             </div>
                         </div>
                         <br/>

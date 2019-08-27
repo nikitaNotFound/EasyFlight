@@ -57,31 +57,31 @@ function Edit (props) {
         changeAirplane(storage);
     }
 
+
     if (!isLoading) { 
         return (
             <div className="list-item-action editing">
                 <Headline name="Editing airplane"/>
 
                 <div className="row">
-                    <div className="col-2">
-                        <input type="file" name="image" id="file-input" className="file-upload"/>
-                        <label htmlFor="file-input">
-                            <img src={AddIcon} className="adding-form-img" alt="add"/>
-                        </label>
-                    </div>
-                    <div className="col-10">
-                        <div className="row">
-                            <div className="form-item">
-                                <label>Airplane name</label>
-                                <input type="text" value={airplane.name} onChange={onAirplaneNameChange} name="name"/>
-                            </div>
-                            <div className="form-item">
-                                <label>Max mass</label>
-                                <input value={airplane.maxMass} onChange={onMassMaxChange}/>
+                    <div className="col-12">
+                        <div className="editing-params-form">
+                            <div className="row">
+                                <div className="form-item">
+                                    <label>Airplane name</label>
+                                    <input type="text" value={airplane.name} onChange={onAirplaneNameChange} name="name"/>
+                                </div>
+                                <div className="form-item">
+                                    <label>Max mass</label>
+                                    <input value={airplane.maxMass} onChange={onMassMaxChange}/>
+                                </div>
                             </div>
                         </div>
                         <br/>
-                        <SeatEditor seatInfo={airplane.seats} onDataSave={onDataSave}/>
+                        <SeatEditor 
+                            seatInfo={airplane.seats}
+                            seatTypes={airplane.seatTypes}
+                            onDataSave={onDataSave}/>
                     </div>
                 </div>
             </div>

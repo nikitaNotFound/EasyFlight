@@ -1,16 +1,14 @@
 import PropsTypes from 'prop-types';
-import React, {Component} from 'react';
+import React from 'react';
 
-class Headline extends Component {
-    static propsType = {
-        name: PropsTypes.string
-    }
+function Headline (props) {
+    return (
+        <h1 className="non-selectable">{props.name}</h1>
+    );
+}
 
-    render () {
-        return (
-            <h1 className="non-selectable">{this.props.name}</h1>
-        );
-    }
+Headline.propsTypes = {
+    name: PropsTypes.string,
 }
 
 export default Headline;

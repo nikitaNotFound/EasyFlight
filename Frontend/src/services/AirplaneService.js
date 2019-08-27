@@ -1,34 +1,48 @@
 import Seat from './airplane-models/seat';
-import seatTypes from './airplane-models/seat-types';
+import SeatType from './airplane-models/seat-type';
+import Airplane from './airplane-models/airplane';
 
 const airplanes = [
-    {
-        id: 1, name:'F300', maxMass: 1000, seats: [
-            new Seat(1, 1, 1, 1, 1, seatTypes.economClass), new Seat(1, 1, 1, 1, 2, seatTypes.economClass),
-            new Seat(1, 1, 2, 1, 1, seatTypes.economClass), new Seat(1, 1, 2, 2, 1, seatTypes.economClass),
+    //airplane constructor params: id, name, maxMass, seats, seatTypes
+    new Airplane(
+        1, 'F300', 1000, 
+        [
+            new Seat(1, 1, 1, 1, 1, 0), new Seat(1, 1, 1, 1, 2, 0),
+            new Seat(1, 1, 2, 1, 1, 0), new Seat(1, 1, 2, 2, 1, 0),
 
-            new Seat(1, 2, 1, 1, 1, seatTypes.businesClass), new Seat(1, 2, 1, 2, 1, seatTypes.businesClass),
-            new Seat(1, 2, 2, 1, 1, seatTypes.businesClass), new Seat(1, 2, 2, 1, 2, seatTypes.businesClass), new Seat(1, 2, 2, 1, 3, seatTypes.businesClass),
-            new Seat(1, 2, 2, 2, 2, seatTypes.businesClass),
+            new Seat(1, 2, 1, 1, 1, 0), new Seat(1, 2, 1, 2, 1, 0),
+            new Seat(1, 2, 2, 1, 1, 0), new Seat(1, 2, 2, 1, 2, 0), new Seat(1, 2, 2, 1, 3, 0),
+            new Seat(1, 2, 2, 2, 2, 0),
 
-            new Seat(1, 3, 1, 1, 1, seatTypes.businesClass), new Seat(1, 3, 1, 1, 2, seatTypes.businesClass), new Seat(1, 3, 1, 1, 3, seatTypes.businesClass),
-            new Seat(1, 3, 1, 2, 1, seatTypes.businesClass), new Seat(1, 3, 1, 2, 2, seatTypes.businesClass),
-            new Seat(1, 3, 1, 3, 1, seatTypes.businesClass),
+            new Seat(1, 3, 1, 1, 1, 0), new Seat(1, 3, 1, 1, 2, 0), new Seat(1, 3, 1, 1, 3, 0),
+            new Seat(1, 3, 1, 2, 1, 0), new Seat(1, 3, 1, 2, 2, 0),
+            new Seat(1, 3, 1, 3, 1, 0),
 
-            new Seat(1, 3, 2, 1, 1, seatTypes.businesClass), new Seat(1, 3, 2, 1, 2, seatTypes.businesClass), new Seat(1, 3, 2, 1, 3, seatTypes.businesClass),
-            new Seat(1, 3, 2, 2, 1, seatTypes.businesClass), new Seat(1, 3, 2, 2, 2, seatTypes.businesClass),
+            new Seat(1, 3, 2, 1, 1, 0), new Seat(1, 3, 2, 1, 2, 0), new Seat(1, 3, 2, 1, 3, 0),
+            new Seat(1, 3, 2, 2, 1, 0), new Seat(1, 3, 2, 2, 2, 0),
 
-            new Seat(1, 3, 3, 1, 1, seatTypes.businesClass), new Seat(1, 3, 3, 2, 1, seatTypes.businesClass),
+            new Seat(1, 3, 3, 1, 1, 0), new Seat(1, 3, 3, 2, 1, 0),
 
-            new Seat(2, 1, 3, 1, 1, seatTypes.businesClass), new Seat(2, 1, 3, 2, 1, seatTypes.businesClass)
+            new Seat(2, 1, 3, 1, 1, 0), new Seat(2, 1, 3, 2, 1, 0)
+        ],
+        [
+            new SeatType('econom', 'rgb(89, 167, 79)'),
+            new SeatType('busines', 'rgb(179, 177, 70)'),
+            new SeatType('first class', 'rgb(173, 68, 68)')
         ]
-    },
-    {
-        id: 2, name:'Keksik', maxMass: 500, seats: [
-            new Seat(1, 1, 1, 1, 1, seatTypes.economClass),
-            new Seat(1, 1, 1, 2, 1, seatTypes.economClass), new Seat(1, 1, 1, 2, 3, seatTypes.economClass)
+    ),
+    new Airplane(
+        2, 'Keksik', 500,
+        [
+            new Seat(1, 1, 1, 1, 1, 0),
+            new Seat(1, 1, 1, 2, 1, 0), new Seat(1, 1, 1, 2, 3, 0)
+        ],
+        [
+            new SeatType('econom', 'rgb(89, 167, 79)'),
+            new SeatType('busines', 'rgb(179, 177, 70)'),
+            new SeatType('first class', 'rgb(173, 68, 68)')
         ]
-    }
+    )
 ];
 
 export function getAll () {

@@ -24,8 +24,9 @@ function SeatString (props) {
                     placeInfo.number = index + 1;
                     return (
                         <Seat
-                            seat={item}
                             key={index}
+                            seat={item}
+                            seatTypes={props.seatTypes}
                             seatChange={seatChange}
                             onSeatAdded={props.onSeatAdded}
                             onSeatChanged={props.onSeatChanged}
@@ -40,6 +41,7 @@ function SeatString (props) {
 
 SeatString.propsTypes = {
     seats: PropsTypes.array,
+    seatTypes: PropsTypes.array,
     placeInfo: PropsTypes.object,
     onSeatAdded: PropsTypes.func,
     onSeatChanged: PropsTypes.func,

@@ -1,35 +1,37 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import PropsTypes from 'prop-types';
 import SeatObject from '../../../../services/airplane-models/seat';
 
-function Seat (props) {
-    const [seatType, changeSeatType] = useState();
+function inizializeSeatType (props) {
+    if (props.seat === undefined) {
+        return undefined;
+    }
+    else {
+        return props.seat.typeId;
+    }
+}
 
-    useEffect(() => {
-        if (props.seat === undefined || props.seat.type == 0) {
-            changeSeatType(0);
-        }
-        else {
-            changeSeatType(props.seat.type);
-        }
-    }, []);
+function Seat (props) {
+    const [seatType, changeSeatType] = useState(inizializeSeatType(props));
 
     function onClickHandler () {
-        const oldType = seatType;
-        const newType = seatType + 1 > 3
-            ? 0
-            : seatType + 1;
+        const oldType = seatType === undefined
+            ? -1
+            : seatType;
+
+        const newType = oldType + 1;
+
         changeSeatType(newType);
 
-        if (newType == 0) {
+        if (newType > props.seatTypes.length - 1) {
             const seatPosition = {
                 string: props.placeInfo.string,
                 number: props.placeInfo.number
             };
-
+            changeSeatType(undefined);
             props.onSeatDeleted(seatPosition);
         }
-        else if (newType > 0 && oldType == 0) {
+        else if (oldType == -1 && newType == 0) {
             const newSeat = new SeatObject (
                 props.placeInfo.floor,
                 props.placeInfo.section,
@@ -45,14 +47,23 @@ function Seat (props) {
             props.onSeatChanged(newType, props.placeInfo);
         }
     }
-
+    if (seatType === undefined) {
+        return (
+            <div className={`seat seat-type-0 non-selectable`}
+                onClick={onClickHandler}/>
+        );
+    }
+    
     return (
-        <div className={`seat seat-type-${seatType} non-selectable`} onClick={onClickHandler}></div>
+        <div className={`seat non-selectable`}
+            style={{background:props.seatTypes[seatType].color}}
+            onClick={onClickHandler}/>
     );
 }
 
 Seat.PropsTypes = {
     seat: PropsTypes.object,
+    seatTypes: PropsTypes.array,
     placeInfo: PropsTypes.object,
     onSeatAdded: PropsTypes.func,
     onSeatChanged: PropsTypes.func,
