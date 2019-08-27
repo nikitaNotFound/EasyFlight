@@ -20,9 +20,9 @@ function Instruments (props) {
         changeSection(newValue);
     }
 
-    function onAddRow() {
+    function onAddZone() {
         if (isNumber(floor) && isNumber(section) && floor > 0 && section > 0) {
-            props.onAddRow(floor, section);
+            props.onAddZone(floor, section);
         }
     }
 
@@ -37,14 +37,14 @@ function Instruments (props) {
                     <label>Section</label>
                     <input type="text" onChange={onSectionChange} value={section}/>
                 </div>
-                <div className="custom-button" onClick={onAddRow}>add row</div>
+                <div className="custom-button" onClick={onAddZone}>add row</div>
             </div>
         </div>
     );
 }
 
 Instruments.propsTypes = {
-    onAddRow: PropsTypes.func
+    onAddZone: PropsTypes.func
 }
 
 export default Instruments;

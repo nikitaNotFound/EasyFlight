@@ -10,13 +10,13 @@ function SeatFloor (props) {
             </div>
 
             {props.seats.map(
-                (item, index) => {
+                (seats, index) => {
                     let placeInfo = {};
                     Object.assign(placeInfo, props.placeInfo);
                     placeInfo.section = index + 1;
                     return (
                         <SeatSection 
-                            seats={item}
+                            seats={seats}
                             placeInfo={placeInfo}
                             seatTypes={props.seatTypes}
                             key={index + 1}/>

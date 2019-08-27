@@ -1,6 +1,6 @@
 import React from 'react';
 import PropsTypes from 'prop-types';
-import SeatRow from './seat-row';
+import SeatZone from './seat-zone';
 
 function SeatSection (props) {
     return (
@@ -11,14 +11,14 @@ function SeatSection (props) {
             <div className="seat-editor-scheme">
                 <div className="airplane-rows">
                     {props.seats.map(
-                        (item, index) => {
+                        (seats, index) => {
                             let placeInfo = {};
                             Object.assign(placeInfo, props.placeInfo);
-                            placeInfo.row = index + 1;
+                            placeInfo.zone = index + 1;
                             return (
-                                <SeatRow 
+                                <SeatZone
                                     key={index}
-                                    seats={item}
+                                    seats={seats}
                                     seatTypes={props.seatTypes}
                                     placeInfo={placeInfo}/>
                             );

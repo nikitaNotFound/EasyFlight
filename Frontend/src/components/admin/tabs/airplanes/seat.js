@@ -3,8 +3,8 @@ import PropsTypes from 'prop-types';
 import SeatObject from '../../../../services/airplane-models/seat';
 
 function inizializeSeatType (props) {
-    if (props.seat === undefined) {
-        return undefined;
+    if (!props.seat) {
+        return null;
     }
     else {
         return props.seat.typeId;
@@ -15,7 +15,7 @@ function Seat (props) {
     const [seatType, changeSeatType] = useState(inizializeSeatType(props));
 
     function onClickHandler () {
-        const oldType = seatType === undefined
+        const oldType = !seatType
             ? -1
             : seatType;
 
@@ -25,18 +25,18 @@ function Seat (props) {
 
         if (newType > props.seatTypes.length - 1) {
             const seatPosition = {
-                string: props.placeInfo.string,
+                row: props.placeInfo.row,
                 number: props.placeInfo.number
             };
-            changeSeatType(undefined);
+            changeSeatType(null);
             props.onSeatDeleted(seatPosition);
         }
         else if (oldType == -1 && newType == 0) {
             const newSeat = new SeatObject (
                 props.placeInfo.floor,
                 props.placeInfo.section,
+                props.placeInfo.zone,
                 props.placeInfo.row,
-                props.placeInfo.string,
                 props.placeInfo.number,
                 seatType
             );
@@ -47,7 +47,7 @@ function Seat (props) {
             props.onSeatChanged(newType, props.placeInfo);
         }
     }
-    if (seatType === undefined) {
+    if (seatType != 0 && !seatType) {
         return (
             <div className={`seat seat-type-0 non-selectable`}
                 onClick={onClickHandler}/>

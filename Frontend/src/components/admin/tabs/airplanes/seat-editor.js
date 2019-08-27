@@ -15,7 +15,7 @@ function initializeSeatArray(props) {
 
     let seatsArray = [];
 
-    //in this for' block program sets up a multi-array divided into the sections (floor, section, row, string)
+    //in this for' block program sets up a multi-array divided into the sections (floor, section, zone, row)
     for (let i = 0, len = storage.length; i < len; i++) {
         const element = storage[i];
         if (seatsArray[element.floor - 1] === undefined) {
@@ -24,13 +24,13 @@ function initializeSeatArray(props) {
         if (seatsArray[element.floor - 1][element.section - 1] === undefined) {
             seatsArray[element.floor - 1][element.section - 1] = [];
         }
-        if (seatsArray[element.floor - 1][element.section - 1][element.row - 1] === undefined) {
-            seatsArray[element.floor - 1][element.section - 1][element.row - 1] = [];
+        if (seatsArray[element.floor - 1][element.section - 1][element.zone - 1] === undefined) {
+            seatsArray[element.floor - 1][element.section - 1][element.zone - 1] = [];
         }
-        if (seatsArray[element.floor - 1][element.section - 1][element.row - 1][element.string - 1] === undefined) {
-            seatsArray[element.floor - 1][element.section - 1][element.row - 1][element.string - 1] = [];
+        if (seatsArray[element.floor - 1][element.section - 1][element.zone - 1][element.row - 1] === undefined) {
+            seatsArray[element.floor - 1][element.section - 1][element.zone - 1][element.row - 1] = [];
         }
-        seatsArray[element.floor - 1][element.section - 1][element.row - 1][element.string - 1][element.number - 1] = element;
+        seatsArray[element.floor - 1][element.section - 1][element.zone - 1][element.row - 1][element.number - 1] = element;
     }
 
    return seatsArray;
@@ -40,8 +40,8 @@ function SeatEditor (props) {
     const [seatArray, changeSeatArray] = useState(initializeSeatArray(props));
     const [seatTypes, changeSeatTypes] = useState(props.seatTypes);
 
-    //calls when user press add row
-    function onAddRow (floor, section) {
+    //calls when user press add zone
+    function onAddZone (floor, section) {
         let storage = [];
         Object.assign(storage, seatArray);
         
@@ -53,12 +53,12 @@ function SeatEditor (props) {
         if (storage[floor - 1][section - 1] === undefined) {
             storage[floor - 1][section - 1] = [];
         }
-        const newRow = storage[floor - 1][section - 1].length + 1;
-        const newSeat = new Seat(floor, section, newRow, 1, 1, 0);
+        const newZone = storage[floor - 1][section - 1].length + 1;
+        const newSeat = new Seat(floor, section, newZone, 1, 1, 0);
 
-        storage[floor - 1][section - 1][newRow - 1] = [];
-        storage[floor - 1][section - 1][newRow - 1][0] = [];
-        storage[floor - 1][section - 1][newRow - 1][0].push(newSeat);
+        storage[floor - 1][section - 1][newZone - 1] = [];
+        storage[floor - 1][section - 1][newZone - 1][0] = [];
+        storage[floor - 1][section - 1][newZone - 1][0].push(newSeat);
 
         changeSeatArray(storage);
     }
@@ -98,7 +98,7 @@ function SeatEditor (props) {
         return (
             <div className="seat-editor">
                 <SeatTypesEditor seatTypes={seatTypes} onAddType={onAddType} onTypeDelete={onTypeDelete}/>
-                <Instruments onAddRow={onAddRow} onDataSave={props.onDataSave}/>
+                <Instruments onAddZone={onAddZone} onDataSave={props.onDataSave}/>
 
                 <div className="custom-button big" onClick={onDataSave}>Save</div>
             </div>
@@ -109,7 +109,7 @@ function SeatEditor (props) {
         return (
             <div className="seat-editor">
                 <SeatTypesEditor seatTypes={seatTypes} onAddType={onAddType} onTypeDelete={onTypeDelete}/>
-                <Instruments onAddRow={onAddRow} onDataSave={props.onDataSave}/>
+                <Instruments onAddZone={onAddZone} onDataSave={props.onDataSave}/>
 
                 <div className="custom-button big" onClick={onDataSave}>Save</div>
             </div>
@@ -119,17 +119,17 @@ function SeatEditor (props) {
     return (
         <div className="seat-editor">
             <SeatTypesEditor seatTypes={seatTypes} onAddType={onAddType} onTypeDelete={onTypeDelete}/>
-            <Instruments onAddRow={onAddRow} onDataSave={props.onDataSave}/>
+            <Instruments onAddZone={onAddZone} onDataSave={props.onDataSave}/>
 
             <div className="seat-editor-layout">
                 {seatArray.map(
-                    (item, index) => {
+                    (seats, index) => {
                         let placeInfo = {};
                         placeInfo.floor = index + 1;
                         return (
                             <SeatFloor
                                 placeInfo={placeInfo}
-                                seats={item}
+                                seats={seats}
                                 seatTypes={seatTypes}
                                 key={index + 1}/>
                         );

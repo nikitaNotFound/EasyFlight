@@ -26,9 +26,9 @@ const airplanes = [
             new Seat(2, 1, 3, 1, 1, 0), new Seat(2, 1, 3, 2, 1, 0)
         ],
         [
-            new SeatType('econom', 'rgb(89, 167, 79)'),
-            new SeatType('busines', 'rgb(179, 177, 70)'),
-            new SeatType('first class', 'rgb(173, 68, 68)')
+            new SeatType(1, 'econom', 'rgb(89, 167, 79)'),
+            new SeatType(2, 'busines', 'rgb(179, 177, 70)'),
+            new SeatType(3, 'first class', 'rgb(173, 68, 68)')
         ]
     ),
     new Airplane(
@@ -38,9 +38,9 @@ const airplanes = [
             new Seat(1, 1, 1, 2, 1, 0), new Seat(1, 1, 1, 2, 3, 0)
         ],
         [
-            new SeatType('econom', 'rgb(89, 167, 79)'),
-            new SeatType('busines', 'rgb(179, 177, 70)'),
-            new SeatType('first class', 'rgb(173, 68, 68)')
+            new SeatType(1, 'econom', 'rgb(89, 167, 79)'),
+            new SeatType(2, 'busines', 'rgb(179, 177, 70)'),
+            new SeatType(3, 'first class', 'rgb(173, 68, 68)')
         ]
     )
 ];

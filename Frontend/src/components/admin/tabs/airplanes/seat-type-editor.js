@@ -20,7 +20,7 @@ function SeatTypesEditor (props) {
 
     function onTypeAdd () {
         if (color && name) {
-            let newType = new SeatType(name, color);
+            let newType = new SeatType(props.seatTypes.length + 1, name, color);
 
             if (props.seatTypes === undefined || isTypeAvailable(newType)) {
                 props.onAddType(newType);

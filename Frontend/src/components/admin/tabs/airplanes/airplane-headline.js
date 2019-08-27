@@ -3,7 +3,7 @@ import PropsTypes from 'prop-types';
 
 class AirportHeadline extends Component {
     static propsTypes = {
-        name: PropsTypes.string,
+        name: PropsTypes.row,
         seatCount: PropsTypes.number
     }
 
