@@ -1,23 +1,18 @@
-const flights = [
-    { id: 1, from: 'test1', to: 'test2', cost: '100$', desc: 'This is a test flight.', airplane: 'F300'},
-    { id: 2, from: 'test3', to: 'test4', cost: '1000$', desc: 'This is not a test flight.', airplane: 'Keksik'}
-];
+import {flights} from './DataBase';
 
-export function getAll() {
+export function getFlights() {
     return new Promise (
         (resolve, reject) => {
             const data = flights;
-            if (data === undefined) {
+            if (!data) {
                 reject("Error");
             }
-            else {
-                setTimeout(resolve, 1000, data);
-            }
+            setTimeout(resolve, 1000, data);
         }
     );
 }
 
-export function getById(id) {
+export function getFlightById(id) {
     return new Promise (
         (resolve, reject) => {
             const storage = flights;
@@ -30,12 +25,38 @@ export function getById(id) {
                     }
                     return undefined;
                 }
-            if (item === undefined) {
+            if (!item()) {
                 reject("Error");
             }
             else {
-                setTimeout(resolve, 1000, item);
+                setTimeout(resolve, 1000, item());
             }
+        }
+    );
+}
+
+export function getFlightsById(idArray) {
+    return new Promise (
+        (resolve, reject) => {
+            const storage = [];
+            
+            //later terrible algoritms like this will be replaced by requests
+            for (let j = 0, len = idArray.length; j < len; j++) {
+                const currentUserId = idArray[j];
+                for (let i = 0, len = flights.length; i < len; i++) {
+                    const element = flights[i];
+
+                    if (element.id == currentUserId) {
+                        storage.push(element);
+                        break;
+                    }
+                }
+            }
+
+            if (!storage) {
+                reject('Error');
+            }
+            resolve(storage);
         }
     );
 }

@@ -14,9 +14,9 @@ function Editing (props) {
     const [flight, changeFlight] = useState();
 
     useEffect (() => {
-        const airportsLoading = AirportService.getAll();
-        const airplanesLoading = AirplaneService.getAll();
-        const flightLoading = FlightService.getById(props.match.params.id);
+        const airportsLoading = AirportService.getAirports();
+        const airplanesLoading = AirplaneService.getAirplanes();
+        const flightLoading = FlightService.getFlightById(props.match.params.id);
 
         Promise.all([airportsLoading, airplanesLoading, flightLoading])
             .then(values => {

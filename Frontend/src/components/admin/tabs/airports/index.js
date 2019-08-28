@@ -9,7 +9,7 @@ function AirportPage () {
     const [airports, changeAirports] = useState([]);
 
     useEffect(() => {
-        const dataLoading = AirportService.getAll();
+        const dataLoading = AirportService.getAirports();
 
         dataLoading
             .then(onDataSuccessful.bind(this))
