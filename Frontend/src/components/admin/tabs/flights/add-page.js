@@ -12,8 +12,8 @@ function Adding () {
     const [airplanes, changeAirplanes] = useState([]);
 
     useEffect(() => {
-        const airportsLoading = AirportService.getAll();
-        const airplanesLoading = AirplaneService.getAll();
+        const airportsLoading = AirportService.getAirports();
+        const airplanesLoading = AirplaneService.getAirplanes();
 
         Promise.all([airportsLoading, airplanesLoading])
             .then(values => {
@@ -48,20 +48,36 @@ function Adding () {
                             </label>
                         </div>
                         <div className="col-10">
-                            <div className="editing-params-form">
-                                <div className="row">
-                                    <SearchList array={airports} placeholder="From"/>
-                                    <SearchList array={airports} placeholder="To"/>
-                                    <div className="form-item">
-                                        <label htmlFor="departure-time">Departure time</label>
-                                        <input id="departure-time" type="time"/>
+
+                        <div className="editing-params-form">
+                            <div className="row">
+                                <SearchList items={airports} placeholder="From"/>
+                                <SearchList items={airports} placeholder="To"/>
+                                <SearchList items={airplanes} onValueChange={onAirplaneChange} placeholder="airplane"/>
+                                <div className="adding-form-section">
+                                    <div className="row">
+                                        <div className="form-item">
+                                            <label>Departure time</label>
+                                            <input type="time"/>
+                                        </div>
+                                        <div className="form-item tabulation">
+                                            <label>Departure date</label>
+                                            <input type="date"/>
+                                        </div>
+                                        <div className="form-item">
+                                            <label>Departure back time</label>
+                                            <input type="time"/>
+                                        </div>
+                                        <div className="form-item">
+                                            <label>Departure back date</label>
+                                            <input type="date"/>
+                                        </div>
                                     </div>
-                                    <div className="form-item">
-                                        <label htmlFor="flight-cost">Cost</label>
-                                        <input id="flight-cost" type="text"/>
-                                    </div>
-                                    <SearchList array={airplanes} placeholder="airplane"/>
                                 </div>
+                                {ticketsCostLayout()}
+                            </div>
+                            <br/>
+                            <textarea placeholder="description"/>
                             </div>
                         </div>
                     </div>

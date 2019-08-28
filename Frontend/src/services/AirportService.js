@@ -1,6 +1,6 @@
 import {airports} from './DataBase';
 
-export function getAll () {
+export function getAirports () {
     return new Promise (
         (resolve, reject) => {
             const data = airports;

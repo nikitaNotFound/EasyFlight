@@ -8,10 +8,11 @@ import * as UserService from '../../services/UserSerivce';
 
 function Content () {
     const [loading, changeLoadingMode] = useState(true);
+    const [user, changeUser] = useState();
     const [flights, changeFlights] = useState([]);
 
     useEffect(() => {
-        const dataLoading = FlightsService.getAll();
+        const dataLoading = FlightsService.getFlights();
 
         dataLoading
             .then(onDataSuccessful.bind(this))

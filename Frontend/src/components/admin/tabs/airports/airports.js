@@ -4,7 +4,7 @@ import PropsTypes from 'prop-types';
 import * as AirportService from '../../../../services/AirportService';
 
 class Airports extends Component {
-    airports = AirportService.getAll();
+    airports = AirportService.getAirports();
 
     propsTypes = {
         onEdit: PropsTypes.func,
