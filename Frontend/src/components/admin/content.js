@@ -9,13 +9,13 @@ function Content () {
         <main className="rounded">
             <div className="tabs">
                 <div className="tabs-item">
-                    <Link to="/admin/airports">Airports</Link>
+                    <Link className="non-dec-link" to="/admin/airports">Airports</Link>
                 </div>
                 <div className="tabs-item">
-                    <Link to="/admin/flights">Flights</Link>
+                    <Link className="non-dec-link" to="/admin/flights">Flights</Link>
                 </div>
                 <div className="tabs-item">
-                    <Link to="/admin/airplanes">Airplanes</Link>
+                    <Link className="non-dec-link" to="/admin/airplanes">Airplanes</Link>
                 </div>
             </div>
 

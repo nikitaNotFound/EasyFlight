@@ -1,11 +1,13 @@
 .tabs {
     clear: both;
-    margin-left: 1%;
-    margin-top: 1%;
+    margin-top: 2%;
+    margin-bottom: 3%;
+    width: 100%;
 }
 
 .tabs-item {
-    display: inline;
+    width: 33.3%;
+    display: inline-block;
     padding: 10px;
     box-shadow: 0 0 2px rgba(0,0,0,0.5);
     background: rgb(211, 211, 211);
@@ -24,7 +26,7 @@
 }
 
 .editing-params-form {
-    padding: 2%;
+    padding: 3.5%;
     background: rgb(212, 212, 212);
 }
 /*****************************ITEMS LIST***********************/
@@ -60,10 +62,9 @@
 
 .list-item-action {
     background: rgb(231, 231, 231);
-    width: 95%;
+    width: 100%;
     min-height: 400px;
     padding: 1%;
-    margin: 0 2.5%;
     margin-top: 1%;
     box-shadow: 0 0 2px rgba(0,0,0,0.5);
 }
@@ -84,8 +85,13 @@
 }
 
 .form-item label {
+    margin-bottom: 0.3%;
     width: 194px;
     display: inherit;
+}
+
+.form-item input {
+    margin-bottom: 4%;
 }
 
 .tabulation {
@@ -139,6 +145,10 @@
 
     .list-item h5 {
         font-size: 22px;
+    }
+
+    .list-item h1 {
+        font-size: 32px;
     }
 }
 
@@ -214,6 +224,7 @@
     height: 60px;
     background: rgb(223, 223, 223);
     font-size: 32px;
+    margin-top: 2%;
 }
 
 .custom-button:hover {

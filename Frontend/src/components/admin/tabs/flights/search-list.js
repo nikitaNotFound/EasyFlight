@@ -27,7 +27,7 @@ function SearchList (props) {
                     ? '' 
                     : 'search-item-hide'}`}>
                         
-                {props.items.map(
+                {props.array.map(
                     (airplane, key) => 
                         <Item airplane={airplane} onValueChange={props.onValueChange} key={key}/>
                 )}
@@ -37,7 +37,7 @@ function SearchList (props) {
 }
 
 SearchList.propsTypes = {
-    items: PropsTypes.array,
+    array: PropsTypes.array,
     placeholder: PropsTypes.string,
     value: PropsTypes.string,
     onValueChange: PropsTypes.func

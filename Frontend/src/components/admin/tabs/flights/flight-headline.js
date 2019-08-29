@@ -12,10 +12,10 @@ class Headline extends Component {
         return (
             <div className="row">
                 <div className="col-6">
-                    <h5>From: {this.props.from} To: {this.props.to}</h5>
+                    <h5>From: {this.props.from}</h5>
                 </div>
                 <div className="col-6">
-                    <h6>{this.props.cost}</h6>
+                    <h5>To: {this.props.to}</h5>
                 </div>
             </div>
         );

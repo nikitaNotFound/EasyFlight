@@ -4,6 +4,7 @@ import UserFlight from '../services/user-models/user-flight';
 import Seat from '../services/airplane-models/seat'
 import SeatType from './airplane-models/seat-type';
 import Airplane from './airplane-models/airplane';
+import Airport from './airports-models/airport';
 
 export const flights = [
     new Flight(1, 'test1', 'test2', '2018-01-01T18:30:00.000Z', '2018-01-07T17:30:00.000Z', 'This is a test flight.', 'F300'),
@@ -19,8 +20,8 @@ export const userFlights = [
 ];
 
 export const airports = [
-    {id: 1, name:"Minsk airport", country:"Belarus", city:"Minsk", desc:"Biggest airport in Belarus"},
-    {id: 2, name:"Kiev airport", country:"Ukraine", city:"Kiev", desc:"Biggest airport in Ukraine"}
+    new Airport(1, "Minsk airport", "Belarus", "Minsk", "Biggest airport in Belarus"),
+    new Airport(2, "Kiev airport", "Ukraine", "Kiev", "Biggest airport in Ukraine")
 ];
 
 export const airplanes = [

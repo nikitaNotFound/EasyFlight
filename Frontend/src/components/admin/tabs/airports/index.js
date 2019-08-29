@@ -33,13 +33,11 @@ function AirportPage () {
             </div>
         );
     }
-    else {
-        return (
-            <div className="tab-content">
-                <Spinner/>
-            </div>
-        );
-    }
+    return (
+        <div className="tab-content">
+            <Spinner/>
+        </div>
+    );
 }
 
 export default AirportPage;

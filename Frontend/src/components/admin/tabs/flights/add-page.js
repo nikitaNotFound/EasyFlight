@@ -69,7 +69,7 @@ function Adding () {
         );
     }
 
-    if(!isLoading) {
+    if(!loading) {
         return (
             <div className="list-item-action">
                 <Headline name="Adding new flight"/>
@@ -85,26 +85,26 @@ function Adding () {
                         <div className="col-10">
                             <div className="editing-params-form">
                                 <div className="row">
-                                    <SearchList items={airports} placeholder="From"/>
-                                    <SearchList items={airports} placeholder="To"/>
-                                    <SearchList items={airplanes} onValueChange={onAirplaneChange} placeholder="airplane"/>
+                                    <SearchList array={airports} placeholder="From"/>
+                                    <SearchList array={airports} placeholder="To"/>
+                                    <SearchList array={airplanes} onValueChange={onAirplaneChange} placeholder="airplane"/>
                                     <div className="adding-form-section">
                                         <div className="row">
                                             <div className="form-item">
-                                                <label>Departure time</label>
-                                                <input type="time"/>
+                                                <label htmlFor="dep-time">Departure time</label>
+                                                <input id="dep-time" type="time"/>
                                             </div>
                                             <div className="form-item tabulation">
-                                                <label>Departure date</label>
-                                                <input type="date"/>
+                                                <label htmlFor="dep-date">Departure date</label>
+                                                <input id="dep-date" type="date"/>
                                             </div>
                                             <div className="form-item">
-                                                <label>Departure back time</label>
-                                                <input type="time"/>
+                                                <label htmlFor="dep-back-time">Departure back time</label>
+                                                <input id="dep-back-time" type="time"/>
                                             </div>
                                             <div className="form-item">
-                                                <label>Departure back date</label>
-                                                <input type="date"/>
+                                                <label htmlFor="dep-back-date">Departure back date</label>
+                                                <input id="dep-back-date" type="date"/>
                                             </div>
                                         </div>
                                         {ticketsCostLayout()}
