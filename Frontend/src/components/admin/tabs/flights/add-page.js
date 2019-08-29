@@ -7,7 +7,7 @@ import * as AirportService from '../../../../services/AirportService';
 import * as AirplaneService from '../../../../services/AirplaneService';
 
 function Adding () {
-    const [isLoading, changeLoadingMode] = useState(true);
+    const [loading, changeLoadingMode] = useState(true);
     const [airports, changeAirports] = useState([]);
     const [airplanes, changeAirplanes] = useState([]);
 
@@ -34,7 +34,7 @@ function Adding () {
         alert(error);
     }
 
-    if(!isLoading) {
+    if(!loading) {
         return (
             <div className="list-item-action">
                 <Headline name="Adding new flight"/>
@@ -52,12 +52,12 @@ function Adding () {
                                 <SearchList array={airports} placeholder="From"/>
                                 <SearchList array={airports} placeholder="To"/>
                                 <div className="form-item">
-                                    <label>Departure time</label>
-                                    <input type="time"/>
+                                    <label htmlFor="departure-time">Departure time</label>
+                                    <input id="departure-time" type="time"/>
                                 </div>
                                 <div className="form-item">
-                                    <label>Cost</label>
-                                    <input type="text"/>
+                                    <label htmlFor="flight-cost">Cost</label>
+                                    <input id="flight-cost" type="text"/>
                                 </div>
                                 <SearchList array={airplanes} placeholder="airplane"/>
                             </div>

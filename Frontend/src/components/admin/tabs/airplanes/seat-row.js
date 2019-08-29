@@ -1,131 +1,36 @@
-import React, {useState} from 'react';
+import React from 'react';
 import PropsTypes from 'prop-types';
-import SeatString from './seat-string';
-
-function inizializeStringSeats (props, maxLength) {
-    let storage = [];
-    Object.assign(storage, props.seats)
-
-    for (let i = 0, len = storage.length; i < len; i++) {
-        storage[i].length = maxLength;
-    }
-
-    let lowerString = [];
-    lowerString.length = maxLength;
-    storage.push(lowerString);
-
-    return storage;
-}
-
-function inizializeGlobalStringLength (props) {
-    let storage = [];
-    Object.assign(storage, props.seats)
-
-    let maxLength = 0;
-    for (let i = 0, len = storage.length; i < len; i++) {
-        const element = storage[i];
-
-        if (element.length > maxLength) {
-            maxLength = element.length;
-        }
-    }
-    maxLength++;
-
-    return maxLength;
-}
+import Seat from './seat';
 
 function SeatRow (props) {
-    const [globalStringLength, changeGlobalStringLength] = useState(inizializeGlobalStringLength(props));
-    const [stringSeats, changeStringSeats] = useState(inizializeStringSeats(props, globalStringLength));
-
-    function onSeatDeleted (seatPosition) {
-        let storage = [];
-        Object.assign(storage, stringSeats);
-
-        storage[seatPosition.string - 1][seatPosition.number - 1] = undefined;
-
-        if (isStringEmpty(storage[storage.length - 1]) && isStringEmpty(storage[storage.length - 2])) {
-            storage = storage.slice(0, storage.length - 1);
+    for (let i = 0, len = props.seats.length; i < len; i++) {
+        if (!props.seats[i]) {
+            props.seats[i] = null;
         }
-
-        if (isColumnEmpty(storage, globalStringLength - 1) && isColumnEmpty(storage, globalStringLength - 2)) {
-            for (let i = 0, len = storage.length; i < len; i++) {
-                storage[i] = storage[i].slice(0, storage[i].length - 1);
-            }
-            changeGlobalStringLength(globalStringLength - 1);
-        }
-
-        changeStringSeats(storage);
-    }
-    
-    function onSeatAdded (seat) {
-        let storage = [];
-        Object.assign(storage, stringSeats);
-
-        storage[seat.string - 1][seat.number - 1] = seat;
-        
-        if (!isColumnEmpty(storage, globalStringLength - 1)) {
-            for (let i = 0, len = storage.length; i < len; i++) {
-                storage[i].length = globalStringLength + 1;
-            }
-            changeGlobalStringLength(globalStringLength + 1);
-        }
-        
-        if (!isStringEmpty(storage[storage.length - 1])) {
-            let lowerString = [];
-            lowerString.length = storage[storage.length - 1].length;
-            storage.push(lowerString);
-        }
-
-        changeStringSeats(storage);
     }
 
-    function onSeatChanged (seatType, placeInfo) {
-        let storage = [];
-        Object.assign(storage, stringSeats);
-
-        storage[placeInfo.string - 1][placeInfo.number - 1].type = seatType;
-        
-        changeStringSeats(storage);
-    }
-    
-    function isColumnEmpty (array, columnIndex) {
-        for (let i = 0, len = array.length; i < len; i++) {
-            const stringElement = array[i];
-            if (stringElement[columnIndex] !== undefined) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    function isStringEmpty (string) {
-        for (let i = 0, len = string.length; i < len; i++) {
-            const element = string[i];
-
-            if (element !== undefined) {
-                return false;
-            }
-        }
-
-        return true;
+    function seatChange (seat, index) {
+        const storage = props.seats;
+        storage[index] = seat;
+        props.rowChange(storage, props.key);
     }
 
     return (
-        <div className="airplane-row">
-            {stringSeats.map(
-                (item, index) => {
+        <div className="airplane-string">
+            {props.seats.map(
+                (seats, index) => {
                     let placeInfo = {};
                     Object.assign(placeInfo, props.placeInfo);
-                    placeInfo.string = index + 1;
+                    placeInfo.number = index + 1;
                     return (
-                        <SeatString 
-                            seats={item}
+                        <Seat
                             key={index}
-                            onSeatAdded={onSeatAdded}
-                            onSeatChanged={onSeatChanged}
-                            onSeatDeleted={onSeatDeleted}
+                            seat={seats}
+                            seatTypes={props.seatTypes}
+                            seatChange={seatChange}
+                            onSeatAdded={props.onSeatAdded}
+                            onSeatChanged={props.onSeatChanged}
+                            onSeatDeleted={props.onSeatDeleted}
                             placeInfo={placeInfo}/>
                     );
                 }
@@ -136,7 +41,11 @@ function SeatRow (props) {
 
 SeatRow.propsTypes = {
     seats: PropsTypes.array,
-    placeInfo: PropsTypes.object
+    seatTypes: PropsTypes.array,
+    placeInfo: PropsTypes.object,
+    onSeatAdded: PropsTypes.func,
+    onSeatChanged: PropsTypes.func,
+    onSeatDeleted: PropsTypes.func
 }
 
 export default SeatRow;

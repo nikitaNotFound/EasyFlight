@@ -4,7 +4,7 @@ import Spinner from '../../../common/spinner';
 import * as AirportService from '../../../../services/AirportService';
 
 function Edit (props) {
-    const [isLoading, changeLoadingMode] = useState(true);
+    const [loading, changeLoadingMode] = useState(true);
     const [airport, changeAirport] = useState();
 
     useEffect(() => {
@@ -27,7 +27,7 @@ function Edit (props) {
         alert(error);
     }
 
-    if (!isLoading) {
+    if (!loading) {
         return (
             <div className="list-item-action rounded editing">
                 <Headline name="Editing airport"/>
@@ -43,16 +43,16 @@ function Edit (props) {
                         <div className="col-10">
                             <div className="row">
                                 <div className="form-item">
-                                    <label>Airport name</label>
-                                    <input type="text" name="name" value={airport.name}/>
+                                    <label htmlFor="airport-name">Airport name</label>
+                                    <input id="airport-name" type="text" name="name" value={airport.name}/>
                                 </div>
                                 <div className="form-item">
-                                    <label>Country</label>
-                                    <input type="text" name="country" value={airport.country}/>
+                                    <label htmlFor="airport-counrty">Country</label>
+                                    <input id="airport-country" type="text" name="country" value={airport.country}/>
                                 </div>
                                 <div className="form-item">
-                                    <label>City</label>
-                                    <input type="text" name="city" value={airport.city}/>
+                                    <label htmlFor="airport-city">City</label>
+                                    <input id="airport-city" type="text" name="city" value={airport.city}/>
                                 </div>
                                 <br/>
                                 <textarea value={airport.desc}/>

@@ -22,6 +22,11 @@
 .add-item-button:hover {
     color: rgb(108, 117, 121);
 }
+
+.editing-params-form {
+    padding: 2%;
+    background: rgb(212, 212, 212);
+}
 /*****************************AIRPORTS LIST********************/
 .items-list {
     margin: 0% calc(1.5vh);
@@ -200,7 +205,7 @@
     justify-content: center;
 }
 
-.airplane-row {
+.airplane-zone {
     display: inline-block;
     margin-right: 9px;
 }
@@ -220,20 +225,70 @@
 .seat-type-0 {
     box-shadow: 0 0 1px rgba(148, 126, 126, 0.5);
 }
-
-.seat-type-1 {
-    background: rgb(89, 167, 79);
-    box-shadow: none;
+/******************************SEAT-TYPES EDITOR***********************/
+.seat-types-editor {
+    width: 100%;
+    background: rgb(212, 212, 212);
+    padding: 2%;
+    margin-bottom: 1%;
 }
 
-.seat-type-2 {
-    background: rgb(179, 177, 70);
-    box-shadow: none;
+.add-type-button {
+    width: 100%;
+    margin-top: 3%;
+    padding: 2%;
+    text-align: center;
+    border: 1px solid black;
+    color: black;
+    background: rgb(201, 201, 201);
 }
 
-.seat-type-3 {
-    background: rgb(173, 68, 68);
-    box-shadow: none;
+.add-type-button:hover{
+    background: rgb(223, 223, 223);
+}
+
+.seat-type-name-input {
+    width: 100%;
+    margin-bottom: 2%;
+}
+
+.seat-types-headline {
+    width: 100%;
+    font-size: 25px;
+    text-align: center;
+    color: black;
+}
+
+.seat-type-item {
+    padding: 1%;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+.seat-type-color-demo {
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    margin-right: 3%;
+}
+
+.color-demo {
+    margin-top: 2%;
+    width: 100%;
+    height: 200px;
+}
+
+.seat-type-remove-button {
+    display: inline-block;
+    float: right;
+    margin-right: 2%;
+    background: red;
+    color: black;
+    padding: 0.1%;
+}
+
+.seat-type-remove-button:hover {
+    background: rgb(255, 73, 73);
 }
 
 /******************************SEARCH LIST****************************/

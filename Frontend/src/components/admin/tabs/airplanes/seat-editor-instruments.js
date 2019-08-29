@@ -20,9 +20,9 @@ function Instruments (props) {
         changeSection(newValue);
     }
 
-    function onAddRow() {
+    function onAddZone() {
         if (isNumber(floor) && isNumber(section) && floor > 0 && section > 0) {
-            props.onAddRow(floor, section);
+            props.onAddZone(floor, section);
         }
     }
 
@@ -30,21 +30,21 @@ function Instruments (props) {
         <div className="seat-editor-instruments">
             <div className="row">
                 <div className="form-item">
-                    <label>Floor</label>
-                    <input type="text" onChange={onFloorChange} value={floor}/>
+                    <label htmlFor="floor-pos">Floor</label>
+                    <input id="floor-pos" type="text" onChange={onFloorChange} value={floor}/>
                 </div>
                 <div className="form-item">
-                    <label>Section</label>
-                    <input type="text" onChange={onSectionChange} value={section}/>
+                    <label htmlFor="section-pos">Section</label>
+                    <input id="section-pos" type="text" onChange={onSectionChange} value={section}/>
                 </div>
-                <div className="custom-button" onClick={onAddRow}>add row</div>
+                <div className="custom-button" onClick={onAddZone}>add row</div>
             </div>
         </div>
     );
 }
 
 Instruments.propsTypes = {
-    onAddRow: PropsTypes.func
+    onAddZone: PropsTypes.func
 }
 
 export default Instruments;
