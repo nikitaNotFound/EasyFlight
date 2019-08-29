@@ -23,6 +23,7 @@ function getSeatTypeIndex (props) {
 }
 
 function Seat (props) {
+    console.log(props.seatTypes);
     const [seatTypeIndex, changeSeatTypeIndex] = useState(getSeatTypeIndex(props));
 
     function onClickHandler () {
