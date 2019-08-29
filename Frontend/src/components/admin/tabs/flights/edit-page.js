@@ -8,7 +8,7 @@ import * as AirplaneService from '../../../../services/AirplaneService';
 import * as FlightService from '../../../../services/FlightService';
 
 function Editing (props) {
-    const [isLoading, changeLoadingMode] = useState(true);
+    const [loading, changeLoadingMode] = useState(true);
     const [airports, changeAirports] = useState([]);
     const [airplanes, changeAirplanes] = useState([]);
     const [flight, changeFlight] = useState();
@@ -38,7 +38,7 @@ function Editing (props) {
         alert(error);
     }
 
-    if (isLoading) {
+    if (loading) {
         return (<Spinner/>);
     }
     return (

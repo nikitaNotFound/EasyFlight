@@ -22,10 +22,13 @@ function getGlobalRowLength (props) {
     Object.assign(storage, props.seats)
 
     let maxLength = storage.reduce(
-            (length, seatRow) => 
-                length < seatRow.length ? seatRow.length : length, 0);
+        (length, seatRow) =>
+            length < seatRow.length
+                ? seatRow.length
+                : length,
+        0
+    );
     maxLength++;
-    console.log(maxLength);
     return maxLength;
 }
 
@@ -39,11 +42,11 @@ function SeatZone (props) {
 
         storage[seatPosition.row - 1][seatPosition.number - 1] = null;
 
-        if (isRowEmpty(storage[storage.length - 1]) && isRowEmpty(storage[storage.length - 2])) {
+        if (checkRowEmpty(storage[storage.length - 1]) && checkRowEmpty(storage[storage.length - 2])) {
             storage = storage.slice(0, storage.length - 1);
         }
 
-        if (isColumnEmpty(storage, globalRowLength - 1) && isColumnEmpty(storage, globalRowLength - 2)) {
+        if (checkColumnEmpty(storage, globalRowLength - 1) && checkColumnEmpty(storage, globalRowLength - 2)) {
             for (let i = 0, len = storage.length; i < len; i++) {
                 storage[i] = storage[i].slice(0, storage[i].length - 1);
             }
@@ -59,14 +62,14 @@ function SeatZone (props) {
 
         storage[seat.row - 1][seat.number - 1] = seat;
         
-        if (!isColumnEmpty(storage, globalRowLength - 1)) {
+        if (!checkColumnEmpty(storage, globalRowLength - 1)) {
             for (let i = 0, len = storage.length; i < len; i++) {
                 storage[i].length = globalRowLength + 1;
             }
             changeGlobalRowLength(globalRowLength + 1);
         }
         
-        if (!isRowEmpty(storage[storage.length - 1])) {
+        if (!checkRowEmpty(storage[storage.length - 1])) {
             let lowerRow = [];
             lowerRow.length = storage[storage.length - 1].length;
             storage.push(lowerRow);
@@ -84,7 +87,7 @@ function SeatZone (props) {
         changeRowSeats(storage);
     }
     
-    function isColumnEmpty (array, columnIndex) {
+    function checkColumnEmpty (array, columnIndex) {
         for (let i = 0, len = array.length; i < len; i++) {
             const rowElement = array[i];
             
@@ -96,7 +99,7 @@ function SeatZone (props) {
         return true;
     }
 
-    function isRowEmpty (row) {
+    function checkRowEmpty (row) {
         for (let i = 0, len = row.length; i < len; i++) {
             const element = row[i];
 

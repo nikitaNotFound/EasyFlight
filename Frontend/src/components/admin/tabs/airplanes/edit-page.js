@@ -6,7 +6,7 @@ import Spinner from '../../../common/spinner';
 import * as AirplaneService from '../../../../services/AirplaneService';
 
 function Edit (props) {
-    const [isLoading, changeLoadingMode] = useState(true);
+    const [loading, changeLoadingMode] = useState(true);
     const [airplane, changeAirplane] = useState();
 
     //reciving info about airplane with id getted from url
@@ -58,7 +58,7 @@ function Edit (props) {
     }
 
 
-    if (!isLoading) { 
+    if (!loading) { 
         return (
             <div className="list-item-action editing">
                 <Headline name="Editing airplane"/>

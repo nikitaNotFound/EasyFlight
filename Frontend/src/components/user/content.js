@@ -6,7 +6,7 @@ import Spinner from '../common/spinner';
 import * as FlightsService from '../../services/FlightService';
 
 function Content () {
-    const [isLoading, changeLoadingMode] = useState(true);
+    const [loading, changeLoadingMode] = useState(true);
     const [flights, changeFlights] = useState([]);
 
     useEffect(() => {
@@ -41,7 +41,7 @@ function Content () {
         changeMode(newMode);
     }
 
-    if (!isLoading) {
+    if (!loading) {
         return (
             <main className={`rounded ${mode}`}>
                 <Switcher switcher={swapFilterList}/>

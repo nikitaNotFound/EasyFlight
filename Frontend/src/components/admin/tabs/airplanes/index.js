@@ -5,7 +5,7 @@ import * as AirplaneService from '../../../../services/AirplaneService';
 import Spinner from '../../../common/spinner';
 
 function AirplanePage () {
-    const [isLoading, changeLoadingMode] = useState(true);
+    const [loading, changeLoadingMode] = useState(true);
     const [airplanes, changeAirplanes] = useState([]);
 
     useEffect(() => {
@@ -25,7 +25,7 @@ function AirplanePage () {
         alert (error);
     }
 
-    if (!isLoading) {
+    if (!loading) {
         return (
             <div className="tab-content">
                 <AddButton catalog="airplanes"/>

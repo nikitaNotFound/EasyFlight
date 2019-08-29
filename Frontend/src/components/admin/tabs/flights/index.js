@@ -5,7 +5,7 @@ import Spinner from '../../../common/spinner';
 import * as FlightService from '../../../../services/FlightService';
 
 function FlightPage () {
-    const [isLoading, changeLoadingMode] = useState(true);
+    const [loading, changeLoadingMode] = useState(true);
     const [flights, changeFlights] = useState([]);
 
     useEffect(() => {
@@ -25,7 +25,7 @@ function FlightPage () {
         alert (error);
     }
 
-    if (!isLoading) {
+    if (!loading) {
         return (
             <div className="tab-content">
                 <AddButton catalog="flights"/>

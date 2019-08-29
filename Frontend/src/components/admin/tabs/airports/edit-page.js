@@ -4,7 +4,7 @@ import Spinner from '../../../common/spinner';
 import * as AirportService from '../../../../services/AirportService';
 
 function Edit (props) {
-    const [isLoading, changeLoadingMode] = useState(true);
+    const [loading, changeLoadingMode] = useState(true);
     const [airport, changeAirport] = useState();
 
     useEffect(() => {
@@ -27,7 +27,7 @@ function Edit (props) {
         alert(error);
     }
 
-    if (!isLoading) {
+    if (!loading) {
         return (
             <div className="list-item-action rounded editing">
                 <Headline name="Editing airport"/>

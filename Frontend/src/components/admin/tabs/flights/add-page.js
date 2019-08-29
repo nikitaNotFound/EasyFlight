@@ -7,7 +7,7 @@ import * as AirportService from '../../../../services/AirportService';
 import * as AirplaneService from '../../../../services/AirplaneService';
 
 function Adding () {
-    const [isLoading, changeLoadingMode] = useState(true);
+    const [loading, changeLoadingMode] = useState(true);
     const [airports, changeAirports] = useState([]);
     const [airplanes, changeAirplanes] = useState([]);
 
@@ -34,7 +34,7 @@ function Adding () {
         alert(error);
     }
 
-    if(!isLoading) {
+    if(!loading) {
         return (
             <div className="list-item-action">
                 <Headline name="Adding new flight"/>
