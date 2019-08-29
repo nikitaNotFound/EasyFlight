@@ -27,7 +27,7 @@
     padding: 2%;
     background: rgb(212, 212, 212);
 }
-/*****************************AIRPORTS LIST********************/
+/*****************************ITEMS LIST***********************/
 .items-list {
     margin: 0% calc(1.5vh);
     margin-top: calc(1vh + 10px);
@@ -73,8 +73,8 @@
 }
 
 .adding-form textarea{
-    margin-top: 2%;
     margin: 0 -15px;
+    margin-top: 3%;
     width: calc(100% + 30px);
 }
 
@@ -86,6 +86,10 @@
 .form-item label {
     width: 194px;
     display: inherit;
+}
+
+.tabulation {
+    margin-right: 10%;
 }
 
 .adding-form-img {
@@ -119,6 +123,23 @@
 
 .edit-button:hover {
     background: rgb(236, 236, 236);
+}
+
+.adding-form-section {
+    width: 100%;
+    float: left;
+    margin: 15px;
+    margin-top: 3%;
+}
+
+@media screen and (max-width: 960px) {
+    .list-item h6 {
+        font-size: 16px;
+    }
+
+    .list-item h5 {
+        font-size: 22px;
+    }
 }
 
 /*****************************SEAT EDITOR*****************************/

@@ -15,11 +15,11 @@ class Airport extends Component {
     render () {
         return (
             <div className="row rounded list-item">
-                <div className="col-2">
+                <div className="col-lg-2 col-sm-3">
                     <img src="" className="list-item-img" alt="airport"/>
                 </div>
 
-                <div className="col-9">
+                <div className="col-lg-9 col-sm-9">
                     <AirportHeadline 
                         name={this.props.name}
                         location={`${this.props.city}, ${this.props.country}`}
@@ -27,7 +27,7 @@ class Airport extends Component {
                     {this.props.desc}
                 </div>
 
-                <div className="col-1">
+                <div className="col-lg-1 col-sm-12">
                     <Link to={`/admin/airports/edit/${this.props.airportId}`}>
                         <div className="edit-button rounded non-selectable">
                             Edit
