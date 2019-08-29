@@ -2,52 +2,61 @@ import React, {useState} from 'react';
 import PropsTypes from 'prop-types';
 import SeatObject from '../../../../services/airplane-models/seat';
 
-function inizializeSeatType (props) {
+const UNDEFINED_SEAT_TYPE_INDEX = -1;
+
+function getSeatTypeIndex (props) {
     if (!props.seat) {
-        return null;
+        return UNDEFINED_SEAT_TYPE_INDEX;
     }
     else {
-        return props.seat.typeId;
+        const getIndex = () => {
+            for (let i = 0, len = props.seatTypes.length; i < len; i++) {
+                const element = props.seatTypes[i];
+                if (element.id == props.seat.typeId) {
+                    return i;
+                }
+            }
+        }
+
+        return getIndex();
     }
 }
 
 function Seat (props) {
-    const [seatType, changeSeatType] = useState(inizializeSeatType(props));
+    const [seatTypeIndex, changeSeatTypeIndex] = useState(getSeatTypeIndex(props));
 
     function onClickHandler () {
-        const oldType = !seatType
-            ? -1
-            : seatType;
+        const oldTypeIndex = seatTypeIndex;
 
-        const newType = oldType + 1;
+        const newTypeIndex = oldTypeIndex + 1;
 
-        changeSeatType(newType);
-
-        if (newType > props.seatTypes.length - 1) {
+        if (newTypeIndex > props.seatTypes.length - 1) {
             const seatPosition = {
                 row: props.placeInfo.row,
                 number: props.placeInfo.number
             };
-            changeSeatType(null);
+            changeSeatTypeIndex(UNDEFINED_SEAT_TYPE_INDEX);
             props.onSeatDeleted(seatPosition);
         }
-        else if (oldType == -1 && newType == 0) {
+        else if (oldTypeIndex == UNDEFINED_SEAT_TYPE_INDEX) {
             const newSeat = new SeatObject (
                 props.placeInfo.floor,
                 props.placeInfo.section,
                 props.placeInfo.zone,
                 props.placeInfo.row,
                 props.placeInfo.number,
-                seatType
+                seatTypeIndex
             );
 
             props.onSeatAdded(newSeat);
+            changeSeatTypeIndex(newTypeIndex);
         }
         else {
-            props.onSeatChanged(newType, props.placeInfo);
+            props.onSeatChanged(newTypeIndex, props.placeInfo);
+            changeSeatTypeIndex(newTypeIndex);
         }
     }
-    if (seatType != 0 && !seatType) {
+    if (seatTypeIndex == UNDEFINED_SEAT_TYPE_INDEX) {
         return (
             <div className={`seat seat-type-0 non-selectable`}
                 onClick={onClickHandler}/>
@@ -56,7 +65,7 @@ function Seat (props) {
     
     return (
         <div className={`seat non-selectable`}
-            style={{background:props.seatTypes[seatType].color}}
+            style={{background:props.seatTypes[seatTypeIndex].color}}
             onClick={onClickHandler}/>
     );
 }

@@ -4,8 +4,8 @@ import Seat from './seat';
 
 function SeatRow (props) {
     for (let i = 0, len = props.seats.length; i < len; i++) {
-        if (props.seats[i] === undefined) {
-            props.seats[i] = undefined;
+        if (!props.seats[i]) {
+            props.seats[i] = null;
         }
     }
 

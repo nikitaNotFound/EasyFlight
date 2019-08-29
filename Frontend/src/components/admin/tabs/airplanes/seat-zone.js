@@ -17,25 +17,20 @@ function inizializeRowSeats (props, maxLength) {
     return storage;
 }
 
-function inizializeGlobalRowLength (props) {
+function getGlobalRowLength (props) {
     let storage = [];
     Object.assign(storage, props.seats)
 
-    let maxLength = 0;
-    for (let i = 0, len = storage.length; i < len; i++) {
-        const element = storage[i];
-
-        if (element.length > maxLength) {
-            maxLength = element.length;
-        }
-    }
+    let maxLength = storage.reduce(
+            (length, seatRow) => 
+                length < seatRow.length ? seatRow.length : length, 0);
     maxLength++;
-
+    console.log(maxLength);
     return maxLength;
 }
 
 function SeatZone (props) {
-    const [globalRowLength, changeGlobalRowLength] = useState(inizializeGlobalRowLength(props));
+    const [globalRowLength, changeGlobalRowLength] = useState(getGlobalRowLength(props));
     const [rowSeats, changeRowSeats] = useState(inizializeRowSeats(props, globalRowLength));
 
     function onSeatDeleted (seatPosition) {

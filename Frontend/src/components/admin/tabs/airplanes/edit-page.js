@@ -68,12 +68,12 @@ function Edit (props) {
                         <div className="editing-params-form">
                             <div className="row">
                                 <div className="form-item">
-                                    <label>Airplane name</label>
-                                    <input type="text" value={airplane.name} onChange={onAirplaneNameChange} name="name"/>
+                                    <label htmlFor="airplane-name">Airplane name</label>
+                                    <input id="airplane-name" type="text" value={airplane.name} onChange={onAirplaneNameChange} name="name"/>
                                 </div>
                                 <div className="form-item">
-                                    <label>Max mass</label>
-                                    <input value={airplane.maxMass} onChange={onMassMaxChange}/>
+                                    <label htmlFor="airplane-max-mass">Max mass</label>
+                                    <input id="airplane-max-mass" value={airplane.maxMass} onChange={onMassMaxChange}/>
                                 </div>
                             </div>
                         </div>

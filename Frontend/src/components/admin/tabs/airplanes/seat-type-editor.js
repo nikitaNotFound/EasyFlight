@@ -22,13 +22,13 @@ function SeatTypesEditor (props) {
         if (color && name) {
             let newType = new SeatType(props.seatTypes.length + 1, name, color);
 
-            if (props.seatTypes === undefined || isTypeAvailable(newType)) {
+            if (!props.seatTypes || checkTypeAvailable(newType)) {
                 props.onAddType(newType);
             }
         }
     }
 
-    function isTypeAvailable(type) {
+    function checkTypeAvailable(type) {
         for (let i = 0, len = props.seatTypes.length; i < len; i++) {
             const element = props.seatTypes[i];
 
@@ -40,7 +40,7 @@ function SeatTypesEditor (props) {
         return true;
     }
 
-    if (props.seatTypes === undefined) {
+    if (!props.seatTypes) {
         return (
             <div className="seat-types-editor">
                 <div className="row">

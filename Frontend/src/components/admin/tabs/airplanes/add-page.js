@@ -34,12 +34,12 @@ function Adding () {
                         <div className="editing-params-form">
                             <div className="row">
                                 <div className="form-item">
-                                    <label>Airplane name</label>
-                                    <input type="text" onChange={onAirplaneNameChange} value={airplaneName}/>
+                                    <label htmlFor="airplane-name">Airplane name</label>
+                                    <input type="text" id="airplane-name" onChange={onAirplaneNameChange} value={airplaneName}/>
                                 </div>
                                 <div className="form-item">
-                                    <label>Max mass</label>
-                                    <input onChange={onMassMaxChange} value={airplaneMaxMass}/>
+                                    <label htmlFor="airplane-max-mass">Max mass</label>
+                                    <input id="airplane-max-mass" onChange={onMassMaxChange} value={airplaneMaxMass}/>
                                 </div>
                             </div>
                         </div>
