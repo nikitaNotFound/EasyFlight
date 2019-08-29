@@ -14,7 +14,7 @@ export function getAirplanes() {
     );
 }
 
-export function getAirplaneById(id) {
+export function getById(id) {
     return new Promise((resolve, reject) => {
         const storage = airplanes;
         const item = () => {

@@ -12,7 +12,7 @@ export function getFlights() {
     );
 }
 
-export function getFlightById(id) {
+export function getById(id) {
     return new Promise (
         (resolve, reject) => {
             const storage = flights;

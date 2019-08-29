@@ -1,19 +1,6 @@
 import {users, userFlights} from './DataBase';
 import { isArray } from 'util';
 
-export function getUsers() {
-    return new Promise(
-        (resolve, reject) => {
-            const data = users;
-
-            if (!data) {
-                reject('Error');
-            }
-            setTimeout(resolve, 1000, data);
-        }
-    );
-}
-
 export function getUserById(id) {
     return new Promise(
         (resolve, reject) => {

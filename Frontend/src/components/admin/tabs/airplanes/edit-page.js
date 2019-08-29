@@ -11,7 +11,7 @@ function Edit (props) {
 
     //reciving info about airplane with id getted from url
     useEffect(() => {
-        const airplaneLoading = AirplaneService.getAirplaneById(props.match.params.id);
+        const airplaneLoading = AirplaneService.getById(props.match.params.id);
         airplaneLoading
             .then(data => {
                 onDataSuccessful(data);

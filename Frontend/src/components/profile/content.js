@@ -17,35 +17,25 @@ function Content () {
         userLoading
             .then((user) => {
                 changeUser(user);
-                const userFlightsLoading = UserService.getUserFlights(user.id);
+                return UserService.getUserFlights(user.id);
+            })
+            .then((userFlights) => {
+                changeUserFlights(userFlights);
 
-                userFlightsLoading
-                    .then((userFlights) => {
-                        changeUserFlights(userFlights);
+                if (userFlights.length > 0) {
+                    let storage = userFlights.map(
+                        (flight) =>
+                            flight.flightId
+                    );
 
-                        if (userFlights.length > 0) {
-                            const flightIds = () => {
-                                let storage = [];
-
-                                for (let i = 0, len = userFlights.length; i < len; i++) {
-                                    const element = userFlights[i];
-                                    storage.push(element.flightId);
-                                }
-
-                                return storage;
-                            }
-
-                            const flightsLoading = FlightService.getFlightsById(flightIds());
-                            flightsLoading
-                                .then((flights) => {
-                                    changeFlights(flights);
-                                    onDataSuccesful();
-                                });
-                        }
-                        else {
-                            onDataSuccesful();
-                        }
-                    });
+                    return FlightService.getFlightsById(storage);
+                }
+            })
+            .then((flights) => {
+                if (flights) {
+                    changeFlights(flights);
+                }
+                onDataSuccesful();
             })
             .catch(onDataFail);
     }, []);

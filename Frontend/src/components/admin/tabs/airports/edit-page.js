@@ -8,7 +8,7 @@ function Edit (props) {
     const [airport, changeAirport] = useState();
 
     useEffect(() => {
-        const airportLoading = AirportService.getAirportById(props.match.params.id);
+        const airportLoading = AirportService.getById(props.match.params.id);
         airportLoading
             .then(data => {
                 onDataSuccessful(data);

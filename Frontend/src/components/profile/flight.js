@@ -2,15 +2,15 @@ import React from 'react';
 import Icon from '../../icons/test-company-2.jpg';
 import PropsTypes from 'prop-types';
 import FlightObject from '../../services/flight-models/flight';
+import moment from 'moment';
 
 function Flight (props) {
     function getTimeString (dateInfo) {
-        let date = new Date(dateInfo);
+        let date = moment(dateInfo);
 
-        return `${date.getFullYear()}.${date.getMonth()}.${date.getDate()} | ${date.getHours()}:${date.getMinutes()}`;
+        return moment(date, 'YYYY-MM-DD hh:mm').format('LLL');
     }
 
-    console.log(props.flight);
     return (
         <div className="flight-history-item">
             <div className="row">
