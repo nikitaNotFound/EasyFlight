@@ -9,7 +9,7 @@ function FlightPage () {
     const [flights, changeFlights] = useState([]);
 
     useEffect(() => {
-        const dataLoading = FlightService.getFlights();
+        const dataLoading = FlightService.getAll();
 
         dataLoading
             .then(onDataSuccessful.bind(this))

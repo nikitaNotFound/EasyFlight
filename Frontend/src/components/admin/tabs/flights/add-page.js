@@ -12,8 +12,8 @@ function Adding () {
     const [airplanes, changeAirplanes] = useState([]);
 
     useEffect(() => {
-        const airportsLoading = AirportService.getAirports();
-        const airplanesLoading = AirplaneService.getAirplanes();
+        const airportsLoading = AirportService.getAll();
+        const airplanesLoading = AirplaneService.getAll();
 
         Promise.all([airportsLoading, airplanesLoading])
             .then(values => {

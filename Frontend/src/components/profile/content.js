@@ -28,7 +28,7 @@ function Content () {
                             flight.flightId
                     );
 
-                    return FlightService.getFlightsById(storage);
+                    return FlightService.getByIds(storage);
                 }
             })
             .then((flights) => {

@@ -28,7 +28,7 @@ function Adding () {
         <div className="list-item-action adding">
             <Headline name="Adding new airplane"/>
 
-            <div method="post" className="adding-form">
+            <div className="adding-form">
                 <div className="row">
                     <div className="col-12">
                         <div className="editing-params-form">

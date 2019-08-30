@@ -1,6 +1,6 @@
 import {flights} from './DataBase';
 
-export function getFlights() {
+export function getAll() {
     return new Promise (
         (resolve, reject) => {
             const data = flights;
@@ -16,26 +16,24 @@ export function getById(id) {
     return new Promise (
         (resolve, reject) => {
             const storage = flights;
-            const item = 
-                () => {
-                    for (let i = 0, len = storage.length; i < len; i++) {
-                        if (storage[i].id == id) {
-                            return storage[i];
-                        }
-                    }
-                    return undefined;
+            const item = {};
+            for (let i = 0, len = storage.length; i < len; i++) {
+                if (storage[i].id == id) {
+                    item = storage[i];
                 }
-            if (!item()) {
+            }
+
+            if (!item) {
                 reject("Error");
             }
             else {
-                setTimeout(resolve, 1000, item());
+                setTimeout(resolve, 1000, item);
             }
         }
     );
 }
 
-export function getFlightsById(idArray) {
+export function getByIds(idArray) {
     return new Promise (
         (resolve, reject) => {
             const storage = [];

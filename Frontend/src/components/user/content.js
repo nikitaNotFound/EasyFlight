@@ -11,7 +11,7 @@ function Content () {
     const [flights, changeFlights] = useState([]);
 
     useEffect(() => {
-        const dataLoading = FlightsService.getFlights();
+        const dataLoading = FlightsService.getAll();
 
         dataLoading
             .then(onDataSuccessful.bind(this))
