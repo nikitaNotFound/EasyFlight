@@ -28,23 +28,23 @@ export const airplanes = [
     new Airplane(
         1, 'F300', 1000,
         [
-            new Seat(1, 1, 1, 1, 1, 0), new Seat(1, 1, 1, 1, 2, 0),
-            new Seat(1, 1, 2, 1, 1, 0), new Seat(1, 1, 2, 2, 1, 0),
+            new Seat(1, 1, 1, 1, 1, 1), new Seat(1, 1, 1, 1, 2, 1),
+            new Seat(1, 1, 2, 1, 1, 1), new Seat(1, 1, 2, 2, 1, 1),
 
-            new Seat(1, 2, 1, 1, 1, 0), new Seat(1, 2, 1, 2, 1, 0),
-            new Seat(1, 2, 2, 1, 1, 0), new Seat(1, 2, 2, 1, 2, 0), new Seat(1, 2, 2, 1, 3, 0),
-            new Seat(1, 2, 2, 2, 2, 0),
+            new Seat(1, 2, 1, 1, 1, 1), new Seat(1, 2, 1, 2, 1, 1),
+            new Seat(1, 2, 2, 1, 1, 1), new Seat(1, 2, 2, 1, 2, 1), new Seat(1, 2, 2, 1, 3, 1),
+            new Seat(1, 2, 2, 2, 2, 1),
 
-            new Seat(1, 3, 1, 1, 1, 0), new Seat(1, 3, 1, 1, 2, 0), new Seat(1, 3, 1, 1, 3, 0),
-            new Seat(1, 3, 1, 2, 1, 0), new Seat(1, 3, 1, 2, 2, 0),
-            new Seat(1, 3, 1, 3, 1, 0),
+            new Seat(1, 3, 1, 1, 1, 1), new Seat(1, 3, 1, 1, 2, 1), new Seat(1, 3, 1, 1, 3, 1),
+            new Seat(1, 3, 1, 2, 1, 1), new Seat(1, 3, 1, 2, 2, 1),
+            new Seat(1, 3, 1, 3, 1, 1),
 
-            new Seat(1, 3, 2, 1, 1, 0), new Seat(1, 3, 2, 1, 2, 0), new Seat(1, 3, 2, 1, 3, 0),
-            new Seat(1, 3, 2, 2, 1, 0), new Seat(1, 3, 2, 2, 2, 0),
+            new Seat(1, 3, 2, 1, 1, 1), new Seat(1, 3, 2, 1, 2, 1), new Seat(1, 3, 2, 1, 3, 1),
+            new Seat(1, 3, 2, 2, 1, 1), new Seat(1, 3, 2, 2, 2, 1),
 
-            new Seat(1, 3, 3, 1, 1, 0), new Seat(1, 3, 3, 2, 1, 0),
+            new Seat(1, 3, 3, 1, 1, 1), new Seat(1, 3, 3, 2, 1, 1),
 
-            new Seat(2, 1, 3, 1, 1, 0), new Seat(2, 1, 3, 2, 1, 0)
+            new Seat(2, 1, 3, 1, 1, 1), new Seat(2, 1, 3, 2, 1, 1)
         ],
         [
             new SeatType(1, 'econom', 'rgb(89, 167, 79)'),
@@ -55,8 +55,8 @@ export const airplanes = [
     new Airplane(
         2, 'Keksik', 500,
         [
-            new Seat(1, 1, 1, 1, 1, 0),
-            new Seat(1, 1, 1, 2, 1, 0), new Seat(1, 1, 1, 2, 3, 0)
+            new Seat(1, 1, 1, 1, 1, 1),
+            new Seat(1, 1, 1, 2, 1, 1), new Seat(1, 1, 1, 2, 3, 1)
         ],
         [
             new SeatType(1, 'econom', 'rgb(89, 167, 79)'),

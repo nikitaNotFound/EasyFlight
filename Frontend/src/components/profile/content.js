@@ -12,7 +12,7 @@ function Content () {
     const [user, changeUser] = useState();
 
     useEffect(() => {
-        const userLoading = UserService.getUserById(1);
+        const userLoading = UserService.getCurrentUser(1);
 
         userLoading
             .then((user) => {

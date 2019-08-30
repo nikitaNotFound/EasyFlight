@@ -16,18 +16,18 @@ export function getById(id) {
     return new Promise (
         (resolve, reject) => {
             const storage = flights;
-            const item = {};
+            let flight = {};
             for (let i = 0, len = storage.length; i < len; i++) {
                 if (storage[i].id == id) {
-                    item = storage[i];
+                    flight = storage[i];
                 }
             }
 
-            if (!item) {
+            if (!flight) {
                 reject("Error");
             }
             else {
-                setTimeout(resolve, 1000, item);
+                setTimeout(resolve, 1000, flight);
             }
         }
     );

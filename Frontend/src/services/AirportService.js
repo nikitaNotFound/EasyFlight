@@ -15,21 +15,22 @@ export function getAll () {
 }
 
 export function getById(id) {
-    return new Promise((resolve, reject) => {
+    return new Promise(
+        (resolve, reject) => {
             const storage = airports;
-            const item = {};
+            let airport = {};
             for (let i = 0, len = storage.length; i < len; i++) {
                 if (storage[i].id == id) {
-                    item = storage[i];
+                    airport = storage[i];
                 }
             }
 
-            if(item === undefined) {
+            if(!airport) {
                 reject("Error");
             }
 
             else {
-                setTimeout(resolve, 1000, item);
+                setTimeout(resolve, 1000, airport);
             }
         }
     );
