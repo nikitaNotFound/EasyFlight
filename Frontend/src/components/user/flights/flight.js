@@ -26,9 +26,6 @@ class Flight extends Component {
                     </div>
                 </div>
                 <div className="col-sm-2" name="item-buy">
-                    <div className="item-cost" name="item-cost">
-                        {this.props.cost}
-                    </div>
                     <button type="submit" className="btn btn-primary button-buy">
                         <img src={buyIcon} alt="icon-book"/>
                         Book

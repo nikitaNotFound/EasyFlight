@@ -37,8 +37,84 @@ footer {
 .non-dec-link:hover {
   text-decoration: none;
 }
-/********************LOGIN AND REGISTRATION************/
 
+/***********************PROFILE************************/
+.main-info {
+  background: rgb(219, 219, 219);
+  box-shadow: 0 0 1px rgba(0,0,0,0.5);
+  padding: 1%;
+}
+
+.user-photo {
+  width: 100%;
+}
+
+.user-photo input {
+  display: none;
+}
+
+.user-photo img {
+  width: 100%;
+  background: rgb(233, 233, 233);
+}
+
+.name-input {
+  width: 100%;
+  font-size: 60px;
+  background: rgb(233, 233, 233);
+  text-align: center;
+}
+
+.flight-history {
+  background: rgb(219, 219, 219);
+  box-shadow: 0 0 1px rgba(0,0,0,0.5);
+  padding: 1%;
+  margin-top: 1%;
+  width: 100%;
+}
+
+.flight-history-headline {
+  width: 100%;
+  text-align: center;
+  font-size: 32px;
+}
+
+.flight-history-list {
+  width: 100%;
+  margin-top: 1%;
+}
+
+.flight-history-item {
+  padding: 0.5%;
+  background: rgb(233, 233, 233);
+  margin-bottom: 1%;
+}
+
+.item-image {
+  width: 100%;
+}
+
+/******************************SEARCH LIST****************************/
+.search-list {
+  width: 194px;
+  position: absolute;
+  z-index: 1000;
+  background: rgb(211, 211, 211);
+  padding: 5px;
+}
+
+.search-item {
+  font-family: serif;
+  font-size: 16px;
+  margin-top: 5px;
+  background: white;
+}
+
+.search-item-hide {
+  display: none;
+}
+
+/********************LOGIN AND REGISTRATION************/
 .sing-up {
   text-align: right;
   font-size: 19px;

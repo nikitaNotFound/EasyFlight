@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Flight from './flight';
-import ComponentHeadline from './component-headline';
+import ComponentHeadline from '../component-headline';
 import PropsTypes from 'prop-types';
 
 class Flights extends Component {
@@ -11,7 +11,7 @@ class Flights extends Component {
     render () {
         return (
             <div className="list rounded">
-                <ComponentHeadline content="Flights list" />
+                <ComponentHeadline content="Flights list"/>
 
                 <div className="container-fluid list-body">
                     {this.props.flights.map(

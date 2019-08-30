@@ -74,12 +74,13 @@
 
 .adding-form textarea{
     margin-top: 2%;
-    width: 100%;
+    margin: 0 -15px;
+    width: calc(100% + 30px);
 }
 
 .form-item {
     display: inline;
-    margin: 0 2.5%;
+    margin-right: 2.5%;
 }
 
 .form-item label {
@@ -291,25 +292,7 @@
     background: rgb(255, 73, 73);
 }
 
-/******************************SEARCH LIST****************************/
-.search-list {
-    width: 194px;
-    position: absolute;
-    z-index: 1000;
-    background: rgb(211, 211, 211);
-    padding: 5px;
-}
 
-.search-item {
-    font-family: serif;
-    font-size: 16px;
-    margin-top: 5px;
-    background: white;
-}
-
-.search-item-hide {
-    display: none;
-}
 
 /*********************************SIGN UP*******************************/
 .form-sign-up {

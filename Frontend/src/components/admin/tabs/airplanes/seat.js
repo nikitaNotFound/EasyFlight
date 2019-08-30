@@ -9,21 +9,20 @@ function getSeatTypeIndex (props) {
         return UNDEFINED_SEAT_TYPE_INDEX;
     }
     else {
-        const getIndex = () => {
-            for (let i = 0, len = props.seatTypes.length; i < len; i++) {
-                const element = props.seatTypes[i];
-                if (element.id == props.seat.typeId) {
-                    return i;
-                }
+        let index = UNDEFINED_SEAT_TYPE_INDEX;
+        for (let i = 0, len = props.seatTypes.length; i < len; i++) {
+            const element = props.seatTypes[i];
+            if (element.id === props.seat.typeId) {
+                index = i;
+                break;
             }
         }
 
-        return getIndex();
+        return index;
     }
 }
 
 function Seat (props) {
-    console.log(props.seatTypes);
     const [seatTypeIndex, changeSeatTypeIndex] = useState(getSeatTypeIndex(props));
 
     function onClickHandler () {

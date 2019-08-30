@@ -39,7 +39,7 @@ function Adding () {
             <div className="list-item-action">
                 <Headline name="Adding new flight"/>
 
-                <form method="post" className="adding-form">
+                <div className="adding-form">
                     <div className="row">
                         <div className="col-2">
                             <input type="file" name="image" id="file-input" className="file-upload"/>
@@ -48,25 +48,25 @@ function Adding () {
                             </label>
                         </div>
                         <div className="col-10">
-                            <div className="row">
-                                <SearchList array={airports} placeholder="From"/>
-                                <SearchList array={airports} placeholder="To"/>
-                                <div className="form-item">
-                                    <label htmlFor="departure-time">Departure time</label>
-                                    <input id="departure-time" type="time"/>
+                            <div className="editing-params-form">
+                                <div className="row">
+                                    <SearchList array={airports} placeholder="From"/>
+                                    <SearchList array={airports} placeholder="To"/>
+                                    <div className="form-item">
+                                        <label htmlFor="departure-time">Departure time</label>
+                                        <input id="departure-time" type="time"/>
+                                    </div>
+                                    <div className="form-item">
+                                        <label htmlFor="flight-cost">Cost</label>
+                                        <input id="flight-cost" type="text"/>
+                                    </div>
+                                    <SearchList array={airplanes} placeholder="airplane"/>
                                 </div>
-                                <div className="form-item">
-                                    <label htmlFor="flight-cost">Cost</label>
-                                    <input id="flight-cost" type="text"/>
-                                </div>
-                                <SearchList array={airplanes} placeholder="airplane"/>
                             </div>
-                            <br/>
-                            <textarea placeholder="description"/>
                         </div>
                     </div>
                     <input type="submit" value="Add" className="add-button"/>
-                </form>
+                </div>
             </div>
         );
     }

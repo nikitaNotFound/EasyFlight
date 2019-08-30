@@ -1,12 +1,9 @@
-const airplanes = [
-    {id: 1, name:"Minsk airport", country:"Belarus", city:"Minsk", desc:"Biggest airport in Belarus"},
-    {id: 2, name:"Kiev airport", country:"Ukraine", city:"Kiev", desc:"Biggest airport in Ukraine"}
-];
+import {airports} from './DataBase';
 
 export function getAll () {
     return new Promise (
         (resolve, reject) => {
-            const data = airplanes;
+            const data = airports;
             if (data === undefined) {
                 reject("Error");
             }
@@ -18,23 +15,22 @@ export function getAll () {
 }
 
 export function getById(id) {
-    return new Promise((resolve, reject) => {
-            const storage = airplanes;
-            const item = () => {
-                for (let i = 0, len = storage.length; i < len; i++) {
-                    if (storage[i].id == id) {
-                        return storage[i];
-                    }
-                    return undefined;
+    return new Promise(
+        (resolve, reject) => {
+            const storage = airports;
+            let airport = {};
+            for (let i = 0, len = storage.length; i < len; i++) {
+                if (storage[i].id == id) {
+                    airport = storage[i];
                 }
             }
 
-            if(item === undefined) {
+            if(!airport) {
                 reject("Error");
             }
 
             else {
-                setTimeout(resolve, 1000, item);
+                setTimeout(resolve, 1000, airport);
             }
         }
     );

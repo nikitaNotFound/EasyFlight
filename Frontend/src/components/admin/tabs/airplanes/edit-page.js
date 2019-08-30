@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import Headline from '../common/headline';
-import AddIcon from '../../../../icons/add-image.png';
 import SeatEditor from './seat-editor';
 import Spinner from '../../../common/spinner';
 import * as AirplaneService from '../../../../services/AirplaneService';

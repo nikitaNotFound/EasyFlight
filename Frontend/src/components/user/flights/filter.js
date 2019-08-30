@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import ComponentHeadline from './component-headline';
+import ComponentHeadline from '../component-headline';
 
 class Filter extends Component {
     render () {
