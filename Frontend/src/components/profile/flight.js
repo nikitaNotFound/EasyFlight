@@ -15,7 +15,7 @@ function Flight (props) {
         <div className="flight-history-item">
             <div className="row">
                 <div className="col-1">
-                    <img src={Icon} className="item-image"/>
+                    <img src={Icon} alt="company-icon" className="item-image"/>
                 </div>
 
                 <div className="col-4">

@@ -50,7 +50,7 @@ function Content () {
 
     if (isLoading) {
         return (
-            <Spinner/>
+            <Spinner headline="Loading..."/>
         );
     }
 
@@ -61,7 +61,7 @@ function Content () {
                     <div className="col-2">
                         <div className="user-photo">
                             <label htmlFor="photo">
-                                <img src={AddImage}/>
+                                <img src={AddImage} alt="add user avatar"/>
                             </label>
                             <input type="file" id="photo"/>
                         </div>

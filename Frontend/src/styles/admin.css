@@ -160,7 +160,7 @@
 
 .seat-editor-instruments {
     margin-bottom: 1%;
-    padding: 1%;
+    padding: calc(1% + 15px);
     background: rgb(212, 212, 212);
 }
 

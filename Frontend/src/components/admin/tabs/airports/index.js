@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import AddButton from '../common/add-button';
+import AddButton from '../../../common/add-button';
 import Airports from './airports';
 import * as AirportService from '../../../../services/AirportService';
 import Spinner from '../../../common/spinner';
@@ -9,12 +9,12 @@ function AirportPage () {
     const [airports, changeAirports] = useState([]);
 
     useEffect(() => {
-        const dataLoading = AirportService.getAirports();
+        const dataLoading = AirportService.getAll();
 
         dataLoading
             .then(onDataSuccessful.bind(this))
             .catch(onDataFail);
-    });
+    }, []);
 
     function onDataSuccessful (data) {
         changeLoadingMode(false);
@@ -35,7 +35,7 @@ function AirportPage () {
     }
     return (
         <div className="tab-content">
-            <Spinner/>
+            <Spinner headline=""/>
         </div>
     );
 }

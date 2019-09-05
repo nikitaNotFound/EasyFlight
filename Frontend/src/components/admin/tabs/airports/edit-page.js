@@ -1,8 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import Headline from '../common/headline';
+import Headline from '../../../common/headline';
 import Spinner from '../../../common/spinner';
-import Airport from '../../../../services/airports-models/airport';
+import SearchList from '../../../common/search-list';
+import MessageBox from '../../../common/message-box';
+import Airport from '../../../../services/airport-models/airport';
 import * as AirportService from '../../../../services/AirportService';
+import * as PlaceService from '../../../../services/PlaceService';
 
 function Edit (props) {
     const [loading, changeLoadingMode] = useState(true);
@@ -10,25 +13,31 @@ function Edit (props) {
     const [country, changeCountry] = useState();
     const [city, changeCity] = useState();
     const [desc, changeDesc] = useState();
+    
+    const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
     useEffect(() => {
-        const airportLoading = AirportService.getAirportById(props.match.params.id);
+        const airportLoading = AirportService.getById(props.match.params.id);
         airportLoading
-            .then(data => {
-                onDataSuccessful(data);
+            .then(foundAirport => {
+                changeName(foundAirport.name);
+                changeDesc(foundAirport.description);
+
+                return PlaceService.getCityById(foundAirport.cityId);
+            })
+            .then(foundCity => {
+                changeCity(foundCity);
+
+                return PlaceService.getCountryById(foundCity.countryId);
+            })
+            .then(foundCountry => {
+                changeCountry(foundCountry);
+                changeLoadingMode(false);
             })
             .catch(error => {
                 onDataFail(error);
             });
-    }, []);
-
-    function onDataSuccessful(data) {
-        changeName(data.name);
-        changeCountry(data.country);
-        changeCity(data.city);
-        changeDesc(data.desc);
-        changeLoadingMode(false);
-    }
+    }, [props.match.params.id]);
 
     function onDataFail(error) {
         alert(error);
@@ -38,12 +47,12 @@ function Edit (props) {
         changeName(event.target.value);
     }
 
-    function onCountryChange(event) {
-        changeCountry(event.target.value);
+    function onCountryChange(newCountry) {
+        changeCountry(newCountry);
     }
 
-    function onCityChange(event) {
-        changeCity(event.target.value);
+    function onCityChange(newCity) {
+        changeCity(newCity);
     }
 
     function onDescChange(event) {
@@ -51,9 +60,47 @@ function Edit (props) {
     }
 
     function onDataSave() {
-        let newAirport = new Airport(null, name, country, city, desc);
-        console.log(newAirport);
+        if (!name || !country || !city || !desc) {
+            changeMessageBoxValue('Input data is not valid!');
+            return;
+        }
+
+        let newAirport = new Airport(null, name, city.id, desc);
         //HERE WILL BE HTTP REQUEST
+    }
+
+    function getCountryName(country) {
+        return country.name;
+    }
+
+    function getCityName(city) {
+        return city.name;
+    }
+
+    function showMessageBox() {
+        if(messageBoxValue) {
+            return (
+                <MessageBox message={messageBoxValue} hideFunc={hideMessageBox}/>
+            );
+        }
+    }
+
+    function hideMessageBox() {
+        changeMessageBoxValue(null);
+    }
+
+    function showCityChooser() {
+        if(country) {
+            return (
+                <SearchList
+                    searchFunc={PlaceService.searchCities}
+                    searchArgs={[country.id]}
+                    placeholder="City"
+                    currentItem={city}
+                    getItemName={getCityName}
+                    onValueChange={onCityChange}/>
+            );
+        }
     }
 
     if (!loading) {
@@ -70,15 +117,13 @@ function Edit (props) {
                                         <label htmlFor="airport-name">Airport name</label>
                                         <input id="airport-name" type="text" onChange={onNameChange} value={name}/>
                                     </div>
-                                    <div className="form-item">
-                                        <label htmlFor="airport-counrty">Country</label>
-                                        <input id="airport-country" type="text" onChange={onCountryChange} value={country}/>
-                                    </div>
-                                    <div className="form-item">
-                                        <label htmlFor="airport-city">City</label>
-                                        <input id="airport-city" type="text" onChange={onCityChange} value={city}/>
-                                    </div>
-                                    <br/>
+                                    <SearchList
+                                        searchFunc={PlaceService.searchCountries}
+                                        placeholder="Country"
+                                        currentItem={country}
+                                        getItemName={getCountryName}
+                                        onValueChange={onCountryChange}/>
+                                    {showCityChooser()}
                                 </div>
                                 <textarea onChange={onDescChange} value={desc}/>
                             </div>
@@ -86,11 +131,12 @@ function Edit (props) {
                     </div>
                     <div className="custom-button big" onClick={onDataSave}>Save</div>
                 </form>
+                {showMessageBox()}
             </div>
         );
     }
     return (
-        <Spinner/>
+        <Spinner headline="Loading..."/>
     );
 }
 

@@ -18,7 +18,6 @@ function getSeatTypeIndex (props) {
             }
         }
 
-        console.log(index);
         return index;
     }
 }
@@ -39,7 +38,7 @@ function Seat (props) {
             changeSeatTypeIndex(UNDEFINED_SEAT_TYPE_INDEX);
             props.onSeatDeleted(seatPosition);
         }
-        else if (oldTypeIndex == UNDEFINED_SEAT_TYPE_INDEX) {
+        else if (oldTypeIndex === UNDEFINED_SEAT_TYPE_INDEX) {
             const newSeat = new SeatObject (
                 props.placeInfo.floor,
                 props.placeInfo.section,
@@ -57,7 +56,7 @@ function Seat (props) {
             changeSeatTypeIndex(newTypeIndex);
         }
     }
-    if (seatTypeIndex == UNDEFINED_SEAT_TYPE_INDEX) {
+    if (seatTypeIndex === UNDEFINED_SEAT_TYPE_INDEX) {
         return (
             <div className={`seat seat-type-0 non-selectable`}
                 onClick={onClickHandler}/>

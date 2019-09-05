@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import AddButton from '../common/add-button';
+import AddButton from '../../../common/add-button';
 import Flights from './flights';
 import Spinner from '../../../common/spinner';
 import * as FlightService from '../../../../services/FlightService';
@@ -9,7 +9,7 @@ function FlightPage () {
     const [flights, changeFlights] = useState([]);
 
     useEffect(() => {
-        const dataLoading = FlightService.getFlights();
+        const dataLoading = FlightService.getAll();
 
         dataLoading
             .then(onDataSuccessful.bind(this))
@@ -36,7 +36,7 @@ function FlightPage () {
     else {
         return (
             <div className="tab-content">
-                <Spinner/>
+                <Spinner headline="Loading..."/>
             </div>
         );
     }

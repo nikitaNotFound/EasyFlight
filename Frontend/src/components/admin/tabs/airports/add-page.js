@@ -1,6 +1,9 @@
 import React, {useState} from 'react';
-import Headline from '../common/headline';
-import Airport from '../../../../services/airports-models/airport';
+import Headline from '../../../common/headline';
+import SearchList from '../../../common/search-list';
+import MessageBox from '../../../common/message-box';
+import Airport from '../../../../services/airport-models/airport';
+import * as PlaceService from '../../../../services/PlaceService';
 
 function Adding () {
     const [name, changeName] = useState();
@@ -8,16 +11,18 @@ function Adding () {
     const [city, changeCity] = useState();
     const [desc, changeDesc] = useState();
 
+    const [messageBoxValue, changeMessageBoxValue] = useState(null);
+
     function onNameChange(event) {
         changeName(event.target.value);
     }
 
-    function onCountryChange(event) {
-        changeCountry(event.target.value);
+    function onCountryChange(country) {
+        changeCountry(country);
     }
 
-    function onCityChange(event) {
-        changeCity(event.target.value);
+    function onCityChange(city) {
+        changeCity(city);
     }
 
     function onDescChange(event) {
@@ -26,12 +31,46 @@ function Adding () {
 
     function onDataSave() {
         if (!name || !country || !city || !desc) {
+            changeMessageBoxValue('Input data is not valid!');
             return;
         }
 
-        let newAirport = new Airport(null, name, country, city, desc);
-        console.log(newAirport);
+        let newAirport = new Airport(null, name, city.id, desc);
         //HERE WILL BE HTTP REQUEST
+    }
+
+    function getCountryName(country) {
+        return country.name;
+    }
+
+    function getCityName(city) {
+        return city.name;
+    }
+
+    function showMessageBox() {
+        if(messageBoxValue) {
+            return (
+                <MessageBox message={messageBoxValue} hideFunc={hideMessageBox}/>
+            );
+        }
+    }
+
+    function hideMessageBox() {
+        changeMessageBoxValue(null);
+    }
+
+    function showCityChooser() {
+        if(country) {
+            return (
+                <SearchList
+                    searchFunc={PlaceService.searchCities}
+                    searchArgs={[country.id]}
+                    placeholder="City"
+                    currentItem={city}
+                    getItemName={getCityName}
+                    onValueChange={onCityChange}/>
+            );
+        }
     }
 
     return (
@@ -47,14 +86,13 @@ function Adding () {
                                     <label htmlFor="airport-name">Airport name</label>
                                     <input id="airport-name" value={name} onChange={onNameChange} type="text" placeholder="airport name"/>
                                 </div>
-                                <div className="form-item">
-                                    <label htmlFor="airport-country">Country</label>
-                                    <input id="airport-country" value={country} onChange={onCountryChange} type="text" placeholder="country"/>
-                                </div>
-                                <div className="form-item">
-                                    <label htmlFor="airport-city">City</label>
-                                    <input id="airport-city" value={city} onChange={onCityChange} type="text" placeholder="city"/>
-                                </div>
+                                <SearchList
+                                    searchFunc={PlaceService.searchCountries}
+                                    placeholder="Country"
+                                    currentItem={country}
+                                    getItemName={getCountryName}
+                                    onValueChange={onCountryChange}/>
+                                {showCityChooser()}
                                 <br/>
                             </div>
                             <textarea onChange={onDescChange} value={desc} placeholder="description"/>
@@ -63,6 +101,7 @@ function Adding () {
                 </div>
                 <div className="custom-button big" onClick={onDataSave}>Save</div>
             </div>
+            {showMessageBox()}
         </div>
     );
 }

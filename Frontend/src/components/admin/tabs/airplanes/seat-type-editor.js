@@ -32,7 +32,7 @@ function SeatTypesEditor (props) {
         for (let i = 0, len = props.seatTypes.length; i < len; i++) {
             const element = props.seatTypes[i];
 
-            if (type.color == element.color || type.name == element.name) {
+            if (type.color === element.color || type.name === element.name) {
                 return false;
             }
         }

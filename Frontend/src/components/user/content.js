@@ -4,15 +4,13 @@ import Flights from './flights/flights';
 import Switcher from './flights/switcher';
 import Spinner from '../common/spinner';
 import * as FlightsService from '../../services/FlightService';
-import * as UserService from '../../services/UserSerivce';
 
 function Content () {
     const [loading, changeLoadingMode] = useState(true);
-    const [user, changeUser] = useState();
     const [flights, changeFlights] = useState([]);
 
     useEffect(() => {
-        const dataLoading = FlightsService.getFlights();
+        const dataLoading = FlightsService.getAll();
 
         dataLoading
             .then(onDataSuccessful.bind(this))
@@ -54,7 +52,7 @@ function Content () {
     }
     else {
         return (
-            <Spinner/>
+            <Spinner headline="Loading..."/>
         );
     }
 }
