@@ -27,42 +27,6 @@ function Adding() {
 
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
-    function onAirplaneChange(airplane) {
-        changeAirplane(airplane);
-    }
-
-    function onFromPlaceChange(event) {
-        changeFromPlace(event.target.value);
-    }
-
-    function onToPlaceChange(event) {
-        changeToPlace(event.target.value);
-    }
-
-    function onDepartureTimeChange(event) {
-        changeDepartureTime(event.target.value);
-    }
-
-    function onDepartureDateChange(event) {
-        changeDepartureDate(event.target.value);
-    }
-
-    function onDepartureBackTimeChange(event) {
-        changeDepartureBackTime(event.target.value);
-    }
-
-    function onDepartureBackDateChange(event) {
-        changeDepartureBackDate(event.target.value);
-    }
-
-    function onTypeCostChange(newTypesCost) {
-        changeTicketsCost(newTypesCost);
-    }
-
-    function onDescChange(event) {
-        changeDesc(event.target.value);
-    }
-
     function onDataSave() {
         if (!departureDate 
             || !departureBackDate 
@@ -109,7 +73,7 @@ function Adding() {
         return (
             <TicketsCostEditor
                 seatTypes={airplane.seatTypes}
-                onTypeCostChange={onTypeCostChange}
+                onTypeCostChange={changeTicketsCost}
             />
         );
     }
@@ -119,14 +83,10 @@ function Adding() {
             return (
                 <MessageBox
                     message={messageBoxValue}
-                    hideFunc={hideMessageBox}
+                    hideFunc={changeMessageBoxValue}
                 />
             );
         }
-    }
-
-    function hideMessageBox() {
-        changeMessageBoxValue(null);
     }
 
     return (
@@ -152,21 +112,21 @@ function Adding() {
                                 <SearchList
                                     searchFunc={AirportService.search}
                                     getItemName={getAirportName}
-                                    onValueChange={onFromPlaceChange}
+                                    onValueChange={changeFromPlace}
                                     currentItem={fromPlace}
                                     placeholder="From"
                                 />
                                 <SearchList
                                     searchFunc={AirportService.search}
                                     getItemName={getAirportName}
-                                    onValueChange={onToPlaceChange}
+                                    onValueChange={changeToPlace}
                                     currentItem={toPlace}
                                     placeholder="To"
                                 />
                                 <SearchList
                                     searchFunc={AirplaneService.search}
                                     getItemName={getAirplaneName}
-                                    onValueChange={onAirplaneChange}
+                                    onValueChange={changeAirplane}
                                     currentItem={airplane}
                                     placeholder="airplane"
                                 />
@@ -179,7 +139,7 @@ function Adding() {
                                             </label>
                                             <input
                                                 id="dep-time"
-                                                onChange={onDepartureTimeChange}
+                                                onChange={(event) => changeDepartureTime(event.target.value)}
                                                 type="time"
                                             />
                                         </div>
@@ -189,7 +149,7 @@ function Adding() {
                                             </label>
                                             <input
                                                 id="dep-date"
-                                                onChange={onDepartureDateChange}
+                                                onChange={(event) => changeDepartureDate(event.target.value)}
                                                 type="date"
                                             />
                                         </div>
@@ -199,7 +159,7 @@ function Adding() {
                                             </label>
                                             <input
                                                 id="dep-back-time"
-                                                onChange={onDepartureBackTimeChange}
+                                                onChange={(event) => changeDepartureBackTime(event.target.value)}
                                                 type="time"
                                             />
                                         </div>
@@ -209,7 +169,7 @@ function Adding() {
                                             </label>
                                             <input
                                                 id="dep-back-date"
-                                                onChange={onDepartureBackDateChange}
+                                                onChange={(event) => changeDepartureBackDate(event.target.value)}
                                                 type="date"
                                             />
                                         </div>
@@ -220,7 +180,7 @@ function Adding() {
                                     <textarea
                                         placeholder="description"
                                         value={desc}
-                                        onChange={onDescChange}
+                                        onChange={(event) => changeDesc(event.target.value)}
                                     />
                                 </div>
                             </div>

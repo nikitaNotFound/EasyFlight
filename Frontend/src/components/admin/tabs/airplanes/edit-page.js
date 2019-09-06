@@ -51,10 +51,6 @@ function Edit(props) {
         const finalAirplane = new Airplane(id, name, maxMass, seats, seatTypes);
     }
 
-    function onNameChange(event) {
-        changeName(event.target.value);
-    }
-
     function onMaxMassChange(event) {
         const newMaxMass = Number(event.target.value);
         if (newMaxMass > 0) {
@@ -62,24 +58,15 @@ function Edit(props) {
         }
     }
 
-    function onSeatsChange(newSeats) {
-        changeSeats(newSeats);
-    }
-
-    function onSeatTypesChange(newSeatTypes) {
-        changeSeatTypes(newSeatTypes);
-    }
-
     function showMessageBox() {
         if (messageBoxValue) {
             return (
-                <MessageBox message={messageBoxValue} hideFunc={hideMessageBox}/>
+                <MessageBox
+                    message={messageBoxValue}
+                    hideFunc={changeMessageBoxValue}
+                />
             );
         }
-    }
-
-    function hideMessageBox() {
-        changeMessageBoxValue(null);
     }
 
     if (!loading) { 
@@ -92,12 +79,25 @@ function Edit(props) {
                         <div className="editing-params-form">
                             <div className="row">
                                 <div className="form-item">
-                                    <label htmlFor="airplane-name">Airplane name</label>
-                                    <input id="airplane-name" type="text" value={name} onChange={onNameChange} name="name"/>
+                                    <label htmlFor="airplane-name">
+                                        Airplane name
+                                    </label>
+                                    <input
+                                        id="airplane-name"
+                                        type="text"
+                                        value={name}
+                                        onChange={(event) => changeName(event.target.value)}
+                                    />
                                 </div>
                                 <div className="form-item">
-                                    <label htmlFor="airplane-max-mass">Max mass</label>
-                                    <input id="airplane-max-mass" value={maxMass} onChange={onMaxMassChange}/>
+                                    <label htmlFor="airplane-max-mass">
+                                        Max mass
+                                    </label>
+                                    <input
+                                        id="airplane-max-mass"
+                                        value={maxMass}
+                                        onChange={onMaxMassChange}
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -105,8 +105,8 @@ function Edit(props) {
                         <SeatEditor 
                             seatInfo={seats}
                             seatTypes={seatTypes}
-                            onSeatsChange={onSeatsChange}
-                            onSeatTypesChange={onSeatTypesChange}
+                            onSeatsChange={changeSeats}
+                            onSeatTypesChange={changeSeatTypes}
                         />
                     </div>
                 </div>

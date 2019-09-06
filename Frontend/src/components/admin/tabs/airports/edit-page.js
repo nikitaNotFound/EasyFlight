@@ -35,29 +35,9 @@ function Edit(props) {
                 changeLoadingMode(false);
             })
             .catch(error => {
-                onDataFail(error);
+                alert(error);
             });
     }, [props.match.params.id]);
-
-    function onDataFail(error) {
-        alert(error);
-    }
-
-    function onNameChange(event) {
-        changeName(event.target.value);
-    }
-
-    function onCountryChange(newCountry) {
-        changeCountry(newCountry);
-    }
-
-    function onCityChange(newCity) {
-        changeCity(newCity);
-    }
-
-    function onDescChange(event) {
-        changeDesc(event.target.value);
-    }
 
     function onDataSave() {
         if (!name || !country || !city || !desc) {
@@ -82,14 +62,10 @@ function Edit(props) {
             return (
                 <MessageBox
                     message={messageBoxValue}
-                    hideFunc={hideMessageBox}
+                    hideFunc={changeMessageBoxValue}
                 />
             );
         }
-    }
-
-    function hideMessageBox() {
-        changeMessageBoxValue(null);
     }
 
     function showCityChooser() {
@@ -101,7 +77,7 @@ function Edit(props) {
                     placeholder="City"
                     currentItem={city}
                     getItemName={getCityName}
-                    onValueChange={onCityChange}
+                    onValueChange={changeCity}
                 />
             );
         }
@@ -119,18 +95,23 @@ function Edit(props) {
                                 <div className="row">
                                     <div className="form-item">
                                         <label htmlFor="airport-name">Airport name</label>
-                                        <input id="airport-name" type="text" onChange={onNameChange} value={name}/>
+                                        <input
+                                            id="airport-name"
+                                            type="text"
+                                            onChange={(event) => changeName(event.target.value)}
+                                            value={name}
+                                        />
                                     </div>
                                     <SearchList
                                         searchFunc={PlaceService.searchCountries}
                                         placeholder="Country"
                                         currentItem={country}
                                         getItemName={getCountryName}
-                                        onValueChange={onCountryChange}
+                                        onValueChange={changeCountry}
                                     />
                                     {showCityChooser()}
                                 </div>
-                                <textarea onChange={onDescChange} value={desc}/>
+                                <textarea onChange={changeDesc} value={desc}/>
                             </div>
                         </div>
                     </div>

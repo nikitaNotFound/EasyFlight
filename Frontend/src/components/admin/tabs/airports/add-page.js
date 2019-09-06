@@ -13,22 +13,6 @@ function Adding() {
 
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
-    function onNameChange(event) {
-        changeName(event.target.value);
-    }
-
-    function onCountryChange(country) {
-        changeCountry(country);
-    }
-
-    function onCityChange(city) {
-        changeCity(city);
-    }
-
-    function onDescChange(event) {
-        changeDesc(event.target.value);
-    }
-
     function onDataSave() {
         if (!name || !country || !city || !desc) {
             changeMessageBoxValue('Input data is not valid!');
@@ -52,14 +36,10 @@ function Adding() {
             return (
                 <MessageBox
                     message={messageBoxValue}
-                    hideFunc={hideMessageBox}
+                    hideFunc={changeMessageBoxValue}
                 />
             );
         }
-    }
-
-    function hideMessageBox() {
-        changeMessageBoxValue(null);
     }
 
     function showCityChooser() {
@@ -71,7 +51,7 @@ function Adding() {
                     placeholder="City"
                     currentItem={city}
                     getItemName={getCityName}
-                    onValueChange={onCityChange}
+                    onValueChange={changeCity}
                 />
             );
         }
@@ -88,23 +68,35 @@ function Adding() {
                             <div className="row">
                                 <div className="form-item">
                                     <label htmlFor="airport-name">Airport name</label>
-                                    <input id="airport-name" value={name} onChange={onNameChange} type="text" placeholder="airport name"/>
+                                    <input
+                                        id="airport-name"
+                                        value={name}
+                                        onChange={(event) => changeName(event.target.value)}
+                                        type="text"
+                                        placeholder="airport name"
+                                    />
                                 </div>
                                 <SearchList
                                     searchFunc={PlaceService.searchCountries}
                                     placeholder="Country"
                                     currentItem={country}
                                     getItemName={getCountryName}
-                                    onValueChange={onCountryChange}
+                                    onValueChange={changeCountry}
                                 />
                                 {showCityChooser()}
                                 <br/>
                             </div>
-                            <textarea onChange={onDescChange} value={desc} placeholder="description"/>
+                            <textarea
+                                onChange={(event) => changeDesc(event.target.value)}
+                                value={desc}
+                                placeholder="description"
+                            />
                         </div>
                     </div>
                 </div>
-                <div className="custom-button big" onClick={onDataSave}>Save</div>
+                <div className="custom-button big" onClick={onDataSave}>
+                    Save
+                </div>
             </div>
             {showMessageBox()}
         </div>

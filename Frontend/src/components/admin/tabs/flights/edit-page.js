@@ -67,44 +67,10 @@ function Editing (props) {
 
                 changeLoadingMode(false);
             })
-            .catch(onDataFail);
+            .catch(error => {
+                alert(error);
+            });
     }, [props.match.params.id]);
-
-    function onDataFail(error) {
-        alert(error);
-    }
-
-    function onAirplaneChange(airplane) {
-        changeAirplane(airplane);
-    }
-
-    function onFromPlaceChange(place) {
-        changeFromPlace(place);
-    }
-
-    function onToPlaceChange(place) {
-        changeToPlace(place);
-    }
-
-    function onDepartureTimeChange(event) {
-        changeDepartureTime(event.target.value);
-    }
-
-    function onDepartureDateChange(event) {
-        changeDepartureDate(event.target.value);
-    }
-
-    function onDepartureBackTimeChange(event) {
-        changeDepartureBackTime(event.target.value);
-    }
-
-    function onDepartureBackDateChange(event) {
-        changeDepartureBackDate(event.target.value);
-    }
-
-    function onTypeCostChange(newTypesCost) {
-        changeTicketsCost(newTypesCost);
-    }
 
     function onDataSave() {
         if (!departureDate
@@ -153,7 +119,7 @@ function Editing (props) {
             <TicketsCostEditor
                 seatTypes={airplane.seatTypes}
                 flightId={flight.id}
-                onTypeCostChange={onTypeCostChange}
+                onTypeCostChange={changeTicketsCost}
             />
         );
     }
@@ -163,14 +129,10 @@ function Editing (props) {
             return (
                 <MessageBox
                     message={messageBoxValue}
-                    hideFunc={hideMessageBox}
+                    hideFunc={changeMessageBoxValue}
                 />
             );
         }
-    }
-
-    function hideMessageBox() {
-        changeMessageBoxValue(null);
     }
 
     if (loading) {
@@ -200,21 +162,21 @@ function Editing (props) {
                                 <SearchList
                                     searchFunc={AirportService.search}
                                     getItemName={getAirportName}
-                                    onValueChange={onFromPlaceChange}
+                                    onValueChange={changeFromPlace}
                                     currentItem={fromPlace}
                                     placeholder="From"
                                 />
                                 <SearchList
                                     searchFunc={AirportService.search}
                                     getItemName={getAirportName}
-                                    onValueChange={onToPlaceChange}
+                                    onValueChange={changeToPlace}
                                     currentItem={toPlace}
                                     placeholder="To"
                                 />
                                 <SearchList
                                     searchFunc={AirplaneService.search}
                                     getItemName={getAirplaneName}
-                                    onValueChange={onAirplaneChange}
+                                    onValueChange={changeAirplane}
                                     currentItem={airplane}
                                     placeholder="airplane"
                                 />
@@ -227,7 +189,7 @@ function Editing (props) {
                                             </label>
                                             <input 
                                                 id="dep-time"
-                                                onChange={onDepartureTimeChange}
+                                                onChange={(event) => changeDepartureTime(event.target.value)}
                                                 value={departureTime}
                                                 type="time"
                                             />
@@ -238,7 +200,7 @@ function Editing (props) {
                                             </label>
                                             <input
                                                 id="dep-date"
-                                                onChange={onDepartureDateChange}
+                                                onChange={(event) => changeDepartureDate(event.target.value)}
                                                 value={departureDate}
                                                 type="date"
                                             />
@@ -249,7 +211,7 @@ function Editing (props) {
                                             </label>
                                             <input
                                                 id="dep-back-time"
-                                                onChange={onDepartureBackTimeChange}
+                                                onChange={(event) => changeDepartureBackTime(event.target.value)}
                                                 value={departureBackTime}
                                                 type="time"
                                             />
@@ -260,7 +222,7 @@ function Editing (props) {
                                             </label>
                                             <input
                                                 id="dep-back-date"
-                                                onChange={onDepartureBackDateChange}
+                                                onChange={(event) => changeDepartureBackTime(event.target.value)}
                                                 value={departureBackDate}
                                                 type="date"
                                             />
@@ -269,7 +231,11 @@ function Editing (props) {
                                 </div>
                                 {getTicketsCostEditor()}
                                 <div className="adding-form-section">
-                                    <textarea placeholder="description" value={desc}/>
+                                    <textarea
+                                        placeholder="description"
+                                        value={desc}
+                                        onChange={changeDesc}
+                                    />
                                 </div>
                             </div>
                         </div>

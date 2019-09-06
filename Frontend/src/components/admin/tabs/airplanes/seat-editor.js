@@ -63,8 +63,9 @@ function SeatEditor(props) {
             storage[floor - 1][section - 1] = [];
         }
         const newZone = storage[floor - 1][section - 1].length + 1;
-        // row, number and typeId setted as 1, because 1 is start value of every prop
-        const newSeat = new Seat(floor, section, newZone, 1, 1, 1);
+        // row, number  setted as 1, because 1 is start value
+        // typeId setted as first element id of seatTypes
+        const newSeat = new Seat(floor, section, newZone, 1, 1, seatTypes[0]);
 
         storage[floor - 1][section - 1][newZone - 1] = [];
         storage[floor - 1][section - 1][newZone - 1][0] = [];
@@ -99,11 +100,12 @@ function SeatEditor(props) {
         props.onSeatTypesChange(storage);
     }
 
-    // returns at the start; when user adds something, program will call the second return' block
     function showSeatTypesInstruments() {
         if (seatTypes.length > 0) {
             return (
-                <Instruments onAddZone={onAddZone} onDataSave={props.onDataSave}/>
+                <Instruments
+                    onAddZone={onAddZone}
+                />
             );
         }
     }
