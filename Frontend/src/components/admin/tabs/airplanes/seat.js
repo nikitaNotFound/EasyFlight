@@ -4,7 +4,7 @@ import SeatObject from '../../../../services/airplane-models/seat';
 
 const UNDEFINED_SEAT_TYPE_INDEX = -1;
 
-function getSeatTypeIndex (props) {
+function getSeatTypeIndex(props) {
     if (!props.seat) {
         return UNDEFINED_SEAT_TYPE_INDEX;
     }
@@ -22,10 +22,10 @@ function getSeatTypeIndex (props) {
     }
 }
 
-function Seat (props) {
+function Seat(props) {
     const [seatTypeIndex, changeSeatTypeIndex] = useState(getSeatTypeIndex(props));
 
-    function onClickHandler () {
+    function onClickHandler() {
         const oldTypeIndex = seatTypeIndex;
 
         const newTypeIndex = oldTypeIndex + 1;

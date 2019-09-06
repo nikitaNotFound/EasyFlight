@@ -70,7 +70,7 @@ function Editing (props) {
             .catch(onDataFail);
     }, [props.match.params.id]);
 
-    function onDataFail (error) {
+    function onDataFail(error) {
         alert(error);
     }
 
@@ -107,7 +107,7 @@ function Editing (props) {
     }
 
     function onDataSave() {
-        if(!departureDate
+        if (!departureDate
             || !departureBackDate
             || !departureTime
             || !departureBackTime
@@ -150,14 +150,21 @@ function Editing (props) {
         }
 
         return (
-            <TicketsCostEditor seatTypes={airplane.seatTypes} flightId={flight.id} onTypeCostChange={onTypeCostChange}/>
+            <TicketsCostEditor
+                seatTypes={airplane.seatTypes}
+                flightId={flight.id}
+                onTypeCostChange={onTypeCostChange}
+            />
         );
     }
 
     function showMessageBox() {
-        if(messageBoxValue) {
+        if (messageBoxValue) {
             return (
-                <MessageBox message={messageBoxValue} hideFunc={hideMessageBox}/>
+                <MessageBox
+                    message={messageBoxValue}
+                    hideFunc={hideMessageBox}
+                />
             );
         }
     }
@@ -167,9 +174,7 @@ function Editing (props) {
     }
 
     if (loading) {
-        return (
-            <Spinner headline="Loading..."/>
-        );
+        return <Spinner headline="Loading..."/>
     }
 
     return (
@@ -179,7 +184,12 @@ function Editing (props) {
             <div className="adding-form">
                 <div className="row">
                     <div className="col-2">
-                        <input type="file" name="image" id="file-input" className="file-upload"/>
+                        <input
+                            type="file"
+                            name="image"
+                            id="file-input"
+                            className="file-upload"
+                        />
                         <label htmlFor="file-input">
                             <img src={BuyIcon} className="adding-form-img" alt="add"/>
                         </label>
@@ -209,20 +219,48 @@ function Editing (props) {
                                 <div className="adding-form-section">
                                     <div className="row">
                                         <div className="form-item">
-                                            <label htmlFor="dep-time">Departure time</label>
-                                            <input id="dep-time" onChange={onDepartureTimeChange} value={departureTime} type="time"/>
+                                            <label htmlFor="dep-time">
+                                                Departure time
+                                            </label>
+                                            <input 
+                                                id="dep-time"
+                                                onChange={onDepartureTimeChange}
+                                                value={departureTime}
+                                                type="time"
+                                            />
                                         </div>
                                         <div className="form-item tabulation">
-                                            <label htmlFor="dep-date">Departure date</label>
-                                            <input id="dep-date" onChange={onDepartureDateChange} value={departureDate} type="date"/>
+                                            <label htmlFor="dep-date">
+                                                Departure date
+                                            </label>
+                                            <input
+                                                id="dep-date"
+                                                onChange={onDepartureDateChange}
+                                                value={departureDate}
+                                                type="date"
+                                            />
                                         </div>
                                         <div className="form-item">
-                                            <label htmlFor="dep-back-time">Departure back time</label>
-                                            <input id="dep-back-time" onChange={onDepartureBackTimeChange} value={departureBackTime} type="time"/>
+                                            <label htmlFor="dep-back-time">
+                                                Departure back time
+                                            </label>
+                                            <input
+                                                id="dep-back-time"
+                                                onChange={onDepartureBackTimeChange}
+                                                value={departureBackTime}
+                                                type="time"
+                                            />
                                         </div>
                                         <div className="form-item">
-                                            <label htmlFor="dep-back-date">Departure back date</label>
-                                            <input id="dep-back-date" onChange={onDepartureBackDateChange} value={departureBackDate} type="date"/>
+                                            <label htmlFor="dep-back-date">
+                                                Departure back date
+                                            </label>
+                                            <input
+                                                id="dep-back-date"
+                                                onChange={onDepartureBackDateChange}
+                                                value={departureBackDate}
+                                                type="date"
+                                            />
                                         </div>
                                     </div>
                                 </div>
@@ -234,7 +272,9 @@ function Editing (props) {
                         </div>
                     </div>
                 </div>
-                <div className="custom-button big" onClick={onDataSave}>Save</div>
+                <div className="custom-button big" onClick={onDataSave}>
+                    Save
+                </div>
             </div>
             {showMessageBox()}
         </div>

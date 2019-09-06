@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import PropsTypes from 'prop-types';
 import SeatRow from './seat-row';
 
-function inizializeRowSeats (props, maxLength) {
+function inizializeRowSeats(props, maxLength) {
     let storage = [];
     Object.assign(storage, props.seats)
 
@@ -17,7 +17,7 @@ function inizializeRowSeats (props, maxLength) {
     return storage;
 }
 
-function getGlobalRowLength (props) {
+function getGlobalRowLength(props) {
     let storage = [];
     Object.assign(storage, props.seats)
 
@@ -32,11 +32,11 @@ function getGlobalRowLength (props) {
     return maxLength;
 }
 
-function SeatZone (props) {
+function SeatZone(props) {
     const [globalRowLength, changeGlobalRowLength] = useState(getGlobalRowLength(props));
     const [rowSeats, changeRowSeats] = useState(inizializeRowSeats(props, globalRowLength));
 
-    function onSeatDeleted (seatPosition) {
+    function onSeatDeleted(seatPosition) {
         let storage = [];
         Object.assign(storage, rowSeats);
 
@@ -56,7 +56,7 @@ function SeatZone (props) {
         changeRowSeats(storage);
     }
     
-    function onSeatAdded (seat) {
+    function onSeatAdded(seat) {
         let storage = [];
         Object.assign(storage, rowSeats);
 
@@ -78,7 +78,7 @@ function SeatZone (props) {
         changeRowSeats(storage);
     }
 
-    function onSeatChanged (seatType, placeInfo) {
+    function onSeatChanged(seatType, placeInfo) {
         let storage = [];
         Object.assign(storage, rowSeats);
 
@@ -87,7 +87,7 @@ function SeatZone (props) {
         changeRowSeats(storage);
     }
     
-    function checkColumnEmpty (array, columnIndex) {
+    function checkColumnEmpty(array, columnIndex) {
         for (let i = 0, len = array.length; i < len; i++) {
             const rowElement = array[i];
             
@@ -99,7 +99,7 @@ function SeatZone (props) {
         return true;
     }
 
-    function checkRowEmpty (row) {
+    function checkRowEmpty(row) {
         for (let i = 0, len = row.length; i < len; i++) {
             const element = row[i];
 

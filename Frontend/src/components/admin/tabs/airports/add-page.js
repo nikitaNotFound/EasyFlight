@@ -5,7 +5,7 @@ import MessageBox from '../../../common/message-box';
 import Airport from '../../../../services/airport-models/airport';
 import * as PlaceService from '../../../../services/PlaceService';
 
-function Adding () {
+function Adding() {
     const [name, changeName] = useState();
     const [country, changeCountry] = useState();
     const [city, changeCity] = useState();
@@ -48,7 +48,7 @@ function Adding () {
     }
 
     function showMessageBox() {
-        if(messageBoxValue) {
+        if (messageBoxValue) {
             return (
                 <MessageBox message={messageBoxValue} hideFunc={hideMessageBox}/>
             );
@@ -60,7 +60,7 @@ function Adding () {
     }
 
     function showCityChooser() {
-        if(country) {
+        if (country) {
             return (
                 <SearchList
                     searchFunc={PlaceService.searchCities}
@@ -68,7 +68,8 @@ function Adding () {
                     placeholder="City"
                     currentItem={city}
                     getItemName={getCityName}
-                    onValueChange={onCityChange}/>
+                    onValueChange={onCityChange}
+                />
             );
         }
     }
@@ -91,7 +92,8 @@ function Adding () {
                                     placeholder="Country"
                                     currentItem={country}
                                     getItemName={getCountryName}
-                                    onValueChange={onCountryChange}/>
+                                    onValueChange={onCountryChange}
+                                />
                                 {showCityChooser()}
                                 <br/>
                             </div>

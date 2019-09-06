@@ -2,7 +2,7 @@ import React from 'react';
 import PropsTypes from 'prop-types';
 import Flight from './flight';
 
-function Flights (props) {
+function Flights(props) {
     return (
         <div className="flight-history-list">
             {props.flights.map(

@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import PropsTypes from 'prop-types';
 import SeatTypeCost from './seat-type-cost';
 import Spinner from '../../../common/spinner';
-import TicketCost from '../../../../services/flight-models/fticket-cost';
+import TicketCost from '../../../../services/flight-models/ticket-cost';
 import * as FlightService from '../../../../services/FlightService';
 
 function TicketsCostEditor(props) {
@@ -12,8 +12,9 @@ function TicketsCostEditor(props) {
     useEffect(() => {
         if (!props.flightId) {
             let newCostInfo = props.seatTypes.map(
-                (seatType) =>
-                    new TicketCost(null, seatType.id, 0)
+                (seatType, index) =>
+                    //cost setted as 0, because 0 is start value of each seat type' ticket
+                    new TicketCost(index + 1, seatType.id, 0)
             );
             changeCostInfo(newCostInfo);
             changeLoading(false);
@@ -31,7 +32,7 @@ function TicketsCostEditor(props) {
                 }
             )
             .catch();
-    }, [props]);
+    }, [props.flightId, props.seatTypes]);
 
     function setStartCostInfo(ticketsCostInfo) {
         props.onTypeCostChange(ticketsCostInfo);
@@ -53,9 +54,7 @@ function TicketsCostEditor(props) {
     }
 
     if (loading) {
-        return (
-            <Spinner headline="Loading..."/>
-        );
+        return <Spinner headline="Loading..."/>
     }
 
     return (

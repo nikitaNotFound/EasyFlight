@@ -1,6 +1,7 @@
 import React from 'react';
 import Airport from './airport';
 import PropsTypes from 'prop-types';
+import '../../../../styles/items-list.css';
 
 function Airports(props) {
     return (

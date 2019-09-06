@@ -1,7 +1,7 @@
 import React from 'react';
 import PropsTypes from 'prop-types';
 
-function SearchListItem (props) {
+function SearchListItem(props) {
     function onClickHandler () {
         props.onValueChange(props.item);
     }

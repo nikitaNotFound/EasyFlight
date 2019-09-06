@@ -4,7 +4,7 @@ import SeatEditor from './seat-editor';
 import MessageBox from '../../../common/message-box';
 import Airplane from '../../../../services/airplane-models/airplane';
 
-function Adding () {
+function Adding() {
     const [name, changeName] = useState('');
     const [maxMass, changeMaxMass] = useState(0);
     const [seats, changeSeats] = useState();
@@ -12,8 +12,8 @@ function Adding () {
 
     const [messageBoxValue, changeMessageBoxValue] = useState();
 
-    function onDataSave (data) {
-        if(!name 
+    function onDataSave(data) {
+        if (!name 
             || !maxMass
             || !seats
             || !seatTypes
@@ -25,11 +25,11 @@ function Adding () {
         const newAirplane = new Airplane(null, name, maxMass, seats, seatTypes);
     }
 
-    function onNameChange (event) {
+    function onNameChange(event) {
         changeName(event.target.value);
     }
 
-    function onMassMaxChange (event) {
+    function onMassMaxChange(event) {
         const newMaxMass = Number(event.target.value);
         if (newMaxMass > 0) {
             changeMaxMass(newMaxMass);
@@ -45,7 +45,7 @@ function Adding () {
     }
 
     function showMessageBox() {
-        if(messageBoxValue) {
+        if (messageBoxValue) {
             return (
                 <MessageBox message={messageBoxValue} hideFunc={hideMessageBox}/>
             );

@@ -3,7 +3,7 @@ import googleIcon from '../../icons/google-icon.png';
 import facebookIcon from '../../icons/facebook-icon.png';
 import { Link } from 'react-router-dom';
 
-function Header () {
+function Header() {
     return (
         <header className="rounded-bottom">
             <div className="row">

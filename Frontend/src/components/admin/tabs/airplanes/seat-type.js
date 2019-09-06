@@ -1,8 +1,8 @@
 import React from 'react';
 import PropsTypes from 'prop-types';
 
-function SeatType (props) {
-    function onTypeDelete () {
+function SeatType(props) {
+    function onTypeDelete() {
         props.onTypeDelete(props.id);
     }
 

@@ -28,10 +28,8 @@ function Airport(props) {
             .catch();
     }, [props.airport.id]);
 
-    if(loading) {
-        return (
-            <Spinner headline="Receiving information about airport..."/>
-        );
+    if (loading) {
+        return <Spinner headline="Receiving information about airport..."/>
     }
 
     return (
@@ -41,10 +39,10 @@ function Airport(props) {
             </div>
 
             <div className="col-lg-9 col-sm-9">
-                <AirportHeadline 
+                <AirportHeadline
                     name={props.airport.name}
                     location={`${city}, ${counrty}`}
-                    />
+                />
                 {props.desc}
             </div>
 

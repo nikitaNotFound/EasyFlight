@@ -60,7 +60,7 @@ function Adding() {
     }
 
     function onDataSave() {
-        if(!departureDate 
+        if (!departureDate 
             || !departureBackDate 
             || !departureTime 
             || !departureBackTime 
@@ -108,7 +108,7 @@ function Adding() {
     }
 
     function showMessageBox() {
-        if(messageBoxValue) {
+        if (messageBoxValue) {
             return (
                 <MessageBox message={messageBoxValue} hideFunc={hideMessageBox}/>
             );

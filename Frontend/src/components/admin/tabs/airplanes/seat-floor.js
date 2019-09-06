@@ -2,7 +2,7 @@ import React from 'react';
 import PropsTypes from 'prop-types';
 import SeatSection from './seat-section';
 
-function SeatFloor (props) {
+function SeatFloor(props) {
     return (
         <div className="seat-editor-floor">
             <div className="seat-editor-floor-number">

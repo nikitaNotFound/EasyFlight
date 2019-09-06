@@ -1,5 +1,6 @@
 import React from 'react';
 import PropsTypes from 'prop-types';
+import '../../styles/message-box.css';
 
 function MessageBox(props) {
     return (

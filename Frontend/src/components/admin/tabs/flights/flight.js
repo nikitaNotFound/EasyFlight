@@ -54,10 +54,8 @@ function Flight(props) {
             .catch();
     }, [props]);
 
-    if(loading) {
-        return (
-            <Spinner headline="Loading..."/>
-        );
+    if (loading) {
+        return <Spinner headline="Loading..."/>
     }
 
     return (

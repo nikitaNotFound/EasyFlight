@@ -4,7 +4,7 @@ import Flights from './flights';
 import Spinner from '../../../common/spinner';
 import * as FlightService from '../../../../services/FlightService';
 
-function FlightPage () {
+function FlightPage() {
     const [loading, changeLoadingMode] = useState(true);
     const [flights, changeFlights] = useState([]);
 
@@ -16,12 +16,12 @@ function FlightPage () {
             .catch(onDataFail);
     });
     
-    function onDataSuccessful (data) {
+    function onDataSuccessful(data) {
         changeLoadingMode(false);
         changeFlights(data);
     }
 
-    function onDataFail (error) {
+    function onDataFail(error) {
         alert (error);
     }
 
@@ -33,13 +33,7 @@ function FlightPage () {
             </div>
         );
     }
-    else {
-        return (
-            <div className="tab-content">
-                <Spinner headline="Loading..."/>
-            </div>
-        );
-    }
+    return <Spinner headline="Loading..."/>
 }
 
 export default FlightPage;

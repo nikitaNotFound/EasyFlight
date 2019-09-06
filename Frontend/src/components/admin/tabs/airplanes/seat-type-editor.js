@@ -3,22 +3,23 @@ import PropsTypes from 'prop-types';
 import ColorWheel from 'color-wheel';
 import SeatTypeItem from './seat-type';
 import SeatType from '../../../../services/airplane-models/seat-type';
+import '../../../../styles/seat-types-editor.css';
 
-function SeatTypesEditor (props) {
+function SeatTypesEditor(props) {
     const [color, changeColor] = useState();
     const [name, changeName] = useState();
 
-    function onColorChange (color) {
+    function onColorChange(color) {
         const [h, s, l] = color;
         const newColor = `hsla(${Math.round(h * 360)},${Math.round(s * 100)}%,${Math.round(l * 100)}%,1)`;
         changeColor(newColor);
     }
 
-    function onNameChange (event) {
+    function onNameChange(event) {
         changeName(event.target.value);
     }
 
-    function onTypeAdd () {
+    function onTypeAdd() {
         if (color && name) {
             let newType = new SeatType(props.seatTypes.length + 1, name, color);
 

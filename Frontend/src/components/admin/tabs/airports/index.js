@@ -4,7 +4,7 @@ import Airports from './airports';
 import * as AirportService from '../../../../services/AirportService';
 import Spinner from '../../../common/spinner';
 
-function AirportPage () {
+function AirportPage() {
     const [loading, changeLoadingMode] = useState(true);
     const [airports, changeAirports] = useState([]);
 
@@ -16,12 +16,12 @@ function AirportPage () {
             .catch(onDataFail);
     }, []);
 
-    function onDataSuccessful (data) {
+    function onDataSuccessful(data) {
         changeLoadingMode(false);
         changeAirports(data);
     }
 
-    function onDataFail (error) {
+    function onDataFail(error) {
         alert (error);
     }
 
@@ -33,11 +33,7 @@ function AirportPage () {
             </div>
         );
     }
-    return (
-        <div className="tab-content">
-            <Spinner headline=""/>
-        </div>
-    );
+    return <Spinner headline="Loading..."/>
 }
 
 export default AirportPage;

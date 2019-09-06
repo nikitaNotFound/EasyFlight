@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function Header () {
+function Header() {
     return (
         <header className="rounded-bottom non-selectable">
             <div className="row">

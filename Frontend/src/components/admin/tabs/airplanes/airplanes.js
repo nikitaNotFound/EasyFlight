@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Airplane from './airplane';
 import PropsTypes from 'prop-types';
+import '../../../../styles/items-list.css';
 
 class Airplanes extends Component {
     propsTypes = {

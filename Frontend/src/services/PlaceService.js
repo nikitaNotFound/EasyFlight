@@ -33,7 +33,7 @@ export function getCityById(id) {
                 }
             }
 
-            if(!foundCity) {
+            if (!foundCity) {
                 reject('Error');
             }
 

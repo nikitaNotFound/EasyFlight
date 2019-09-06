@@ -1,6 +1,7 @@
 import React from 'react';
 import Flight from './flight';
 import PropsTypes from 'prop-types';
+import '../../../../styles/items-list.css';
 
 function Flights(props) {
     return (

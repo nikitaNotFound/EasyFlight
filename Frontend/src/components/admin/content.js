@@ -4,7 +4,7 @@ import AirplaneRouter from './tabs/airplane-router';
 import AirportRouter from './tabs/airport-router';
 import FlightRouter from './tabs/flight-router';
 
-function Content () {
+function Content() {
     return (
         <main className="rounded">
             <div className="tabs">

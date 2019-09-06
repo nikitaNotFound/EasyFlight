@@ -1,6 +1,6 @@
 import {airports} from './DataBase';
 
-export function getAll () {
+export function getAll() {
     return new Promise (
         (resolve, reject) => {
             const data = airports;
@@ -25,7 +25,7 @@ export function getById(id) {
                 }
             }
 
-            if(!airport) {
+            if (!airport) {
                 reject("Error");
             }
 

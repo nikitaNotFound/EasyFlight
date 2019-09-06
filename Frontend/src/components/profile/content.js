@@ -4,8 +4,9 @@ import Flights from './flights';
 import * as UserService from '../../services/UserSerivce';
 import * as FlightService from '../../services/FlightService';
 import Spinner from '../common/spinner';
+import '../../styles/profile.css';
 
-function Content () {
+function Content() {
     const [isLoading, changeLoadingMode] = useState(true);
     const [flights, changeFlights] = useState([]);
     const [userFlights, changeUserFlights] = useState();
@@ -40,18 +41,16 @@ function Content () {
             .catch(onDataFail);
     }, []);
 
-    function onDataSuccesful () {
+    function onDataSuccesful() {
         changeLoadingMode(false);
     }
 
-    function onDataFail (error) {
+    function onDataFail(error) {
         alert(error);
     }
 
     if (isLoading) {
-        return (
-            <Spinner headline="Loading..."/>
-        );
+        return <Spinner headline="Loading..."/>
     }
 
     return (

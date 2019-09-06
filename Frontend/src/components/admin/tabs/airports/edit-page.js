@@ -7,7 +7,7 @@ import Airport from '../../../../services/airport-models/airport';
 import * as AirportService from '../../../../services/AirportService';
 import * as PlaceService from '../../../../services/PlaceService';
 
-function Edit (props) {
+function Edit(props) {
     const [loading, changeLoadingMode] = useState(true);
     const [name, changeName] = useState();
     const [country, changeCountry] = useState();
@@ -78,7 +78,7 @@ function Edit (props) {
     }
 
     function showMessageBox() {
-        if(messageBoxValue) {
+        if (messageBoxValue) {
             return (
                 <MessageBox message={messageBoxValue} hideFunc={hideMessageBox}/>
             );
@@ -90,7 +90,7 @@ function Edit (props) {
     }
 
     function showCityChooser() {
-        if(country) {
+        if (country) {
             return (
                 <SearchList
                     searchFunc={PlaceService.searchCities}
@@ -135,9 +135,7 @@ function Edit (props) {
             </div>
         );
     }
-    return (
-        <Spinner headline="Loading..."/>
-    );
+    return <Spinner headline="Loading..."/>
 }
 
 export default Edit;

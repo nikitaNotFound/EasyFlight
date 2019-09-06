@@ -4,6 +4,7 @@ import SeatFloor from './seat-floor';
 import Instruments from './seat-editor-instruments';
 import SeatTypesEditor from './seat-type-editor';
 import Seat from '../../../../services/airplane-models/seat';
+import '../../../../styles/seat-editor.css';
 
 function initializeSeatArray(props) {
     if (!props.seatInfo) {
@@ -15,7 +16,7 @@ function initializeSeatArray(props) {
 
     let seatsArray = [];
 
-    //in this for' block program sets up a multi-array divided into the sections (floor, section, zone, row)
+    // in this for' block program sets up a multi-array divided into the sections (floor, section, zone, row)
     for (let i = 0, len = storage.length; i < len; i++) {
         const element = storage[i];
         if (!seatsArray[element.floor - 1]) {
@@ -37,7 +38,7 @@ function initializeSeatArray(props) {
 }
 
 function getSeatTypes(props) {
-    if(props.seatTypes) {
+    if (props.seatTypes) {
         return props.seatTypes;
     }
 
@@ -48,20 +49,21 @@ function SeatEditor(props) {
     const [seatArray, changeSeatArray] = useState(initializeSeatArray(props));
     const [seatTypes, changeSeatTypes] = useState(getSeatTypes(props));
 
-    //calls when user press add zone
+    // calls when user press add zone
     function onAddZone(floor, section) {
         let storage = [];
         Object.assign(storage, seatArray);
         
-        //if there no floor with getted number, programm will add it
+        // if there no floor with getted number, programm will add it
         if (!storage[floor - 1]) {
             storage[floor - 1] = [];
         }
-        //if there no sector with getted number, programm will add it
+        // if there no sector with getted number, programm will add it
         if (!storage[floor - 1][section - 1]) {
             storage[floor - 1][section - 1] = [];
         }
         const newZone = storage[floor - 1][section - 1].length + 1;
+        // row, number and typeId setted as 1, because 1 is start value of every prop
         const newSeat = new Seat(floor, section, newZone, 1, 1, 1);
 
         storage[floor - 1][section - 1][newZone - 1] = [];
@@ -72,7 +74,7 @@ function SeatEditor(props) {
         props.onSeatsChange(storage);
     }
 
-    //calls when user press add type
+    // calls when user press add type
     function onAddType(newType) {
         let storage = [];
         Object.assign(storage, seatTypes);
@@ -82,14 +84,14 @@ function SeatEditor(props) {
         props.onSeatTypesChange(storage);
     }
 
-    //calls when user press delete type
+    // calls when user press delete type
     function onTypeDelete(id) {
         let storage = [];
         Object.assign(storage, seatTypes);
 
         storage.splice(id, 1);
 
-        if(storage.length == 0) {
+        if (storage.length == 0) {
             storage = null;
         }
 
@@ -97,9 +99,9 @@ function SeatEditor(props) {
         props.onSeatTypesChange(storage);
     }
 
-    //returns at the start; when user adds something, program will call the second return' block
+    // returns at the start; when user adds something, program will call the second return' block
     function showSeatTypesInstruments() {
-        if(seatTypes.length > 0) {
+        if (seatTypes.length > 0) {
             return (
                 <Instruments onAddZone={onAddZone} onDataSave={props.onDataSave}/>
             );
@@ -107,7 +109,7 @@ function SeatEditor(props) {
     }
 
     function showSeatsSheme() {
-        if(seatArray) {
+        if (seatArray) {
             return (
                 <div className="seat-editor-layout">
                     {seatArray.map(

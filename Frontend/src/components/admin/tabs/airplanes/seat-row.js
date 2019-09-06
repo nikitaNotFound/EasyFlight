@@ -2,14 +2,14 @@ import React from 'react';
 import PropsTypes from 'prop-types';
 import Seat from './seat';
 
-function SeatRow (props) {
+function SeatRow(props) {
     for (let i = 0, len = props.seats.length; i < len; i++) {
         if (!props.seats[i]) {
             props.seats[i] = null;
         }
     }
 
-    function seatChange (seat, index) {
+    function seatChange(seat, index) {
         const storage = props.seats;
         storage[index] = seat;
         props.rowChange(storage, props.key);

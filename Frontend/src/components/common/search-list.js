@@ -2,16 +2,17 @@ import PropsTypes from 'prop-types';
 import React, {useState} from 'react';
 import Spinner from './spinner';
 import Item from './search-list-item';
+import '../../styles/search-list.css';
 
 function getStartItem(props) {
-    if(!props.currentItem) {
+    if (!props.currentItem) {
         return;
     }
 
     return props.getItemName(props.currentItem);
 }
 
-function SearchList (props) {
+function SearchList(props) {
     const [loading, changeLoading] = useState(true);
     const [mode, changeMode] = useState(false);
     const [list, changeList] = useState([]);
@@ -23,7 +24,7 @@ function SearchList (props) {
     }
 
     function closeList() {
-        if(currentItem) {
+        if (currentItem) {
             changeInputValue(props.getItemName(props.currentItem));
         }
         else {
@@ -39,10 +40,8 @@ function SearchList (props) {
     }
 
     function getList() {
-        if(loading) {
-            return (
-                <Spinner headline="Waiting..."/>
-            );
+        if (loading) {
+            return <Spinner headline="Waiting..."/>
         }
 
         return (
@@ -56,7 +55,7 @@ function SearchList (props) {
     function onSearchPhraseChange(event) {
         changeInputValue(event.target.value);
 
-        if(!event.target.value) {
+        if (!event.target.value) {
             changeLoading(true);
             return;
         }

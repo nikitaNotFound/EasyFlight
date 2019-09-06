@@ -6,7 +6,7 @@ import Spinner from '../../../common/spinner';
 import Airplane from '../../../../services/airplane-models/airplane';
 import * as AirplaneService from '../../../../services/AirplaneService';
 
-function Edit (props) {
+function Edit(props) {
     const [loading, changeLoading] = useState(true);
 
     const [id, changeId] = useState();
@@ -32,14 +32,14 @@ function Edit (props) {
             .catch(error => {
                 onDataFail(error);
             });
-    }, [props]);
+    }, [props.match.params.id]);
 
     function onDataFail(error) {
         alert(error);
     }
 
     function onDataSave() {
-        if(!name
+        if (!name
             || !maxMass
             || !seats
             || !seatTypes
@@ -71,7 +71,7 @@ function Edit (props) {
     }
 
     function showMessageBox() {
-        if(messageBoxValue) {
+        if (messageBoxValue) {
             return (
                 <MessageBox message={messageBoxValue} hideFunc={hideMessageBox}/>
             );
@@ -115,9 +115,7 @@ function Edit (props) {
         );
     }
 
-    return (
-        <Spinner headline="Loading..."/>
-    );
+    return <Spinner headline="Loading..."/>
 }
 
 export default Edit;

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import PropsTypes from 'prop-types';
 import { isNumber } from 'util';
 
-function Instruments (props) {
+function Instruments(props) {
     const [floor, changeFloor] = useState();
     const [section, changeSection] = useState();
 

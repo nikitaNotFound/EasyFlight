@@ -5,7 +5,7 @@ import Seat from '../services/airplane-models/seat'
 import SeatType from './airplane-models/seat-type';
 import Airplane from './airplane-models/airplane';
 import Airport from './airport-models/airport';
-import TicketCost from './flight-models/fticket-cost';
+import TicketCost from './flight-models/ticket-cost';
 import City from '../services/place-models/city';
 import Country from '../services/place-models/country';
 

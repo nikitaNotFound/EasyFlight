@@ -4,8 +4,8 @@ import PropsTypes from 'prop-types';
 import FlightObject from '../../services/flight-models/flight';
 import moment from 'moment';
 
-function Flight (props) {
-    function getTimeString (dateInfo) {
+function Flight(props) {
+    function getTimeString(dateInfo) {
         let date = moment(dateInfo);
 
         return moment(date, 'YYYY-MM-DD hh:mm').format('LLL');
