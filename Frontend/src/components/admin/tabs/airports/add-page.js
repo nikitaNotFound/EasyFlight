@@ -50,7 +50,10 @@ function Adding() {
     function showMessageBox() {
         if (messageBoxValue) {
             return (
-                <MessageBox message={messageBoxValue} hideFunc={hideMessageBox}/>
+                <MessageBox
+                    message={messageBoxValue}
+                    hideFunc={hideMessageBox}
+                />
             );
         }
     }

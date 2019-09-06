@@ -66,7 +66,7 @@ function Edit(props) {
         }
 
         let newAirport = new Airport(null, name, city.id, desc);
-        //HERE WILL BE HTTP REQUEST
+        // HERE WILL BE HTTP REQUEST
     }
 
     function getCountryName(country) {
@@ -80,7 +80,10 @@ function Edit(props) {
     function showMessageBox() {
         if (messageBoxValue) {
             return (
-                <MessageBox message={messageBoxValue} hideFunc={hideMessageBox}/>
+                <MessageBox
+                    message={messageBoxValue}
+                    hideFunc={hideMessageBox}
+                />
             );
         }
     }
@@ -98,7 +101,8 @@ function Edit(props) {
                     placeholder="City"
                     currentItem={city}
                     getItemName={getCityName}
-                    onValueChange={onCityChange}/>
+                    onValueChange={onCityChange}
+                />
             );
         }
     }
@@ -122,7 +126,8 @@ function Edit(props) {
                                         placeholder="Country"
                                         currentItem={country}
                                         getItemName={getCountryName}
-                                        onValueChange={onCountryChange}/>
+                                        onValueChange={onCountryChange}
+                                    />
                                     {showCityChooser()}
                                 </div>
                                 <textarea onChange={onDescChange} value={desc}/>

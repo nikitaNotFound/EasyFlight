@@ -51,7 +51,11 @@ function SeatTypesEditor(props) {
 
                     <div className="col-md-2">
                         <label>Type name</label><br/>
-                        <input className="seat-type-name-input" type="text" value={name} onChange={onNameChange}/>
+                        <input
+                            className="seat-type-name-input"
+                            type="text" value={name}
+                            onChange={onNameChange}
+                        />
                         <div className="color-demo" style={{background:color}}></div>
                         <div className="add-type-button" onClick={onTypeAdd}>Add type</div>
                     </div>
@@ -73,7 +77,11 @@ function SeatTypesEditor(props) {
 
                 <div className="col-md-2">
                     <label>Type name</label><br/>
-                    <input className="seat-type-name-input" type="text" value={name} onChange={onNameChange}/>
+                    <input
+                        className="seat-type-name-input"
+                        type="text" value={name}
+                        onChange={onNameChange}
+                    />
                     <div className="color-demo" style={{background:color}}></div>
                     <div className="add-type-button" onClick={onTypeAdd}>Add type</div>
                 </div>
@@ -87,7 +95,8 @@ function SeatTypesEditor(props) {
                                 color={item.color}
                                 id={index}
                                 onTypeDelete={props.onTypeDelete}
-                                key={index}/>
+                                key={index}
+                            />
                     )}
                 </div>
             </div>

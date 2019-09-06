@@ -12,8 +12,15 @@ function SeatTypeCost(props) {
 
     return (
         <div className="form-item">
-            <label htmlFor={props.name}>{props.name}</label>
-            <input id={props.name} onChange={onCostChange} value={cost} type="text"/>
+            <label htmlFor={props.name}>
+                {props.name}
+            </label>
+            <input
+                id={props.name}
+                onChange={onCostChange}
+                value={cost}
+                type="text"
+            />
         </div>
     );
 }

@@ -66,13 +66,19 @@ function Content() {
                         </div>
                     </div>
                     <div className="col-10">
-                        <input type="text" className="name-input" value={user.name}/>
+                        <input
+                            type="text"
+                            className="name-input"
+                            value={user.name}
+                        />
                     </div>
                 </div>
             </div>
 
             <div className="flight-history">
-                <div className="flight-history-headline non-selectable">Your flights</div>
+                <div className="flight-history-headline non-selectable">
+                    Your flights
+                </div>
                 <Flights flights={flights}/>
             </div>
         </main>

@@ -202,19 +202,22 @@ function Editing (props) {
                                     getItemName={getAirportName}
                                     onValueChange={onFromPlaceChange}
                                     currentItem={fromPlace}
-                                    placeholder="From"/>
+                                    placeholder="From"
+                                />
                                 <SearchList
                                     searchFunc={AirportService.search}
                                     getItemName={getAirportName}
                                     onValueChange={onToPlaceChange}
                                     currentItem={toPlace}
-                                    placeholder="To"/>
+                                    placeholder="To"
+                                />
                                 <SearchList
                                     searchFunc={AirplaneService.search}
                                     getItemName={getAirplaneName}
                                     onValueChange={onAirplaneChange}
                                     currentItem={airplane}
-                                    placeholder="airplane"/>
+                                    placeholder="airplane"
+                                />
 
                                 <div className="adding-form-section">
                                     <div className="row">

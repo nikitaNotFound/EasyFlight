@@ -47,7 +47,12 @@ function SearchList(props) {
         return (
             list.map(
                 (item, key) => 
-                    <Item item={item} getItemName={props.getItemName} onValueChange={searchItemChosen} key={key}/>
+                    <Item
+                        item={item}
+                        getItemName={props.getItemName}
+                        onValueChange={searchItemChosen}
+                        key={key}
+                    />
             )
         );
     }
@@ -73,12 +78,17 @@ function SearchList(props) {
     return (
         <div className="form-item">
             <label htmlFor={props.placeholder}>{props.placeholder}</label>
-            <input id={props.placeholder} type="text" value={inputValue} autoComplete="off"
+            <input
+                id={props.placeholder}
+                type="text"
+                value={inputValue}
+                autoComplete="off"
                 name={props.placeholder}
                 placeholder={props.placeholder}
                 onFocus={openList} 
                 onBlur={closeList}
-                onChange={onSearchPhraseChange}/>
+                onChange={onSearchPhraseChange}
+            />
 
             <div className={`search-list non-selectable 
                 ${mode === true 

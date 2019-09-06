@@ -17,7 +17,7 @@ function Edit(props) {
 
     const [messageBoxValue, changeMessageBoxValue] = useState();
 
-    //reciving info about airplane with id getted from url
+    // reciving info about airplane with id getted from url
     useEffect(() => {
         const airplaneLoading = AirplaneService.getById(props.match.params.id);
         airplaneLoading
@@ -106,7 +106,8 @@ function Edit(props) {
                             seatInfo={seats}
                             seatTypes={seatTypes}
                             onSeatsChange={onSeatsChange}
-                            onSeatTypesChange={onSeatTypesChange}/>
+                            onSeatTypesChange={onSeatTypesChange}
+                        />
                     </div>
                 </div>
                 <div className="custom-button big" onClick={onDataSave}>Save</div>

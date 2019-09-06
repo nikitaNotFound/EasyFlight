@@ -10,7 +10,11 @@ function SeatType(props) {
         <div className="seat-type-item">
             <div className="seat-type-color-demo" style={{background:props.color}}/>
             {props.name}
-            <div className="seat-type-remove-button non-selectable" onClick={onTypeDelete}>delete</div>
+            <div
+                className="seat-type-remove-button non-selectable"
+                onClick={onTypeDelete}>
+                    delete
+            </div>
         </div>
     );
 }

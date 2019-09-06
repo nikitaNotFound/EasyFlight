@@ -19,7 +19,8 @@ function SeatFloor(props) {
                             seats={seats}
                             placeInfo={placeInfo}
                             seatTypes={props.seatTypes}
-                            key={index + 1}/>
+                            key={index + 1}
+                        />
                     );
                 }
             )}

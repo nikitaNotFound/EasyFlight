@@ -31,7 +31,8 @@ function SeatRow(props) {
                             onSeatAdded={props.onSeatAdded}
                             onSeatChanged={props.onSeatChanged}
                             onSeatDeleted={props.onSeatDeleted}
-                            placeInfo={placeInfo}/>
+                            placeInfo={placeInfo}
+                        />
                     );
                 }
             )}

@@ -42,11 +42,15 @@ function SeatZone(props) {
 
         storage[seatPosition.row - 1][seatPosition.number - 1] = null;
 
-        if (checkRowEmpty(storage[storage.length - 1]) && checkRowEmpty(storage[storage.length - 2])) {
+        if (checkRowEmpty(storage[storage.length - 1])
+            && checkRowEmpty(storage[storage.length - 2])
+        ) {
             storage = storage.slice(0, storage.length - 1);
         }
 
-        if (checkColumnEmpty(storage, globalRowLength - 1) && checkColumnEmpty(storage, globalRowLength - 2)) {
+        if (checkColumnEmpty(storage, globalRowLength - 1)
+            && checkColumnEmpty(storage, globalRowLength - 2)
+        ) {
             for (let i = 0, len = storage.length; i < len; i++) {
                 storage[i] = storage[i].slice(0, storage[i].length - 1);
             }
@@ -126,7 +130,8 @@ function SeatZone(props) {
                             onSeatAdded={onSeatAdded}
                             onSeatChanged={onSeatChanged}
                             onSeatDeleted={onSeatDeleted}
-                            placeInfo={placeInfo}/>
+                            placeInfo={placeInfo}
+                        />
                     );
                 }
             )}

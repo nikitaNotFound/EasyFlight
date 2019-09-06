@@ -67,7 +67,8 @@ function TicketsCostEditor(props) {
                             cost={costInfo[index].cost}
                             key={index}
                             typeId={seatType.id}
-                            onCostInfoChange={onCostInfoChange}/>
+                            onCostInfoChange={onCostInfoChange}
+                        />
                 )}
             </div>
         </div>

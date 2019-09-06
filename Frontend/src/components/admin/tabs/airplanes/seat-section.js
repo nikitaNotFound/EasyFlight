@@ -20,7 +20,8 @@ function SeatSection(props) {
                                     key={index}
                                     seats={seats}
                                     seatTypes={props.seatTypes}
-                                    placeInfo={placeInfo}/>
+                                    placeInfo={placeInfo}
+                                />
                             );
                         }
                     )}

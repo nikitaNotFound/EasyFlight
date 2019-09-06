@@ -121,7 +121,8 @@ function SeatEditor(props) {
                                     placeInfo={placeInfo}
                                     seats={seats}
                                     seatTypes={seatTypes}
-                                    key={index + 1}/>
+                                    key={index + 1}
+                                />
                             );
                         }
                     )}
@@ -132,7 +133,11 @@ function SeatEditor(props) {
 
     return (
         <div className="seat-editor">
-            <SeatTypesEditor seatTypes={seatTypes} onAddType={onAddType} onTypeDelete={onTypeDelete}/>
+            <SeatTypesEditor
+                seatTypes={seatTypes}
+                onAddType={onAddType}
+                onTypeDelete={onTypeDelete}
+            />
             {showSeatTypesInstruments()}
             {showSeatsSheme()}
         </div>

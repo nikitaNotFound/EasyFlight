@@ -78,7 +78,8 @@ function Adding() {
                         <br/>
                         <SeatEditor 
                             onSeatsChange={onSeatsChange}
-                            onSeatTypesChange={onSeatTypesChange}/>
+                            onSeatTypesChange={onSeatTypesChange}
+                        />
                     </div>
                 </div>
             </div>
