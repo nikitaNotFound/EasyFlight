@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import googleIcon from '../../icons/google-icon.png';
 import facebookIcon from '../../icons/facebook-icon.png';
+import '../../styles/registration.css';
 
 class Content extends Component {
     render () {

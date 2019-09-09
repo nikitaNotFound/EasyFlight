@@ -18,7 +18,7 @@ export function getCurrentUser(id) {
             if (!user) {
                 reject('Error');
             }
-            setTimeout(resolve, 1000, user);
+            resolve(user);
         }
     );
 }
@@ -38,7 +38,7 @@ export function getUserFlights(userId) {
             if (!data && !isArray(data)) {
                 reject("Error");
             }
-            setTimeout(resolve, 1000, data);
+            resolve(data);
         }
     );
 }

@@ -4,8 +4,9 @@ import Flights from './flights';
 import * as UserService from '../../services/UserSerivce';
 import * as FlightService from '../../services/FlightService';
 import Spinner from '../common/spinner';
+import '../../styles/profile.css';
 
-function Content () {
+function Content() {
     const [isLoading, changeLoadingMode] = useState(true);
     const [flights, changeFlights] = useState([]);
     const [userFlights, changeUserFlights] = useState();
@@ -40,18 +41,16 @@ function Content () {
             .catch(onDataFail);
     }, []);
 
-    function onDataSuccesful () {
+    function onDataSuccesful() {
         changeLoadingMode(false);
     }
 
-    function onDataFail (error) {
+    function onDataFail(error) {
         alert(error);
     }
 
     if (isLoading) {
-        return (
-            <Spinner/>
-        );
+        return <Spinner headline="Loading..."/>
     }
 
     return (
@@ -61,19 +60,25 @@ function Content () {
                     <div className="col-2">
                         <div className="user-photo">
                             <label htmlFor="photo">
-                                <img src={AddImage}/>
+                                <img src={AddImage} alt="add user avatar"/>
                             </label>
                             <input type="file" id="photo"/>
                         </div>
                     </div>
                     <div className="col-10">
-                        <input type="text" className="name-input" value={user.name}/>
+                        <input
+                            type="text"
+                            className="name-input"
+                            value={user.name}
+                        />
                     </div>
                 </div>
             </div>
 
             <div className="flight-history">
-                <div className="flight-history-headline non-selectable">Your flights</div>
+                <div className="flight-history-headline non-selectable">
+                    Your flights
+                </div>
                 <Flights flights={flights}/>
             </div>
         </main>

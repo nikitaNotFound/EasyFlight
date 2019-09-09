@@ -1,41 +1,104 @@
-import React from 'react';
-import Headline from '../common/headline';
-import BuyIcon from '../../../../icons/add-image.png';
+import React, {useState} from 'react';
+import Headline from '../../../common/headline';
+import SearchList from '../../../common/search-list';
+import MessageBox from '../../../common/message-box';
+import Airport from '../../../../services/airport-models/airport';
+import * as PlaceService from '../../../../services/PlaceService';
 
-function Adding () {
+function Adding() {
+    const [name, changeName] = useState();
+    const [country, changeCountry] = useState();
+    const [city, changeCity] = useState();
+    const [desc, changeDesc] = useState();
+
+    const [messageBoxValue, changeMessageBoxValue] = useState(null);
+
+    function onDataSave() {
+        if (!name || !country || !city || !desc) {
+            changeMessageBoxValue('Input data is not valid!');
+            return;
+        }
+
+        let newAirport = new Airport(null, name, city.id, desc);
+        //HERE WILL BE HTTP REQUEST
+    }
+
+    function getCountryName(country) {
+        return country.name;
+    }
+
+    function getCityName(city) {
+        return city.name;
+    }
+
+    function showMessageBox() {
+        if (messageBoxValue) {
+            return (
+                <MessageBox
+                    message={messageBoxValue}
+                    hideFunc={changeMessageBoxValue}
+                />
+            );
+        }
+    }
+
+    function showCityChooser() {
+        if (country) {
+            return (
+                <SearchList
+                    searchFunc={PlaceService.searchCities}
+                    searchArgs={[country.id]}
+                    placeholder="City"
+                    currentItem={city}
+                    getItemName={getCityName}
+                    onValueChange={changeCity}
+                />
+            );
+        }
+    }
+
     return (
         <div className="list-item-action adding">
             <Headline name="Adding new airport"/>
 
-            <form method="post" className="adding-form">
+            <div className="adding-form">
                 <div className="row">
-                    <div className="col-2">
-                        <input type="file" name="image" id="file-input" className="file-upload"/>
-                        <label htmlFor="file-input">
-                            <img src={BuyIcon} className="adding-form-img" alt="add"/>
-                        </label>
-                    </div>
-                    <div className="col-10">
-                        <div className="row">
-                            <div className="form-item">
-                                <label htmlFor="airport-name">Airport name</label>
-                                <input id="airport-name" type="text" placeholder="airport name" name="name"/>
+                    <div className="col-12">
+                        <div className="editing-params-form">
+                            <div className="row">
+                                <div className="form-item">
+                                    <label htmlFor="airport-name">Airport name</label>
+                                    <input
+                                        id="airport-name"
+                                        value={name}
+                                        onChange={(event) => changeName(event.target.value)}
+                                        type="text"
+                                        placeholder="airport name"
+                                    />
+                                </div>
+                                <SearchList
+                                    searchFunc={PlaceService.searchCountries}
+                                    placeholder="Country"
+                                    currentItem={country}
+                                    getItemName={getCountryName}
+                                    onValueChange={changeCountry}
+                                />
+                                {showCityChooser()}
+                                <br/>
                             </div>
-                            <div className="form-item">
-                                <label htmlFor="airport-country">Country</label>
-                                <input id="airport-country" type="text" placeholder="country" name="country"/>
-                            </div>
-                            <div className="form-item">
-                                <label htmlFor="airport-city">City</label>
-                                <input id="airport-city" type="text" placeholder="city" name="city"/>
-                            </div>
-                            <br/>
-                            <textarea placeholder="description"/>
+                            <textarea
+                                onChange={(event) => changeDesc(event.target.value)}
+                                value={desc}
+                                placeholder="description"
+                            />
                         </div>
                     </div>
                 </div>
-                <input type="submit" value="Add" className="add-button"/>
-            </form>
+                <div className="custom-button big" onClick={onDataSave}>
+                    Save
+                </div>
+            </div>
+            {showMessageBox()}
         </div>
     );
 }

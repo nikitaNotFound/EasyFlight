@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Flight from './flight';
 import ComponentHeadline from '../component-headline';
 import PropsTypes from 'prop-types';
+import '../../../styles/flight-list.scss';
 
 class Flights extends Component {
     propsTypes = {

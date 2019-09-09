@@ -1,77 +1,198 @@
 import React, {useState, useEffect} from 'react';
-import Headline from '../common/headline';
+import Headline from '../../../common/headline';
 import BuyIcon from '../../../../icons/add-image.png';
-import SearchList from './search-list';
-import Spinner from '../../../common/spinner';
+import SearchList from '../../../common/search-list';
+import MessageBox from '../../../common/message-box';
+import TicketsCostEditor from './tickets-cost-editor';
+import Flight from '../../../../services/flight-models/flight';
 import * as AirportService from '../../../../services/AirportService';
 import * as AirplaneService from '../../../../services/AirplaneService';
 
-function Adding () {
-    const [loading, changeLoadingMode] = useState(true);
-    const [airports, changeAirports] = useState([]);
-    const [airplanes, changeAirplanes] = useState([]);
+function Adding() {
+    const [airplane, changeAirplane] = useState();
 
-    useEffect(() => {
-        const airportsLoading = AirportService.getAll();
-        const airplanesLoading = AirplaneService.getAll();
+    const [fromPlace, changeFromPlace] = useState();
 
-        Promise.all([airportsLoading, airplanesLoading])
-            .then(values => {
-                onDataSuccessful(values);
-            })
-            .catch(onDataFail);
-    }, []);
+    const [toPlace, changeToPlace] = useState();
 
-    function onDataSuccessful (data) {
-        let [airports, airplanes] = data;
-        
-        changeAirports(airports);
-        changeAirplanes(airplanes);
-        changeLoadingMode(false);
+    const [desc, changeDesc] = useState();
+
+    const [departureTime, changeDepartureTime] = useState();
+    const [departureDate, changeDepartureDate] = useState();
+
+    const [departureBackTime, changeDepartureBackTime] = useState();
+    const [departureBackDate, changeDepartureBackDate] = useState();
+
+    const [ticketsCost, changeTicketsCost] = useState();
+
+    const [messageBoxValue, changeMessageBoxValue] = useState(null);
+
+    function onDataSave() {
+        if (!departureDate 
+            || !departureBackDate 
+            || !departureTime 
+            || !departureBackTime 
+            || !fromPlace 
+            || !toPlace 
+            || !airplane 
+            || !ticketsCost
+            || !desc
+        ) {
+            changeMessageBoxValue('Input data is not valid!');
+            return;
+        }
+
+        const departureTime = `${departureDate} ${departureTime}`;
+        const departureBackTime = `${departureBackDate} ${departureBackTime}`;
+
+        const newFlight = 
+            new Flight(
+                null,
+                fromPlace.id,
+                toPlace.id,
+                departureTime,
+                departureBackTime,
+                desc,
+                airplane.id
+            );
     }
 
-    function onDataFail (error) {
-        alert(error);
+    function getAirplaneName(airplane) {
+        return airplane.name;
     }
 
-    if(!loading) {
+    function getAirportName(airport) {
+        return airport.name;
+    }
+
+    function showTicketsCostEditor() {
+        if (!airplane) {
+            return;
+        }
+
         return (
-            <div className="list-item-action">
-                <Headline name="Adding new flight"/>
+            <TicketsCostEditor
+                seatTypes={airplane.seatTypes}
+                onTypeCostChange={changeTicketsCost}
+            />
+        );
+    }
 
-                <div className="adding-form">
-                    <div className="row">
-                        <div className="col-2">
-                            <input type="file" name="image" id="file-input" className="file-upload"/>
-                            <label htmlFor="file-input">
-                                <img src={BuyIcon} className="adding-form-img" alt="add"/>
-                            </label>
-                        </div>
-                        <div className="col-10">
-                            <div className="editing-params-form">
-                                <div className="row">
-                                    <SearchList array={airports} placeholder="From"/>
-                                    <SearchList array={airports} placeholder="To"/>
-                                    <div className="form-item">
-                                        <label htmlFor="departure-time">Departure time</label>
-                                        <input id="departure-time" type="time"/>
+    function showMessageBox() {
+        if (messageBoxValue) {
+            return (
+                <MessageBox
+                    message={messageBoxValue}
+                    hideFunc={changeMessageBoxValue}
+                />
+            );
+        }
+    }
+
+    return (
+        <div className="list-item-action">
+            <Headline name="Adding new flight"/>
+
+            <div className="adding-form">
+                <div className="row">
+                    <div className="col-2">
+                        <input
+                            type="file"
+                            name="image"
+                            id="file-input"
+                            className="file-upload"
+                        />
+                        <label htmlFor="file-input">
+                            <img src={BuyIcon} className="adding-form-img" alt="add"/>
+                        </label>
+                    </div>
+                    <div className="col-10">
+                        <div className="editing-params-form">
+                            <div className="row">
+                                <SearchList
+                                    searchFunc={AirportService.search}
+                                    getItemName={getAirportName}
+                                    onValueChange={changeFromPlace}
+                                    currentItem={fromPlace}
+                                    placeholder="From"
+                                />
+                                <SearchList
+                                    searchFunc={AirportService.search}
+                                    getItemName={getAirportName}
+                                    onValueChange={changeToPlace}
+                                    currentItem={toPlace}
+                                    placeholder="To"
+                                />
+                                <SearchList
+                                    searchFunc={AirplaneService.search}
+                                    getItemName={getAirplaneName}
+                                    onValueChange={changeAirplane}
+                                    currentItem={airplane}
+                                    placeholder="airplane"
+                                />
+
+                                <div className="adding-form-section">
+                                    <div className="row">
+                                        <div className="form-item">
+                                            <label htmlFor="dep-time">
+                                                Departure time
+                                            </label>
+                                            <input
+                                                id="dep-time"
+                                                onChange={(event) => changeDepartureTime(event.target.value)}
+                                                type="time"
+                                            />
+                                        </div>
+                                        <div className="form-item tabulation">
+                                            <label htmlFor="dep-date">
+                                                Departure date
+                                            </label>
+                                            <input
+                                                id="dep-date"
+                                                onChange={(event) => changeDepartureDate(event.target.value)}
+                                                type="date"
+                                            />
+                                        </div>
+                                        <div className="form-item">
+                                            <label htmlFor="dep-back-time">
+                                                Departure back time
+                                            </label>
+                                            <input
+                                                id="dep-back-time"
+                                                onChange={(event) => changeDepartureBackTime(event.target.value)}
+                                                type="time"
+                                            />
+                                        </div>
+                                        <div className="form-item">
+                                            <label htmlFor="dep-back-date">
+                                                Departure back date
+                                            </label>
+                                            <input
+                                                id="dep-back-date"
+                                                onChange={(event) => changeDepartureBackDate(event.target.value)}
+                                                type="date"
+                                            />
+                                        </div>
                                     </div>
-                                    <div className="form-item">
-                                        <label htmlFor="flight-cost">Cost</label>
-                                        <input id="flight-cost" type="text"/>
-                                    </div>
-                                    <SearchList array={airplanes} placeholder="airplane"/>
+                                </div>
+                                {showTicketsCostEditor()}
+                                <div className="adding-form-section">
+                                    <textarea
+                                        placeholder="description"
+                                        value={desc}
+                                        onChange={(event) => changeDesc(event.target.value)}
+                                    />
                                 </div>
                             </div>
                         </div>
+                        <div className="custom-button big" onClick={onDataSave}>
+                            Save
+                        </div>
                     </div>
-                    <input type="submit" value="Add" className="add-button"/>
                 </div>
             </div>
-        );
-    }
-    return (
-        <Spinner/>
+            {showMessageBox()}
+        </div>
     );
 }
 

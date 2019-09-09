@@ -1,4 +1,4 @@
-import {flights} from './DataBase';
+import {flights, ticketsCost} from './DataBase';
 
 export function getAll() {
     return new Promise (
@@ -7,7 +7,7 @@ export function getAll() {
             if (!data) {
                 reject("Error");
             }
-            setTimeout(resolve, 1000, data);
+            resolve(data);
         }
     );
 }
@@ -27,7 +27,7 @@ export function getById(id) {
                 reject("Error");
             }
             else {
-                setTimeout(resolve, 1000, flight);
+                resolve(flight);
             }
         }
     );
@@ -40,11 +40,11 @@ export function getByIds(idArray) {
             
             //later terrible algoritms like this will be replaced by requests
             for (let j = 0, len = idArray.length; j < len; j++) {
-                const currentUserId = idArray[j];
+                const currentId = idArray[j];
                 for (let i = 0, len = flights.length; i < len; i++) {
                     const element = flights[i];
 
-                    if (element.id == currentUserId) {
+                    if (element.id == currentId) {
                         storage.push(element);
                         break;
                     }
@@ -55,6 +55,28 @@ export function getByIds(idArray) {
                 reject('Error');
             }
             resolve(storage);
+        }
+    );
+}
+
+export function getTicketsCost(id) {
+    return new Promise(
+        (resolve, reject) => {
+            const data = ticketsCost;
+            let ticketsCostInfo = data.reduce(
+                (array, ticketCost) => {
+                    if (ticketCost.flightId == id) {
+                        array.push(ticketCost);
+                    }
+                    return array;
+                },
+                []
+            );
+
+            if (!ticketsCostInfo) {
+                reject("Error");
+            }
+            resolve(ticketsCostInfo);
         }
     );
 }

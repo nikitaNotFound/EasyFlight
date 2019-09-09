@@ -2,7 +2,7 @@ import React from 'react';
 import PropsTypes from 'prop-types';
 import SeatZone from './seat-zone';
 
-function SeatSection (props) {
+function SeatSection(props) {
     return (
         <div className="seat-editor-row">
             <div className="seat-editor-number">
@@ -20,7 +20,8 @@ function SeatSection (props) {
                                     key={index}
                                     seats={seats}
                                     seatTypes={props.seatTypes}
-                                    placeInfo={placeInfo}/>
+                                    placeInfo={placeInfo}
+                                />
                             );
                         }
                     )}

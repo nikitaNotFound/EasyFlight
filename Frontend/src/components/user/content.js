@@ -4,9 +4,8 @@ import Flights from './flights/flights';
 import Switcher from './flights/switcher';
 import Spinner from '../common/spinner';
 import * as FlightsService from '../../services/FlightService';
-import * as UserService from '../../services/UserSerivce';
 
-function Content () {
+function Content() {
     const [loading, changeLoadingMode] = useState(true);
     const [flights, changeFlights] = useState([]);
 
@@ -18,12 +17,12 @@ function Content () {
             .catch(onDataFail);
     });
 
-    function onDataSuccessful (data) {
+    function onDataSuccessful(data) {
         changeLoadingMode(false);
         changeFlights(data);
     }
 
-    function onDataFail (error) {
+    function onDataFail(error) {
         alert (error);
     }
 
@@ -34,7 +33,7 @@ function Content () {
 
     const [mode, changeMode] = useState(layoutMode.List);
 
-    function swapFilterList () {
+    function swapFilterList() {
         const newMode = mode === layoutMode.List 
             ? layoutMode.Filter 
             : layoutMode.List;
@@ -51,11 +50,7 @@ function Content () {
             </main>
         );
     }
-    else {
-        return (
-            <Spinner/>
-        );
-    }
+        return <Spinner headline="Loading..."/>
 }
 
 export default Content;

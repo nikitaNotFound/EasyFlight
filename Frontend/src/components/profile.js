@@ -3,7 +3,7 @@ import Header from './profile/header';
 import Content from './profile/content';
 import Footer from './profile/footer';
 
-function Profile () {
+function Profile() {
     return (
         <div className="wrapper container-fluid content">
             <Header/>

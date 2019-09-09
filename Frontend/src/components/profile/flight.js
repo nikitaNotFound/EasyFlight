@@ -4,8 +4,8 @@ import PropsTypes from 'prop-types';
 import FlightObject from '../../services/flight-models/flight';
 import moment from 'moment';
 
-function Flight (props) {
-    function getTimeString (dateInfo) {
+function Flight(props) {
+    function getTimeString(dateInfo) {
         let date = moment(dateInfo);
 
         return moment(date, 'YYYY-MM-DD hh:mm').format('LLL');
@@ -15,7 +15,7 @@ function Flight (props) {
         <div className="flight-history-item">
             <div className="row">
                 <div className="col-1">
-                    <img src={Icon} className="item-image"/>
+                    <img src={Icon} alt="company-icon" className="item-image"/>
                 </div>
 
                 <div className="col-4">

@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import AddButton from '../common/add-button';
+import AddButton from '../../../common/add-button';
 import Airports from './airports';
 import * as AirportService from '../../../../services/AirportService';
 import Spinner from '../../../common/spinner';
 
-function AirportPage () {
+function AirportPage() {
     const [loading, changeLoadingMode] = useState(true);
     const [airports, changeAirports] = useState([]);
 
@@ -14,14 +14,14 @@ function AirportPage () {
         dataLoading
             .then(onDataSuccessful.bind(this))
             .catch(onDataFail);
-    });
+    }, []);
 
-    function onDataSuccessful (data) {
+    function onDataSuccessful(data) {
         changeLoadingMode(false);
         changeAirports(data);
     }
 
-    function onDataFail (error) {
+    function onDataFail(error) {
         alert (error);
     }
 
@@ -33,13 +33,7 @@ function AirportPage () {
             </div>
         );
     }
-    else {
-        return (
-            <div className="tab-content">
-                <Spinner/>
-            </div>
-        );
-    }
+    return <Spinner headline="Loading..."/>
 }
 
 export default AirportPage;

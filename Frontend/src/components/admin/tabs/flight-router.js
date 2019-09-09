@@ -4,7 +4,7 @@ import Add from './flights/add-page';
 import Edit from './flights/edit-page';
 import React from 'react';
 
-function FlightsRouter () {
+function FlightsRouter() {
     return (
         <Switch>
             <Route exact path="/admin/flights" component={Page}/>

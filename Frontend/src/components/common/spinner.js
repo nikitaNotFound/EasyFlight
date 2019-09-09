@@ -1,11 +1,16 @@
 import React from 'react';
+import PropsTypes from 'prop-types';
 
-function Spinner () {
+function Spinner(props) {
     return (
         <div>
-            Loading...
+            {props.headline}
         </div>
     );
+}
+
+Spinner.propsTypes = {
+    headline: PropsTypes.string
 }
 
 export default Spinner;

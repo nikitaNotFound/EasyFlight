@@ -1,35 +1,29 @@
-import React, {Component} from 'react';
+import React from 'react';
 import Airport from './airport';
 import PropsTypes from 'prop-types';
-import * as AirportService from '../../../../services/AirportService';
+import '../../../../styles/items-list.css';
 
-class Airports extends Component {
-    airports = AirportService.getAll();
+function Airports(props) {
+    return (
+        <div className="items-list">
+                {props.airports.map(
+                    (item, index) => 
+                        <Airport 
+                            name={item.name}
+                            airport={item}
+                            onEdit={props.onEdit}
+                            displayLayout={props.displayLayout}
+                            key={index}
+                        />
+                )}
+        </div>
+    );
+}
 
-    propsTypes = {
-        onEdit: PropsTypes.func,
-        displayLayout: PropsTypes.func,
-        airports: PropsTypes.array
-    }
-
-    render () {
-        return (
-            <div className="items-list">
-                 {this.props.airports.map(
-                        (item) => 
-                            <Airport 
-                                name={item.name} 
-                                city={item.city} 
-                                country={item.country} 
-                                desc={item.desc}
-                                airportId={item.id}
-                                onEdit={this.props.onEdit}
-                                displayLayout={this.props.displayLayout}
-                            />
-                    )}
-            </div>
-        );
-    }
+Airports.propsTypes = {
+    onEdit: PropsTypes.func,
+    displayLayout: PropsTypes.func,
+    airports: PropsTypes.array
 }
 
 export default Airports;

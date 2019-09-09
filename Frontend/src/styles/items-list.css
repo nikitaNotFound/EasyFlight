@@ -1,0 +1,121 @@
+.items-list {
+    margin: 0% calc(1.5vh);
+    margin-top: calc(1vh + 10px);
+}
+
+.list-item {
+    min-height: 100px;
+    background: rgb(211, 211, 211);
+    box-shadow: 0 0 2px rgba(0,0,0,0.5);
+    margin-bottom: 1%;
+}
+
+.list-item-img {
+    width: 100px;
+    height: 100px;
+}
+
+.add-airport {
+    width: 100%;
+    background: rgb(231, 231, 231);
+    box-shadow: 0 0 2px rgba(0,0,0,0.5);
+    padding: 0.2%;
+    font-size: 32px;
+    text-align: center;
+}
+
+.add-airport:hover {
+    background: rgb(211, 211, 211);
+}
+
+.list-item-action {
+    background: rgb(231, 231, 231);
+    width: 100%;
+    min-height: 400px;
+    padding: 1%;
+    margin-top: 1%;
+    box-shadow: 0 0 2px rgba(0,0,0,0.5);
+}
+
+.adding-form {
+    margin-top: 3%;
+}
+
+.adding-form textarea{
+    margin: 0 -15px;
+    margin-top: 3%;
+    width: calc(100% + 30px);
+}
+
+.form-item {
+    display: inline;
+    margin-right: 2.5%;
+}
+
+.form-item label {
+    margin-bottom: 0.3%;
+    width: 194px;
+    display: inherit;
+}
+
+.form-item input {
+    margin-bottom: 4%;
+}
+
+.tabulation {
+    margin-right: 10%;
+}
+
+.adding-form-img {
+    width: 100%;
+}
+
+.file-upload {
+    display: none;
+}
+
+.add-button {
+    width: 30%;
+    height: 50px;
+    position: relative;
+    left: 60vw;
+}
+
+.cancel-button {
+    width: 30%;
+    height: 50px;
+    position: relative;
+    left: 60vw;
+}
+
+.edit-button {
+    background: rgb(223, 223, 223);
+    padding: 4px;
+    text-align: center;
+    color: black;
+}
+
+.edit-button:hover {
+    background: rgb(236, 236, 236);
+}
+
+.adding-form-section {
+    width: 100%;
+    float: left;
+    margin: 15px;
+    margin-top: 3%;
+}
+
+@media screen and (max-width: 960px) {
+    .list-item h6 {
+        font-size: 16px;
+    }
+
+    .list-item h5 {
+        font-size: 22px;
+    }
+
+    .list-item h1 {
+        font-size: 32px;
+    }
+}

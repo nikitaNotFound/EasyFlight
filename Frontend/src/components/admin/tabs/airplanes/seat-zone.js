@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import PropsTypes from 'prop-types';
 import SeatRow from './seat-row';
 
-function inizializeRowSeats (props, maxLength) {
+function inizializeRowSeats(props, maxLength) {
     let storage = [];
     Object.assign(storage, props.seats)
 
@@ -17,7 +17,7 @@ function inizializeRowSeats (props, maxLength) {
     return storage;
 }
 
-function getGlobalRowLength (props) {
+function getGlobalRowLength(props) {
     let storage = [];
     Object.assign(storage, props.seats)
 
@@ -32,21 +32,25 @@ function getGlobalRowLength (props) {
     return maxLength;
 }
 
-function SeatZone (props) {
+function SeatZone(props) {
     const [globalRowLength, changeGlobalRowLength] = useState(getGlobalRowLength(props));
     const [rowSeats, changeRowSeats] = useState(inizializeRowSeats(props, globalRowLength));
 
-    function onSeatDeleted (seatPosition) {
+    function onSeatDeleted(seatPosition) {
         let storage = [];
         Object.assign(storage, rowSeats);
 
         storage[seatPosition.row - 1][seatPosition.number - 1] = null;
 
-        if (checkRowEmpty(storage[storage.length - 1]) && checkRowEmpty(storage[storage.length - 2])) {
+        if (checkRowEmpty(storage[storage.length - 1])
+            && checkRowEmpty(storage[storage.length - 2])
+        ) {
             storage = storage.slice(0, storage.length - 1);
         }
 
-        if (checkColumnEmpty(storage, globalRowLength - 1) && checkColumnEmpty(storage, globalRowLength - 2)) {
+        if (checkColumnEmpty(storage, globalRowLength - 1)
+            && checkColumnEmpty(storage, globalRowLength - 2)
+        ) {
             for (let i = 0, len = storage.length; i < len; i++) {
                 storage[i] = storage[i].slice(0, storage[i].length - 1);
             }
@@ -56,7 +60,7 @@ function SeatZone (props) {
         changeRowSeats(storage);
     }
     
-    function onSeatAdded (seat) {
+    function onSeatAdded(seat) {
         let storage = [];
         Object.assign(storage, rowSeats);
 
@@ -78,7 +82,7 @@ function SeatZone (props) {
         changeRowSeats(storage);
     }
 
-    function onSeatChanged (seatType, placeInfo) {
+    function onSeatChanged(seatType, placeInfo) {
         let storage = [];
         Object.assign(storage, rowSeats);
 
@@ -87,7 +91,7 @@ function SeatZone (props) {
         changeRowSeats(storage);
     }
     
-    function checkColumnEmpty (array, columnIndex) {
+    function checkColumnEmpty(array, columnIndex) {
         for (let i = 0, len = array.length; i < len; i++) {
             const rowElement = array[i];
             
@@ -99,7 +103,7 @@ function SeatZone (props) {
         return true;
     }
 
-    function checkRowEmpty (row) {
+    function checkRowEmpty(row) {
         for (let i = 0, len = row.length; i < len; i++) {
             const element = row[i];
 
@@ -126,7 +130,8 @@ function SeatZone (props) {
                             onSeatAdded={onSeatAdded}
                             onSeatChanged={onSeatChanged}
                             onSeatDeleted={onSeatDeleted}
-                            placeInfo={placeInfo}/>
+                            placeInfo={placeInfo}
+                        />
                     );
                 }
             )}

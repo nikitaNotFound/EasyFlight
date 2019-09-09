@@ -1,31 +1,29 @@
-import React, {Component} from 'react';
+import React from 'react';
 import Flight from './flight';
 import PropsTypes from 'prop-types';
+import '../../../../styles/items-list.css';
 
-class Flights extends Component {
-    propsTypes = {
-        flights: PropsTypes.array
-    }
+function Flights(props) {
+    return (
+        <div className="items-list">
+                {props.flights.map(
+                    (item) => 
+                        <Flight
+                            name={item.name}
+                            fromId={item.fromId}
+                            toId={item.toId}
+                            desc={item.desc}
+                            flightId={item.id}
+                            onEdit={props.onEdit}
+                            displayLayout={props.displayLayout}
+                        />
+                )}
+        </div>
+    );
+}
 
-    render () {
-        return (
-            <div className="items-list">
-                 {this.props.flights.map(
-                        (item) => 
-                            <Flight
-                                name={item.name}
-                                from={item.from}
-                                to={item.to}
-                                cost={item.cost}
-                                desc={item.desc}
-                                flightId={item.id}
-                                onEdit={this.props.onEdit}
-                                displayLayout={this.props.displayLayout}
-                            />
-                    )}
-            </div>
-        );
-    }
+Flight.propsTypes = {
+    flights: PropsTypes.array
 }
 
 export default Flights;

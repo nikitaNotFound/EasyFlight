@@ -1,26 +1,45 @@
 import React, {useState} from 'react';
-import Headline from '../common/headline';
-import AddIcon from '../../../../icons/add-image.png';
+import Headline from '../../../common/headline';
 import SeatEditor from './seat-editor';
+import MessageBox from '../../../common/message-box';
 import Airplane from '../../../../services/airplane-models/airplane';
 
-function Adding () {
-    const [airplaneName, changeAirplaneName] = useState('');
-    const [airplaneMaxMass, changeAirplaneMaxMass] = useState(0);
+function Adding() {
+    const [name, changeName] = useState('');
+    const [maxMass, changeMaxMass] = useState(0);
+    const [seats, changeSeats] = useState();
+    const [seatTypes, changeSeatTypes] = useState();
 
-    function onDataSave (data) {
-        data.push(new Airplane(airplaneName, airplaneMaxMass, data));
-        //HERE WILL BE HTTP REQUEST TO API
+    const [messageBoxValue, changeMessageBoxValue] = useState();
+
+    function onDataSave(data) {
+        if (!name 
+            || !maxMass
+            || !seats
+            || !seatTypes
+        ) {
+            changeMessageBoxValue('Input data is not valid');
+            return;
+        }
+
+        const newAirplane = new Airplane(null, name, maxMass, seats, seatTypes);
     }
 
-    function onAirplaneNameChange (event) {
-        changeAirplaneName(event.target.value);
-    }
-
-    function onMassMaxChange (event) {
+    function onMassMaxChange(event) {
         const newMaxMass = Number(event.target.value);
         if (newMaxMass > 0) {
-            changeAirplaneMaxMass(newMaxMass);
+            changeMaxMass(newMaxMass);
+        }
+    }
+
+    function showMessageBox() {
+        if (messageBoxValue) {
+            return (
+                <MessageBox
+                    message={messageBoxValue}
+                    hideFunc={changeMessageBoxValue}
+                />
+            );
         }
     }
 
@@ -34,20 +53,38 @@ function Adding () {
                         <div className="editing-params-form">
                             <div className="row">
                                 <div className="form-item">
-                                    <label htmlFor="airplane-name">Airplane name</label>
-                                    <input type="text" id="airplane-name" onChange={onAirplaneNameChange} value={airplaneName}/>
+                                    <label htmlFor="airplane-name">
+                                        Airplane name
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="airplane-name"
+                                        onChange={(event) => changeName(event.target.value)}
+                                        value={name}
+                                    />
                                 </div>
                                 <div className="form-item">
-                                    <label htmlFor="airplane-max-mass">Max mass</label>
-                                    <input id="airplane-max-mass" onChange={onMassMaxChange} value={airplaneMaxMass}/>
+                                    <label htmlFor="airplane-max-mass">
+                                        Max mass
+                                    </label>
+                                    <input
+                                        id="airplane-max-mass"
+                                        onChange={onMassMaxChange}
+                                        value={maxMass}
+                                    />
                                 </div>
                             </div>
                         </div>
                         <br/>
-                        <SeatEditor onDataSave={onDataSave}/>
+                        <SeatEditor 
+                            onSeatsChange={changeSeats}
+                            onSeatTypesChange={changeSeatTypes}
+                        />
                     </div>
                 </div>
             </div>
+            <div className="custom-button big" onClick={onDataSave}>Save</div>
+            {showMessageBox()}
         </div>
     );
 }
