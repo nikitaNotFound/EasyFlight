@@ -72,7 +72,9 @@ function SearchList(props) {
                 changeList(newList);
                 changeLoading(false);
             })
-            .catch();
+            .catch(error => {
+                alert(error);
+            });
     }
 
     return (
