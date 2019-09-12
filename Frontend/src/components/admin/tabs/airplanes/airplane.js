@@ -7,7 +7,7 @@ class Airplane extends Component {
     static propsTypes = {
         name: PropsTypes.string,
         seatCount: PropsTypes.number,
-        maxMass: PropsTypes.number,
+        carrying: PropsTypes.number,
         airplaneId: PropsTypes.number,
     }
 
@@ -23,7 +23,7 @@ class Airplane extends Component {
                         name={this.props.name}
                         seatCount={`${this.props.seatCount} seats`}
                     />
-                    {`max mass = ${this.props.maxMass}kg`}
+                    {`max mass = ${this.props.carrying}kg`}
                 </div>
 
                 <div className="col-1">

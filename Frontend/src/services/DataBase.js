@@ -10,8 +10,11 @@ import City from '../services/place-models/city';
 import Country from '../services/place-models/country';
 
 export const flights = [
-    new Flight(1, 2, 3, '2018-01-01 18:30', '2018-01-07 17:30', 'This is a test flight.', 1),
-    new Flight(2, 4, 1, '2018-02-01 12:30', '2018-02-07 17:30', 'This is not a test flight.', 2)
+    new Flight(1, 2, 3, '2018-01-01 18:30', '2018-01-07 17:30', 'This is a test flight.', 1, 20),
+    new Flight(2, 4, 1, '2018-02-01 12:30', '2018-02-07 17:30', 'This is not a test flight.', 2, 5),
+    new Flight(3, 1, 4, '2018-02-01 12:30', '2018-02-07 17:30', 'This is not a test flight.', 1, 20),
+    new Flight(4, 3, 2, '2018-02-01 12:30', '2018-02-07 17:30', 'This is not a test flight.', 2, 5),
+    new Flight(5, 1, 4, '2018-02-01 12:30', '2018-02-07 17:30', 'This is not a test flight.', 1, 20),
 ];
 
 export const ticketsCost = [
@@ -45,7 +48,7 @@ export const countries = [
 ]
 
 export const airplanes = [
-    //airplane constructor params: id, name, maxMass, seats, seatTypes
+    //airplane constructor params: id, name, carrying, seats, seatTypes
     new Airplane(
         1, 'F300', 1000,
         [

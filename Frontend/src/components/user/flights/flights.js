@@ -1,34 +1,36 @@
-import React, {Component} from 'react';
+import React from 'react';
 import Flight from './flight';
-import ComponentHeadline from '../component-headline';
+import ComponentHeadline from '../../common/component-headline';
 import PropsTypes from 'prop-types';
 import '../../../styles/flight-list.scss';
 
-class Flights extends Component {
-    propsTypes = {
-        flights: PropsTypes.array
+function Flights(props) {
+    function showSearchResult() {
+        if (props.flights.length == 0) {
+            return <div>No items found</div>
+        }
     }
 
-    render () {
-        return (
-            <div className="list rounded">
-                <ComponentHeadline content="Flights list"/>
+    return (
+        <div className="list rounded">
+            <ComponentHeadline content="Flights list"/>
+            {showSearchResult()}
 
-                <div className="container-fluid list-body">
-                    {this.props.flights.map(
-                        (item, index) => 
-                            <Flight 
-                                key={index} 
-                                from={item.from} 
-                                to={item.to} 
-                                cost={item.cost} 
-                                desc={item.desc}
-                            />
-                    )}
-                </div>
+            <div className="container-fluid list-body">
+                {props.flights.map(
+                    (flight, index) => 
+                        <Flight 
+                            flight={flight}
+                            key={index}
+                        />
+                )}
             </div>
-        );
-    }
+        </div>
+    );
+}
+
+Flights.propsTypes = {
+    flights: PropsTypes.array
 }
 
 export default Flights;

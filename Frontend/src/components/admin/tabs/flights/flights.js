@@ -7,15 +7,12 @@ function Flights(props) {
     return (
         <div className="items-list">
                 {props.flights.map(
-                    (item) => 
+                    (item, index) => 
                         <Flight
-                            name={item.name}
-                            fromId={item.fromId}
-                            toId={item.toId}
-                            desc={item.desc}
-                            flightId={item.id}
+                            flight={item}
                             onEdit={props.onEdit}
                             displayLayout={props.displayLayout}
+                            key={index}
                         />
                 )}
         </div>

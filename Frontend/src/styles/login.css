@@ -3,62 +3,62 @@
     font-size: 19px;
   }
   
-  .button-dark {
-    background: rgb(167, 180, 185);
-    border: 1px solid gray;
+.button-dark {
+  background: rgb(167, 180, 185);
+  border: 1px solid gray;
+}
+
+.button-dark:hover{
+  background: rgb(170, 196, 219);
+  border: 1px solid;
+}
+
+.button-red {
+  background: red;
+  border: 1px solid red;
+}
+
+.button-red:hover {
+  background: rgb(219, 2, 2);
+  border: 1px solid rgb(219, 2, 2);
+}
+
+.switcher button {
+  margin-right: 1%;
+}
+
+.login-item-img {
+  width: 22px;
+  height: 22px;
+}
+
+@media screen and (max-width: 1660px) {
+  .login-item {
+      font-size: 11px;
   }
-  
-  .button-dark:hover{
-    background: rgb(170, 196, 219);
-    border: 1px solid;
-  }
-  
-  .button-red {
-    background: red;
-    border: 1px solid red;
-  }
-  
-  .button-red:hover {
-    background: rgb(219, 2, 2);
-    border: 1px solid rgb(219, 2, 2);
-  }
-  
-  .switcher button {
-    margin-right: 1%;
-  }
-  
+
   .login-item-img {
-    width: 22px;
-    height: 22px;
+      width: 18px;
+      height: 18px;
   }
-  
-  @media screen and (max-width: 1660px) {
-    .login-item {
-        font-size: 11px;
-    }
-  
-    .login-item-img {
-        width: 18px;
-        height: 18px;
-    }
-  
-    .login-container {
-        height: 44px;
-    }
+
+  .login-container {
+      height: 44px;
   }
-  
-  
-  @media screen and (max-width: 960px) {
-    .login-item {
-        font-size: 20px;
-    }
-  
-    .login-item-img {
-        width: 25px;
-        height: 25px;
-    }
-  
-    .login-container {
-        height: 44px;
-    }
+}
+
+
+@media screen and (max-width: 960px) {
+  .login-item {
+      font-size: 20px;
   }
+
+  .login-item-img {
+      width: 25px;
+      height: 25px;
+  }
+
+  .login-container {
+      height: 44px;
+  }
+}

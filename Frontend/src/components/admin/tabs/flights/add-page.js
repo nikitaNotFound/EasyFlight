@@ -53,7 +53,8 @@ function Adding() {
                 departureTime,
                 departureBackTime,
                 desc,
-                airplane.id
+                airplane.id,
+                airplane.seats.length
             );
     }
 

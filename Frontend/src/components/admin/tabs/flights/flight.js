@@ -3,6 +3,7 @@ import FlightHeadline from './flight-headline';
 import PropsTypes from 'prop-types';
 import Spinner from '../../../common/spinner';
 import { Link } from 'react-router-dom';
+import FlightObject from '../../../../services/flight-models/flight';
 import * as PlaceService from '../../../../services/PlaceService';
 import * as AirportService from '../../../../services/AirportService';
 
@@ -18,8 +19,8 @@ function Flight(props) {
     const [toCountry, changeToCountry] = useState();
     
     useEffect(() => {
-        const fromAirportLoading = AirportService.getById(props.fromId);
-        const toAirportLoading = AirportService.getById(props.toId);
+        const fromAirportLoading = AirportService.getById(props.flight.fromId);
+        const toAirportLoading = AirportService.getById(props.flight.toId);
 
         Promise.all([fromAirportLoading, toAirportLoading])
             .then(airports => {
@@ -52,7 +53,7 @@ function Flight(props) {
                 changeLoading(false);
             })
             .catch();
-    }, [props]);
+    }, [props.flight]);
 
     if (loading) {
         return <Spinner headline="Loading..."/>
@@ -69,11 +70,11 @@ function Flight(props) {
                     from={`${fromAirport.name} (${fromCity.name}, ${fromCountry.name})`}
                     to={`${toAirport.name} (${toCity.name}, ${toCountry.name})`}
                 />
-                {props.desc}
+                {props.flight.desc}
             </div>
 
             <div className="col-lg-1 col-sm-12">
-                <Link to={`/admin/flights/edit/${props.flightId}`}>
+                <Link to={`/admin/flights/edit/${props.flight.flightId}`}>
                     <div className="edit-button rounded non-selectable">
                         Edit
                     </div>
@@ -84,10 +85,7 @@ function Flight(props) {
 }
 
 Flight.propsTypes = {
-    fromId: PropsTypes.string,
-    toId: PropsTypes.string,
-    desc: PropsTypes.string,
-    flightId: PropsTypes.number,
+    flight: PropsTypes.instanceOf(Flight),
     onEdit: PropsTypes.func,
     displayLayout: PropsTypes.func
 }

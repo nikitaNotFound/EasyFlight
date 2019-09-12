@@ -18,7 +18,7 @@ class Airplanes extends Component {
                             <Airplane 
                                 name={item.name} 
                                 seatCount={item.seats.length}
-                                maxMass={item.maxMass}
+                                carrying={item.carrying}
                                 airplaneId={item.id}
                                 onEdit={this.props.onEdit}
                                 displayLayout={this.props.displayLayout}

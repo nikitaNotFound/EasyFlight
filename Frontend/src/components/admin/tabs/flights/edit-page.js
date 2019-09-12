@@ -98,7 +98,8 @@ function Editing (props) {
                 finalDepartureTime,
                 finalDepartureBackTime,
                 desc,
-                airplane.id
+                airplane.id,
+                airplane.seats.length
             );
     }
 

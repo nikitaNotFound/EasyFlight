@@ -1,14 +1,14 @@
 class Airplane {
     id;
     name;
-    maxMass;
+    carrying;
     seats;
     seatTypes;
 
-    constructor (id, name, maxMass, seats, seatTypes) {
+    constructor (id, name, carrying, seats, seatTypes) {
         this.id = id;
         this.name = name;
-        this.maxMass = maxMass;
+        this.carrying = carrying;
         this.seats = seats;
         this.seatTypes = seatTypes;
     }
