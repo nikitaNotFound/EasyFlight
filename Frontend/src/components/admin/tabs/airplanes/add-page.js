@@ -6,15 +6,15 @@ import Airplane from '../../../../services/airplane-models/airplane';
 
 function Adding() {
     const [name, changeName] = useState('');
-    const [maxMass, changeMaxMass] = useState(0);
+    const [carrying, changeCarrying] = useState(0);
     const [seats, changeSeats] = useState();
     const [seatTypes, changeSeatTypes] = useState();
 
     const [messageBoxValue, changeMessageBoxValue] = useState();
 
-    function onDataSave(data) {
+    function onDataSave() {
         if (!name 
-            || !maxMass
+            || !carrying
             || !seats
             || !seatTypes
         ) {
@@ -22,13 +22,13 @@ function Adding() {
             return;
         }
 
-        const newAirplane = new Airplane(null, name, maxMass, seats, seatTypes);
+        const newAirplane = new Airplane(null, name, carrying, seats, seatTypes);
     }
 
     function onMassMaxChange(event) {
-        const newMaxMass = Number(event.target.value);
-        if (newMaxMass > 0) {
-            changeMaxMass(newMaxMass);
+        const newCarrying = Number(event.target.value);
+        if (newCarrying > 0) {
+            changeCarrying(newCarrying);
         }
     }
 
@@ -70,7 +70,7 @@ function Adding() {
                                     <input
                                         id="airplane-max-mass"
                                         onChange={onMassMaxChange}
-                                        value={maxMass}
+                                        value={carrying}
                                     />
                                 </div>
                             </div>

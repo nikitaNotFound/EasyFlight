@@ -6,8 +6,9 @@ class Flight {
      departureBackTime;
      desc;
      airplaneId;
+     ticketsLeft;
 
-     constructor (id, fromId, toId, departureTime, departureBackTime, desc, airplaneId) {
+     constructor (id, fromId, toId, departureTime, departureBackTime, desc, airplaneId, ticketsLeft) {
          this.id = id;
          this.fromId = fromId;
          this.toId = toId;
@@ -15,6 +16,7 @@ class Flight {
          this.departureBackTime = departureBackTime;
          this.desc = desc;
          this.airplaneId = airplaneId;
+         this.ticketsLeft = ticketsLeft;
      }
 }
 

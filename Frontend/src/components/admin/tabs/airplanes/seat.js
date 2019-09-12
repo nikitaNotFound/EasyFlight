@@ -7,8 +7,7 @@ const UNDEFINED_SEAT_TYPE_INDEX = -1;
 function getSeatTypeIndex(props) {
     if (!props.seat) {
         return UNDEFINED_SEAT_TYPE_INDEX;
-    }
-    else {
+    } else {
         let index = UNDEFINED_SEAT_TYPE_INDEX;
         for (let i = 0, len = props.seatTypes.length; i < len; i++) {
             const element = props.seatTypes[i];
@@ -37,8 +36,7 @@ function Seat(props) {
             };
             changeSeatTypeIndex(UNDEFINED_SEAT_TYPE_INDEX);
             props.onSeatDeleted(seatPosition);
-        }
-        else if (oldTypeIndex === UNDEFINED_SEAT_TYPE_INDEX) {
+        } else if (oldTypeIndex === UNDEFINED_SEAT_TYPE_INDEX) {
             const newSeat = new SeatObject (
                 props.placeInfo.floor,
                 props.placeInfo.section,
@@ -50,8 +48,7 @@ function Seat(props) {
 
             props.onSeatAdded(newSeat);
             changeSeatTypeIndex(newTypeIndex);
-        }
-        else {
+        } else {
             props.onSeatChanged(newTypeIndex, props.placeInfo);
             changeSeatTypeIndex(newTypeIndex);
         }

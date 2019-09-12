@@ -1,4 +1,5 @@
 import {airports} from './DataBase';
+import * as PlaceService from './PlaceService';
 
 export function getAll() {
     return new Promise (
@@ -6,8 +7,7 @@ export function getAll() {
             const data = airports;
             if (!data) {
                 reject("Error");
-            }
-            else {
+            } else {
                 resolve(data);
             }
         }
@@ -29,9 +29,7 @@ export function getById(id) {
                 reject("Error");
             }
 
-            else {
-                resolve(airport);
-            }
+            resolve(airport);
         }
     );
 }
@@ -76,11 +74,57 @@ export function search(searchPhrase) {
                 }
             }
             //IN FUTURE HERE WILL BE CHECKING OF SUCCESFULL REQUEST TO THE API
-            if (false) {
+            if (!airplanes) {
                 reject("Error");
             }
 
             resolve(airplanes);
+        }
+    );
+}
+
+export async function searchWithParams(params) {
+    return new Promise(
+        async (resolve, reject) => {
+            const data = airports;
+
+            let foundAirports = [];
+
+            for (let i = 0, len = data.length; i < len; i++) {
+                const element = data[i];
+
+                const city = await PlaceService.getCityById(element.cityId);
+                const country = await PlaceService.getCountryById(city.countryId);
+
+                if (params.name) {
+                    const searchReg = new RegExp('^' + params.name, 'ig');
+
+                    if (!element.name.match(searchReg)) {
+                        continue;
+                    }
+                }
+
+                if (!params.city
+                    && params.country
+                    && !(country.id == params.country.id)
+                ) {
+                    continue;
+                }
+
+                if (params.city
+                    && !(params.city.id == element.cityId)
+                ) {
+                    continue;
+                }
+
+                foundAirports.push(element);
+            }
+
+            if (!foundAirports) {
+                reject('Error');
+            }
+
+            resolve(foundAirports);
         }
     );
 }

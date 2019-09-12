@@ -1,39 +1,29 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import AddButton from '../../../common/add-button';
 import Flights from './flights';
-import Spinner from '../../../common/spinner';
 import * as FlightService from '../../../../services/FlightService';
+import SearchOptions from '../../../../services/flight-models/search-options';
+import Filter from './filter';
 
 function FlightPage() {
-    const [loading, changeLoadingMode] = useState(true);
     const [flights, changeFlights] = useState([]);
+    const [filterOptions, changeFilterOptions] = useState(new SearchOptions());
 
-    useEffect(() => {
-        const dataLoading = FlightService.getAll();
+    async function onFilterApply(newFilterOptions) {
+        changeFilterOptions(newFilterOptions);
 
-        dataLoading
-            .then(onDataSuccessful.bind(this))
-            .catch(onDataFail);
-    });
-    
-    function onDataSuccessful(data) {
-        changeLoadingMode(false);
-        changeFlights(data);
+        const foundFlights = await FlightService.searchWithParams(newFilterOptions);
+
+        changeFlights(foundFlights);
     }
 
-    function onDataFail(error) {
-        alert (error);
-    }
-
-    if (!loading) {
-        return (
-            <div className="tab-content">
-                <AddButton catalog="flights"/>
-                <Flights flights={flights}/>
-            </div>
-        );
-    }
-    return <Spinner headline="Loading..."/>
+    return (
+        <div className="tab-content">
+            <Filter filterOptions={filterOptions} onFilterApply={onFilterApply}/>
+            <AddButton catalog="flights"/>
+            <Flights flights={flights}/>
+        </div>
+    );
 }
 
 export default FlightPage;

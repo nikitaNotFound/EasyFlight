@@ -11,7 +11,7 @@ function Edit(props) {
 
     const [id, changeId] = useState();
     const [name, changeName] = useState('');
-    const [maxMass, changeMaxMass] = useState(0);
+    const [carrying, changeCarrying] = useState(0);
     const [seats, changeSeats] = useState();
     const [seatTypes, changeSeatTypes] = useState();
 
@@ -24,7 +24,7 @@ function Edit(props) {
             .then(airplane => {
                 changeId(airplane.id);
                 changeName(airplane.name);
-                changeMaxMass(airplane.maxMass);
+                changeCarrying(airplane.carrying);
                 changeSeatTypes(airplane.seatTypes);
                 changeSeats(airplane.seats);
                 changeLoading(false);
@@ -40,7 +40,7 @@ function Edit(props) {
 
     function onDataSave() {
         if (!name
-            || !maxMass
+            || !carrying
             || !seats
             || !seatTypes
         ) {
@@ -48,13 +48,13 @@ function Edit(props) {
             return;
         }
 
-        const finalAirplane = new Airplane(id, name, maxMass, seats, seatTypes);
+        const finalAirplane = new Airplane(id, name, carrying, seats, seatTypes);
     }
 
-    function onMaxMassChange(event) {
-        const newMaxMass = Number(event.target.value);
-        if (newMaxMass > 0) {
-            changeMaxMass(newMaxMass);
+    function onCarryingChange(event) {
+        const newCarrying = Number(event.target.value);
+        if (newCarrying > 0) {
+            changeCarrying(newCarrying);
         }
     }
 
@@ -95,8 +95,8 @@ function Edit(props) {
                                     </label>
                                     <input
                                         id="airplane-max-mass"
-                                        value={maxMass}
-                                        onChange={onMaxMassChange}
+                                        value={carrying}
+                                        onChange={onCarryingChange}
                                     />
                                 </div>
                             </div>

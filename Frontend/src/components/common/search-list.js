@@ -25,9 +25,8 @@ function SearchList(props) {
 
     function closeList() {
         if (currentItem) {
-            changeInputValue(props.getItemName(props.currentItem));
-        }
-        else {
+            changeInputValue(props.getItemName(currentItem));
+        } else {
             changeInputValue('');
         }
         changeMode(false);
@@ -62,6 +61,8 @@ function SearchList(props) {
 
         if (!event.target.value) {
             changeLoading(true);
+            changeCurrentItem(null);
+            props.onValueChange(null);
             return;
         }
 
@@ -87,7 +88,7 @@ function SearchList(props) {
                 autoComplete="off"
                 name={props.placeholder}
                 placeholder={props.placeholder}
-                onFocus={openList} 
+                onFocus={openList}
                 onBlur={closeList}
                 onChange={onSearchPhraseChange}
             />
