@@ -40,19 +40,18 @@ function Filter(props) {
             return;
         }
 
-        const newOptions =
-            new SearchOptions(
-                    fromAirport,
-                    toAirport,
-                    fromCity,
-                    toCity,
-                    departureTime,
-                    departureBackTime,
-                    ticketCount,
-                    searchToAndBack,
-                    fromCountry,
-                    toCountry
-                    );
+        const newOptions = new SearchOptions(
+            fromAirport,
+            toAirport,
+            fromCity,
+            toCity,
+            departureTime,
+            departureBackTime,
+            ticketCount,
+            searchToAndBack,
+            fromCountry,
+            toCountry
+        );
 
         props.onFilterApplied(newOptions);
     }

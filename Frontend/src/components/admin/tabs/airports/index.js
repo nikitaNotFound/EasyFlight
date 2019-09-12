@@ -5,13 +5,9 @@ import * as AirportService from '../../../../services/AirportService';
 import Filter from './filter';
 import SearchOptions from '../../../../services/airport-models/search-options';
 
-function getEmptyFilterOptions() {
-    return new SearchOptions(null, null, null);
-}
-
 function AirportPage() {
     const [airports, changeAirports] = useState([]);
-    const [filterOptions, changeFilterOptions] = useState(getEmptyFilterOptions);
+    const [filterOptions, changeFilterOptions] = useState(new SearchOptions());
 
     async function onFilterApply(newFilterOptions) {
         changeFilterOptions(newFilterOptions);

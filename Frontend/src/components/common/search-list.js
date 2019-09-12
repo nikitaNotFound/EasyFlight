@@ -26,8 +26,7 @@ function SearchList(props) {
     function closeList() {
         if (currentItem) {
             changeInputValue(props.getItemName(currentItem));
-        }
-        else {
+        } else {
             changeInputValue('');
         }
         changeMode(false);

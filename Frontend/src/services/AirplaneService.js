@@ -6,8 +6,7 @@ export function getAll() {
             const data = airplanes;
             if (!data) {
                 reject("Error");
-            }
-            else {
+            } else {
                 resolve(data);
             }
         }
@@ -27,8 +26,7 @@ export function getById(id) {
 
             if (!airplane) {
                 reject("Error");
-            }
-            else {
+            } else {
                 resolve(airplane);
             }
         }

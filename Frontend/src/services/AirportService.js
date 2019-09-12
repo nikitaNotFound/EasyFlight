@@ -7,8 +7,7 @@ export function getAll() {
             const data = airports;
             if (!data) {
                 reject("Error");
-            }
-            else {
+            } else {
                 resolve(data);
             }
         }

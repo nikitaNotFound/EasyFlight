@@ -26,8 +26,7 @@ export function getById(id) {
 
             if (!flight) {
                 reject("Error");
-            }
-            else {
+            } else {
                 resolve(flight);
             }
         }
@@ -129,9 +128,7 @@ export function searchWithParams(params) {
                     ) {
                         continue;
                     }
-                }
-
-                else {
+                } else {
                     if (params.fromAirport
                         && !(element.fromId == params.fromAirport.id)
                     ) {

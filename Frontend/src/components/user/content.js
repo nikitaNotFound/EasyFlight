@@ -2,28 +2,12 @@ import React, {useState, useEffect} from 'react';
 import Filter from './flights/filter';
 import Flights from './flights/flights';
 import Switcher from './flights/switcher';
-import Spinner from '../common/spinner';
 import SearchOptions from '../../services/flight-models/search-options';
 import * as FlightsService from '../../services/FlightService';
 
-function getEmptyFilterOptions() {
-    return new SearchOptions(
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
-    );
-}
-
 function Content() {
     const [flights, changeFlights] = useState(null);
-    const [filterOptions, changeFilterOptions] = useState(getEmptyFilterOptions);
+    const [filterOptions, changeFilterOptions] = useState(new SearchOptions);
     const layoutMode = {
         List: 'list-only',
         Filter: 'filter-only'

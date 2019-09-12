@@ -5,24 +5,9 @@ import * as FlightService from '../../../../services/FlightService';
 import SearchOptions from '../../../../services/flight-models/search-options';
 import Filter from './filter';
 
-function getEmptyFilterOptions() {
-    return new SearchOptions(
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
-    );
-}
-
 function FlightPage() {
     const [flights, changeFlights] = useState([]);
-    const [filterOptions, changeFilterOptions] = useState(getEmptyFilterOptions());
+    const [filterOptions, changeFilterOptions] = useState(new SearchOptions());
 
     async function onFilterApply(newFilterOptions) {
         changeFilterOptions(newFilterOptions);
