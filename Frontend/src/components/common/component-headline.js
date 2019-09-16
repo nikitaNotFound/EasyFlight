@@ -1,9 +1,10 @@
 import React from 'react';
 import PropsTypes from 'prop-types';
+import '../../styles/component-headline.css';
 
 function ComponentHeadline(props) {
     return (
-        <h4>{props.content}</h4>
+        <h4 className="component-headline">{props.content}</h4>
     );
 }
 

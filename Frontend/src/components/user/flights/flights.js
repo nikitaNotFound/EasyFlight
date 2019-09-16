@@ -2,7 +2,7 @@ import React from 'react';
 import Flight from './flight';
 import ComponentHeadline from '../../common/component-headline';
 import PropsTypes from 'prop-types';
-import '../../../styles/flight-list.scss';
+
 
 function Flights(props) {
     function showSearchResult() {

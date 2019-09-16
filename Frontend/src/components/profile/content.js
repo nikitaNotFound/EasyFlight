@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import { withRouter } from 'react-router-dom';
 import AddImage from '../../icons/add-image.png';
 import Flights from './flights';
 import * as UserService from '../../services/UserSerivce';
@@ -6,20 +7,23 @@ import * as FlightService from '../../services/FlightService';
 import Spinner from '../common/spinner';
 import '../../styles/profile.css';
 
-function Content() {
+import { connect } from 'react-redux';
+
+
+function Content(props) {
     const [isLoading, changeLoadingMode] = useState(true);
     const [flights, changeFlights] = useState([]);
     const [userFlights, changeUserFlights] = useState();
-    const [user, changeUser] = useState();
+    const [user, changeUser] = useState(props.userInfo);
+
+    if (!UserService.checkLogin()) {
+        props.history.push("/signin");
+    }
 
     useEffect(() => {
-        const userLoading = UserService.getCurrentUser(1);
+        const userFlightsLoading = UserService.getUserFlights(user.id)
 
-        userLoading
-            .then((user) => {
-                changeUser(user);
-                return UserService.getUserFlights(user.id);
-            })
+        userFlightsLoading
             .then((userFlights) => {
                 changeUserFlights(userFlights);
 
@@ -36,17 +40,16 @@ function Content() {
                 if (flights) {
                     changeFlights(flights);
                 }
-                onDataSuccesful();
+                changeLoadingMode(false);
             })
-            .catch(onDataFail);
+            .catch(error => {
+                alert(error);
+            });
     }, []);
 
-    function onDataSuccesful() {
-        changeLoadingMode(false);
-    }
-
-    function onDataFail(error) {
-        alert(error);
+    async function onLogout() {
+        await UserService.logout();
+        props.history.push("");
     }
 
     if (isLoading) {
@@ -71,6 +74,13 @@ function Content() {
                             className="name-input"
                             value={user.name}
                         />
+
+                        <div
+                            className="logout rounded non-selectable"
+                            onClick={onLogout}
+                        >
+                            log out
+                        </div>
                     </div>
                 </div>
             </div>
@@ -85,4 +95,4 @@ function Content() {
     );
 }
 
-export default Content;
+export default connect(state => state.userInfo)(withRouter(Content));

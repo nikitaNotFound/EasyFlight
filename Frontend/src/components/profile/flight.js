@@ -1,14 +1,42 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Icon from '../../icons/test-company-2.jpg';
 import PropsTypes from 'prop-types';
 import FlightObject from '../../services/flight-models/flight';
+import * as PlaceService from '../../services/PlaceService';
+import * as AirportService from '../../services/AirportService';
+import Spinner from '../common/spinner';
 import moment from 'moment';
 
 function Flight(props) {
+    const [loading, changeLoading] = useState(true);
+
+    const [from, changeFrom] = useState();
+    const [to, changeTo] = useState();
+
+    useEffect(async () => {
+        const fromAirport = await AirportService.getById(props.flight.fromId);
+        const toAirport = await AirportService.getById(props.flight.toId);
+
+        const fromCity = await PlaceService.getCityById(fromAirport.cityId);
+        const toCity = await PlaceService.getCityById(toAirport.cityId);
+
+        const fromCountry = await PlaceService.getCountryById(fromCity.countryId);
+        const toCountry = await PlaceService.getCountryById(toCity.countryId);
+
+        changeFrom(`${fromAirport.name} (${fromCity.name}, ${fromCountry.name})`);
+        changeTo(`${toAirport.name} (${toCity.name}, ${toCountry.name})`);
+
+        changeLoading(false);
+     }, [props.flight]);
+
     function getTimeString(dateInfo) {
         let date = moment(dateInfo);
 
         return moment(date, 'YYYY-MM-DD hh:mm').format('LLL');
+    }
+
+    if (loading) {
+        return <Spinner headline="Loading..."/>
     }
 
     return (
@@ -20,7 +48,7 @@ function Flight(props) {
 
                 <div className="col-4">
                     <div className="container-fluid">
-                        <h5>From: {props.flight.from} To: {props.flight.to}</h5>
+                        <h5>From: {from} To: {to}</h5>
                     </div>
 
                     <div className="container-fluid">

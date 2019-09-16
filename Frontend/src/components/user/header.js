@@ -1,65 +1,35 @@
 import React from 'react';
-import googleIcon from '../../icons/google-icon.png';
-import facebookIcon from '../../icons/facebook-icon.png';
 import { Link } from 'react-router-dom';
+import SignBar from './sign-bar';
+import ProfileBar from './profile-bar';
 import '../../styles/login.css';
 
-function Header() {
+import { connect } from 'react-redux';
+
+
+function Header(props) {
+    function showBar() {
+        if(props.userInfo) {
+            return <ProfileBar userInfo={props.userInfo}/>;
+        }
+        return <SignBar/>
+    }
+
     return (
         <header className="rounded-bottom">
             <div className="row">
-                <div className="col-sm-12 col-lg-8">
+                <div className="col-sm-12 col-lg-9">
                     <Link to="/" className="non-dec-link">
                         <h1 className="display-4 company-icon">easy flight</h1>
                     </Link>
                 </div>
 
-                <div className="col-sm-12 col-lg-4">
-                    <form className="form-inline pull-right login-bar">
-                        <div className="input-group">
-                            <input
-                                className="form-control login-item"
-                                placeholder="Email"
-                            />
-                            <input
-                                className="form-control login-item"
-                                placeholder="Password"
-                            />
-                            <div className="input-group-btn">
-                                <button
-                                    type="submit"
-                                    className="btn btn-primary button-dark login-item login-container"
-                                >
-                                        Login
-                                </button>
-
-                                <button
-                                    type="submit"
-                                    className="btn btn-primary button-dark login-container"
-                                >
-                                    <img src={googleIcon} className="login-item-img" alt="google-icon"/>
-                                </button>
-
-                                <button
-                                    type="submit"
-                                    className="btn btn-primary button-dark login-container"
-                                >
-                                    <img
-                                        src={facebookIcon}
-                                        className="login-item-img"
-                                        alt="facebook-icon"
-                                    />
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                    <div className="sing-up">
-                        or <Link to="/signup">sign up</Link>
-                    </div>
+                <div className="col-sm-12 col-lg-3">
+                    {showBar()}
                 </div>
             </div>
         </header>
     );
 }
 
-export default Header;
+export default connect((state) => state.userInfo)(Header);

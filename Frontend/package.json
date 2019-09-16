@@ -33,5 +33,9 @@
       "last 2 firefox version",
       "last 2 edge version"
     ]
+  },
+  "devDependencies": {
+    "react-redux": "^7.1.1",
+    "redux": "^4.0.4"
   }
 }
