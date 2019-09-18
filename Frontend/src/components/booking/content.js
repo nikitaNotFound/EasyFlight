@@ -6,6 +6,11 @@ import ComponentHeadline from '../common/component-headline';
 import Spinner from '../common/spinner';
 import SeatTypes from './seat-types/seat-types';
 import SeatScheme from './seat-scheme/seat-scheme';
+import ChoosenSeats from './choosen-seats/choosen-seats';
+import BaggageController from './baggage-controller';
+import FinalButton from './final-button';
+import CostLayout from './cost-layout';
+import MessageBox from '../common/message-box';
 
 import * as AirplaneService from '../../services/AirplaneService';
 import * as FlightService from '../../services/FlightService'
@@ -18,19 +23,58 @@ export default function Content(props) {
     const [airplane, changeAirplane] = useState();
     const [seatTypes, changeSeatTypes] = useState();
     const [seats, changeSeats] = useState();
+    const [choosenSeats, changeChoosenSeats] = useState([]);
+    const [baggageCount, changeBaggageCount] = useState(0);
+    const [messageBoxValue, changeMessageBoxValue] = useState(null);
+    const [calculatePage, changeCalculatePage] = useState(false);
 
-    useEffect(async () => {
-        const flight = await FlightService.getById(props.flightId);
-        changeFlight(flight);
-        console.log(flight);
+    useEffect(() => {
+        const fetchData = async () => {
+            const flight = await FlightService.getById(props.flightId);
+            changeFlight(flight);
 
-        const airplane = await AirplaneService.getById(flight.airplaneId);
-        changeAirplane(airplane);
-        changeSeatTypes(airplane.seatTypes);
-        changeSeats(airplane.seats);
+            const airplane = await AirplaneService.getById(flight.airplaneId);
+            changeAirplane(airplane);
+            changeSeatTypes(airplane.seatTypes);
+            changeSeats(airplane.seats);
 
-        changeLoading(false);
+            changeLoading(false);
+        }
+        fetchData();
     }, [props.flightId]);
+
+    function onSeatChoosen(seat) {
+        let storage = [];
+        Object.assign(storage, choosenSeats);
+
+        storage.push(seat);
+
+        changeChoosenSeats(storage);
+    }
+
+    function onSeatUnchoosen(seat) {
+        let storage = [];
+
+        for (let i = 0, len = choosenSeats.length; i < len; i++) {
+            const element = choosenSeats[i];
+            if (element.id !== seat.id) {
+                storage.push(element);
+            }
+        }
+
+        changeChoosenSeats(storage);
+    }
+
+    function calculateCost() {
+        if (choosenSeats.length > 0) {
+            changeCalculatePage(true);
+        }
+    }
+
+    function onBookingConfirm() {
+        // HTTP REQUEST
+        props.history.push('/profile');
+    }
 
     if (loading) {
         return (
