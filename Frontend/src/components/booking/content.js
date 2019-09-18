@@ -11,6 +11,7 @@ import BaggageController from './baggage-controller';
 import FinalButton from './final-button';
 import CostLayout from './cost-layout';
 import FlightInfo from './flight-info';
+import MessageBox from '../common/message-box';
 
 import * as AirplaneService from '../../services/AirplaneService';
 import * as FlightService from '../../services/FlightService';
@@ -26,15 +27,10 @@ function Content(props) {
     const [seats, changeSeats] = useState();
     const [choosenSeats, changeChoosenSeats] = useState([]);
     const [baggageCount, changeBaggageCount] = useState(0);
-    const [carryonCount, changeCarryonCount] = useState(0);
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
     const [calculatePage, changeCalculatePage] = useState(false);
 
     useEffect(() => {
-        if (!UserService.checkLogin()) {
-            props.history.push("/signin");
-        }
-
         const fetchData = async () => {
             const flight = await FlightService.getById(props.flightId);
             changeFlight(flight);
