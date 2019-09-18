@@ -13,20 +13,22 @@ function Flight(props) {
     const [from, changeFrom] = useState();
     const [to, changeTo] = useState();
 
-    useEffect(async () => {
-        const fromAirport = await AirportService.getById(props.flight.fromId);
-        const toAirport = await AirportService.getById(props.flight.toId);
+    useEffect(() => {
+        const fetchData = async () => {
+            const fromAirport = await AirportService.getById(props.flight.fromId);
+            const toAirport = await AirportService.getById(props.flight.toId);
 
-        const fromCity = await PlaceService.getCityById(fromAirport.cityId);
-        const toCity = await PlaceService.getCityById(toAirport.cityId);
+            const fromCity = await PlaceService.getCityById(fromAirport.cityId);
+            const toCity = await PlaceService.getCityById(toAirport.cityId);
 
-        const fromCountry = await PlaceService.getCountryById(fromCity.countryId);
-        const toCountry = await PlaceService.getCountryById(toCity.countryId);
+            const fromCountry = await PlaceService.getCountryById(fromCity.countryId);
+            const toCountry = await PlaceService.getCountryById(toCity.countryId);
 
-        changeFrom(`${fromAirport.name} (${fromCity.name}, ${fromCountry.name})`);
-        changeTo(`${toAirport.name} (${toCity.name}, ${toCountry.name})`);
-
-        changeLoading(false);
+            changeFrom(`${fromAirport.name} (${fromCity.name}, ${fromCountry.name})`);
+            changeTo(`${toAirport.name} (${toCity.name}, ${toCountry.name})`);
+            changeLoading(false);
+        }
+        fetchData();
      }, [props.flight]);
 
     function getTimeString(dateInfo) {

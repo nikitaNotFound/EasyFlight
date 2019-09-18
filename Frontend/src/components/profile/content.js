@@ -1,11 +1,14 @@
 import React, {useState, useEffect} from 'react';
 import { withRouter } from 'react-router-dom';
+
 import AddImage from '../../icons/add-image.png';
-import Flights from './flights';
+import '../../styles/profile.css';
+
 import * as UserService from '../../services/UserSerivce';
 import * as FlightService from '../../services/FlightService';
+
 import Spinner from '../common/spinner';
-import '../../styles/profile.css';
+import Flights from './flights';
 
 import { connect } from 'react-redux';
 
@@ -16,40 +19,40 @@ function Content(props) {
     const [userFlights, changeUserFlights] = useState();
     const [user, changeUser] = useState(props.userInfo);
 
-    if (!UserService.checkLogin()) {
-        props.history.push("/signin");
-    }
-
     useEffect(() => {
-        const userFlightsLoading = UserService.getUserFlights(user.id)
+        if (!UserService.checkLogin()) {
+            props.history.push("/signin");
+        } else {
+            const userFlightsLoading = UserService.getUserFlights(user.id)
 
-        userFlightsLoading
-            .then((userFlights) => {
-                changeUserFlights(userFlights);
+            userFlightsLoading
+                .then((userFlights) => {
+                    changeUserFlights(userFlights);
 
-                if (userFlights.length > 0) {
-                    let storage = userFlights.map(
-                        (flight) =>
-                            flight.flightId
-                    );
+                    if (userFlights.length > 0) {
+                        let storage = userFlights.map(
+                            (flight) =>
+                                flight.flightId
+                        );
 
-                    return FlightService.getByIds(storage);
-                }
-            })
-            .then((flights) => {
-                if (flights) {
-                    changeFlights(flights);
-                }
-                changeLoadingMode(false);
-            })
-            .catch(error => {
-                alert(error);
-            });
+                        return FlightService.getByIds(storage);
+                    }
+                })
+                .then((flights) => {
+                    if (flights) {
+                        changeFlights(flights);
+                    }
+                    changeLoadingMode(false);
+                })
+                .catch(error => {
+                    alert(error);
+                });
+        }
     }, []);
 
     async function onLogout() {
         await UserService.logout();
-        props.history.push("");
+        props.history.push("/");
     }
 
     if (isLoading) {
@@ -95,4 +98,6 @@ function Content(props) {
     );
 }
 
-export default connect(state => state.userInfo)(withRouter(Content));
+export default withRouter(
+    connect(state => state.userInfo)(Content)
+);
