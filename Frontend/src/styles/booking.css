@@ -131,3 +131,16 @@
 .false-visible {
     display: none;
 }
+
+.flight-info {
+    background: rgb(211, 211, 211);
+    padding: 0.5%;
+    display: block;
+    margin-bottom: 1%;
+}
+
+.flight-info .params-container {
+    display: inline-block;
+    margin-right: 2%;
+    vertical-align: top;
+}
