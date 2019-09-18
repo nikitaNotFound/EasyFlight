@@ -97,7 +97,7 @@ function Flight(props) {
                         <img src={buyIcon} alt="icon-book"/>
                         Book
                     </div>
-                </Link>
+                </Link>tend/src/components/user/flights/flight.js
             </div>
         </div>
     );
