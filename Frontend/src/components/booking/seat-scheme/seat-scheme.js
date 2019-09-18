@@ -69,5 +69,5 @@ SeatScheme.propsTypes = {
     seatInfo: PropsTypes.array,
     seatTypes: PropsTypes.array,
     onSeatChoosen: PropsTypes.func,
-    onSeatUnchoosen: PropsTypes.funcure
-};
+    onSeatUnchoosen: PropsTypes.func
+}

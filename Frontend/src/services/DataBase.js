@@ -72,7 +72,7 @@ export const airplanes = [
 
             new Seat(22, 1, 1, 3, 3, 1, 1, 1), new Seat(23, 1, 1, 3, 3, 2, 1, 1),
 
-            new Seat(24, 1, 2, 1, 1, 1, 1, 1), new Seat(25, 1, 2, 1, 1, 2, 1, 1)
+            new Seat(24, 1, 2, 1, 3, 1, 1, 1), new Seat(25, 1, 2, 1, 3, 2, 1, 1)
         ],
         [
             new SeatType(1, 'econom', 'rgb(89, 167, 79)'),
