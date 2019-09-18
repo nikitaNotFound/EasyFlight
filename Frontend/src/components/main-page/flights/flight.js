@@ -92,12 +92,12 @@ function Flight(props) {
                 </div>
             </div>
             <div className="col-sm-2" name="item-buy">
-                <button type="submit" className="btn btn-primary button-buy">
-                    <img src={buyIcon} alt="icon-book"/>
-                    <Link to={`/booking/${props.flight.id}`} className="non-dec-link">
+                <Link to={`/booking/${props.flight.id}`} className="non-dec-link">
+                    <div className="btn btn-primary button-buy">
+                        <img src={buyIcon} alt="icon-book"/>
                         Book
-                    </Link>
-                </button>
+                    </div>
+                </Link>
             </div>
         </div>
     );

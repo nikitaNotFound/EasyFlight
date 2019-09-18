@@ -8,6 +8,7 @@ import Airport from './airport-models/airport';
 import TicketCost from './flight-models/ticket-cost';
 import City from '../services/place-models/city';
 import Country from '../services/place-models/country';
+import BaggageCost from '../services/flight-models/baggage-cost';
 
 export const flights = [
     new Flight(1, 2, 3, '2018-01-01 18:30', '2018-01-07 17:30', 'This is a test flight.', 1, 20),
@@ -19,7 +20,15 @@ export const flights = [
 
 export const ticketsCost = [
     new TicketCost(1, 1, 100), new TicketCost(1, 2, 200), new TicketCost(1, 3, 300),
-    new TicketCost(2, 1, 250), new TicketCost(2, 2, 600), new TicketCost(2, 3, 1000)
+    new TicketCost(2, 1, 250), new TicketCost(2, 2, 600), new TicketCost(2, 3, 1000),
+    new TicketCost(3, 1, 100), new TicketCost(3, 2, 200), new TicketCost(3, 3, 300),
+    new TicketCost(4, 1, 250), new TicketCost(4, 2, 600), new TicketCost(4, 3, 1000),
+    new TicketCost(5, 1, 100), new TicketCost(5, 2, 200), new TicketCost(5, 3, 300)
+];
+
+export const baggageCost = [
+    new BaggageCost(1, 10), new BaggageCost(2, 20), new BaggageCost(3, 30),
+    new BaggageCost(4, 40), new BaggageCost(5, 50),
 ];
 
 export const users = [
@@ -52,23 +61,23 @@ export const airplanes = [
     new Airplane(
         1, 'F300', 1000,
         [
-            new Seat(1, 1, 1, 1, 1, 1), new Seat(1, 1, 1, 1, 2, 1),
-            new Seat(1, 1, 2, 1, 1, 1), new Seat(1, 1, 2, 2, 1, 1),
+            new Seat(1, 1, 1, 1, 1, 1, 1, 1), new Seat(2, 1, 1, 1, 1, 1, 2, 1),
+            new Seat(3, 1, 1, 1, 2, 1, 1, 1), new Seat(4, 1, 1, 1, 2, 2, 1, 1),
 
-            new Seat(1, 2, 1, 1, 1, 1), new Seat(1, 2, 1, 2, 1, 1),
-            new Seat(1, 2, 2, 1, 1, 1), new Seat(1, 2, 2, 1, 2, 1), new Seat(1, 2, 2, 1, 3, 1),
-            new Seat(1, 2, 2, 2, 2, 1),
+            new Seat(5, 1, 1, 2, 1, 1, 1, 1), new Seat(6, 1, 1, 2, 1, 2, 1, 1),
+            new Seat(7, 1, 1, 2, 2, 1, 1, 1), new Seat(8, 1, 1, 2, 2, 1, 2, 1), new Seat(9, 1, 1, 2, 2, 1, 3, 1),
+            new Seat(10, 1, 1, 2, 2, 2, 2, 1),
 
-            new Seat(1, 3, 1, 1, 1, 1), new Seat(1, 3, 1, 1, 2, 1), new Seat(1, 3, 1, 1, 3, 1),
-            new Seat(1, 3, 1, 2, 1, 1), new Seat(1, 3, 1, 2, 2, 1),
-            new Seat(1, 3, 1, 3, 1, 1),
+            new Seat(11, 1, 1, 3, 1, 1, 1, 1), new Seat(12, 1, 1, 3, 1, 1, 2, 1), new Seat(13, 1, 1, 3, 1, 1, 3, 1),
+            new Seat(14, 1, 1, 3, 1, 2, 1, 1), new Seat(15, 1, 1, 3, 1, 2, 2, 1),
+            new Seat(16, 1, 1, 3, 1, 3, 1, 1),
 
-            new Seat(1, 3, 2, 1, 1, 1), new Seat(1, 3, 2, 1, 2, 1), new Seat(1, 3, 2, 1, 3, 1),
-            new Seat(1, 3, 2, 2, 1, 1), new Seat(1, 3, 2, 2, 2, 1),
+            new Seat(17, 1, 1, 3, 2, 1, 1, 1), new Seat(18, 1, 1, 3, 2, 1, 2, 1), new Seat(19, 1, 1, 3, 2, 1, 3, 1),
+            new Seat(20, 1, 1, 3, 2, 2, 1, 1), new Seat(21, 1, 1, 3, 2, 2, 2, 1),
 
-            new Seat(1, 3, 3, 1, 1, 1), new Seat(1, 3, 3, 2, 1, 1),
+            new Seat(22, 1, 1, 3, 3, 1, 1, 1), new Seat(23, 1, 1, 3, 3, 2, 1, 1),
 
-            new Seat(2, 1, 3, 1, 1, 1), new Seat(2, 1, 3, 2, 1, 1)
+            new Seat(24, 1, 2, 1, 3, 1, 1, 1), new Seat(25, 1, 2, 1, 3, 2, 1, 1)
         ],
         [
             new SeatType(1, 'econom', 'rgb(89, 167, 79)'),
@@ -79,8 +88,8 @@ export const airplanes = [
     new Airplane(
         2, 'Keksik', 500,
         [
-            new Seat(1, 1, 1, 1, 1, 1),
-            new Seat(1, 1, 1, 2, 1, 1), new Seat(1, 1, 1, 2, 3, 1)
+            new Seat(26, 2, 1, 1, 1, 1, 1, 1),
+            new Seat(27, 2, 1, 1, 1, 2, 1, 1), new Seat(28, 2, 1, 1, 1, 2, 3, 1)
         ],
         [
             new SeatType(1, 'econom', 'rgb(89, 167, 79)'),
