@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import AddButton from '../../../common/add-button';
 import Airplanes from './airplanes';
 import * as AirplaneService from '../../../../services/AirplaneService';
-import Spinner from '../../../common/spinner';
 import Filter from './filter';
 import SearchOptions from '../../../../services/airplane-models/search-options';
 

@@ -1,0 +1,38 @@
+.seat-types-list {
+    width: 15%;
+    background: rgb(211, 211, 211);
+    padding: 0.5%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.headline {
+    font-size: 20px;
+    clear: both;
+    margin-bottom: 1%;
+}
+
+.seat-types-list .item {
+    margin: 0.3% 0;
+}
+
+.seat-types-list .seat-color {
+    width: 17px;
+    height: 17px;
+    display: inline-block;
+    margin-right: 3%;
+}
+
+.seat-types-list .seat-name {
+    display: inline-block;
+    font-size: 17px;
+}
+
+.seat-scheme {
+    background: rgb(211, 211, 211);
+    width: 83%;
+    margin-right: 2%;
+    padding: 0.5%;
+    display: inline-block;
+    vertical-align: top;
+}
