@@ -97,14 +97,14 @@ export function searchWithParams(params) {
                 const toCityId = toAirplane.cityId;
 
                 const [departureTime] = element.departureTime.split(' ');
-                
+                console.log(params);
                 if (params.searchToAndBack
                     && ((params.fromCity && toCityId == params.fromCity.id)
                         || (params.fromAirport && element.toId == params.fromAirport.id))
                 ) {
                     if (!params.fromAirport
                         && params.fromCity
-                        && !(toCityId == params.formCity.id)
+                        && !(toCityId == params.fromCity.id)
                     ) {
                         continue;
                     }

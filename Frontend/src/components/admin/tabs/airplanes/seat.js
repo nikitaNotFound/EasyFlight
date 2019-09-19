@@ -38,7 +38,9 @@ function Seat(props) {
             changeSeatTypeIndex(UNDEFINED_SEAT_TYPE_INDEX);
             props.onSeatDeleted(seatPosition);
         } else if (oldTypeIndex === UNDEFINED_SEAT_TYPE_INDEX) {
-            const newSeat = new SeatObject(
+            const newSeat = new SeatObject (
+                null,
+                null,
                 props.placeInfo.floor,
                 props.placeInfo.section,
                 props.placeInfo.zone,

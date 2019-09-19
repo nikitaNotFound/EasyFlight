@@ -93,7 +93,7 @@ function SeatEditor(props) {
         storage.splice(id, 1);
 
         if (storage.length == 0) {
-            storage = null;
+            storage = [];
         }
 
         changeSeatTypes(storage);
@@ -111,7 +111,7 @@ function SeatEditor(props) {
     }
 
     function showSeatsSheme() {
-        if (seatArray) {
+        if (seatArray && seatTypes.length > 0) {
             return (
                 <div className="seat-editor-layout">
                     {seatArray.map(
