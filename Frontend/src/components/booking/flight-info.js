@@ -40,7 +40,7 @@ export default function FlightInfo(props) {
             changeFromDate(
                 moment(props.flight.departureTime, 'YYYY-MM-DD hh:mm').format('LLL')
             );
-            
+
             changeLoading(false);
         };
         fetchData();

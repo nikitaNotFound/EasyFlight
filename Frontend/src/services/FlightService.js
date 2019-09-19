@@ -1,4 +1,4 @@
-import {flights, ticketsCost, baggageCost} from './DataBase';
+import {flights, ticketsCost} from './DataBase';
 import * as AirportService from '../services/AirportService';
 
 export function getById(id) {
@@ -65,29 +65,6 @@ export function getTicketsCost(id) {
                 reject("Error");
             }
             resolve(ticketsCostInfo);
-        }
-    );
-}
-
-export function getBaggageCost(id) {
-    return new Promise(
-        (resolve, reject) => {
-            const data = baggageCost;
-            let foundCost = {};
-            
-            for (let i = 0, len = data.length; i < len; i++) {
-                const element = data[i];
-
-                if (element.flightId == id) {
-                    foundCost = element;
-                }
-            }
-
-            if (!foundCost) {
-                reject('Error');
-            }
-
-            resolve(foundCost);
         }
     );
 }
