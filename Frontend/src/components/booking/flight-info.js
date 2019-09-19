@@ -31,7 +31,10 @@ export default function FlightInfo(props) {
             changeFrom(`${fromAirport.name} (${fromCity.name}, ${fromCountry.name})`);
             changeTo(`${toAirport.name} (${toCity.name}, ${toCountry.name})`);
 
-            changeFromDate(moment(props.flight.departureTime, "YYYY-MM-DD hh:mm").format("LLL"));
+            changeFromDate(
+                moment(props.flight.departureTime, 'YYYY-MM-DD hh:mm').format('LLL')
+            );
+
             changeLoading(false);
         };
         fetchData();
@@ -49,13 +52,13 @@ export default function FlightInfo(props) {
         <div className="flight-info rounded">
             <LayoutHeadline content="Flight info" />
             <div className="params-container">
-                From: {from} <br />
-                To: {to} <br />
+                From: {from} <br/>
+                To: {to} <br/>
             </div>
 
             <div className="params-container">
-                Airplane name: {props.airplaneName} <br />
-                Departure time: {formDate} <br />
+                Airplane name: {props.airplaneName} <br/>
+                Departure time: {formDate} <br/>
             </div>
         </div>
     );
