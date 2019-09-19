@@ -5,24 +5,48 @@ import LayoutHeadline from './layout-headline';
 
 
 export default function BaggageController(props) {
-    const [mass, changeMass] = useState(0);
+    const [count, changeCount] = useState(0);
+    const [carryonMass, changeCarryonMass] = useState(0);
 
-    function onMassChange(event) {
+    function onCountChange(event) {
         const newValue = Number(event.target.value)
-        if (newValue) {
-            changeMass(newValue);
+        if (newValue && newValue <= props.suitcaseCount) {
+            changeCount(newValue);
             props.changeBaggageCount(newValue);
+        }
+    }
+
+    function onCarryonChange(event) {
+        const newValue = Number(event.target.value);
+        if (newValue && newValue <= props.carryonMass) {
+            changeCarryonMass(newValue);
+            props.changeCarryonMass(newValue);
         }
     }
 
     return (
         <div className="baggage-controller rounded">
             <LayoutHeadline content="Baggage"/>
-            <input value={mass} onChange={onMassChange}/>kg
+            <div className="baggage-info">
+                {`max suitcase mass: ${props.suitcaseMass} kg`} <br/>
+                {`max suitcase count: ${props.suitcaseCount}`} <br/>
+                <input value={count} onChange={onCountChange}/>suitcase count
+            </div>
+
+            <div className="baggage-info">
+                {`max carryon mass: ${props.carryonMass} kg`} <br/>
+                {`max carryon count: ${props.carryonCount}`} <br/>
+                <input value={carryonMass} onChange={onCarryonChange}/>carryon count
+            </div>
         </div>
     );
 }
 
 BaggageController.propsTypes = {
-    changeBaggageCount: PropsTypes.number
+    changeBaggageCount: PropsTypes.number,
+    suitcaseMass: PropsTypes.number,
+    suitcaseCount: PropsTypes.number,
+    changeCarryonCount: PropsTypes.func,
+    carryonMass: PropsTypes.number,
+    carryonCount: PropsTypes.number
 }

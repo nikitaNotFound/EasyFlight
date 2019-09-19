@@ -16,7 +16,6 @@ export default function FlightInfo(props) {
     const [from, changeFrom] = useState(null);
     const [to, changeTo] = useState(null);
     const [formDate, changeFromDate] = useState(null);
-    const [toDate, changeToDate] = useState(null);
     const [loading, changeLoading] = useState(true);
 
     useEffect(() => {
@@ -36,9 +35,6 @@ export default function FlightInfo(props) {
             changeFromDate(
                 moment(props.flight.departureTime, 'YYYY-MM-DD hh:mm').format('LLL')
             );
-            changeToDate(
-                moment(props.flight.departureBackTime, 'YYYY-MM-DD hh:mm').format('LLL')
-            );
             changeLoading(false);
         }
         fetchData();
@@ -56,14 +52,13 @@ export default function FlightInfo(props) {
         <div className="flight-info rounded">
             <LayoutHeadline content="Flight info"/>
             <div className="params-container">
-                Airplane name: {props.airplaneName} <br/>
                 From: {from} <br/>
                 To: {to} <br/>
             </div>
 
             <div className="params-container">
+                Airplane name: {props.airplaneName} <br/>
                 Departure time: {formDate} <br/>
-                Departure back time: {toDate} <br/>
             </div>
         </div>
     );

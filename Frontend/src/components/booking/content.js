@@ -27,6 +27,7 @@ function Content(props) {
     const [seats, changeSeats] = useState();
     const [choosenSeats, changeChoosenSeats] = useState([]);
     const [baggageCount, changeBaggageCount] = useState(0);
+    const [carryonCount, changeCarryonCount] = useState(0);
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
     const [calculatePage, changeCalculatePage] = useState(false);
 
@@ -102,7 +103,14 @@ function Content(props) {
                 />
                 <div className="seat-types-baggage-container">
                     <SeatTypes seatTypes={seatTypes}/>
-                    <BaggageController changeBaggageCount={changeBaggageCount}/>
+                    <BaggageController
+                        changeBaggageCount={changeBaggageCount}
+                        suitcaseMass={flight.suitcaseMass}
+                        suitcaseCount={flight.suitcaseCount}
+                        changeCarryonCount={changeCarryonCount}
+                        carryonCount={flight.carryonCount}
+                        carryonMass={flight.carryonMass}
+                    />
                 </div>
                 <ChoosenSeats
                     choosenSeats={choosenSeats}
@@ -120,6 +128,7 @@ function Content(props) {
                     flightId={flight.id}
                     choosenSeats={choosenSeats}
                     baggageCount={baggageCount}
+                    carryonCount={carryonCount}
                 />
                 <FinalButton
                     type="confirm-booking"

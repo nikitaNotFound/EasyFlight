@@ -29,11 +29,7 @@ export default function CostLayout(props) {
                     }
                 }
             }
-
-            const baggageCost = await FlightService.getBaggageCost(props.flightId);
-
-            finalCost += baggageCost.costPerKg * props.baggageCount;
-
+            
             changeFinalCost(finalCost);
             changeLoading(false);
         }

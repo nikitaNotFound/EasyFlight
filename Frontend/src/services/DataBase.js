@@ -11,11 +11,11 @@ import Country from '../services/place-models/country';
 import BaggageCost from '../services/flight-models/baggage-cost';
 
 export const flights = [
-    new Flight(1, 2, 3, '2018-01-01 18:30', '2018-01-07 17:30', 'This is a test flight.', 1, 20),
-    new Flight(2, 4, 1, '2018-02-01 12:30', '2018-02-07 17:30', 'This is not a test flight.', 2, 5),
-    new Flight(3, 1, 4, '2018-02-01 12:30', '2018-02-07 17:30', 'This is not a test flight.', 1, 20),
-    new Flight(4, 3, 2, '2018-02-01 12:30', '2018-02-07 17:30', 'This is not a test flight.', 2, 5),
-    new Flight(5, 1, 4, '2018-02-01 12:30', '2018-02-07 17:30', 'This is not a test flight.', 1, 20),
+    new Flight(1, 2, 3, '2018-01-01 18:30', 'This is a test flight.', 1, 20, 10, 2, 8, 1),
+    new Flight(2, 4, 1, '2018-02-01 12:30', 'This is not a test flight.', 2, 5, 20, 3, 10, 1),
+    new Flight(3, 1, 4, '2018-02-01 12:30', 'This is not a test flight.', 1, 20, 10, 4, 5, 2),
+    new Flight(4, 3, 2, '2018-02-01 12:30', 'This is not a test flight.', 2, 5, 5, 2, 1, 10),
+    new Flight(5, 1, 4, '2018-02-01 12:30', 'This is not a test flight.', 1, 20, 10, 1, 30, 1),
 ];
 
 export const ticketsCost = [
@@ -24,11 +24,6 @@ export const ticketsCost = [
     new TicketCost(3, 1, 100), new TicketCost(3, 2, 200), new TicketCost(3, 3, 300),
     new TicketCost(4, 1, 250), new TicketCost(4, 2, 600), new TicketCost(4, 3, 1000),
     new TicketCost(5, 1, 100), new TicketCost(5, 2, 200), new TicketCost(5, 3, 300)
-];
-
-export const baggageCost = [
-    new BaggageCost(1, 10), new BaggageCost(2, 20), new BaggageCost(3, 30),
-    new BaggageCost(4, 40), new BaggageCost(5, 50),
 ];
 
 export const users = [
@@ -77,7 +72,7 @@ export const airplanes = [
 
             new Seat(22, 1, 1, 3, 3, 1, 1, 1), new Seat(23, 1, 1, 3, 3, 2, 1, 1),
 
-            new Seat(24, 1, 2, 1, 3, 1, 1, 1), new Seat(25, 1, 2, 1, 3, 2, 1, 1)
+            new Seat(24, 1, 2, 1, 1, 1, 1, 1), new Seat(25, 1, 2, 1, 1, 2, 1, 1)
         ],
         [
             new SeatType(1, 'econom', 'rgb(89, 167, 79)'),

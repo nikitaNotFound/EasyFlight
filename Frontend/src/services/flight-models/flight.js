@@ -3,20 +3,26 @@ class Flight {
      fromId;
      toId;
      departureTime;
-     departureBackTime;
      desc;
      airplaneId;
      ticketsLeft;
+     suitcaseMass;
+     suitcaseCount;
+     carryonMass;
+     carryonCount;
 
-     constructor (id, fromId, toId, departureTime, departureBackTime, desc, airplaneId, ticketsLeft) {
+     constructor (id, fromId, toId, departureTime, desc, airplaneId, ticketsLeft, suitcaseMass, suitcaseCount, carryonMass, carryonCount) {
          this.id = id;
          this.fromId = fromId;
          this.toId = toId;
          this.departureTime = departureTime;
-         this.departureBackTime = departureBackTime;
          this.desc = desc;
          this.airplaneId = airplaneId;
          this.ticketsLeft = ticketsLeft;
+         this.suitcaseMass = suitcaseMass;
+         this.suitcaseCount = suitcaseCount;
+         this.carryonMass = carryonMass;
+         this.carryonCount = carryonCount;
      }
 }
 
