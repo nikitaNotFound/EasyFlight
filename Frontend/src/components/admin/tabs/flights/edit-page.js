@@ -48,7 +48,7 @@ function Editing (props) {
 
             changeFlight(flight);
 
-            const [toDate, toTime] = flight.departureTime.split(" ");
+            const [toDate, toTime] = flight.departureTime.split(' ');
 
             changeDepartureTime(toTime);
             changeDepartureDate(toDate);

@@ -27,6 +27,7 @@ function Content(props) {
     const [seats, changeSeats] = useState();
     const [choosenSeats, changeChoosenSeats] = useState([]);
     const [baggageCount, changeBaggageCount] = useState(0);
+    const [carryonCount, changeCarryonCount] = useState(0);
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
     const [calculatePage, changeCalculatePage] = useState(false);
 
