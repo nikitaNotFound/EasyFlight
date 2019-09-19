@@ -32,6 +32,10 @@ function Content(props) {
     const [calculatePage, changeCalculatePage] = useState(false);
 
     useEffect(() => {
+        if (!UserService.checkLogin()) {
+            props.history.push("/signin");
+        }
+
         const fetchData = async () => {
             const flight = await FlightService.getById(props.flightId);
             changeFlight(flight);
