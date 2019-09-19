@@ -56,6 +56,7 @@ function Seat(props) {
             changeSeatTypeIndex(newTypeIndex);
         }
     }
+
     if (seatTypeIndex === UNDEFINED_SEAT_TYPE_INDEX) {
         return <div className={`seat seat-type-0 non-selectable`} onClick={onClickHandler} />;
     }

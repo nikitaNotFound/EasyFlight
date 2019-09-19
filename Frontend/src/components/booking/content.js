@@ -13,7 +13,8 @@ import CostLayout from './cost-layout';
 import MessageBox from '../common/message-box';
 
 import * as AirplaneService from '../../services/AirplaneService';
-import * as FlightService from '../../services/FlightService'
+import * as FlightService from '../../services/FlightService';
+import * as UserService from '../../services/UserSerivce'
 
 import '../../styles/booking.css';
 
@@ -30,6 +31,10 @@ export default function Content(props) {
     const [calculatePage, changeCalculatePage] = useState(false);
 
     useEffect(() => {
+        if (!UserService.checkLogin()) {
+            props.history.push("/signin");
+        }
+
         const fetchData = async () => {
             const flight = await FlightService.getById(props.flightId);
             changeFlight(flight);
