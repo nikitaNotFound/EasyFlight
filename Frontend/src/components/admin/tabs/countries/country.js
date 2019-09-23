@@ -14,7 +14,7 @@ export default function Country(props) {
 
             <div className="col-2">
                 <Link to={`/admin/countries/edit/${props.country.id}`}>
-                    <div className="edit-button rounded non-selectable">
+                    <div className="button edit-button rounded non-selectable">
                         Edit
                     </div>
                 </Link>
@@ -24,5 +24,5 @@ export default function Country(props) {
 }
 
 Country.propsTypes = {
-    counrty: PropsTypes.instanceOf(CountryObject),
+    country: PropsTypes.instanceOf(CountryObject)
 }

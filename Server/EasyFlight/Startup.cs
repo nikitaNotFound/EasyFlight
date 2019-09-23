@@ -10,6 +10,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using EasyFlight.Models;
+using EasyFlight.Models.Cities;
+using EasyFlight.Models.Countries;
 
 namespace EasyFlight
 {
@@ -20,15 +23,30 @@ namespace EasyFlight
             Configuration = configuration;
         }
 
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(MyAllowSpecificOrigins,
+                builder =>
+                {
+                    builder.WithOrigins("http://localhost:3000",
+                                        "http://www.contoso.com")
+                                        .AllowAnyHeader()
+                                        .AllowAnyMethod();
+                });
+            });
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            string connectString = @"Server=np:\\.\pipe\LOCALDB#56D93920\tsql\query;Initial Catalog=easyflight;Integrated Security=True";
+            services.AddSingleton<IRepository<City, CitySearchOptions>, CityRepository>(provider => new CityRepository(connectString));
+            services.AddSingleton<IRepository<Country, CountrySearchOptions>, CountryRepository>(provider => new CountryRepository(connectString));
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
@@ -37,9 +55,10 @@ namespace EasyFlight
             }
             else
             {
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseHttpsRedirection();
             app.UseMvc();

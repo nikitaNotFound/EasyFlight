@@ -1,18 +1,6 @@
 import {flights, ticketsCost} from './DataBase';
 import * as AirportService from '../services/AirportService';
 
-export function getAll() {
-    return new Promise (
-        (resolve, reject) => {
-            const data = flights;
-            if (!data) {
-                reject("Error");
-            }
-            resolve(data);
-        }
-    );
-}
-
 export function getById(id) {
     return new Promise (
         (resolve, reject) => {

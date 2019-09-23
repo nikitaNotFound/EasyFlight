@@ -16,7 +16,7 @@ export default function Filter(props) {
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
     function onFilterApply() {
-        if (!name || !country) {
+        if (!country) {
             changeMessageBoxValue('Setup filter!');
             return;
         }

@@ -1,17 +1,5 @@
 import {airplanes} from './DataBase';
 
-export function getAll() {
-    return new Promise (
-        (resolve, reject) => {
-            const data = airplanes;
-            if (!data) {
-                reject("Error");
-            } else {
-                resolve(data);
-            }
-        }
-    );
-}
 
 export function getById(id) {
     return new Promise(

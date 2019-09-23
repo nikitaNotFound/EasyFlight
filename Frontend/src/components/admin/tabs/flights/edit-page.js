@@ -160,21 +160,21 @@ function Editing (props) {
                         <div className="editing-params-form">
                             <div className="row">
                                 <SearchList
-                                    searchFunc={AirportService.search}
+                                    searchFunc={AirportService.searchWithParams}
                                     getItemName={getAirportName}
                                     onValueChange={changeFromPlace}
                                     currentItem={fromPlace}
                                     placeholder="From"
                                 />
                                 <SearchList
-                                    searchFunc={AirportService.search}
+                                    searchFunc={AirportService.searchWithParams}
                                     getItemName={getAirportName}
                                     onValueChange={changeToPlace}
                                     currentItem={toPlace}
                                     placeholder="To"
                                 />
                                 <SearchList
-                                    searchFunc={AirplaneService.search}
+                                    searchFunc={AirplaneService.searchWithParams}
                                     getItemName={getAirplaneName}
                                     onValueChange={changeAirplane}
                                     currentItem={airplane}

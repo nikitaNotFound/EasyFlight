@@ -10,20 +10,27 @@ import City from '../../../../services/place-models/city';
 import * as PlaceService from '../../../../services/PlaceService';
 
 
-export default function Edit(props) {
+export default function Add(props) {
     const [name, changeName] = useState();
     const [country, changeCountry] = useState(null);
     
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
-    function onDataSave() {
+    async function onDataSave() {
         if (!name || !country) {
             changeMessageBoxValue('Input data is not valid!');
             return;
         }
 
-        let newAirport = new City(null, country.id, name);
-        // HERE WILL BE HTTP REQUEST
+        let newCity = new City(0, country.id, name);
+        
+        const insertResult = await PlaceService.addCity(newCity);
+
+        if (insertResult === true) {
+            changeMessageBoxValue('Added!');
+        } else {
+            changeMessageBoxValue(insertResult.message);
+        }
     }
 
     function showMessageBox() {
@@ -43,7 +50,7 @@ export default function Edit(props) {
     
     return (
         <div className="list-item-action rounded editing">
-            <Headline name="Editing country"/>
+            <Headline name="Adding city"/>
 
             <div className="adding-form">
                 <div className="row">
@@ -70,7 +77,7 @@ export default function Edit(props) {
                         </div>
                     </div>
                 </div>
-                <div className="custom-button big" onClick={onDataSave}>Save</div>
+                <div className="custom-button big" onClick={onDataSave}>Add</div>
             </div>
             {showMessageBox()}
         </div>

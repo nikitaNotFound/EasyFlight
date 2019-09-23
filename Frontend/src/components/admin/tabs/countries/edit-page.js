@@ -12,6 +12,7 @@ import * as PlaceService from '../../../../services/PlaceService';
 export default function Edit(props) {
     const [loading, changeLoadingMode] = useState(true);
     const [name, changeName] = useState();
+    const [id, changeId] = useState();
     
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
@@ -19,19 +20,25 @@ export default function Edit(props) {
         const fetchData = async () => {
             const foundCountry = await PlaceService.getCountryById(props.match.params.id);
             changeName(foundCountry.name);
+            changeId(foundCountry.id);
             changeLoadingMode(false);
         }
         fetchData();
     }, [props.match.params.id]);
 
-    function onDataSave() {
+    async function onDataSave() {
         if (!name) {
             changeMessageBoxValue('Input data is not valid!');
             return;
         }
 
-        let newAirport = new Country(null, name);
-        // HERE WILL BE HTTP REQUEST
+        let finalCountry = new Country(id, name);
+        
+        const updateStatus = await PlaceService.updateCountry(finalCountry);
+
+        if (updateStatus) {
+            changeMessageBoxValue('Updated!');
+        }
     }
 
     function showMessageBox() {

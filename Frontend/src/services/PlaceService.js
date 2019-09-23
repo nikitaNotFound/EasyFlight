@@ -1,91 +1,218 @@
-import {countries, cities} from './DataBase';
+import { DOMAIN } from './CONSTANTS';
 
 export function getCountryById(id) {
     return new Promise(
-        (resolve, reject) => {
-            const data = countries;
+        async (resolve, reject) => {
+            const response = await fetch(`${DOMAIN}/api/countries/${id}`);
 
-            let foundCountry = null;
-            for (let i = 0, len = data.length; i < len; i++) {
-                if (data[i].id == id) {
-                    foundCountry = data[i];
+            if (response.ok) {
+                resolve(response.json());
+            }
+
+            reject(response.status);
+        }
+    );
+}
+
+export function searchCountries(name) {
+    return new Promise(
+        async (resolve, reject) => {
+            const response = await fetch(
+                `${DOMAIN}/api/countries/search`,
+                {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({name: name})
                 }
+            );
+
+            if (response.ok) {
+                resolve(response.json());
             }
 
-            if (!foundCountry) {
-                reject('Error');
+            reject(response.status);
+        }
+    );
+}
+
+export function addCountry(country) {
+    return new Promise(
+        async (resolve) => {
+            const response = await fetch(
+                `${DOMAIN}/api/countries/add`,
+                {
+                    method: 'PUT',
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(country)
+                }
+            );
+
+            if (response.ok) {
+                resolve(true);
+            } else {
+            resolve(response.json());
+            }
+        }
+    );
+}
+
+export function deleteCountry(id) {
+    return new Promise(
+        async (resolve, reject) => {
+            const response = await fetch(
+                `${DOMAIN}/api/countries/delete/${id}`,
+                {
+                    method: 'POST'
+                }
+            );
+
+            if (response.ok) {
+                resolve(true);
             }
 
-            resolve(foundCountry);
+            reject(response.status);
+        }
+    );
+}
+
+export function updateCountry(country) {
+    return new Promise(
+        async (resolve, reject) => {
+            const response = await fetch(
+                `${DOMAIN}/api/countries/update`,
+                {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(country)
+                }
+            );
+
+            if (response.ok) {
+                resolve(true);
+            }
+
+            reject(false);
         }
     );
 }
 
 export function getCityById(id) {
     return new Promise(
-        (resolve, reject) => {
-            const data = cities;
+        async (resolve, reject) => {
+            const response = await fetch(`${DOMAIN}/api/cities/${id}`);
 
-            let foundCity = null;
-            for (let i = 0, len = data.length; i < len; i++) {
-                if (data[i].id == id) {
-                    foundCity = data[i];
-                }
+            if (response.ok) {
+                resolve(response.json());
             }
 
-            if (!foundCity) {
-                reject('Error');
-            }
-
-            resolve(foundCity);
+            reject(response.status);
         }
     );
 }
 
-export function searchCountries(searchPhrase) {
+export function addCity(city) {
     return new Promise(
-        (resolve, reject) => {
-            const storage = countries;
-            let foundCountries = [];
-
-            const searchReg = new RegExp('^' + searchPhrase, 'ig');
-
-            for (let i = 0, len = storage.length; i < len; i++) {
-                if (storage[i].name.match(searchReg)) {
-                    foundCountries.push(storage[i]);
+        async (resolve) => {
+            const response = await fetch(
+                `${DOMAIN}/api/cities/add`,
+                {
+                    method: 'PUT',
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(city)
                 }
-            }
-            //IN FUTURE HERE WILL BE CHECKING OF SUCCESFULL REQUEST TO THE API
-            if (false) {
-                reject("Error");
-            }
+            );
 
-            resolve(foundCountries);
+            if (response.ok) {
+                resolve(true);
+            } else {
+            resolve(response.json());
+            }
         }
     );
 }
 
-export function searchCities(searchPhrase, args) {
+export function deleteCity(id) {
     return new Promise(
-        (resolve, reject) => {
-            const storage = cities;
-            const [countryId] = args
-
-            let foundCities = [];
-
-            const searchReg = new RegExp('^' + searchPhrase, 'ig');
-
-            for (let i = 0, len = storage.length; i < len; i++) {
-                if (storage[i].name.match(searchReg) && storage[i].countryId == countryId) {
-                    foundCities.push(storage[i]);
+        async (resolve, reject) => {
+            const response = await fetch(
+                `${DOMAIN}/api/cities/delete/${id}`,
+                {
+                    method: 'POST'
                 }
-            }
-            //IN FUTURE HERE WILL BE CHECKING OF SUCCESFULL REQUEST TO THE API
-            if (false) {
-                reject("Error");
+            );
+
+            if (response.ok) {
+                resolve(true);
             }
 
-            resolve(foundCities);
+            reject(response.status);
+        }
+    );
+}
+
+export function updateCity(city) {
+    return new Promise(
+        async (resolve, reject) => {
+            const response = await fetch(
+                `${DOMAIN}/api/cities/update`,
+                {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(city)
+                }
+            );
+
+            if (response.ok) {
+                resolve(true);
+            }
+
+            reject(response.status);
+        }
+    );
+}
+
+export function searchCities(name, args) {
+    return new Promise(
+        async (resolve, reject) => {
+            const [countryId] = args;
+
+            const response = await fetch(
+                `${DOMAIN}/api/cities/search`,
+                {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(
+                        {
+                            name: name,
+                            countryId: countryId
+                        }
+                    )
+                }
+            );
+
+            if (response.ok) {
+                resolve(response.json());
+            }
+
+            reject(resolve.status);
         }
     );
 }

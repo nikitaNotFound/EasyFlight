@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import AddButton from '../../../common/add-button';
 import Cities from './cities';
 import Filter from './filter';
+import SubmitBox from '../../../common/submit-box';
+import MessageBox from '../../../common/message-box';
 
 import * as PlaceService from '../../../../services/PlaceService';
 

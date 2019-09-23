@@ -129,14 +129,14 @@ function Filter(props) {
 
                 <div className="row filter-item">
                     <SearchList
-                        searchFunc={AirportService.search}
+                        searchFunc={AirportService.searchWithParams}
                         placeholder="From airport"
                         currentItem={fromAirport}
                         getItemName={getAirportName}
                         onValueChange={changeFromAirport}
                     />
                     <SearchList
-                        searchFunc={AirportService.search}
+                        searchFunc={AirportService.searchWithParams}
                         placeholder="To airport"
                         currentItem={toAirport}
                         getItemName={getAirportName}

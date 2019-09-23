@@ -12,6 +12,7 @@ import * as PlaceService from '../../../../services/PlaceService';
 
 export default function Edit(props) {
     const [loading, changeLoadingMode] = useState(true);
+    const [id, changeId] = useState();
     const [name, changeName] = useState();
     const [country, changeCountry] = useState(null);
     
@@ -20,6 +21,7 @@ export default function Edit(props) {
     useEffect(() => {
         const fetchData = async () => {
             const foundCity = await PlaceService.getCityById(props.match.params.id);
+            changeId(foundCity.id);
             changeName(foundCity.name);
 
             const foundCountry = await PlaceService.getCountryById(foundCity.countryId);
@@ -36,8 +38,15 @@ export default function Edit(props) {
             return;
         }
 
-        let newAirport = new City(null, country.id, name);
-        // HERE WILL BE HTTP REQUEST
+        let newCity = new City(id, country.id, name);
+
+        const updateResult = PlaceService.updateCity(newCity);
+
+        if (updateResult) {
+            changeMessageBoxValue('Saved!');
+        } else {
+            changeMessageBoxValue(updateResult);
+        }
     }
 
     function showMessageBox() {
@@ -61,7 +70,7 @@ export default function Edit(props) {
 
     return (
         <div className="list-item-action rounded editing">
-            <Headline name="Editing country"/>
+            <Headline name="Editing city"/>
 
             <div className="adding-form">
                 <div className="row">

@@ -1,25 +1,33 @@
 import React, { useState } from 'react';
 
 import Headline from '../../../common/headline';
-import Spinner from '../../../common/spinner';
 import MessageBox from '../../../common/message-box';
 
 import Country from '../../../../services/place-models/country';
 
+import * as PlaceService from '../../../../services/PlaceService';
 
-export default function Edit(props) {
+
+export default function Add() {
     const [name, changeName] = useState();
     
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
-    function onDataSave() {
+    async function onDataSave() {
         if (!name) {
             changeMessageBoxValue('Input data is not valid!');
             return;
         }
 
-        let newAirport = new Country(null, name);
-        // HERE WILL BE HTTP REQUEST
+        let newCountry = new Country(0, name);
+
+        const addResult = await PlaceService.addCountry(newCountry);
+
+        if (addResult === true) {
+            changeMessageBoxValue('Added!');
+        } else {
+            changeMessageBoxValue(addResult.message);
+        }
     }
 
     function showMessageBox() {
@@ -35,7 +43,7 @@ export default function Edit(props) {
 
     return (
         <div className="list-item-action rounded editing">
-            <Headline name="Editing country"/>
+            <Headline name="Adding country"/>
 
             <div className="adding-form">
                 <div className="row">
@@ -55,7 +63,7 @@ export default function Edit(props) {
                         </div>
                     </div>
                 </div>
-                <div className="custom-button big" onClick={onDataSave}>Save</div>
+                <div className="custom-button big" onClick={onDataSave}>Add</div>
             </div>
             {showMessageBox()}
         </div>

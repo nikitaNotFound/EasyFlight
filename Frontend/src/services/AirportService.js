@@ -1,18 +1,6 @@
 import {airports} from './DataBase';
 import * as PlaceService from './PlaceService';
 
-export function getAll() {
-    return new Promise (
-        (resolve, reject) => {
-            const data = airports;
-            if (!data) {
-                reject("Error");
-            } else {
-                resolve(data);
-            }
-        }
-    );
-}
 
 export function getById(id) {
     return new Promise(

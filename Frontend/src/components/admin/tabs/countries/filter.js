@@ -4,7 +4,6 @@ import PropsTypes from 'prop-types';
 import SearchOptions from '../../../../services/airport-models/search-options';
 import ComponentHeadline from '../../../common/component-headline';
 import MessageBox from '../../../common/message-box';
-import SearchList from '../../../common/search-list';
 
 
 export default function Filter(props) {
