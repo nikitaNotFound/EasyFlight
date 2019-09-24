@@ -1,11 +1,12 @@
-import React, {useState, useEffect} from 'react';
-import FlightHeadline from './flight-headline';
-import PropsTypes from 'prop-types';
-import Spinner from '../../../common/spinner';
-import { Link } from 'react-router-dom';
-import FlightObject from '../../../../services/flight-models/flight';
-import * as PlaceService from '../../../../services/PlaceService';
-import * as AirportService from '../../../../services/AirportService';
+import React, { useState, useEffect } from "react";
+import PropsTypes from "prop-types";
+import { Link } from "react-router-dom";
+
+import FlightHeadline from "./flight-headline";
+import Spinner from "../../../common/spinner";
+
+import * as PlaceService from "../../../../services/PlaceService";
+import * as AirportService from "../../../../services/AirportService";
 
 function Flight(props) {
     const [loading, changeLoading] = useState(true);
@@ -17,7 +18,7 @@ function Flight(props) {
     const [toAirport, changeToAirport] = useState();
     const [toCity, changeToCity] = useState();
     const [toCountry, changeToCountry] = useState();
-    
+
     useEffect(() => {
         const fromAirportLoading = AirportService.getById(props.flight.fromId);
         const toAirportLoading = AirportService.getById(props.flight.toId);
@@ -56,17 +57,17 @@ function Flight(props) {
     }, [props.flight]);
 
     if (loading) {
-        return <Spinner headline="Loading..."/>
+        return <Spinner headline="Loading..." />;
     }
 
     return (
         <div className="row rounded list-item">
             <div className="col-lg-2 col-sm-3">
-                <img src="" className="list-item-img" alt="airport"/>
+                <img src="" className="list-item-img" alt="airport" />
             </div>
 
             <div className="col-lg-9 col-sm-9">
-                <FlightHeadline 
+                <FlightHeadline
                     from={`${fromAirport.name} (${fromCity.name}, ${fromCountry.name})`}
                     to={`${toAirport.name} (${toCity.name}, ${toCountry.name})`}
                 />
@@ -75,9 +76,7 @@ function Flight(props) {
 
             <div className="col-lg-1 col-sm-12">
                 <Link to={`/admin/flights/edit/${props.flight.flightId}`}>
-                    <div className="edit-button rounded non-selectable">
-                        Edit
-                    </div>
+                    <div className="edit-button rounded non-selectable">Edit</div>
                 </Link>
             </div>
         </div>
@@ -88,6 +87,6 @@ Flight.propsTypes = {
     flight: PropsTypes.instanceOf(Flight),
     onEdit: PropsTypes.func,
     displayLayout: PropsTypes.func
-}
+};
 
 export default Flight;

@@ -1,18 +1,17 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import SignBar from './sign-bar';
-import ProfileBar from './profile-bar';
-import '../../styles/login.css';
+import React from "react";
+import { Link } from "react-router-dom";
+import SignBar from "./sign-bar";
+import ProfileBar from "./profile-bar";
+import "../../styles/login.css";
 
-import { connect } from 'react-redux';
-
+import { connect } from "react-redux";
 
 function Header(props) {
     function showBar() {
-        if(props.userInfo) {
-            return <ProfileBar userInfo={props.userInfo}/>;
+        if (props.userInfo) {
+            return <ProfileBar userInfo={props.userInfo} />;
         }
-        return <SignBar/>
+        return <SignBar />;
     }
 
     return (
@@ -24,12 +23,10 @@ function Header(props) {
                     </Link>
                 </div>
 
-                <div className="col-sm-12 col-lg-3">
-                    {showBar()}
-                </div>
+                <div className="col-sm-12 col-lg-3">{showBar()}</div>
             </div>
         </header>
     );
 }
 
-export default connect((state) => state.userInfo)(Header);
+export default connect(state => state.userInfo)(Header);

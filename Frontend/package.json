@@ -11,7 +11,9 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "3.0.1"
+    "react-scripts": "3.0.1",
+    "react-redux": "^7.1.1",
+    "redux": "^4.0.4"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -33,9 +35,5 @@
       "last 2 firefox version",
       "last 2 edge version"
     ]
-  },
-  "devDependencies": {
-    "react-redux": "^7.1.1",
-    "redux": "^4.0.4"
   }
 }

@@ -23,7 +23,7 @@ export const ticketsCost = [
 ];
 
 export const users = [
-    new User(1, 'Nikita', '123@123.com', '123', 'admin')
+    new User(1, 'Nikita', '123@123.com', '123', '')
 ];
 
 export const userFlights = [
