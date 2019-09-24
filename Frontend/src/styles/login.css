@@ -1,6 +1,8 @@
-.sing-up {
-    text-align: right;
+.sing-up-in {
+    position: absolute;
     font-size: 19px;
+    bottom: 10px;
+    right: 15px;
   }
   
 .button-dark {

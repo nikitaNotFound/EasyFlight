@@ -1,56 +1,54 @@
-import React, {useState, useEffect} from 'react';
-import AddImage from '../../icons/add-image.png';
-import Flights from './flights';
-import * as UserService from '../../services/UserSerivce';
-import * as FlightService from '../../services/FlightService';
-import Spinner from '../common/spinner';
-import '../../styles/profile.css';
+import React, { useState, useEffect } from "react";
+import { withRouter } from "react-router-dom";
 
-function Content() {
+import AddImage from "../../icons/add-image.png";
+import "../../styles/profile.css";
+
+import * as UserService from "../../services/UserSerivce";
+import * as FlightService from "../../services/FlightService";
+
+import Spinner from "../common/spinner";
+import Flights from "./flights";
+
+import { connect } from "react-redux";
+
+function Content(props) {
     const [isLoading, changeLoadingMode] = useState(true);
     const [flights, changeFlights] = useState([]);
     const [userFlights, changeUserFlights] = useState();
-    const [user, changeUser] = useState();
+    const [user, changeUser] = useState(props.userInfo);
 
     useEffect(() => {
-        const userLoading = UserService.getCurrentUser(1);
+        const userFlightsLoading = UserService.getUserFlights(user.id);
 
-        userLoading
-            .then((user) => {
-                changeUser(user);
-                return UserService.getUserFlights(user.id);
-            })
-            .then((userFlights) => {
+        userFlightsLoading
+            .then(userFlights => {
                 changeUserFlights(userFlights);
 
                 if (userFlights.length > 0) {
-                    let storage = userFlights.map(
-                        (flight) =>
-                            flight.flightId
-                    );
+                    let storage = userFlights.map(flight => flight.flightId);
 
                     return FlightService.getByIds(storage);
                 }
             })
-            .then((flights) => {
+            .then(flights => {
                 if (flights) {
                     changeFlights(flights);
                 }
-                onDataSuccesful();
+                changeLoadingMode(false);
             })
-            .catch(onDataFail);
+            .catch(error => {
+                alert(error);
+            });
     }, []);
 
-    function onDataSuccesful() {
-        changeLoadingMode(false);
-    }
-
-    function onDataFail(error) {
-        alert(error);
+    async function onLogout() {
+        await UserService.logout();
+        props.history.push("/");
     }
 
     if (isLoading) {
-        return <Spinner headline="Loading..."/>
+        return <Spinner headline="Loading..." />;
     }
 
     return (
@@ -60,29 +58,27 @@ function Content() {
                     <div className="col-2">
                         <div className="user-photo">
                             <label htmlFor="photo">
-                                <img src={AddImage} alt="add user avatar"/>
+                                <img src={AddImage} alt="add user avatar" />
                             </label>
-                            <input type="file" id="photo"/>
+                            <input type="file" id="photo" />
                         </div>
                     </div>
                     <div className="col-10">
-                        <input
-                            type="text"
-                            className="name-input"
-                            value={user.name}
-                        />
+                        <input type="text" className="name-input" value={user.name} />
+
+                        <div className="logout rounded non-selectable" onClick={onLogout}>
+                            log out
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div className="flight-history">
-                <div className="flight-history-headline non-selectable">
-                    Your flights
-                </div>
-                <Flights flights={flights}/>
+                <div className="flight-history-headline non-selectable">Your flights</div>
+                <Flights flights={flights} />
             </div>
         </main>
     );
 }
 
-export default Content;
+export default withRouter(connect(state => state.userInfo)(Content));

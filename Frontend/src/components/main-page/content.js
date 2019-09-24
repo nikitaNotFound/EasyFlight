@@ -1,13 +1,16 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import Filter from './flights/filter';
 import Flights from './flights/flights';
 import Switcher from './flights/switcher';
 import SearchOptions from '../../services/flight-models/search-options';
 import * as FlightsService from '../../services/FlightService';
+import '../../styles/flight-list.scss';
+
 
 function Content() {
     const [flights, changeFlights] = useState(null);
-    const [filterOptions, changeFilterOptions] = useState(new SearchOptions);
+    const [filterOptions, changeFilterOptions] = useState(new SearchOptions());
+
     const layoutMode = {
         List: 'list-only',
         Filter: 'filter-only'
@@ -24,7 +27,6 @@ function Content() {
 
     function onFilterApplied(searchOptions) {
         changeFilterOptions(searchOptions);
-        console.log(searchOptions);
 
         const flightsLoading = FlightsService.searchWithParams(searchOptions);
 
@@ -38,14 +40,24 @@ function Content() {
     }
 
     if (!flights) {
-        return <Filter onFilterApplied={onFilterApplied} filterOptions={filterOptions}/>
+        return (
+            <main className="rounede">
+                <Filter
+                    onFilterApplied={onFilterApplied}
+                    filterOptions={filterOptions}
+                />
+            </main>
+        );
     }
 
     return (
         <main className={`rounded ${mode}`}>
             <Switcher switcher={swapFilterList}/>
             <Flights flights={flights}/>
-            <Filter onFilterApplied={onFilterApplied} filterOptions={filterOptions}/>
+            <Filter
+                onFilterApplied={onFilterApplied}
+                filterOptions={filterOptions}
+            />
         </main>
     );
 }

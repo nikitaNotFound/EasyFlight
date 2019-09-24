@@ -107,7 +107,7 @@ function Filter(props) {
             {showMessageBox()}
             <ComponentHeadline content="Filter" />
 
-            <div className="container-fluid">
+            <div className="filter-area">
                 <div className="row filter-item">
                     <SearchList
                         searchFunc={PlaceService.searchCountries}
@@ -145,20 +145,26 @@ function Filter(props) {
                 </div>
 
                 <div className="row filter-item">
-                    <div className="col filter-col">
-                        Departure
+                    <div className="filter-col">
+                        <label htmlFor="departure">
+                            Departure
+                        </label>
                         <input
-                            className="form-control filter-control"
+                            className="filter-control"
                             type="date"
+                            id="departure"
                             placeholder="Date"
                             value={departureTime}
                             onChange={(event) => changeDepartureTime(event.target.value)}
                         />
                     </div>
-                    <div className="col filter-col">
-                        Departure back
+                    <div className="filter-col">
+                        <label htmlFor="departure-back">
+                            Departure back
+                        </label>
                         <input
-                            className="form-control filter-control"
+                            className="filter-control"
+                            id="departure-back"
                             type="date"
                             placeholder="Date"
                             value={departureBackTime}
@@ -168,13 +174,18 @@ function Filter(props) {
                 </div>
 
                 <div className="row filter-item">
-                    Amount of tickets
-                    <input
-                        className="form-control filter-control"
-                        placeholder="Count"
-                        value={ticketCount}
-                        onChange={(event) => changeTicketsCount(event.target.value)}
-                    />
+                    <div className="filter-col">
+                        <label htmlFor="tickets">
+                            Amount of tickets
+                        </label>
+                        <input
+                            className="filter-control"
+                            id="tickets"
+                            placeholder="Count"
+                            value={ticketCount}
+                            onChange={(event) => changeTicketsCount(event.target.value)}
+                        />
+                    </div>
                 </div>
 
                 <div className="row filter-item">

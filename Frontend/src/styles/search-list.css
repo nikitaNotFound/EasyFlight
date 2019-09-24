@@ -1,19 +1,28 @@
 .search-list {
-    color: black;
-    width: 194px;
-    position: absolute;
-    z-index: 1000;
-    background: rgb(139, 139, 139);
-    padding: 3px;
-  }
-  
-  .search-item {
-    font-family: serif;
-    font-size: 16px;
-    margin-top: 5px;
-    background: white;
-  }
-  
-  .search-item-hide {
-    display: none;
-  }
+  color: black;
+  width: 194px;
+  position: absolute;
+  z-index: 1000;
+  background: rgb(139, 139, 139);
+  padding: 3px;
+}
+
+.search-item {
+  font-family: serif;
+  font-size: 16px;
+  margin-top: 5px;
+  background: white;
+}
+
+.search-item-hide {
+  display: none;
+}
+
+label {
+  color: black;
+}
+
+input {
+  color: rgb(48, 50, 51);
+  padding: 3px;
+}
