@@ -1,11 +1,11 @@
 import React from "react";
-import { BrowserRouter as Router, Redirect, Route, Switch, BrowserRouter } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, BrowserRouter } from "react-router-dom";
 
 import AdminRoute from "./routes/AdminRoute";
-import AuthorizedRoute from './routes/AuthorizedRoute';
-import UnauthorizedRoute from './routes/UnauthorizedRoute';
+import AuthorizedRoute from "./routes/AuthorizedRoute";
+import UnauthorizedRoute from "./routes/UnauthorizedRoute";
 
-import User from "./components/user";
+import MainPage from "./components/main-page";
 import Admin from "./components/admin";
 import SignUp from "./components/sign-up";
 import SignIn from "./components/sign-in";
@@ -23,7 +23,7 @@ function App() {
                     <UnauthorizedRoute path="/signup" component={SignUp} />
                     <UnauthorizedRoute path="/signin" component={SignIn} />
                     <AuthorizedRoute path="/profile" component={Profile} />
-                    <Route path="/" component={User} />
+                    <Route path="/" component={MainPage} />
                 </Switch>
             </BrowserRouter>
         </Provider>

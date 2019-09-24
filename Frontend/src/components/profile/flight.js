@@ -20,11 +20,15 @@ function Flight(props) {
                 AirportService.getById(props.flight.toId)
             ]);
 
-            const fromCity = await PlaceService.getCityById(fromAirport.cityId);
-            const toCity = await PlaceService.getCityById(toAirport.cityId);
+            const [fromCity, toCity] = await Promise.all([
+                PlaceService.getCityById(fromAirport.cityId),
+                PlaceService.getCityById(toAirport.cityId)
+            ]);
 
-            const fromCountry = await PlaceService.getCountryById(fromCity.countryId);
-            const toCountry = await PlaceService.getCountryById(toCity.countryId);
+            const [fromCountry, fromCountry] = await Promise.all([
+                PlaceService.getCountryById(fromCity.countryId),
+                PlaceService.getCountryById(toCity.countryId)
+            ]);
 
             changeFrom(`${fromAirport.name} (${fromCity.name}, ${fromCountry.name})`);
             changeTo(`${toAirport.name} (${toCity.name}, ${toCountry.name})`);
