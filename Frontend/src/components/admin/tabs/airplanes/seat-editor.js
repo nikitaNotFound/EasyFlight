@@ -1,10 +1,13 @@
-import React, {useState} from 'react';
-import PropsTypes from 'prop-types';
-import SeatFloor from './seat-floor';
-import Instruments from './seat-editor-instruments';
-import SeatTypesEditor from './seat-type-editor';
-import Seat from '../../../../services/airplane-models/seat';
-import '../../../../styles/seat-editor.css';
+import React, { useState } from "react";
+import PropsTypes from "prop-types";
+
+import SeatFloor from "./seat-floor";
+import Instruments from "./seat-editor-instruments";
+import SeatTypesEditor from "./seat-type-editor";
+
+import Seat from "../../../../services/airplane-models/seat";
+
+import "../../../../styles/seat-editor.css";
 
 function initializeSeatArray(props) {
     if (!props.seatInfo) {
@@ -31,10 +34,12 @@ function initializeSeatArray(props) {
         if (!seatsArray[element.floor - 1][element.section - 1][element.zone - 1][element.row - 1]) {
             seatsArray[element.floor - 1][element.section - 1][element.zone - 1][element.row - 1] = [];
         }
-        seatsArray[element.floor - 1][element.section - 1][element.zone - 1][element.row - 1][element.number - 1] = element;
+        seatsArray[element.floor - 1][element.section - 1][element.zone - 1][element.row - 1][
+            element.number - 1
+        ] = element;
     }
 
-   return seatsArray;
+    return seatsArray;
 }
 
 function getSeatTypes(props) {
@@ -53,7 +58,7 @@ function SeatEditor(props) {
     function onAddZone(floor, section) {
         let storage = [];
         Object.assign(storage, seatArray);
-        
+
         // if there no floor with getted number, programm will add it
         if (!storage[floor - 1]) {
             storage[floor - 1] = [];
@@ -102,11 +107,7 @@ function SeatEditor(props) {
 
     function showSeatTypesInstruments() {
         if (seatTypes.length > 0) {
-            return (
-                <Instruments
-                    onAddZone={onAddZone}
-                />
-            );
+            return <Instruments onAddZone={onAddZone} />;
         }
     }
 
@@ -114,20 +115,11 @@ function SeatEditor(props) {
         if (seatArray && seatTypes.length > 0) {
             return (
                 <div className="seat-editor-layout">
-                    {seatArray.map(
-                        (seats, index) => {
-                            let placeInfo = {};
-                            placeInfo.floor = index + 1;
-                            return (
-                                <SeatFloor
-                                    placeInfo={placeInfo}
-                                    seats={seats}
-                                    seatTypes={seatTypes}
-                                    key={index + 1}
-                                />
-                            );
-                        }
-                    )}
+                    {seatArray.map((seats, index) => {
+                        let placeInfo = {};
+                        placeInfo.floor = index + 1;
+                        return <SeatFloor placeInfo={placeInfo} seats={seats} seatTypes={seatTypes} key={index + 1} />;
+                    })}
                 </div>
             );
         }
@@ -135,16 +127,11 @@ function SeatEditor(props) {
 
     return (
         <div className="seat-editor">
-            <SeatTypesEditor
-                seatTypes={seatTypes}
-                onAddType={onAddType}
-                onTypeDelete={onTypeDelete}
-            />
+            <SeatTypesEditor seatTypes={seatTypes} onAddType={onAddType} onTypeDelete={onTypeDelete} />
             {showSeatTypesInstruments()}
             {showSeatsSheme()}
         </div>
     );
-
 }
 
 SeatEditor.propsTypes = {
@@ -152,6 +139,6 @@ SeatEditor.propsTypes = {
     seatTypes: PropsTypes.array,
     onSeatsChange: PropsTypes.func,
     onSeatTypesChange: PropsTypes.func
-}
+};
 
 export default SeatEditor;

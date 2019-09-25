@@ -18,7 +18,7 @@ namespace EasyFlight.Models.Cities
 
         public void Add(City item)
         {
-            string query = $"SELECT * FROM cities WHERE name='{item.Name}' and countryId={item.CountryId}";
+            string query = @"SELECT * FROM cities WHERE name=@item.Name}' and countryId={item.CountryId}";
 
             IEnumerable<City> foundCities = db.Query<City>(query);
 
