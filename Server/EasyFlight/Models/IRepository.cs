@@ -7,10 +7,9 @@ namespace EasyFlight.Models
 {
     public interface IRepository <Item, SearchOptions>
     {
-        Item Get(int id);
-        IEnumerable<Item> Search(SearchOptions searchOptions);
-        void Add(Item item);
-        void Update(Item item);
-        void Delete(int id);
+        Item GetAsync(int id);
+        IEnumerable<Item> SearchAsync(SearchOptions searchOptions);
+        Task AddAsync(Item item);
+        void UpdateAsync(Item item);
     }
 }

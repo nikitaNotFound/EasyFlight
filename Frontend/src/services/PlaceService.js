@@ -48,23 +48,24 @@ export function searchCountriesByName(nameFilter) {
 }
 
 export function addCountry(country) {
-    return new Promise(async resolve => {
-        try {
-            const response = await fetch(`${config.API_URL}/api/countries`, {
+    try {
+        const response = await fetch(
+            `${config.API_URL}/api/countries`,
+            {
                 method: "POST",
                 mode: "cors",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(country)
-            });
+            }
+        );
 
-            resolve(RequestController.formResult(response));
-        } catch {
-            const errorInfo = RequestController.getErrorInfo(500);
-            resolve(new RequestResult(false, errorInfo));
-        }
-    });
+        return RequestController.formResult(response);
+    } catch {
+        const errorInfo = RequestController.getErrorInfo(500);
+        return new RequestResult(false, errorInfo);
+    }
 }
 
 export function updateCountry(country) {
@@ -96,14 +97,15 @@ export function getCityById(id) {
                 headers: {
                     "Content-Type": "application/json"
                 }
-            });
+            );
 
-            resolve(RequestController.formResult(response));
-        } catch {
-            const errorInfo = RequestController.getErrorInfo(500);
-            resolve(new RequestResult(false, errorInfo));
+            if (response.ok) {
+                resolve(response.json());
+            }
+
+            reject(response.status);
         }
-    });
+    );
 }
 
 export function addCity(city) {
