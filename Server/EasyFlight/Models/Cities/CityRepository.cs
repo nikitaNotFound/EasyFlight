@@ -35,7 +35,7 @@ namespace EasyFlight.Models.Cities
             }
             else
             {
-                throw new AttemptToAddExistingObjectException(item.Name);
+                throw new DuplicatedItemException(item.Name);
             }
         }
 

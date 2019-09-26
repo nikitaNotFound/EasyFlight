@@ -33,7 +33,7 @@ namespace EasyFlight.Models.Countries
             }
             else
             {
-                throw new AttemptToAddExistingObjectException(item.Name);
+                throw new DuplicatedItemException(item.Name);
             }
         }
 

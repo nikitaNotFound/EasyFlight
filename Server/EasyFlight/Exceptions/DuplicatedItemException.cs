@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace EasyFlight.Exceptions
 {
-    public class AttemptToAddExistingObjectException : Exception
+    public class DuplicatedItemException : Exception
     {
-        public AttemptToAddExistingObjectException(string objectName)
+        public DuplicatedItemException(string objectName)
             : base(String.Format("{0} already exists!", objectName))
         {
         }
