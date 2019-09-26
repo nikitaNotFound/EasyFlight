@@ -1,29 +1,28 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using BusinessLayer.Models;
+using Dapper;
+using System.Data.SqlClient;
+using System.Data;
 using DataAccessLayer.Models;
-using DataAccessLayer.Repositories.Cities;
 using AutoMapper;
 using System.Linq;
 
-namespace BusinessLayer.Services.Cities
+namespace DataAccessLayer.Repositories.Cities
 {
     public class CityService : ICityService
     {
-        private readonly ICityRepository _cityRepository;
-        private readonly IMapper _mapper;
+        private readonly IDalSettings _settings;
 
 
-        public CityService(ICityRepository cityRepository, IMapper mapper)
+        public CityRepository(IDalSettings settings)
         {
-            _cityRepository = cityRepository;
-            _mapper = mapper;
+            _settings = settings;
         }
 
 
-        public async Task<IReadOnlyCollection<City>> GetAllAsync()
+        public async Task<IReadOnlyCollection<CityEntity>> GetAllAsync()
         {
-            IReadOnlyCollection<CityEntity> citiesDal = await _cityRepository.GetAllAsync();
+            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
 
             IReadOnlyCollection<City> cities = citiesDal.Select(_mapper.Map<City>).ToList();
 
@@ -39,50 +38,44 @@ namespace BusinessLayer.Services.Cities
             return cities;
         }
 
-        public async Task<City> GetByIdAsync(int id)
+        public async Task<CityEntity> GetAsync(int id)
         {
-            CityEntity foundCityDal = await _cityRepository.GetAsync(id);
+            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
 
-            City foundCity = _mapper.Map<City>(foundCityDal);
-
-            return foundCity;
+            return await db.QuerySingleOrDefaultAsync<CityEntity>(
+                "GetCityById",
+                new { id = id },
+                commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<ResultTypes> AddAsync(City city)
+        public async Task AddAsync(CityEntity city)
         {
-            CityEntity cityDal = _mapper.Map<CityEntity>(city);
+            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
 
-            bool dublicate = await _cityRepository.CheckDublicateAsync(cityDal);
-
-            if (!dublicate)
-            {
-                await _cityRepository.AddAsync(cityDal);
-                return ResultTypes.OK;
-            }
-
-            return ResultTypes.Dublicate;
+            await db.ExecuteAsync(
+                "AddCity",
+                new { name = city.Name, countryId = city.CountryId },
+                commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<ResultTypes> UpdateAsync(City city)
+        public async Task UpdateAsync(CityEntity city)
         {
-            CityEntity oldCityDal = await _cityRepository.GetAsync(city.Id);
+            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
 
-            if (oldCityDal != null)
-            {
-                CityEntity cityDal = _mapper.Map<CityEntity>(city);
+            await db.ExecuteAsync(
+                "UpdateCity",
+                city,
+                commandType: CommandType.StoredProcedure);
+        }
 
-                bool dublicate = await _cityRepository.CheckDublicateAsync(cityDal);
+        public async Task<bool> CheckDublicateAsync(CityEntity city)
+        {
+            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
 
-                if (!dublicate)
-                {
-                    await _cityRepository.UpdateAsync(cityDal);
-                    return ResultTypes.OK;
-                }
-
-                return ResultTypes.Dublicate;
-            }
-
-            return ResultTypes.NotFound;
+            return await db.ExecuteScalarAsync<bool>(
+                "CheckCityDublicate",
+                new { name = city.Name, countryId = city.CountryId },
+                commandType: CommandType.StoredProcedure);
         }
 
         public async Task AddAsync(CityEntity city)
