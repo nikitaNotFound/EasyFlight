@@ -1,7 +1,10 @@
 import PropsTypes from 'prop-types';
 import React, {useState} from 'react';
+
 import Spinner from './spinner';
 import Item from './search-list-item';
+import MessageBox from '../common/message-box';
+
 import '../../styles/search-list.css';
 
 function getStartItem(props) {
@@ -18,6 +21,7 @@ function SearchList(props) {
     const [list, changeList] = useState([]);
     const [inputValue, changeInputValue] = useState(getStartItem(props));
     const [currentItem, changeCurrentItem] = useState(props.currentItem);
+    const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
     function openList() {
         changeMode(true);
@@ -36,6 +40,26 @@ function SearchList(props) {
         changeInputValue(await props.getItemName(item));
         changeCurrentItem(item);
         props.onValueChange(item);
+    }
+
+    async function onSearchPhraseChange(event) {
+        changeInputValue(event.target.value);
+        
+        if (!event.target.value) {
+            changeLoading(true);
+            changeCurrentItem(null);
+            props.onValueChange(null);
+            return;
+        }
+
+        let newListRequest = await props.searchFunc(event.target.value, props.searchArgs);
+
+        if (newListRequest.succcessful === true) {
+            changeList(newListRequest.value);
+            changeLoading(false);
+        } else {
+            changeMessageBoxValue(newListRequest.value)
+        }
     }
 
     function getList() {
@@ -84,9 +108,19 @@ function SearchList(props) {
                 alert(error);
             });
     }
+    
+    function showMessageBox() {
+        return (
+            <MessageBox
+                message={messageBoxValue}
+                hideFunc={changeMessageBoxValue}
+            />
+        );
+    }
 
     return (
         <div className="form-item">
+            {showMessageBox()}
             <label htmlFor={props.placeholder}>{props.placeholder}</label>
             <input
                 id={props.placeholder}

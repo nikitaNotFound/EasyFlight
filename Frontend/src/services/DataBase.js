@@ -8,7 +8,6 @@ import Airport from './airport-models/airport';
 import TicketCost from './flight-models/ticket-cost';
 import City from '../services/place-models/city';
 import Country from '../services/place-models/country';
-import BaggageCost from '../services/flight-models/baggage-cost';
 
 export const flights = [
     new Flight(1, 2, 3, '2018-01-01 18:30', 'This is a test flight.', 1, 20, 10, 2, 8, 1),

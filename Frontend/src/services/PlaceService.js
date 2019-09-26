@@ -100,10 +100,10 @@ export function getCityById(id) {
             );
 
             if (response.ok) {
-                resolve(response.json());
+                resolve(new RequestResult(true, response.json()));
             }
 
-            reject(response.status);
+            reject(new RequestResult(false, response.json()));
         }
     );
 }

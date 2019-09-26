@@ -73,8 +73,6 @@ export default function Filter(props) {
                         type="text"
                         value={name}
                         onChange={onNameChanged}
-                        getItemName={getCountryName}
-                        onValueChange={changeCountry}
                     />
                 </div>
             </div>

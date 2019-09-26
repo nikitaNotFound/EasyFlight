@@ -17,10 +17,16 @@ export default function Edit(props) {
 
     useEffect(() => {
         const fetchData = async () => {
-            const foundCountry = await PlaceService.getCountryById(props.match.params.id);
-            changeName(foundCountry.name);
-            changeId(foundCountry.id);
-            changeLoadingMode(false);
+            const countryRequest = await PlaceService.getCountryById(props.match.params.id);
+
+            if (countryRequest.successful === true) {
+                changeName(countryRequest.value.name);
+                changeId(countryRequest.value.id);
+                changeLoadingMode(false);
+            } else {
+                changeMessageBoxValue(countryRequest.value);
+            }
+            
         }
         fetchData();
     }, [props.match.params.id]);
@@ -54,6 +60,7 @@ export default function Edit(props) {
     if (loading) {
         return (
             <div className="list-item-action rounded editing">
+                {showMessageBox()}
                 <Spinner headline="Loading..."/>
             </div>
         );
