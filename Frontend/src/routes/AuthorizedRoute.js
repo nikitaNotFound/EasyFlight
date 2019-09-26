@@ -9,7 +9,7 @@ export default function AuthorizedRoute({ component: Component, ...rest }) {
         <Route
             {...rest}
             render={() =>
-                UserService.checkLogin().status === true ? <Component props={{ ...rest }} /> : <Redirect to="/signin" />
+                UserService.checkLogin().authorized === true ? <Component props={{ ...rest }} /> : <Redirect to="/signin" />
             }
         />
     );

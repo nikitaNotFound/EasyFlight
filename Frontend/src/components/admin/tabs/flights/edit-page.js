@@ -1,22 +1,21 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from "react";
 
-import Headline from '../../../common/headline';
-import SearchList from '../../../common/search-list';
-import MessageBox from '../../../common/message-box';
-import Spinner from '../../../common/spinner';
-import TicketsCostEditor from './tickets-cost-editor';
-import ParamField from './param-field';
+import Headline from "../../../common/headline";
+import SearchList from "../../../common/search-list";
+import MessageBox from "../../../common/message-box";
+import Spinner from "../../../common/spinner";
+import TicketsCostEditor from "./tickets-cost-editor";
+import ParamField from "./param-field";
 
-import BuyIcon from '../../../../icons/add-image.png';
+import BuyIcon from "../../../../icons/add-image.png";
 
-import Flight from '../../../../services/flight-models/flight';
+import Flight from "../../../../services/flight-models/flight";
 
-import * as AirplaneService from '../../../../services/AirplaneService';
-import * as FlightService from '../../../../services/FlightService';
-import * as AirportService from '../../../../services/AirportService';
+import * as AirplaneService from "../../../../services/AirplaneService";
+import * as FlightService from "../../../../services/FlightService";
+import * as AirportService from "../../../../services/AirportService";
 
-
-function Editing (props) {
+function Editing(props) {
     const [loading, changeLoadingMode] = useState(true);
 
     const [flight, changeFlight] = useState();
@@ -42,27 +41,29 @@ function Editing (props) {
 
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
-    useEffect (() => {
+    useEffect(() => {
         const fetchData = async () => {
             const flight = await FlightService.getById(props.match.params.id);
 
             changeFlight(flight);
 
-            const [toDate, toTime] = flight.departureTime.split(' ');
+            const [toDate, toTime] = flight.departureTime.split(" ");
 
             changeDepartureTime(toTime);
             changeDepartureDate(toDate);
 
             changeSuitcaseMass(flight.suitcaseMass);
-            changeSuitcaseCount(flight.suitcaseCount)
+            changeSuitcaseCount(flight.suitcaseCount);
 
             changeCarryonMass(flight.carryonMass);
             changeCarryonCount(flight.carryonCount);
 
             changeDesc(flight.desc);
 
-            const airplane = await AirplaneService.getById(flight.airplaneId);
-            const airports = await AirportService.getByIds([flight.fromId, flight.toId]);
+            const [airplane, airports] = Promise.all([
+                AirplaneService.getById(flight.airplaneId),
+                AirportService.getByIds([flight.fromId, flight.toId])
+            ]);
 
             changeAirplane(airplane);
 
@@ -72,39 +73,31 @@ function Editing (props) {
             changeToPlace(to);
 
             changeLoadingMode(false);
-        }
+        };
         fetchData();
     }, [props.match.params.id]);
 
     function onDataSave() {
-        if (!departureDate
-            || !departureTime
-            || !fromPlace
-            || !toPlace
-            || !airplane
-            || !ticketsCost
-            || !desc
-        ) {
-            changeMessageBoxValue('Input data is not valid!');
+        if (!departureDate || !departureTime || !fromPlace || !toPlace || !airplane || !ticketsCost || !desc) {
+            changeMessageBoxValue("Input data is not valid!");
             return;
         }
 
         const finalDepartureTime = `${departureDate} ${departureTime}`;
 
-        const newFlight = 
-            new Flight(
-                null,
-                fromPlace.id,
-                toPlace.id,
-                finalDepartureTime,
-                desc,
-                airplane.id,
-                airplane.seats.length,
-                suitcaseMass,
-                suitcaseCount,
-                carryonMass,
-                carryonCount
-            );
+        const newFlight = new Flight(
+            null,
+            fromPlace.id,
+            toPlace.id,
+            finalDepartureTime,
+            desc,
+            airplane.id,
+            airplane.seats.length,
+            suitcaseMass,
+            suitcaseCount,
+            carryonMass,
+            carryonCount
+        );
     }
 
     function getAirplaneName(airplane) {
@@ -131,38 +124,24 @@ function Editing (props) {
 
     function showMessageBox() {
         if (messageBoxValue) {
-            return (
-                <MessageBox
-                    message={messageBoxValue}
-                    hideFunc={changeMessageBoxValue}
-                />
-            );
+            return <MessageBox message={messageBoxValue} hideFunc={changeMessageBoxValue} />;
         }
     }
 
     if (loading) {
-        return <Spinner headline="Loading..."/>
+        return <Spinner headline="Loading..." />;
     }
 
     return (
         <div className="list-item-action editing">
-            <Headline name="Editing flight"/>
+            <Headline name="Editing flight" />
 
             <div className="adding-form">
                 <div className="row">
                     <div className="col-2">
-                        <input
-                            type="file"
-                            name="image"
-                            id="file-input"
-                            className="file-upload"
-                        />
+                        <input type="file" name="image" id="file-input" className="file-upload" />
                         <label htmlFor="file-input">
-                            <img
-                                src={BuyIcon}
-                                className="adding-form-img"
-                                alt="add"
-                            />
+                            <img src={BuyIcon} className="adding-form-img" alt="add" />
                         </label>
                     </div>
                     <div className="col-10">
@@ -240,11 +219,7 @@ function Editing (props) {
                                 </div>
 
                                 <div className="adding-form-section">
-                                    <textarea
-                                        placeholder="description"
-                                        value={desc}
-                                        onChange={changeDesc}
-                                    />
+                                    <textarea placeholder="description" value={desc} onChange={changeDesc} />
                                 </div>
                             </div>
                         </div>
