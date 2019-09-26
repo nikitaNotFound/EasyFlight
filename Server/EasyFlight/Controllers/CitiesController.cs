@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using EasyFlight.Models;
 using EasyFlight.Models.Cities;
+using EasyFlight.Exceptions;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 
 namespace EasyFlight.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [DisableCors]
     public class CitiesController : ControllerBase
     {
         IRepository<City, CitySearchOptions> repository = null;
@@ -21,49 +22,63 @@ namespace EasyFlight.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public ActionResult Get(int id)
-        {
-            City city = repository.GetAsync(id);
-
-            if (city != null)
-            {
-                return new ObjectResult(city);
-            }
-
-            return new NoContentResult();
-        }
-
-        [HttpPost]
-        public ActionResult Add([FromBody]City city)
+        public async Task<ActionResult> Get(int id)
         {
             try
             {
-                repository.AddAsync(city);
+                City city = await repository.GetAsync(id);
+
+                Response.StatusCode = 200;
+                return new ObjectResult(city);
             }
             catch (Exception ex)
             {
-                Response.StatusCode = 500;
-                return new JsonResult(new { message = ex.Message });
+                Response.StatusCode = 404;
+                return new JsonResult(new ErrorMessage(ex.Message));
             }
+        }
 
-            return new NoContentResult();
+        [HttpPost]
+        public async Task<ActionResult> Add([FromBody]City city)
+        {
+            try
+            {
+                await repository.AddAsync(city);
+
+                Response.StatusCode = 201;
+                return new NoContentResult();
+            }
+            catch (Exception ex)
+            {
+                Response.StatusCode = 409;
+                return new JsonResult(new ErrorMessage(ex.Message));
+            }
         }
 
         [HttpPut]
         [Route("{id}")]
-        public ActionResult Update(int id, [FromBody]City city)
+        public async Task<ActionResult> Update(int id, [FromBody]City city)
         {
-            city.Id = id;
-            repository.UpdateAsync(city);
+            try
+            {
+                city.Id = id;
+                await repository.UpdateAsync(city);
 
-            return new NoContentResult();
+                Response.StatusCode = 202;
+                return new NoContentResult();
+            }
+            catch (Exception ex)
+            {
+                Response.StatusCode = 500;
+                return new JsonResult(ex.Message);
+            }
         }
 
         [HttpPost]
         [Route("searches")]
-        public ActionResult Search([FromBody]CitySearchOptions searchOptions)
+        public async Task<ActionResult> Search([FromBody]CitySearchOptions searchOptions)
         {
-            IEnumerable<City> foundCities = repository.SearchAsync(searchOptions);
+            var foundCities = await repository.SearchAsync(searchOptions);
 
             return new ObjectResult(foundCities);
         }

@@ -7,11 +7,6 @@ namespace EasyFlight.Models.Countries
 {
     public class CountrySearchOptions
     {
-        public CountrySearchOptions(string name)
-        {
-            this.Name = name;
-        }
-
         public string Name { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using EasyFlight.Exceptions;
 using Dapper;
 
 namespace EasyFlight.Models.Cities
@@ -24,33 +25,40 @@ namespace EasyFlight.Models.Cities
                 WHERE name=@Name
                     and countryId=CountryId";
 
-            if (!db.ExecuteScalar<bool>(EXISTING_CHECK_QUERY, item))
+            if (!await db.ExecuteScalarAsync<bool>(EXISTING_CHECK_QUERY, item))
             {
                 const string INSERT_QUERY = @"
                     INSERT INTO cities(countryId, name)
                     VALUES(@countryId, @name)";
 
-                db.Execute(INSERT_QUERY, item);
+                await db.ExecuteAsync(INSERT_QUERY, item);
             }
             else
             {
-                throw new Exception($"'{item.Name}' already exists!");
+                throw new AttemptToAddExistingObjectException(item.Name);
             }
         }
 
-        public City GetAsync(int id)
+        public async Task<City> GetAsync(int id)
         {
             string GET_QUERY = @"
-                SELECT *
+                SELECT TOP 1 *
                 FROM cities
-                WHERE id={id}";
+                WHERE id=@id";
 
-            City foundCity = db.Query<City>(GET_QUERY).ToList().First();
+            var cityQueryResult = (await db.QueryAsync<City>(GET_QUERY, new { id = id })).ToList();
 
-            return foundCity;
+            if (cityQueryResult.Count() == 1)
+            {
+                return cityQueryResult.First();
+            }
+            else
+            {
+                throw new ObjectNotFoundException(id);
+            }
         }
 
-        public IEnumerable<City> SearchAsync(CitySearchOptions searchOptions)
+        public async Task<IEnumerable<City>> SearchAsync(CitySearchOptions searchOptions)
         {
             const string SEARCH_QUERY = @"
                 SELECT *
@@ -58,19 +66,17 @@ namespace EasyFlight.Models.Cities
                 WHERE countryId=@countryId
                 and name LIKE '@Name%";
 
-            IEnumerable<City> foundCities = db.Query<City>(SEARCH_QUERY, searchOptions);
-
-            return foundCities;
+            return await db.QueryAsync<City>(SEARCH_QUERY, searchOptions);
         }
 
-        public void UpdateAsync(City item)
+        public async Task UpdateAsync(City item)
         {
             const string UPDATE_QUERY = @"
                 UPDATE cities
                 SET name=@name, countryId=@countryId
                 WHERE id=@id";
 
-            db.Execute(UPDATE_QUERY, item);
+            await db.ExecuteAsync(UPDATE_QUERY, item);
         }
     }
 }

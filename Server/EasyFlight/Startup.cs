@@ -23,45 +23,49 @@ namespace EasyFlight
             Configuration = configuration;
         }
 
-        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors(options =>
             {
-                options.AddPolicy(MyAllowSpecificOrigins,
-                builder =>
-                {
-                    builder.WithOrigins("http://localhost:3000",
-                                        "http://www.contoso.com")
-                                        .AllowAnyHeader()
-                                        .AllowAnyMethod();
-                });
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+
+                        builder.WithOrigins("http://localhost:3000",
+                                            "http://www.contoso.com");
+                    });
+
+                options.AddPolicy("AllowAnyHeaderAndMethod",
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:3000")
+                                            .AllowAnyHeader()
+                                            .AllowAnyMethod();
+                    });
             });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            string connectString = @"Server=np:\\.\pipe\LOCALDB#CCF10672\tsql\query;Initial Catalog=easyflight;Integrated Security=True";
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            services.AddControllers();
+
+            string connectString = @"Server=np:\\.\pipe\LOCALDB#5186F99E\tsql\query;Initial Catalog=easyflight;Integrated Security=True";
             services.AddSingleton<IRepository<City, CitySearchOptions>, CityRepository>(provider => new CityRepository(connectString));
             services.AddSingleton<IRepository<Country, CountrySearchOptions>, CountryRepository>(provider => new CountryRepository(connectString));
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseHsts();
-            }
-
-            app.UseCors(MyAllowSpecificOrigins);
+            app.UseRouting();
+            app.UseCors("AllowAnyHeaderAndMethod");
 
             app.UseHttpsRedirection();
-            app.UseMvc();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }

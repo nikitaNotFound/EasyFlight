@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using EasyFlight.Models;
-using Dapper;
 using System.Data.SqlClient;
+using EasyFlight.Exceptions;
+using Dapper;
 
 namespace EasyFlight.Models.Countries
 {
@@ -33,45 +33,47 @@ namespace EasyFlight.Models.Countries
             }
             else
             {
-                throw new Exception($"'{item.Name}' already exists!");
+                throw new AttemptToAddExistingObjectException(item.Name);
             }
         }
 
-        public Country GetAsync(int id)
+        public async Task<Country> GetAsync(int id)
         {
             const string GET_QUERY = @"
                 SELECT TOP 1 *
                 FROM countries
                 WHERE id=@id";
 
-            var countryQueryResult = db.Query<Country>(GET_QUERY, new { id = id }).ToList();
+            var countryQueryResult = (await db.QueryAsync<Country>(GET_QUERY, new { id = id })).ToList();
 
-            if (countryQueryResult.Count == 1)
+            if (countryQueryResult.Count() == 1)
             {
                 return countryQueryResult.First();
             }
-
-            return null;
+            else
+            {
+                throw new ObjectNotFoundException(id);
+            }
         }
 
-        public IEnumerable<Country> SearchAsync(CountrySearchOptions searchOptions)
+        public async Task<IEnumerable<Country>> SearchAsync(CountrySearchOptions searchOptions)
         {
             const string SEARCH_QUERY = @"
                 SELECT *
                 FROM countries
-                WHERE name LIKE 'b%'";
+                WHERE name LIKE '{0}%'";
 
-            return db.Query<Country>(SEARCH_QUERY, searchOptions);
+            return (await db.QueryAsync<Country>(String.Format(SEARCH_QUERY, searchOptions.Name)));
         }
 
-        public void UpdateAsync(Country item)
+        public async Task UpdateAsync(Country item)
         {
             const string UPDATE_QUERY = @"
                 UPDATE countries
                 SET name=@name
                 WHERE id=@id";
 
-            db.Execute(UPDATE_QUERY, item);
+            await db.ExecuteAsync(UPDATE_QUERY, item);
         }
     }
 }
