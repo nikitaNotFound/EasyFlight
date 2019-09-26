@@ -31,10 +31,10 @@ namespace EasyFlight.Controllers
                 Response.StatusCode = 200;
                 return new ObjectResult(city);
             }
-            catch (Exception ex)
+            catch
             {
                 Response.StatusCode = 404;
-                return new JsonResult(new ErrorMessage(ex.Message));
+                return new NoContentResult();
             }
         }
 

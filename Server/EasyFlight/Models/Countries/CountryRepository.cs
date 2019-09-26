@@ -52,7 +52,7 @@ namespace EasyFlight.Models.Countries
             }
             else
             {
-                throw new ObjectNotFoundException(id);
+                throw new ObjectNotFoundException();
             }
         }
 

@@ -33,10 +33,9 @@ namespace EasyFlight.Controllers
                 Response.StatusCode = 200;
                 return new ObjectResult(foundCountry);
             }
-            catch (Exception ex)
+            catch (ObjectNotFoundException ex)
             {
-                Response.StatusCode = 404;
-                return new JsonResult(new ErrorMessage(ex.Message));
+                return new StatusCodeResult(404);
             }
         }
 

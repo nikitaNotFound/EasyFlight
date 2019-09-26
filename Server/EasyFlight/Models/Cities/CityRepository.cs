@@ -54,7 +54,7 @@ namespace EasyFlight.Models.Cities
             }
             else
             {
-                throw new ObjectNotFoundException(id);
+                throw new Exception();
             }
         }
 
