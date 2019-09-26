@@ -1,67 +1,70 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
+using EasyFlight.Models.Cities;
+using System.Data.SqlClient;
+using System.Data;
 
-namespace EasyFlight.Models.Cities
+namespace EasyFlight.Repositories.Cities
 {
-    public class CityRepository : IRepository<City, CitySearchOptions>
+    public class CityRepository : ICityRepository
     {
-        SqlConnection db = null;
-
-        public CityRepository(string conn)
+        Settings settings;
+        public CityRepository(Settings settings)
         {
-            db = new SqlConnection(conn);
+            this.settings = settings;
         }
 
-        public void Add(City item)
+        public async Task<City> GetAsync(int id)
         {
-            string query = $"SELECT * FROM cities WHERE name='{item.Name}' and countryId={item.CountryId}";
+            using SqlConnection db = new SqlConnection(settings.ConnectionString);
 
-            IEnumerable<City> foundCities = db.Query<City>(query);
-
-            if (foundCities.Count() == 0)
-            {
-                query = $"INSERT INTO cities(countryId, name) VALUES(@countryId, @name)";
-                db.Execute(query, item);
-            }
-            else
-            {
-                throw new Exception("Such city exists!");
-            }
+            return await db.QuerySingleOrDefaultAsync<City>(
+                "GetCityById",
+                new { id = id },
+                commandType: CommandType.StoredProcedure);
         }
 
-        public void Delete(int id)
+        public async Task<IEnumerable<City>> SearchAsync(CitySearchOptions searchOptions)
         {
-            string query = $"DELETE FROM cities WHERE id={id}";
-            db.Query(query);
+            using SqlConnection db = new SqlConnection(settings.ConnectionString);
+
+            return await db.QueryAsync<City>(
+                "SeatchCities",
+                searchOptions,
+                commandType: CommandType.StoredProcedure);
         }
 
-        public City Get(int id)
+        public async Task AddAsync(City item)
         {
-            string query = $"SELECT * FROM cities WHERE id={id}";
-            City foundCity = db.Query<City>(query).ToList().First();
+            using SqlConnection db = new SqlConnection(settings.ConnectionString);
 
-            return foundCity;
+            await db.ExecuteAsync(
+                "AddCity",
+                new { name = item.Name, countryId = item.CountryId },
+                commandType: CommandType.StoredProcedure);
         }
 
-        public IEnumerable<City> Search(CitySearchOptions searchOptions)
+        public async Task UpdateAsync(City item)
         {
-            string query = $"SELECT * FROM cities " +
-                $"WHERE countryId={searchOptions.CountryId} " +
-                $"and name LIKE '{searchOptions.Name}%'";
+            using SqlConnection db = new SqlConnection(settings.ConnectionString);
 
-            IEnumerable<City> foundCities = db.Query<City>(query);
-
-            return foundCities;
+            await db.ExecuteAsync(
+                "UpdateCity",
+                item,
+                commandType: CommandType.StoredProcedure);
         }
 
-        public void Update(City item)
+        public async Task<bool> CheckDublicateAsync(City item)
         {
-            string query = $"UPDATE cities SET name=@name, countryId=@countryId WHERE id=@id";
-            db.Execute(query, item);
+            using SqlConnection db = new SqlConnection(settings.ConnectionString);
+
+            return await db.ExecuteScalarAsync<bool>(
+                "CheckCityDublicate",
+                new { name = item.Name, countryId = item.CountryId },
+                commandType: CommandType.StoredProcedure);
         }
     }
 }
