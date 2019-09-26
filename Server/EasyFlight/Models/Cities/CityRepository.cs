@@ -16,52 +16,61 @@ namespace EasyFlight.Models.Cities
             db = new SqlConnection(conn);
         }
 
-        public void Add(City item)
+        public async Task AddAsync(City item)
         {
-            string query = @"SELECT * FROM cities WHERE name=@item.Name}' and countryId={item.CountryId}";
+            const string EXISTING_CHECK_QUERY = @"
+                SELECT *
+                FROM cities
+                WHERE name=@Name
+                    and countryId=CountryId";
 
-            IEnumerable<City> foundCities = db.Query<City>(query);
-
-            if (foundCities.Count() == 0)
+            if (!db.ExecuteScalar<bool>(EXISTING_CHECK_QUERY, item))
             {
-                query = $"INSERT INTO cities(countryId, name) VALUES(@countryId, @name)";
-                db.Execute(query, item);
+                const string INSERT_QUERY = @"
+                    INSERT INTO cities(countryId, name)
+                    VALUES(@countryId, @name)";
+
+                db.Execute(INSERT_QUERY, item);
             }
             else
             {
-                throw new Exception("Such city exists!");
+                throw new Exception($"'{item.Name}' already exists!");
             }
         }
 
-        public void Delete(int id)
+        public City GetAsync(int id)
         {
-            string query = $"DELETE FROM cities WHERE id={id}";
-            db.Query(query);
-        }
+            string GET_QUERY = @"
+                SELECT *
+                FROM cities
+                WHERE id={id}";
 
-        public City Get(int id)
-        {
-            string query = $"SELECT * FROM cities WHERE id={id}";
-            City foundCity = db.Query<City>(query).ToList().First();
+            City foundCity = db.Query<City>(GET_QUERY).ToList().First();
 
             return foundCity;
         }
 
-        public IEnumerable<City> Search(CitySearchOptions searchOptions)
+        public IEnumerable<City> SearchAsync(CitySearchOptions searchOptions)
         {
-            string query = $"SELECT * FROM cities " +
-                $"WHERE countryId={searchOptions.CountryId} " +
-                $"and name LIKE '{searchOptions.Name}%'";
+            const string SEARCH_QUERY = @"
+                SELECT *
+                FROM cities
+                WHERE countryId=@countryId
+                and name LIKE '@Name%";
 
-            IEnumerable<City> foundCities = db.Query<City>(query);
+            IEnumerable<City> foundCities = db.Query<City>(SEARCH_QUERY, searchOptions);
 
             return foundCities;
         }
 
-        public void Update(City item)
+        public void UpdateAsync(City item)
         {
-            string query = $"UPDATE cities SET name=@name, countryId=@countryId WHERE id=@id";
-            db.Execute(query, item);
+            const string UPDATE_QUERY = @"
+                UPDATE cities
+                SET name=@name, countryId=@countryId
+                WHERE id=@id";
+
+            db.Execute(UPDATE_QUERY, item);
         }
     }
 }

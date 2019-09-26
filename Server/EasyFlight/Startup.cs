@@ -42,7 +42,7 @@ namespace EasyFlight
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            string connectString = @"Server=np:\\.\pipe\LOCALDB#56D93920\tsql\query;Initial Catalog=easyflight;Integrated Security=True";
+            string connectString = @"Server=np:\\.\pipe\LOCALDB#CCF10672\tsql\query;Initial Catalog=easyflight;Integrated Security=True";
             services.AddSingleton<IRepository<City, CitySearchOptions>, CityRepository>(provider => new CityRepository(connectString));
             services.AddSingleton<IRepository<Country, CountrySearchOptions>, CountryRepository>(provider => new CountryRepository(connectString));
         }

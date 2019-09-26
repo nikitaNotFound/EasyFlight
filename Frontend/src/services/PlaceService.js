@@ -3,7 +3,16 @@ import { DOMAIN } from './CONSTANTS';
 export function getCountryById(id) {
     return new Promise(
         async (resolve, reject) => {
-            const response = await fetch(`${DOMAIN}/api/countries/${id}`);
+            const response = await fetch(
+                `${DOMAIN}/api/countries/${id}`,
+                {
+                    method: 'GET',
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
 
             if (response.ok) {
                 resolve(response.json());
@@ -18,7 +27,7 @@ export function searchCountries(name) {
     return new Promise(
         async (resolve, reject) => {
             const response = await fetch(
-                `${DOMAIN}/api/countries/search`,
+                `${DOMAIN}/api/countries/searches`,
                 {
                     method: 'POST',
                     mode: 'cors',
@@ -42,9 +51,9 @@ export function addCountry(country) {
     return new Promise(
         async (resolve) => {
             const response = await fetch(
-                `${DOMAIN}/api/countries/add`,
+                `${DOMAIN}/api/countries`,
                 {
-                    method: 'PUT',
+                    method: 'POST',
                     mode: 'cors',
                     headers: {
                         'Content-Type': 'application/json'
@@ -62,32 +71,13 @@ export function addCountry(country) {
     );
 }
 
-export function deleteCountry(id) {
-    return new Promise(
-        async (resolve, reject) => {
-            const response = await fetch(
-                `${DOMAIN}/api/countries/delete/${id}`,
-                {
-                    method: 'POST'
-                }
-            );
-
-            if (response.ok) {
-                resolve(true);
-            }
-
-            reject(response.status);
-        }
-    );
-}
-
 export function updateCountry(country) {
     return new Promise(
         async (resolve, reject) => {
             const response = await fetch(
-                `${DOMAIN}/api/countries/update`,
+                `${DOMAIN}/api/countries/${country.id}`,
                 {
-                    method: 'POST',
+                    method: 'PUT',
                     mode: 'cors',
                     headers: {
                         'Content-Type': 'application/json'
@@ -108,7 +98,16 @@ export function updateCountry(country) {
 export function getCityById(id) {
     return new Promise(
         async (resolve, reject) => {
-            const response = await fetch(`${DOMAIN}/api/cities/${id}`);
+            const response = await fetch(
+                `${DOMAIN}/api/cities/${id}`,
+                {
+                    method: 'GET',
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
 
             if (response.ok) {
                 resolve(response.json());
@@ -123,9 +122,9 @@ export function addCity(city) {
     return new Promise(
         async (resolve) => {
             const response = await fetch(
-                `${DOMAIN}/api/cities/add`,
+                `${DOMAIN}/api/cities`,
                 {
-                    method: 'PUT',
+                    method: 'POST',
                     mode: 'cors',
                     headers: {
                         'Content-Type': 'application/json'
@@ -143,32 +142,13 @@ export function addCity(city) {
     );
 }
 
-export function deleteCity(id) {
-    return new Promise(
-        async (resolve, reject) => {
-            const response = await fetch(
-                `${DOMAIN}/api/cities/delete/${id}`,
-                {
-                    method: 'POST'
-                }
-            );
-
-            if (response.ok) {
-                resolve(true);
-            }
-
-            reject(response.status);
-        }
-    );
-}
-
 export function updateCity(city) {
     return new Promise(
         async (resolve, reject) => {
             const response = await fetch(
-                `${DOMAIN}/api/cities/update`,
+                `${DOMAIN}/api/cities/${city.id}`,
                 {
-                    method: 'POST',
+                    method: 'PUT',
                     mode: 'cors',
                     headers: {
                         'Content-Type': 'application/json'
@@ -192,9 +172,9 @@ export function searchCities(name, args) {
             const [countryId] = args;
 
             const response = await fetch(
-                `${DOMAIN}/api/cities/search`,
+                `${DOMAIN}/api/cities`,
                 {
-                    method: 'POST',
+                    method: 'GET',
                     mode: 'cors',
                     headers: {
                         'Content-Type': 'application/json'

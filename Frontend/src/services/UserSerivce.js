@@ -88,6 +88,5 @@ export function checkLogin() {
         return { authorized: false, admin: false};
     }
 
-    console.log(storeObject);
     return { authorized: true, admin: storeObject.userInfo.userInfo.role == 'admin' ? true : false };
 }

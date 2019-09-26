@@ -24,7 +24,7 @@ namespace EasyFlight.Controllers
         [Route("{id}")]
         public ActionResult Get(int id)
         {
-            Country foundCountry = repository.Get(id);
+            Country foundCountry = repository.GetAsync(id);
 
             if (foundCountry != null)
             {
@@ -34,37 +34,37 @@ namespace EasyFlight.Controllers
             return new NoContentResult();
         }
 
-        [HttpPut]
-        [Route("add")]
+        [HttpPost]
         public ActionResult Add([FromBody]Country country)
         {
             try
             {
-                repository.Add(country);
+                repository.AddAsync(country);
             }
             catch (Exception ex)
             {
-                Response.StatusCode = 500;
+                Response.StatusCode = 400;
                 return new JsonResult(new { message = ex.Message });
             }
 
             return new NoContentResult();
         }
 
-        [HttpPost]
-        [Route("update")]
-        public ActionResult Update([FromBody]Country country)
+        [HttpPut]
+        [Route("{id}")]
+        public ActionResult Update(int id, [FromBody]Country country)
         {
-            repository.Update(country);
+            country.Id = id;
+            repository.UpdateAsync(country);
 
             return new NoContentResult();
         }
 
         [HttpPost]
-        [Route("search")]
+        [Route("searches")]
         public ActionResult Search([FromBody]CountrySearchOptions searchOptions)
         {
-            var foundCountries = repository.Search(searchOptions).ToList();
+            var foundCountries = repository.SearchAsync(searchOptions).ToList();
 
             return new ObjectResult(foundCountries);
         }

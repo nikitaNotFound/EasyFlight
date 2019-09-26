@@ -23,7 +23,7 @@ namespace EasyFlight.Controllers
         [Route("{id}")]
         public ActionResult Get(int id)
         {
-            City city = repository.Get(id);
+            City city = repository.GetAsync(id);
 
             if (city != null)
             {
@@ -33,13 +33,12 @@ namespace EasyFlight.Controllers
             return new NoContentResult();
         }
 
-        [HttpPut]
-        [Route("add")]
+        [HttpPost]
         public ActionResult Add([FromBody]City city)
         {
             try
             {
-                repository.Add(city);
+                repository.AddAsync(city);
             }
             catch (Exception ex)
             {
@@ -50,29 +49,21 @@ namespace EasyFlight.Controllers
             return new NoContentResult();
         }
 
-        [HttpPost]
-        [Route("update")]
-        public ActionResult Update([FromBody]City city)
+        [HttpPut]
+        [Route("{id}")]
+        public ActionResult Update(int id, [FromBody]City city)
         {
-            repository.Update(city);
+            city.Id = id;
+            repository.UpdateAsync(city);
 
             return new NoContentResult();
         }
 
         [HttpPost]
-        [Route("delete/{id}")]
-        public ActionResult Delete(int id)
-        {
-            repository.Delete(id);
-
-            return new NoContentResult();
-        }
-
-        [HttpPost]
-        [Route("search")]
+        [Route("searches")]
         public ActionResult Search([FromBody]CitySearchOptions searchOptions)
         {
-            IEnumerable<City> foundCities = repository.Search(searchOptions);
+            IEnumerable<City> foundCities = repository.SearchAsync(searchOptions);
 
             return new ObjectResult(foundCities);
         }

@@ -16,33 +16,35 @@ namespace EasyFlight.Models.Countries
             db = new SqlConnection(conn);
         }
 
-        public void Add(Country item)
+        public async Task AddAsync(Country item)
         {
-            string query = $"SELECT * FROM countries WHERE name='{item.Name}'";
+            const string EXISTING_CHECK_QUERY = @"
+                SELECT *
+                FROM countries
+                WHERE name=@name";
 
-            IEnumerable<Country> foundedCountries = db.Query<Country>(query);
-
-            if (foundedCountries.Count() == 0)
+            if (!await db.ExecuteScalarAsync<bool>(EXISTING_CHECK_QUERY, item))
             {
-                query = "INSERT INTO countries(name) VALUES(@name)";
-                db.Execute(query, item);
+                const string INSERT_ITEM_QUERY = @"
+                    INSERT INTO countries(name)
+                    VALUES(@name)";
+
+                await db.ExecuteAsync(INSERT_ITEM_QUERY, item);
             }
             else
             {
-                throw new Exception("Such country exists!");
+                throw new Exception($"'{item.Name}' already exists!");
             }
         }
 
-        public void Delete(int id)
+        public Country GetAsync(int id)
         {
-            string query = $"DELETE FROM countries WHERE id={id}";
-            db.Query(query);
-        }
+            const string GET_QUERY = @"
+                SELECT TOP 1 *
+                FROM countries
+                WHERE id=@id";
 
-        public Country Get(int id)
-        {
-            string query = $"SELECT * FROM countries WHERE id={id}";
-            var countryQueryResult = db.Query<Country>(query).ToList();
+            var countryQueryResult = db.Query<Country>(GET_QUERY, new { id = id }).ToList();
 
             if (countryQueryResult.Count == 1)
             {
@@ -52,17 +54,24 @@ namespace EasyFlight.Models.Countries
             return null;
         }
 
-        public IEnumerable<Country> Search(CountrySearchOptions searchOptions)
+        public IEnumerable<Country> SearchAsync(CountrySearchOptions searchOptions)
         {
-            string query = $"SELECT * FROM countries WHERE name LIKE '{searchOptions.Name}%'";
+            const string SEARCH_QUERY = @"
+                SELECT *
+                FROM countries
+                WHERE name LIKE 'b%'";
 
-            return db.Query<Country>(query);
+            return db.Query<Country>(SEARCH_QUERY, searchOptions);
         }
 
-        public void Update(Country item)
+        public void UpdateAsync(Country item)
         {
-            string query = "UPDATE countries SET name=@name WHERE id=@id";
-            db.Execute(query, item);
+            const string UPDATE_QUERY = @"
+                UPDATE countries
+                SET name=@name
+                WHERE id=@id";
+
+            db.Execute(UPDATE_QUERY, item);
         }
     }
 }

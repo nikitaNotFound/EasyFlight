@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
-import Icon from "../../icons/test-company-2.jpg";
 import PropsTypes from "prop-types";
+
+import Spinner from "../common/spinner";
+
 import FlightObject from "../../services/flight-models/flight";
+
 import * as PlaceService from "../../services/PlaceService";
 import * as AirportService from "../../services/AirportService";
-import Spinner from "../common/spinner";
+
+import Icon from "../../icons/test-company-2.jpg";
+
 import moment from "moment";
 
 function Flight(props) {
