@@ -16,20 +16,20 @@ import { Provider } from "react-redux";
 import store from "./store/store";
 
 function App() {
-  return (
-    <Provider store={store}>
-      <BrowserRouter>
-        <Switch>
-          <AdminRoute path="/admin" component={Admin} />
-          <UnauthorizedRoute path="/signup" component={SignUp} />
-          <UnauthorizedRoute path="/signin" component={SignIn} />
-          <AuthorizedRoute path="/profile" component={Profile} />
-          <AuthorizedRoute path="/booking/:id" component={Booking} />
-          <Route path="/" component={MainPage} />
-        </Switch>
-      </BrowserRouter>
-    </Provider>
-  );
+    return (
+        <Provider store={store}>
+            <BrowserRouter>
+                <Switch>
+                    <AdminRoute path="/admin" component={Admin} />
+                    <UnauthorizedRoute path="/signup" component={SignUp} />
+                    <UnauthorizedRoute path="/signin" component={SignIn} />
+                    <AuthorizedRoute path="/profile" component={Profile} />
+                    <AuthorizedRoute path="/booking/:id" component={Booking} />
+                    <Route path="/" component={MainPage} />
+                </Switch>
+            </BrowserRouter>
+        </Provider>
+    );
 }
 
 export default App;
