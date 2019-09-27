@@ -129,7 +129,7 @@ function SearchList(props) {
             )
         );
     }
-
+    
     return (
         <div className="form-item">
             {showMessageBox()}
