@@ -54,7 +54,7 @@ function SearchList(props) {
 
         let newListRequest = await props.searchFunc(event.target.value, props.searchArgs);
 
-        if (newListRequest.succcessful === true) {
+        if (newListRequest.successful === true) {
             changeList(newListRequest.value);
             changeLoading(false);
         } else {
@@ -110,12 +110,14 @@ function SearchList(props) {
     }
     
     function showMessageBox() {
-        return (
-            <MessageBox
-                message={messageBoxValue}
-                hideFunc={changeMessageBoxValue}
-            />
-        );
+        if (messageBoxValue) {
+            return (
+                <MessageBox
+                    message={messageBoxValue}
+                    hideFunc={changeMessageBoxValue}
+                />
+            );
+        }
     }
 
     return (

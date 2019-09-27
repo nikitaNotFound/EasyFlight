@@ -174,12 +174,12 @@ function Filter(props) {
                 </div>
 
                 <div className="row filter-item">
-                    <button
+                    <div
                         className="btn btn-primary button-filter"
                         onClick={onFilterApplied}
                     >
                         Apply filter
-                    </button>
+                    </div>
                 </div>
             </div>
         </main>

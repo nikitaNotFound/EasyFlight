@@ -2,7 +2,7 @@ import * as config  from '../config.json';
 
 import * as RequestController from './RequestController';
 
-import RequestResult from './request-result';
+import RequestResult from "./request-result";
 
 export function getCountryById(id) {
     return new Promise(async resolve => {
@@ -91,21 +91,37 @@ export function updateCountry(country) {
 export function getCityById(id) {
     return new Promise(async resolve => {
         try {
-            const response = await fetch(`${config.API_URL}/api/cities/${id}`, {
-                method: "GET",
-                mode: "cors",
-                headers: {
-                    "Content-Type": "application/json"
+            const response = await fetch(
+                `${config.API_URL}/api/cities/${id}`, 
+                {
+                    method: "GET",
+                    mode: "cors",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
                 }
             );
 
-            if (response.ok) {
-                resolve(new RequestResult(true, response.json()));
-            }
+            try {
+                var responseBody = await response.json();
+            } catch {}
 
-            reject(new RequestResult(false, response.json()));
+            if (response.ok) {
+                resolve(new RequestResult(true, responseBody));
+            } else {
+                let errorInfo = getErrorInfo(500);
+
+                if (responseBody.message) {
+                    errorInfo += responseBody.message;
+                }
+
+                resolve(new RequestResult(false, errorInfo));
+            }
+        } catch {
+            const errorInfo = getErrorInfo(500);
+            resolve(new RequestResult(false, errorInfo));
         }
-    );
+    });
 }
 
 export function addCity(city) {
