@@ -5,7 +5,6 @@ import Airport from './airport';
 
 import '../../../../styles/items-list.css';
 
-
 export default function Airports(props) {
     return (
         <div className="items-list">

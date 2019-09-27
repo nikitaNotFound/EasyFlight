@@ -1,9 +1,12 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
+
 import Headline from '../../../common/headline';
 import MessageBox from '../../../common/message-box';
 import SeatEditor from './seat-editor';
 import Spinner from '../../../common/spinner';
+
 import Airplane from '../../../../services/airplane-models/airplane';
+
 import * as AirplaneService from '../../../../services/AirplaneService';
 
 export default function Edit(props) {

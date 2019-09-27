@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { withRouter } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { withRouter } from 'react-router-dom';
 
-import AddImage from "../../icons/add-image.png";
-import "../../styles/profile.css";
+import AddImage from '../../icons/add-image.png';
+import '../../styles/profile.css';
 
-import * as UserService from "../../services/UserSerivce";
-import * as FlightService from "../../services/FlightService";
+import * as UserService from '../../services/UserSerivce';
+import * as FlightService from '../../services/FlightService';
 
-import Spinner from "../common/spinner";
-import Flights from "./flights";
+import Spinner from '../common/spinner';
+import Flights from './flights';
 
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 
 function Content(props) {
     const [isLoading, changeLoadingMode] = useState(true);

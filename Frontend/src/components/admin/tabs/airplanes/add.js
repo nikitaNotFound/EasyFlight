@@ -1,7 +1,9 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
+
 import Headline from '../../../common/headline';
 import SeatEditor from './seat-editor';
 import MessageBox from '../../../common/message-box';
+
 import Airplane from '../../../../services/airplane-models/airplane';
 
 export default function Add() {

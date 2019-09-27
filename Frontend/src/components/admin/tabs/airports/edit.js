@@ -1,9 +1,12 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
+
 import Headline from '../../../common/headline';
 import Spinner from '../../../common/spinner';
 import SearchList from '../../../common/search-list';
 import MessageBox from '../../../common/message-box';
+
 import Airport from '../../../../services/airport-models/airport';
+
 import * as AirportService from '../../../../services/AirportService';
 import * as PlaceService from '../../../../services/PlaceService';
 

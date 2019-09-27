@@ -1,7 +1,7 @@
 import React from 'react';
 import PropsTypes from 'prop-types';
 
-function AirportHeadline(props) {
+export default function AirportHeadline(props) {
     return (
         <div className="row">
             <div className="col-6">
@@ -18,5 +18,3 @@ AirportHeadline.propsTypes = {
     name: PropsTypes.string,
     location: PropsTypes.string
 }
-
-export default AirportHeadline;

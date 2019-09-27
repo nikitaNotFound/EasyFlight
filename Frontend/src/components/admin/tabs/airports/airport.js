@@ -1,12 +1,15 @@
-import React, {useState, useEffect} from 'react';
-import AirportHeadline from './airport-headline';
+import React, { useState, useEffect } from 'react';
 import PropsTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+
+import AirportHeadline from './airport-headline';
 import Spinner from '../../../common/spinner';
+
 import AirportObject from '../../../../services/airport-models/airport';
+
 import * as PlaceService from '../../../../services/PlaceService';
 
-function Airport(props) {
+export default function Airport(props) {
     const [loading, changeLoading] = useState(true);
 
     const [city, changeCity] = useState();
@@ -60,5 +63,3 @@ function Airport(props) {
 Airport.propsTypes = {
     airport: PropsTypes.instanceOf(AirportObject),
 }
-
-export default Airport;

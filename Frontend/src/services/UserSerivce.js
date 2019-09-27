@@ -1,9 +1,9 @@
-import { users, userFlights } from "./DataBase";
-import { isArray } from "util";
-import UserInfo from "./user-models/user-info";
+import { users, userFlights } from './DataBase';
+import { isArray } from 'util';
+import UserInfo from './user-models/user-info';
 
-import store from "../store/store";
-import * as types from "../store/ActionTypes";
+import store from '../store/store';
+import * as types from '../store/ActionTypes';
 
 export function getCurrentUser(id) {
     return new Promise((resolve, reject) => {
