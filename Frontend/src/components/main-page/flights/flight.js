@@ -5,6 +5,8 @@ import Spinner from '../../common/spinner';
 import FlightObject from '../../../services/flight-models/flight';
 import * as AirportService from '../../../services/AirportService';
 import * as PlaceService from '../../../services/PlaceService';
+import { Link } from 'react-router-dom';
+
 
 function Flight(props) {
     const [loading, changeLoading] = useState(true);
@@ -90,10 +92,12 @@ function Flight(props) {
                 </div>
             </div>
             <div className="col-sm-2" name="item-buy">
-                <button type="submit" className="btn btn-primary button-buy">
-                    <img src={buyIcon} alt="icon-book"/>
-                    Book
-                </button>
+                <Link to={`/booking/${props.flight.id}`} className="non-dec-link">
+                    <div className="btn btn-primary button-buy">
+                        <img src={buyIcon} alt="icon-book"/>
+                        Book
+                    </div>
+                </Link>
             </div>
         </div>
     );

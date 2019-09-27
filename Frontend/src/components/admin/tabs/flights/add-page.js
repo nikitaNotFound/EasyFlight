@@ -1,12 +1,16 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
+
 import Headline from '../../../common/headline';
 import BuyIcon from '../../../../icons/add-image.png';
 import SearchList from '../../../common/search-list';
 import MessageBox from '../../../common/message-box';
 import TicketsCostEditor from './tickets-cost-editor';
 import Flight from '../../../../services/flight-models/flight';
+import ParamFiled from './param-field';
+
 import * as AirportService from '../../../../services/AirportService';
 import * as AirplaneService from '../../../../services/AirplaneService';
+
 
 function Adding() {
     const [airplane, changeAirplane] = useState();
@@ -20,18 +24,19 @@ function Adding() {
     const [departureTime, changeDepartureTime] = useState();
     const [departureDate, changeDepartureDate] = useState();
 
-    const [departureBackTime, changeDepartureBackTime] = useState();
-    const [departureBackDate, changeDepartureBackDate] = useState();
-
     const [ticketsCost, changeTicketsCost] = useState();
+
+    const [suitcaseMass, changeSuitcaseMass] = useState(0);
+    const [suitcaseCount, changeSuitcaseCount] = useState(0);
+
+    const [carryonMass, changeCarryonMass] = useState(0);
+    const [carryonCount, changeCarryonCount] = useState(0);
 
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
     function onDataSave() {
         if (!departureDate 
-            || !departureBackDate 
             || !departureTime 
-            || !departureBackTime 
             || !fromPlace 
             || !toPlace 
             || !airplane 
@@ -43,7 +48,6 @@ function Adding() {
         }
 
         const departureTime = `${departureDate} ${departureTime}`;
-        const departureBackTime = `${departureBackDate} ${departureBackTime}`;
 
         const newFlight = 
             new Flight(
@@ -51,10 +55,13 @@ function Adding() {
                 fromPlace.id,
                 toPlace.id,
                 departureTime,
-                departureBackTime,
                 desc,
                 airplane.id,
-                airplane.seats.length
+                airplane.seats.length,
+                suitcaseMass,
+                suitcaseCount,
+                carryonMass,
+                carryonCount
             );
     }
 
@@ -104,7 +111,11 @@ function Adding() {
                             className="file-upload"
                         />
                         <label htmlFor="file-input">
-                            <img src={BuyIcon} className="adding-form-img" alt="add"/>
+                            <img
+                                src={BuyIcon}
+                                className="adding-form-img"
+                                alt="add"
+                            />
                         </label>
                     </div>
                     <div className="col-10">
@@ -132,51 +143,55 @@ function Adding() {
                                     placeholder="airplane"
                                 />
 
+                                {showTicketsCostEditor()}
+
                                 <div className="adding-form-section">
                                     <div className="row">
-                                        <div className="form-item">
-                                            <label htmlFor="dep-time">
-                                                Departure time
-                                            </label>
-                                            <input
-                                                id="dep-time"
-                                                onChange={(event) => changeDepartureTime(event.target.value)}
-                                                type="time"
-                                            />
-                                        </div>
-                                        <div className="form-item tabulation">
-                                            <label htmlFor="dep-date">
-                                                Departure date
-                                            </label>
-                                            <input
-                                                id="dep-date"
-                                                onChange={(event) => changeDepartureDate(event.target.value)}
-                                                type="date"
-                                            />
-                                        </div>
-                                        <div className="form-item">
-                                            <label htmlFor="dep-back-time">
-                                                Departure back time
-                                            </label>
-                                            <input
-                                                id="dep-back-time"
-                                                onChange={(event) => changeDepartureBackTime(event.target.value)}
-                                                type="time"
-                                            />
-                                        </div>
-                                        <div className="form-item">
-                                            <label htmlFor="dep-back-date">
-                                                Departure back date
-                                            </label>
-                                            <input
-                                                id="dep-back-date"
-                                                onChange={(event) => changeDepartureBackDate(event.target.value)}
-                                                type="date"
-                                            />
-                                        </div>
+                                        <ParamFiled
+                                            name="Departure time"
+                                            value={departureTime}
+                                            onChange={changeDepartureTime}
+                                            inputType="time"
+                                        />
+                                        <ParamFiled
+                                            name="Departure date"
+                                            value={departureDate}
+                                            onChange={changeDepartureDate}
+                                            inputType="date"
+                                        />
                                     </div>
                                 </div>
-                                {showTicketsCostEditor()}
+
+                                <div className="adding-form-section">
+                                    <div className="row">
+                                        <ParamFiled
+                                            name="Suitcase mass"
+                                            value={suitcaseMass}
+                                            onChange={changeSuitcaseMass}
+                                        />
+                                        <ParamFiled
+                                            name="Suitcase count"
+                                            value={suitcaseCount}
+                                            onChange={changeSuitcaseCount}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="adding-form-section">
+                                    <div className="row">
+                                        <ParamFiled
+                                            name="Carryon mass"
+                                            value={carryonMass}
+                                            onChange={changeCarryonMass}
+                                        />
+                                        <ParamFiled
+                                            name="Carryon count"
+                                            value={carryonCount}
+                                            onChange={changeCarryonCount}
+                                        />
+                                    </div>
+                                </div>
+
                                 <div className="adding-form-section">
                                     <textarea
                                         placeholder="description"

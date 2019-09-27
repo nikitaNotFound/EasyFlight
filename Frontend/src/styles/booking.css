@@ -1,0 +1,163 @@
+.headline {
+    font-size: 20px;
+    clear: both;
+    margin-bottom: 1%;
+}
+
+.final-button {
+    color: black;
+    text-align: center;
+    padding: 1%;
+    margin-top: 3%;
+    font-size: 22px;
+}
+
+.confirm-booking {
+    background: rgb(104, 148, 104);
+}
+
+.confirm-booking:hover {
+    background: rgb(117, 168, 117);
+}
+
+.calculate-cost {
+    background: rgb(148, 144, 104);
+}
+
+.calculate-cost:hover {
+    background: rgb(187, 183, 137);
+}
+
+.change-options {
+    background: rgb(214, 30, 30);
+}
+
+.change-options:hover {
+    background: rgb(172, 25, 25);
+}
+
+.seat-types-baggage-container {
+    width: 18%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.seat-types-list {
+    background: rgb(211, 211, 211);
+    padding: 1%;
+    display: block;
+}
+
+.seat-types-list .item {
+    margin: 0.3% 0;
+}
+
+.seat-types-list .seat-color {
+    width: 17px;
+    height: 17px;
+    display: inline-block;
+    margin-right: 3%;
+}
+
+.seat-types-list .seat-name {
+    display: inline-block;
+    font-size: 17px;
+}
+
+.baggage-controller {
+    background: rgb(211, 211, 211);
+    margin-top: 8%;
+    padding: 1%;
+    display: block;
+}
+
+.baggage-controller input {
+    width: 50px;
+    margin-right: 4%;
+}
+
+.baggage-info {
+    width: 100%;
+    margin-bottom: 4%;
+    background: rgb(218, 218, 218);
+}
+
+@media screen and (max-width: 1366px) {
+    .baggage-controller {
+        font-size: 14px;
+    }
+
+    .baggage-controller input {
+        width: 30px;
+        font-size: 14px;
+        padding: 0.5%;
+    }
+}
+
+.choosen-seats {
+    display: block;
+    width: 100%;
+    background: rgb(211, 211, 211);
+    padding: 0.5%;
+    margin-top: 1%;
+}
+
+.choosen-seat {
+    padding: 0.5%;
+    margin: 0.5%;
+    background: rgb(224, 217, 217);
+    box-shadow: 0 0 1px rgba(148, 126, 126, 0.5);
+    width: 15.66%;
+    display: inline-block;
+}
+
+.seat-scheme {
+    background: rgb(211, 211, 211);
+    width: 80%;
+    margin-right: 2%;
+    padding: 0.5%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+@media screen and (max-width: 1366px) {
+    .headline {
+        font-size: 17px;
+    }
+
+    .seat-types-list .seat-name {
+        font-size: 12px;
+    }
+
+    .seat-types-list .seat-color {
+        width: 12px;
+        height: 12px;
+    }
+}
+
+.cost-layout {
+    background: rgb(211, 211, 211);
+    padding: 1%;
+    display: block;
+}
+
+.true-visible {
+    display: block;
+}
+
+.false-visible {
+    display: none;
+}
+
+.flight-info {
+    background: rgb(211, 211, 211);
+    padding: 0.5%;
+    display: block;
+    margin-bottom: 1%;
+}
+
+.flight-info .params-container {
+    display: inline-block;
+    margin-right: 2%;
+    vertical-align: top;
+}

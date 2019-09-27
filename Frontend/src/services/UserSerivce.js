@@ -85,9 +85,9 @@ export function checkLogin() {
     const storeObject = store.getState();
 
     if (!storeObject.authToken.authToken || !storeObject.refreshToken.refreshToken || !storeObject.userInfo.userInfo) {
-        return { status: false, admin: false};
+        return { authorized: false, admin: false};
     }
 
     console.log(storeObject);
-    return { status: true, admin: storeObject.userInfo.userInfo.role == 'admin' ? true : false };
+    return { authorized: true, admin: storeObject.userInfo.userInfo.role == 'admin' ? true : false };
 }

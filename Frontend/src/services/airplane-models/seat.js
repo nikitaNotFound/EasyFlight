@@ -1,4 +1,6 @@
 class Seat {
+    id;
+    airplaneId;
     floor;
     section;
     zone;
@@ -6,7 +8,9 @@ class Seat {
     number;
     typeId;
 
-    constructor(floor, section, zone, row, number, typeId) {
+    constructor(id, airplaneId, floor, section, zone, row, number, typeId) {
+        this.id = id;
+        this.airplaneId = airplaneId;
         this.floor = floor;
         this.section = section;
         this.zone = zone;

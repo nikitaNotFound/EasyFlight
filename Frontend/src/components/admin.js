@@ -1,10 +1,13 @@
 import React from 'react';
+
 import Header from './admin/header';
 import Footer from './admin/footer';
 import Content from './admin/content';
+
 import '../styles/admin.css';
 
-function Admin() {
+
+export default function Admin() {
     return (
         <div className="wrapper container-fluid content">
             <Header />
@@ -13,5 +16,3 @@ function Admin() {
         </div>
     );
 }
-
-export default Admin;

@@ -75,8 +75,10 @@ function Flight(props) {
             </div>
 
             <div className="col-lg-1 col-sm-12">
-                <Link to={`/admin/flights/edit/${props.flight.flightId}`}>
-                    <div className="edit-button rounded non-selectable">Edit</div>
+                <Link to={`/admin/flights/edit/${props.flight.id}`}>
+                    <div className="edit-button rounded non-selectable">
+                        Edit
+                    </div>
                 </Link>
             </div>
         </div>

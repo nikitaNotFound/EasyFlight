@@ -25,7 +25,7 @@ function Flight(props) {
                 PlaceService.getCityById(toAirport.cityId)
             ]);
 
-            const [fromCountry, fromCountry] = await Promise.all([
+            const [fromCountry, toCountry] = await Promise.all([
                 PlaceService.getCountryById(fromCity.countryId),
                 PlaceService.getCountryById(toCity.countryId)
             ]);

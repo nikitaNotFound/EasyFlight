@@ -1,16 +1,21 @@
-import React, {useState, useEffect} from 'react';
-import Headline from '../../../common/headline';
-import BuyIcon from '../../../../icons/add-image.png';
-import SearchList from '../../../common/search-list';
-import MessageBox from '../../../common/message-box';
-import Spinner from '../../../common/spinner';
-import TicketsCostEditor from './tickets-cost-editor';
-import * as AirplaneService from '../../../../services/AirplaneService';
-import * as FlightService from '../../../../services/FlightService';
-import * as AirportService from '../../../../services/AirportService';
-import Flight from '../../../../services/flight-models/flight';
+import React, { useState, useEffect } from "react";
 
-function Editing (props) {
+import Headline from "../../../common/headline";
+import SearchList from "../../../common/search-list";
+import MessageBox from "../../../common/message-box";
+import Spinner from "../../../common/spinner";
+import TicketsCostEditor from "./tickets-cost-editor";
+import ParamField from "./param-field";
+
+import BuyIcon from "../../../../icons/add-image.png";
+
+import Flight from "../../../../services/flight-models/flight";
+
+import * as AirplaneService from "../../../../services/AirplaneService";
+import * as FlightService from "../../../../services/FlightService";
+import * as AirportService from "../../../../services/AirportService";
+
+function Editing(props) {
     const [loading, changeLoadingMode] = useState(true);
 
     const [flight, changeFlight] = useState();
@@ -26,81 +31,73 @@ function Editing (props) {
     const [departureTime, changeDepartureTime] = useState();
     const [departureDate, changeDepartureDate] = useState();
 
-    const [departureBackTime, changeDepartureBackTime] = useState();
-    const [departureBackDate, changeDepartureBackDate] = useState();
-
     const [ticketsCost, changeTicketsCost] = useState();
+
+    const [suitcaseMass, changeSuitcaseMass] = useState(0);
+    const [suitcaseCount, changeSuitcaseCount] = useState(0);
+
+    const [carryonMass, changeCarryonMass] = useState(0);
+    const [carryonCount, changeCarryonCount] = useState(0);
 
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
-    useEffect (() => {
-        const flightLoading = FlightService.getById(props.match.params.id);
+    useEffect(() => {
+        const fetchData = async () => {
+            const flight = await FlightService.getById(props.match.params.id);
 
-        flightLoading
-            .then(flight => {
-                changeFlight(flight);
+            changeFlight(flight);
 
-                const [toDate, toTime] = flight.departureTime.split(' ');
-                changeDepartureTime(toTime);
-                changeDepartureDate(toDate);
+            const [toDate, toTime] = flight.departureTime.split(" ");
 
-                const [fromDate, fromTime] = flight.departureBackTime.split(' ');
-                changeDepartureBackTime(fromTime);
-                changeDepartureBackDate(fromDate);
+            changeDepartureTime(toTime);
+            changeDepartureDate(toDate);
 
-                changeDesc(flight.desc);
+            changeSuitcaseMass(flight.suitcaseMass);
+            changeSuitcaseCount(flight.suitcaseCount);
 
-                const airplaneLoading = AirplaneService.getById(flight.airplaneId);
-                const airportsLoading = AirportService.getByIds([flight.fromId, flight.toId]);
+            changeCarryonMass(flight.carryonMass);
+            changeCarryonCount(flight.carryonCount);
 
-                return Promise.all([airplaneLoading, airportsLoading])
-            })
-            .then(data => {
-                const [airplane, airports] = data;
-                
-                changeAirplane(airplane);
+            changeDesc(flight.desc);
 
-                const [from, to] = airports;
+            const [airplane, airports] = Promise.all([
+                AirplaneService.getById(flight.airplaneId),
+                AirportService.getByIds([flight.fromId, flight.toId])
+            ]);
 
-                changeFromPlace(from);
-                changeToPlace(to);
+            changeAirplane(airplane);
 
-                changeLoadingMode(false);
-            })
-            .catch(error => {
-                alert(error);
-            });
+            const [from, to] = airports;
+
+            changeFromPlace(from);
+            changeToPlace(to);
+
+            changeLoadingMode(false);
+        };
+        fetchData();
     }, [props.match.params.id]);
 
     function onDataSave() {
-        if (!departureDate
-            || !departureBackDate
-            || !departureTime
-            || !departureBackTime
-            || !fromPlace
-            || !toPlace
-            || !airplane
-            || !ticketsCost
-            || !desc
-        ) {
-            changeMessageBoxValue('Input data is not valid!');
+        if (!departureDate || !departureTime || !fromPlace || !toPlace || !airplane || !ticketsCost || !desc) {
+            changeMessageBoxValue("Input data is not valid!");
             return;
         }
 
         const finalDepartureTime = `${departureDate} ${departureTime}`;
-        const finalDepartureBackTime = `${departureBackDate} ${departureBackTime}`;
 
-        const newFlight = 
-            new Flight(
-                null,
-                fromPlace.id,
-                toPlace.id,
-                finalDepartureTime,
-                finalDepartureBackTime,
-                desc,
-                airplane.id,
-                airplane.seats.length
-            );
+        const newFlight = new Flight(
+            null,
+            fromPlace.id,
+            toPlace.id,
+            finalDepartureTime,
+            desc,
+            airplane.id,
+            airplane.seats.length,
+            suitcaseMass,
+            suitcaseCount,
+            carryonMass,
+            carryonCount
+        );
     }
 
     function getAirplaneName(airplane) {
@@ -127,34 +124,24 @@ function Editing (props) {
 
     function showMessageBox() {
         if (messageBoxValue) {
-            return (
-                <MessageBox
-                    message={messageBoxValue}
-                    hideFunc={changeMessageBoxValue}
-                />
-            );
+            return <MessageBox message={messageBoxValue} hideFunc={changeMessageBoxValue} />;
         }
     }
 
     if (loading) {
-        return <Spinner headline="Loading..."/>
+        return <Spinner headline="Loading..." />;
     }
 
     return (
         <div className="list-item-action editing">
-            <Headline name="Editing flight"/>
+            <Headline name="Editing flight" />
 
             <div className="adding-form">
                 <div className="row">
                     <div className="col-2">
-                        <input
-                            type="file"
-                            name="image"
-                            id="file-input"
-                            className="file-upload"
-                        />
+                        <input type="file" name="image" id="file-input" className="file-upload" />
                         <label htmlFor="file-input">
-                            <img src={BuyIcon} className="adding-form-img" alt="add"/>
+                            <img src={BuyIcon} className="adding-form-img" alt="add" />
                         </label>
                     </div>
                     <div className="col-10">
@@ -182,61 +169,57 @@ function Editing (props) {
                                     placeholder="airplane"
                                 />
 
+                                {getTicketsCostEditor()}
+
                                 <div className="adding-form-section">
                                     <div className="row">
-                                        <div className="form-item">
-                                            <label htmlFor="dep-time">
-                                                Departure time
-                                            </label>
-                                            <input 
-                                                id="dep-time"
-                                                onChange={(event) => changeDepartureTime(event.target.value)}
-                                                value={departureTime}
-                                                type="time"
-                                            />
-                                        </div>
-                                        <div className="form-item tabulation">
-                                            <label htmlFor="dep-date">
-                                                Departure date
-                                            </label>
-                                            <input
-                                                id="dep-date"
-                                                onChange={(event) => changeDepartureDate(event.target.value)}
-                                                value={departureDate}
-                                                type="date"
-                                            />
-                                        </div>
-                                        <div className="form-item">
-                                            <label htmlFor="dep-back-time">
-                                                Departure back time
-                                            </label>
-                                            <input
-                                                id="dep-back-time"
-                                                onChange={(event) => changeDepartureBackTime(event.target.value)}
-                                                value={departureBackTime}
-                                                type="time"
-                                            />
-                                        </div>
-                                        <div className="form-item">
-                                            <label htmlFor="dep-back-date">
-                                                Departure back date
-                                            </label>
-                                            <input
-                                                id="dep-back-date"
-                                                onChange={(event) => changeDepartureBackTime(event.target.value)}
-                                                value={departureBackDate}
-                                                type="date"
-                                            />
-                                        </div>
+                                        <ParamField
+                                            name="Departure time"
+                                            value={departureTime}
+                                            onChange={changeDepartureTime}
+                                            inputType="time"
+                                        />
+                                        <ParamField
+                                            name="Departure date"
+                                            value={departureDate}
+                                            onChange={changeDepartureDate}
+                                            inputType="date"
+                                        />
                                     </div>
                                 </div>
-                                {getTicketsCostEditor()}
+
                                 <div className="adding-form-section">
-                                    <textarea
-                                        placeholder="description"
-                                        value={desc}
-                                        onChange={changeDesc}
-                                    />
+                                    <div className="row">
+                                        <ParamField
+                                            name="Suitcase mass"
+                                            value={suitcaseMass}
+                                            onChange={changeSuitcaseMass}
+                                        />
+                                        <ParamField
+                                            name="Suitcase count"
+                                            value={suitcaseCount}
+                                            onChange={changeSuitcaseCount}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="adding-form-section">
+                                    <div className="row">
+                                        <ParamField
+                                            name="Carryon mass"
+                                            value={carryonMass}
+                                            onChange={changeCarryonMass}
+                                        />
+                                        <ParamField
+                                            name="Carryon count"
+                                            value={carryonCount}
+                                            onChange={changeCarryonCount}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="adding-form-section">
+                                    <textarea placeholder="description" value={desc} onChange={changeDesc} />
                                 </div>
                             </div>
                         </div>
