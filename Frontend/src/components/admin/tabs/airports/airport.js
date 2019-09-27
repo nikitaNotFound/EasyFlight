@@ -59,7 +59,6 @@ function Airport(props) {
 
 Airport.propsTypes = {
     airport: PropsTypes.instanceOf(AirportObject),
-    airportId: PropsTypes.number
 }
 
 export default Airport;

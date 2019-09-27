@@ -38,7 +38,7 @@ function initializeSeatArray(props) {
    return seatsArray;
 }
 
-function SeatScheme(props) {
+export default function SeatScheme(props) {
     const [seatArray, changeSeatArray] = useState(initializeSeatArray(props));
     const [seatTypes, changeSeatTypes] = useState(props.seatTypes);
 
@@ -71,5 +71,3 @@ SeatScheme.propsTypes = {
     onSeatChoosen: PropsTypes.func,
     onSeatUnchoosen: PropsTypes.func
 }
-
-export default SeatScheme;

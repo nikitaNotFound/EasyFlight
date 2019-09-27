@@ -1,21 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from 'react';
 
-import Headline from "../../../common/headline";
-import SearchList from "../../../common/search-list";
-import MessageBox from "../../../common/message-box";
-import Spinner from "../../../common/spinner";
-import TicketsCostEditor from "./tickets-cost-editor";
-import ParamField from "./param-field";
+import Headline from '../../../common/headline';
+import SearchList from '../../../common/search-list';
+import MessageBox from '../../../common/message-box';
+import Spinner from '../../../common/spinner';
+import TicketsCostEditor from './tickets-cost-editor';
+import ParamField from './param-field';
 
-import BuyIcon from "../../../../icons/add-image.png";
+import BuyIcon from '../../../../icons/add-image.png';
 
-import Flight from "../../../../services/flight-models/flight";
+import Flight from '../../../../services/flight-models/flight';
 
-import * as AirplaneService from "../../../../services/AirplaneService";
-import * as FlightService from "../../../../services/FlightService";
-import * as AirportService from "../../../../services/AirportService";
+import * as AirplaneService from '../../../../services/AirplaneService';
+import * as FlightService from '../../../../services/FlightService';
+import * as AirportService from '../../../../services/AirportService';
 
-function Editing(props) {
+
+function Editing (props) {
     const [loading, changeLoadingMode] = useState(true);
 
     const [flight, changeFlight] = useState();
@@ -78,8 +79,15 @@ function Editing(props) {
     }, [props.match.params.id]);
 
     function onDataSave() {
-        if (!departureDate || !departureTime || !fromPlace || !toPlace || !airplane || !ticketsCost || !desc) {
-            changeMessageBoxValue("Input data is not valid!");
+        if (!departureDate
+            || !departureTime
+            || !fromPlace
+            || !toPlace
+            || !airplane
+            || !ticketsCost
+            || !desc
+        ) {
+            changeMessageBoxValue('Input data is not valid!');
             return;
         }
 
@@ -141,7 +149,11 @@ function Editing(props) {
                     <div className="col-2">
                         <input type="file" name="image" id="file-input" className="file-upload" />
                         <label htmlFor="file-input">
-                            <img src={BuyIcon} className="adding-form-img" alt="add" />
+                            <img
+                                src={BuyIcon}
+                                className="adding-form-img"
+                                alt="add"
+                            />
                         </label>
                     </div>
                     <div className="col-10">
