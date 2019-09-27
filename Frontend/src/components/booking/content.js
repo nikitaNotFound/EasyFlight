@@ -10,7 +10,7 @@ import ChoosenSeats from './choosen-seats/choosen-seats';
 import BaggageController from './baggage-controller';
 import FinalButton from './final-button';
 import CostLayout from './cost-layout';
-import MessageBox from '../common/message-box';
+import FlightInfo from './flight-info';
 
 import * as AirplaneService from '../../services/AirplaneService';
 import * as FlightService from '../../services/FlightService';
@@ -18,7 +18,7 @@ import * as UserService from '../../services/UserSerivce'
 
 import '../../styles/booking.css';
 
-export default function Content(props) {
+function Content(props) {
     const [loading, changeLoading] = useState(true);
     const [flight, changeFlight] = useState();
     const [airplane, changeAirplane] = useState();
