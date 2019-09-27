@@ -54,7 +54,7 @@ namespace EasyFlight.Models.Cities
             }
             else
             {
-                throw new Exception();
+                throw new ObjectNotFoundException();
             }
         }
 
@@ -63,10 +63,10 @@ namespace EasyFlight.Models.Cities
             const string SEARCH_QUERY = @"
                 SELECT *
                 FROM cities
-                WHERE countryId=@countryId
-                and name LIKE '@Name%";
+                WHERE countryId={0}
+                and name LIKE '{1}%'";
 
-            return await db.QueryAsync<City>(SEARCH_QUERY, searchOptions);
+            return await db.QueryAsync<City>(String.Format(SEARCH_QUERY, searchOptions.CountryId, searchOptions.Name));
         }
 
         public async Task UpdateAsync(City item)

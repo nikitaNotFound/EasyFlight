@@ -11,7 +11,7 @@ namespace EasyFlight.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [DisableCors]
+    [EnableCors("AllowAnyHeaderAndMethod")]
     public class CitiesController : ControllerBase
     {
         IRepository<City, CitySearchOptions> repository = null;
@@ -31,10 +31,9 @@ namespace EasyFlight.Controllers
                 Response.StatusCode = 200;
                 return new ObjectResult(city);
             }
-            catch
+            catch (ObjectNotFoundException ex)
             {
-                Response.StatusCode = 404;
-                return new NoContentResult();
+                return new StatusCodeResult(404);
             }
         }
 
@@ -80,6 +79,7 @@ namespace EasyFlight.Controllers
         {
             var foundCities = await repository.SearchAsync(searchOptions);
 
+            Response.StatusCode = 200;
             return new ObjectResult(foundCities);
         }
     }

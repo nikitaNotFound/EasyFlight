@@ -37,10 +37,6 @@ namespace EasyFlight.Controllers
             {
                 return new StatusCodeResult(404);
             }
-            catch (Exception ex)
-            {
-                return new StatusCodeResult(500);
-            }
         }
 
         [HttpPost]
