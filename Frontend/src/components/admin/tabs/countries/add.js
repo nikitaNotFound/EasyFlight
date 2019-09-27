@@ -20,12 +20,12 @@ export default function Add() {
 
         let newCountry = new Country(null, name);
 
-        const addResult = await PlaceService.addCountry(newCountry);
+        const addRequest = await PlaceService.addCountry(newCountry);
 
-        if (addResult === true) {
+        if (addRequest.successful === true) {
             changeMessageBoxValue('Added!');
         } else {
-            changeMessageBoxValue(addResult.message);
+            changeMessageBoxValue(addRequest.message);
         }
     }
 

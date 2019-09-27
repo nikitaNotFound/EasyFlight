@@ -12,6 +12,7 @@ import SearchOptions from '../../../../services/airport-models/search-options';
 export default function CityList() {
     const [cities, changeCities] = useState([]);
     const [filterOptions, changeFilterOptions] = useState(new SearchOptions());
+    const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
     async function onFilterApply(newFilterOptions) {
         changeFilterOptions(newFilterOptions);
@@ -26,11 +27,27 @@ export default function CityList() {
             foundCities = await PlaceService.searchCitiesByName(newFilterOptions.name);
         }
 
-        changeCities(foundCities);
+        if (citiesRequest.successful === true) {
+            changeCities(citiesRequest.value);
+        } else {
+            changeMessageBoxValue(citiesRequest.value);
+        }
+    }
+
+    function showMessageBox() {
+        if (messageBoxValue) {
+            return (
+                <MessageBox
+                    message={messageBoxValue}
+                    hideFunc={changeMessageBoxValue}
+                />
+            );
+        }
     }
 
     return (
         <div className="tab-content">
+            {showMessageBox()}
             <Filter filterOptions={filterOptions} onFilterApply={onFilterApply}/>
             <AddButton catalog="cities"/>
             <Cities cities={cities}/>

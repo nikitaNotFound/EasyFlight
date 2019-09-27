@@ -1,7 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 
 import Headline from '../../../common/headline';
-import Spinner from '../../../common/spinner';
 import MessageBox from '../../../common/message-box';
 import SearchList from '../../../common/search-list';
 
@@ -24,10 +23,10 @@ export default function Add() {
 
         const insertResult = await PlaceService.addCity(newCity);
 
-        if (insertResult === true) {
+        if (insertRequest.successful === true) {
             changeMessageBoxValue('Added!');
         } else {
-            changeMessageBoxValue(insertResult.message);
+            changeMessageBoxValue(insertRequest.value);
         }
     }
 

@@ -1,9 +1,9 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Switch, BrowserRouter } from "react-router-dom";
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch, BrowserRouter } from 'react-router-dom';
 
-import AdminRoute from "./routes/AdminRoute";
-import AuthorizedRoute from "./routes/AuthorizedRoute";
-import UnauthorizedRoute from "./routes/UnauthorizedRoute";
+import AdminRoute from './routes/AdminRoute';
+import AuthorizedRoute from './routes/AuthorizedRoute';
+import UnauthorizedRoute from './routes/UnauthorizedRoute';
 
 import MainPage from "./components/main-page";
 import Admin from "./components/admin";
@@ -12,8 +12,8 @@ import SignIn from "./components/sign-in";
 import Profile from "./components/profile";
 import Booking from "./components/booking";
 
-import { Provider } from "react-redux";
-import store from "./store/store";
+import { Provider } from 'react-redux';
+import store from './store/store';
 
 function App() {
     return (

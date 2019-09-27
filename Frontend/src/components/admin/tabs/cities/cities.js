@@ -5,8 +5,22 @@ import City from './city';
 
 import '../../../../styles/items-list.css';
 
+export default function Cities(props) {
+    if (!props.cities) {
+        return (
+            <div className="items-list">
+            </div>
+        );
+    }
 
-export default function Countries(props) {
+    if (props.cities.length == 0) {
+        return (
+            <div className="items-list">
+                No result
+            </div>
+        );
+    }
+
     return (
         <div className="items-list">
             {props.cities.map(
@@ -20,6 +34,6 @@ export default function Countries(props) {
     );
 }
 
-Countries.propsTypes = {
+Cities.propsTypes = {
     cities: PropsTypes.array
 }

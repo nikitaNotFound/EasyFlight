@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
-import Header from "./main-page/header";
-import Footer from "./main-page/footer";
-import Content from "./main-page/content";
+import Header from './main-page/header';
+import Footer from './main-page/footer';
+import Content from './main-page/content';
 
 export default function MainPage() {
     return (
