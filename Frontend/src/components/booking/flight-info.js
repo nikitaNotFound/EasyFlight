@@ -19,11 +19,17 @@ export default function FlightInfo(props) {
 
     useEffect(() => {
         const fetchData = async () => {
-            const [fromAirport, toAirport, fromCity, toCity, fromCountry, toCountry] = Promise.all([
+            const [fromAirport, toAirport] = Promise.all([
                 AirportService.getById(props.flight.fromId),
-                AirportService.getById(props.flight.toId),
+                AirportService.getById(props.flight.toId)
+            ]);
+
+            const [fromCity, toCity] = Promise.all([
                 PlaceService.getCityById(fromAirport.cityId),
-                PlaceService.getCityById(toAirport.cityId),
+                PlaceService.getCityById(toAirport.cityId)
+            ]);
+
+            const [fromCountry, toCountry] = Promise.all([
                 PlaceService.getCountryById(fromCity.countryId),
                 PlaceService.getCountryById(toCity.countryId)
             ]);
@@ -67,4 +73,4 @@ export default function FlightInfo(props) {
 FlightInfo.propsTypes = {
     airplaneName: PropsTypes.string,
     flight: PropsTypes.instanceOf(FlightObject)
-};
+}; 
