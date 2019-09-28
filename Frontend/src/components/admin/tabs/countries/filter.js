@@ -12,8 +12,7 @@ export default function Filter(props) {
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
     function onFilterApply() {
-        if (!name
-        ) {
+        if (!name) {
             changeMessageBoxValue('Setup filter!');
             return;
         }
