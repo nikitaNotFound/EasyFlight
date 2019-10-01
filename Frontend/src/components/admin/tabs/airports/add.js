@@ -4,25 +4,32 @@ import Headline from '../../../common/headline';
 import SearchList from '../../../common/search-list';
 import MessageBox from '../../../common/message-box';
 
+import { invalidInput } from '../../../common/message-box-messages';
 import Airport from '../../../../services/airport-models/airport';
 
 import * as PlaceService from '../../../../services/PlaceService';
-import { invalidInput } from '../../../common/message-box-messages';
+import * as AirportService from '../../../../services/AirportService';
 
 export default function Add() {
     const [name, changeName] = useState();
     const [city, changeCity] = useState();
-    const [desc, changeDesc] = useState();
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
     function onDataSave() {
-        if (!name || !city || !desc) {
+        if (!name || !city) {
             changeMessageBoxValue(invalidInput());
             return;
         }
 
-        let newAirport = new Airport(null, name, city.id, desc);
-        //HERE WILL BE HTTP REQUEST
+        let newAirport = new Airport(0, name, city.id);
+
+        const addingResult = await AirportService.add(newAirport);
+
+        if (addingResult.successful === true) {
+            changeMessageBoxValue("Added!");
+        } else {
+            changeMessageBoxValue(addingResult.value);
+        }
     }
 
     async function getCityName(city) {
@@ -72,16 +79,11 @@ export default function Add() {
                                 />
                                 <br/>
                             </div>
-                            <textarea
-                                onChange={(event) => changeDesc(event.target.value)}
-                                value={desc}
-                                placeholder="description"
-                            />
                         </div>
                     </div>
                 </div>
                 <div className="custom-button big" onClick={onDataSave}>
-                    Save
+                    Add
                 </div>
             </div>
             {showMessageBox()}

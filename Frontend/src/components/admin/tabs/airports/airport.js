@@ -11,24 +11,31 @@ import * as PlaceService from '../../../../services/PlaceService';
 
 export default function Airport(props) {
     const [loading, changeLoading] = useState(true);
-
     const [city, changeCity] = useState();
     const [counrty, changeCountry] = useState();
+    const [messageBoxValue, changeMessageBoxValue] = useState();
 
     useEffect(() => {
-        const cityLoading = PlaceService.getCityById(props.airport.cityId);
+        const fetchData = async () => {
+            const cityResult = await PlaceService.getCityById(props.airport.cityId);
+            if (cityResult.successful === false) {
+                changeMessageBoxValue(cityResult.value);
+                return;
+            }
 
-        cityLoading
-            .then(foundCity => {
-                changeCity(foundCity.name);
+            changeCity(cityResult.value.name);
 
-                return PlaceService.getCountryById(foundCity.countryId);
-            })
-            .then(foundCountry => {
-                changeCountry(foundCountry.name);
-                changeLoading(false);
-            })
-            .catch();
+            const countryResult = await PlaceService.getCountryById(cityResult.value.countryId);
+            if (countryResult.successful === false) {
+                changeMessageBoxValue(countryResult.value);
+                return;
+            }
+
+            changeCountry(countryResult.value.name);
+
+            changeLoading(false);
+        }
+        fetchData();
     }, [props.airport.id]);
 
     if (loading) {
@@ -51,7 +58,7 @@ export default function Airport(props) {
 
             <div className="col-lg-1 col-sm-12">
                 <Link to={`/admin/airports/edit/${props.airport.id}`}>
-                    <div className="edit-button rounded non-selectable">
+                    <div className="button edit-button rounded non-selectable">
                         Edit
                     </div>
                 </Link>

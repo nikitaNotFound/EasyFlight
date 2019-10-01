@@ -13,6 +13,7 @@ import { invalidInput } from '../../../common/message-box-messages';
 
 export default function Edit(props) {
     const [loading, changeLoadingMode] = useState(true);
+    const [id, changeId] = useState();
     const [name, changeName] = useState();
     const [country, changeCountry] = useState();
     const [city, changeCity] = useState();
@@ -20,36 +21,54 @@ export default function Edit(props) {
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
     useEffect(() => {
-        const airportLoading = AirportService.getById(props.match.params.id);
-        airportLoading
-            .then(foundAirport => {
-                changeName(foundAirport.name);
-                changeDesc(foundAirport.description);
+        const fetchData = async () => {
+            const airportResult = await AirportService.getById(props.match.params.id);
+            if (airportResult.successful === false) {
+                changeMessageBoxValue(airportResult.value);
+                return;
+            }
 
-                return PlaceService.getCityById(foundAirport.cityId);
-            })
-            .then(foundCity => {
-                changeCity(foundCity);
+            changeId(airportResult.value.id);
+            changeName(airportResult.value.name);
+            changeDesc(airportResult.value.description);
 
-                return PlaceService.getCountryById(foundCity.countryId);
-            })
-            .then(foundCountry => {
-                changeCountry(foundCountry);
-                changeLoadingMode(false);
-            })
-            .catch(error => {
-                alert(error);
-            });
+            const cityResult = await PlaceService.getCityById(airportResult.value.cityId);
+            if (cityResult.successful === false) {
+                changeMessageBoxValue(cityResult.value);
+                return;
+            }
+
+            changeCity(cityResult.value);
+
+            const countryResult = await PlaceService.getCountryById(cityResult.value.countryId);
+            if (countryResult.successful === false) {
+                changeMessageBoxValue(countryResult.value);
+                return;
+            }
+
+            changeCountry(countryResult.value);
+
+            changeLoadingMode(false);
+        }
+        fetchData();
     }, [props.match.params.id]);
 
     function onDataSave() {
-        if (!name || !country || !city || !desc) {
+        if (!name || !country || !city) {
             changeMessageBoxValue(invalidInput());
+
             return;
         }
 
-        let newAirport = new Airport(null, name, city.id, desc);
-        // HERE WILL BE HTTP REQUEST
+        let newAirport = new Airport(id, name, city.id);
+        
+        const updateResult = await AirportService.update(newAirport)
+
+        if (updateResult.successful === true) {
+            changeMessageBoxValue('Updated!');
+        } else {
+            changeMessageBoxValue(updateResult.value);
+        }
     }
 
     function getCountryName(country) {
@@ -118,7 +137,6 @@ export default function Edit(props) {
                                     />
                                     {showCityChooser()}
                                 </div>
-                                <textarea onChange={changeDesc} value={desc}/>
                             </div>
                         </div>
                     </div>

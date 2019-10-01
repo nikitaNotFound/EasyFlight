@@ -2,13 +2,11 @@ class Airport {
     id;
     name;
     cityId;
-    description;
 
-    constructor(id, name, cityId, description) {
+    constructor(id, name, cityId) {
         this.id = id;
         this.name = name;
         this.cityId = cityId;
-        this.description = description;
     }
 }
 

@@ -63,7 +63,10 @@ export default function Edit(props) {
 
             const [airplane, airports] = Promise.all([
                 AirplaneService.getById(flight.airplaneId),
-                AirportService.getByIds([flight.fromId, flight.toId])
+                Promise.all([
+                    AirportService.getById(flight.fromId),
+                    AirportService.getById(flight.toId)
+                ])
             ]);
 
             changeAirplane(airplane);
