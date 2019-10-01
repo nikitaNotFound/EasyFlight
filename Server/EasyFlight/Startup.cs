@@ -48,8 +48,7 @@ namespace EasyFlight
             Settings settings = new Settings(Configuration);
             services.AddSingleton<Settings>(settings);
 
-            ErrorsHandler errorsHandler = new ErrorsHandler();
-            services.AddSingleton<ErrorsHandler>(provider => errorsHandler);
+            services.AddSingleton<ErrorsHandler>(provider => new ErrorsHandler());
         }
 
         public void Configure(IApplicationBuilder app)
