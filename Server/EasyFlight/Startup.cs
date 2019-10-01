@@ -10,9 +10,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using EasyFlight.Models;
-using EasyFlight.Models.Cities;
-using EasyFlight.Models.Countries;
+using EasyFlight.Repositories;
+using EasyFlight.Services;
+using EasyFlight.Errors;
 
 namespace EasyFlight
 {
@@ -29,14 +29,6 @@ namespace EasyFlight
         {
             services.AddCors(options =>
             {
-                options.AddDefaultPolicy(
-                    builder =>
-                    {
-
-                        builder.WithOrigins("http://localhost:3000",
-                                            "http://www.contoso.com");
-                    });
-
                 options.AddPolicy("AllowAnyHeaderAndMethod",
                     builder =>
                     {
@@ -50,13 +42,19 @@ namespace EasyFlight
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddControllers();
 
-            string connectString = @"Server=np:\\.\pipe\LOCALDB#5186F99E\tsql\query;Initial Catalog=easyflight;Integrated Security=True";
-            services.AddSingleton<IRepository<City, CitySearchOptions>, CityRepository>(provider => new CityRepository(connectString));
-            services.AddSingleton<IRepository<Country, CountrySearchOptions>, CountryRepository>(provider => new CountryRepository(connectString));
+            RepositoryModule.Register(services);
+            ServiceModule.Register(services);
+
+            Settings settings = new Settings(Configuration);
+            services.AddSingleton<Settings>(settings);
+
+            ErrorsHandler errorsHandler = new ErrorsHandler();
+            services.AddSingleton<ErrorsHandler>(provider => errorsHandler);
         }
 
         public void Configure(IApplicationBuilder app)
         {
+            app.UseErrorHandler();
             app.UseRouting();
             app.UseCors("AllowAnyHeaderAndMethod");
 

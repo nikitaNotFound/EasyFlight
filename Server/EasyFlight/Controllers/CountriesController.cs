@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using EasyFlight.Models;
 using EasyFlight.Models.Countries;
-using EasyFlight.Exceptions;
 using Microsoft.AspNetCore.Cors;
+using EasyFlight.Services.Countries;
 
 namespace EasyFlight.Controllers
 {
@@ -16,73 +16,63 @@ namespace EasyFlight.Controllers
     [EnableCors("AllowAnyHeaderAndMethod")]
     public class CountriesController : ControllerBase
     {
-        IRepository<Country, CountrySearchOptions> repository = null;
-        public CountriesController(IRepository<Country, CountrySearchOptions> repository)
+        ICountryService service = null;
+        public CountriesController(ICountryService service)
         {
-            this.repository = repository;
+            this.service = service;
         }
 
+        // GET api/countries/{id}
         [HttpGet]
         [Route("{id}")]
         public async Task<ActionResult> Get(int id)
         {
-            try
-            {
-                Country foundCountry = await repository.GetAsync(id);
+            Country foundCountry = await service.GetById(id);
 
+            if (foundCountry != null)
+            {
                 Response.StatusCode = 200;
                 return new ObjectResult(foundCountry);
             }
-            catch (ObjectNotFoundException ex)
-            {
-                return new StatusCodeResult(404);
-            }
+
+            return new NoContentResult();
         }
 
+        // POST api/countries
         [HttpPost]
         public async Task<ActionResult> Add([FromBody]Country country)
         {
-            try
-            {
-                await repository.AddAsync(country);
+            await service.Add(country);
 
-                Response.StatusCode = 201;
-                return new NoContentResult();
-            }
-            catch (Exception ex)
-            {
-                Response.StatusCode = 409;
-                return new JsonResult(new ErrorMessage(ex.Message));
-            }
+            Response.StatusCode = 201;
+            return new NoContentResult();
         }
 
+        // PUT api/countries/{id}
         [HttpPut]
         [Route("{id}")]
         public async Task<ActionResult> Update(int id, [FromBody]Country country)
         {
-            try
-            {
-                country.Id = id;
-                await repository.UpdateAsync(country);
+            await service.Update(id, country);
 
-                Response.StatusCode = 202;
-                return new NoContentResult();
-            }
-            catch (Exception ex)
-            {
-                Response.StatusCode = 500;
-                return new JsonResult(new ErrorMessage(ex.Message));
-            }
+            Response.StatusCode = 202;
+            return new NoContentResult();
         }
 
+        // POST api/countries/searches
         [HttpPost]
         [Route("searches")]
         public async Task<ActionResult> Search([FromBody]CountrySearchOptions searchOptions)
         {
-            var foundCountries = await repository.SearchAsync(searchOptions);
+            var foundCountries = await service.Search(searchOptions);
 
-            Response.StatusCode = 200;
-            return new ObjectResult(foundCountries);
+            if (foundCountries != null)
+            {
+                Response.StatusCode = 200;
+                return new ObjectResult(foundCountries);
+            }
+
+            return new NoContentResult();
         }
     }
 }
