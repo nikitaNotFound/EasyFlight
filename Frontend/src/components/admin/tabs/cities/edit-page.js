@@ -9,13 +9,11 @@ import City from '../../../../services/place-models/city';
 
 import * as PlaceService from '../../../../services/PlaceService';
 
-
-export default function Edit(props) {
+export default function EditPage(props) {
     const [loading, changeLoadingMode] = useState(true);
     const [id, changeId] = useState();
     const [name, changeName] = useState();
     const [country, changeCountry] = useState(null);
-    
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
     useEffect(() => {
@@ -40,7 +38,7 @@ export default function Edit(props) {
 
         let newCity = new City(id, country.id, name);
 
-        const updateResult = PlaceService.updateCity(newCity);
+        const updateResult = await PlaceService.updateCity(newCity);
 
         if (updateResult) {
             changeMessageBoxValue('Saved!');
@@ -65,7 +63,11 @@ export default function Edit(props) {
     }
 
     if (loading) {
-        return <Spinner headline="Loading..."/>
+        return (
+            <div className="list-item-action rounded editing">
+                <Spinner headline="Loading..."/>
+            </div>
+        );
     }
 
     return (

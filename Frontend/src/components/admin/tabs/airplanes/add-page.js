@@ -4,12 +4,11 @@ import SeatEditor from './seat-editor';
 import MessageBox from '../../../common/message-box';
 import Airplane from '../../../../services/airplane-models/airplane';
 
-function Adding() {
+export default function AddPage() {
     const [name, changeName] = useState('');
     const [carrying, changeCarrying] = useState(0);
     const [seats, changeSeats] = useState();
     const [seatTypes, changeSeatTypes] = useState();
-
     const [messageBoxValue, changeMessageBoxValue] = useState();
 
     function onDataSave() {
@@ -88,5 +87,3 @@ function Adding() {
         </div>
     );
 }
-
-export default Adding;

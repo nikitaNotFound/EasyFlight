@@ -6,15 +6,13 @@ import Spinner from '../../../common/spinner';
 import Airplane from '../../../../services/airplane-models/airplane';
 import * as AirplaneService from '../../../../services/AirplaneService';
 
-function Edit(props) {
+export default function EditPage(props) {
     const [loading, changeLoading] = useState(true);
-
     const [id, changeId] = useState();
     const [name, changeName] = useState('');
     const [carrying, changeCarrying] = useState(0);
     const [seats, changeSeats] = useState();
     const [seatTypes, changeSeatTypes] = useState();
-
     const [messageBoxValue, changeMessageBoxValue] = useState();
 
     // reciving info about airplane with id getted from url
@@ -118,5 +116,3 @@ function Edit(props) {
 
     return <Spinner headline="Loading..."/>
 }
-
-export default Edit;

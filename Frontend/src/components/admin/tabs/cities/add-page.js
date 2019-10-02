@@ -9,11 +9,10 @@ import City from '../../../../services/place-models/city';
 
 import * as PlaceService from '../../../../services/PlaceService';
 
-
-export default function Add(props) {
+export default function AddPage(props) {
+    const [loading, changeLoading] = useState(true);
     const [name, changeName] = useState();
     const [country, changeCountry] = useState(null);
-    
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
     async function onDataSave() {
@@ -22,7 +21,7 @@ export default function Add(props) {
             return;
         }
 
-        let newCity = new City(0, country.id, name);
+        let newCity = new City(null, country.id, name);
         
         const insertResult = await PlaceService.addCity(newCity);
 
@@ -48,6 +47,14 @@ export default function Add(props) {
         return country.name;
     }
     
+    if (loading) {
+        return (
+            <div className="list-item-action rounded editing">
+                <Spinner headline="Loading..." />
+            </div>
+        );
+    }
+
     return (
         <div className="list-item-action rounded editing">
             <Headline name="Adding city"/>

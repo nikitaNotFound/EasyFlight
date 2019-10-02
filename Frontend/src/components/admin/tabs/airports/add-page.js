@@ -5,12 +5,11 @@ import MessageBox from '../../../common/message-box';
 import Airport from '../../../../services/airport-models/airport';
 import * as PlaceService from '../../../../services/PlaceService';
 
-function Adding() {
+export default function AddPage() {
     const [name, changeName] = useState();
     const [country, changeCountry] = useState();
     const [city, changeCity] = useState();
     const [desc, changeDesc] = useState();
-
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
     function onDataSave() {
@@ -102,5 +101,3 @@ function Adding() {
         </div>
     );
 }
-
-export default Adding;

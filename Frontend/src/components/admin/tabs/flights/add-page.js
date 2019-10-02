@@ -11,8 +11,7 @@ import ParamFiled from './param-field';
 import * as AirportService from '../../../../services/AirportService';
 import * as AirplaneService from '../../../../services/AirplaneService';
 
-
-function Adding() {
+export function AddPage() {
     const [airplane, changeAirplane] = useState();
 
     const [fromPlace, changeFromPlace] = useState();
@@ -211,5 +210,3 @@ function Adding() {
         </div>
     );
 }
-
-export default Adding;

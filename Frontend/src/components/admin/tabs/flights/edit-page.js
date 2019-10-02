@@ -15,8 +15,7 @@ import * as AirplaneService from '../../../../services/AirplaneService';
 import * as FlightService from '../../../../services/FlightService';
 import * as AirportService from '../../../../services/AirportService';
 
-
-function Editing (props) {
+export default function EditPage(props) {
     const [loading, changeLoadingMode] = useState(true);
 
     const [flight, changeFlight] = useState();
@@ -245,5 +244,3 @@ function Editing (props) {
         </div>
     );
 }
-
-export default Editing;

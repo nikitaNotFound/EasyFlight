@@ -8,7 +8,7 @@ import Country from '../../../../services/place-models/country';
 import * as PlaceService from '../../../../services/PlaceService';
 
 
-export default function Add() {
+export default function AddPage() {
     const [name, changeName] = useState();
     
     const [messageBoxValue, changeMessageBoxValue] = useState(null);

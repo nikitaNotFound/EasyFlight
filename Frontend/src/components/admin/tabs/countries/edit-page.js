@@ -9,11 +9,10 @@ import Country from '../../../../services/place-models/country';
 import * as PlaceService from '../../../../services/PlaceService';
 
 
-export default function Edit(props) {
+export default function EditPage(props) {
     const [loading, changeLoadingMode] = useState(true);
     const [name, changeName] = useState();
     const [id, changeId] = useState();
-    
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
     useEffect(() => {
@@ -53,7 +52,11 @@ export default function Edit(props) {
     }
 
     if (loading) {
-        return <Spinner headline="Loading..."/>
+        return (
+            <div className="list-item-action rounded editing">
+                <Spinner headline="Loading..."/>
+            </div>
+        );
     }
 
     return (
