@@ -11,11 +11,13 @@ namespace EasyFlight.Repositories.Cities
 {
     public class CityRepository : ICityRepository
     {
-        Settings settings;
+        private Settings settings;
+
         public CityRepository(Settings settings)
         {
             this.settings = settings;
         }
+
 
         public async Task<City> GetAsync(int id)
         {

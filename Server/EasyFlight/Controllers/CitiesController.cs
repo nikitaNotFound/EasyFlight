@@ -13,18 +13,20 @@ namespace EasyFlight.Controllers
     [EnableCors("AllowAnyHeaderAndMethod")]
     public class CitiesController : ControllerBase
     {
-        ICityService service = null;
-        public CitiesController(ICityService service)
+        private ICityService cityService;
+
+        public CitiesController(ICityService cityService)
         {
-            this.service = service;
+            this.cityService = cityService;
         }
+
 
         // GET api/cities/{id}
         [HttpGet]
         [Route("{id}")]
         public async Task<ActionResult> Get(int id)
         {
-            City city = await service.GetById(id);
+            City city = await cityService.GetByIdAsync(id);
 
             if (city != null)
             {
@@ -37,9 +39,9 @@ namespace EasyFlight.Controllers
 
         // POST api/cities
         [HttpPost]
-        public async Task<ActionResult> Add([FromBody]City city)
+        public async Task<ActionResult> Add([FromBody] City city)
         {
-            await service.Add(city);
+            await cityService.AddAsync(city);
 
             Response.StatusCode = 201;
             return new NoContentResult();
@@ -48,9 +50,9 @@ namespace EasyFlight.Controllers
         // PUT api/cities/{id}
         [HttpPut]
         [Route("{id}")]
-        public async Task<ActionResult> Update(int id, [FromBody]City city)
+        public async Task<ActionResult> Update(int id, [FromBody] City city)
         {
-            await service.Update(id, city);
+            await cityService.UpdateAsync(id, city);
 
             Response.StatusCode = 202;
             return new NoContentResult();
@@ -59,17 +61,12 @@ namespace EasyFlight.Controllers
         // POST api/cities/searches
         [HttpPost]
         [Route("searches")]
-        public async Task<ActionResult> Search([FromBody]CitySearchOptions searchOptions)
+        public async Task<ActionResult> Search([FromBody] CitySearchOptions searchOptions)
         {
-            var foundCities = await service.Search(searchOptions);
+            var foundCities = await cityService.SearchAsync(searchOptions);
 
-            if (foundCities != null)
-            {
-                Response.StatusCode = 200;
-                return new ObjectResult(foundCities);
-            }
-
-            return new NoContentResult();
+            Response.StatusCode = 200;
+            return new ObjectResult(foundCities);
         }
     }
 }

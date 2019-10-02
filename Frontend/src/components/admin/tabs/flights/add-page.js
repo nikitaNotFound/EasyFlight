@@ -11,7 +11,7 @@ import ParamFiled from './param-field';
 import * as AirportService from '../../../../services/AirportService';
 import * as AirplaneService from '../../../../services/AirplaneService';
 
-export function AddPage() {
+export default function AddPage() {
     const [airplane, changeAirplane] = useState();
 
     const [fromPlace, changeFromPlace] = useState();

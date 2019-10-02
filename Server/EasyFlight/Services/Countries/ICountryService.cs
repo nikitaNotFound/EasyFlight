@@ -8,9 +8,9 @@ namespace EasyFlight.Services.Countries
 {
     public interface ICountryService
     {
-        Task<Country> GetById(int id);
-        Task<IEnumerable<Country>> Search(CountrySearchOptions searchOptions);
-        Task Add(Country country);
-        Task Update(int id, Country country);
+        Task<Country> GetByIdAsync(int id);
+        Task<IEnumerable<Country>> SearchAsync(CountrySearchOptions searchOptions);
+        Task AddAsync(Country country);
+        Task UpdateAsync(int id, Country country);
     }
 }

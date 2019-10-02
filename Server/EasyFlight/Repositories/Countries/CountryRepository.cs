@@ -11,11 +11,13 @@ namespace EasyFlight.Repositories.Countries
 {
     public class CountryRepository : ICountryRepository
     {
-        Settings settings;
+        private Settings settings;
+
         public CountryRepository(Settings settings)
         {
             this.settings = settings;
         }
+
 
         public async Task<Country> GetAsync(int id)
         {

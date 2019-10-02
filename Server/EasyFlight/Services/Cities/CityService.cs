@@ -8,17 +8,19 @@ namespace EasyFlight.Services.Cities
 {
     public class CityService : ICityService
     {
-        ICityRepository repository;
-        ErrorsHandler errorsHandler;
-        public CityService(ICityRepository repository, ErrorsHandler errorsHandler)
+        private ICityRepository cityRepository;
+        private ErrorsHandler errorsHandler;
+
+        public CityService(ICityRepository cityRepository, ErrorsHandler errorsHandler)
         {
-            this.repository = repository;
+            this.cityRepository = cityRepository;
             this.errorsHandler = errorsHandler;
         }
 
-        public async Task<City> GetById(int id)
+
+        public async Task<City> GetByIdAsync(int id)
         {
-            var foundCity = await repository.GetAsync(id);
+            var foundCity = await cityRepository.GetAsync(id);
 
             if (foundCity == null)
             {
@@ -28,18 +30,18 @@ namespace EasyFlight.Services.Cities
             return foundCity;
         }
 
-        public async Task<IEnumerable<City>> Search(CitySearchOptions searchOptions)
+        public async Task<IEnumerable<City>> SearchAsync(CitySearchOptions searchOptions)
         {
-            return await repository.SearchAsync(searchOptions);
+            return await cityRepository.SearchAsync(searchOptions);
         }
 
-        public async Task Add(City city)
+        public async Task AddAsync(City city)
         {
-            bool dublicate = await repository.CheckDublicateAsync(city);
+            bool dublicate = await cityRepository.CheckDublicateAsync(city);
 
             if (!dublicate)
             {
-                await repository.AddAsync(city);
+                await cityRepository.AddAsync(city);
             }
             else
             {
@@ -47,10 +49,20 @@ namespace EasyFlight.Services.Cities
             }
         }
 
-        public async Task Update(int id, City country)
+        public async Task UpdateAsync(int id, City country)
         {
             country.Id = id;
-            await repository.UpdateAsync(country);
+
+            bool existing = await cityRepository.CheckDublicateAsync(country);
+
+            if (existing)
+            {
+                await cityRepository.UpdateAsync(country);
+            }
+            else
+            {
+                // throw Exception
+            }
         }
     }
 }

@@ -10,15 +10,17 @@ namespace EasyFlight.Services.Countries
 {
     public class CountryService : ICountryService
     {
-        ICountryRepository repository;
-        ErrorsHandler errorsHandler;
+        private ICountryRepository repository;
+        private ErrorsHandler errorsHandler;
+
         public CountryService(ICountryRepository repository, ErrorsHandler errorsHandler)
         {
             this.repository = repository;
             this.errorsHandler = errorsHandler;
         }
 
-        public async Task<Country> GetById(int id)
+
+        public async Task<Country> GetByIdAsync(int id)
         {
             var foundCountry = await repository.GetAsync(id);
 
@@ -30,12 +32,12 @@ namespace EasyFlight.Services.Countries
             return foundCountry;
         }
 
-        public async Task<IEnumerable<Country>> Search(CountrySearchOptions searchOptions)
+        public async Task<IEnumerable<Country>> SearchAsync(CountrySearchOptions searchOptions)
         {
             return await repository.SearchAsync(searchOptions);
         }
 
-        public async Task Add(Country country)
+        public async Task AddAsync(Country country)
         {
             bool dublicate = await repository.CheckDublicateAsync(country);
 
@@ -49,10 +51,20 @@ namespace EasyFlight.Services.Countries
             }
         }
 
-        public async Task Update(int id, Country country)
+        public async Task UpdateAsync(int id, Country country)
         {
             country.Id = id;
-            await repository.UpdateAsync(country);
+
+            bool existing = await repository.CheckDublicateAsync(country);
+
+            if (existing)
+            {
+                await repository.UpdateAsync(country);
+            }
+            else
+            {
+                // throw Exception
+            }
         }
     }
 }

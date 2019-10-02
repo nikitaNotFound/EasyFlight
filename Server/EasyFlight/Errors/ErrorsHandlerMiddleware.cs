@@ -11,13 +11,15 @@ namespace EasyFlight.Errors
 {
     public class ErrorsHandlerMiddleware
     {
-        RequestDelegate next;
-        ErrorsHandler errorsHandler;
+        private RequestDelegate next;
+        private ErrorsHandler errorsHandler;
+
         public ErrorsHandlerMiddleware(RequestDelegate next, ErrorsHandler errorsHandler)
         {
             this.next = next;
             this.errorsHandler = errorsHandler;
         }
+
 
         public async Task InvokeAsync(HttpContext context)
         {

@@ -1,10 +1,10 @@
-import { DOMAIN } from './CONSTANTS';
+import { API_URL } from '../config';
 
 export function getCountryById(id) {
     return new Promise(
         async (resolve, reject) => {
             const response = await fetch(
-                `${DOMAIN}/api/countries/${id}`,
+                `${API_URL}/countries/${id}`,
                 {
                     method: 'GET',
                     mode: 'cors',
@@ -27,7 +27,7 @@ export function searchCountries(name) {
     return new Promise(
         async (resolve, reject) => {
             const response = await fetch(
-                `${DOMAIN}/api/countries/searches`,
+                `${API_URL}/countries/searches`,
                 {
                     method: 'POST',
                     mode: 'cors',
@@ -51,7 +51,7 @@ export function addCountry(country) {
     return new Promise(
         async (resolve) => {
             const response = await fetch(
-                `${DOMAIN}/api/countries`,
+                `${API_URL}/countries`,
                 {
                     method: 'POST',
                     mode: 'cors',
@@ -75,7 +75,7 @@ export function updateCountry(country) {
     return new Promise(
         async (resolve, reject) => {
             const response = await fetch(
-                `${DOMAIN}/api/countries/${country.id}`,
+                `${API_URL}/countries/${country.id}`,
                 {
                     method: 'PUT',
                     mode: 'cors',
@@ -99,7 +99,7 @@ export function getCityById(id) {
     return new Promise(
         async (resolve, reject) => {
             const response = await fetch(
-                `${DOMAIN}/api/cities/${id}`,
+                `${API_URL}/cities/${id}`,
                 {
                     method: 'GET',
                     mode: 'cors',
@@ -122,7 +122,7 @@ export function addCity(city) {
     return new Promise(
         async (resolve) => {
             const response = await fetch(
-                `${DOMAIN}/api/cities`,
+                `${API_URL}/cities`,
                 {
                     method: 'POST',
                     mode: 'cors',
@@ -146,7 +146,7 @@ export function updateCity(city) {
     return new Promise(
         async (resolve, reject) => {
             const response = await fetch(
-                `${DOMAIN}/api/cities/${city.id}`,
+                `${API_URL}/cities/${city.id}`,
                 {
                     method: 'PUT',
                     mode: 'cors',
@@ -172,7 +172,7 @@ export function searchCities(name, args) {
             const [countryId] = args;
 
             const response = await fetch(
-                `${DOMAIN}/api/cities`,
+                `${API_URL}/cities`,
                 {
                     method: 'GET',
                     mode: 'cors',

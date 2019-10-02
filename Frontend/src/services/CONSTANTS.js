@@ -1,1 +1,0 @@
-export const DOMAIN = 'https://localhost:44312';

@@ -122,5 +122,3 @@ export default function EditPage(props) {
     }
     return <Spinner headline="Loading..."/>
 }
-
-export default Edit;

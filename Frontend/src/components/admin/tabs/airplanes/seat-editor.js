@@ -34,9 +34,7 @@ function initializeSeatArray(props) {
         if (!seatsArray[element.floor - 1][element.section - 1][element.zone - 1][element.row - 1]) {
             seatsArray[element.floor - 1][element.section - 1][element.zone - 1][element.row - 1] = [];
         }
-        seatsArray[element.floor - 1][element.section - 1][element.zone - 1][element.row - 1][
-            element.number - 1
-        ] = element;
+        seatsArray[element.floor - 1][element.section - 1][element.zone - 1][element.row - 1][element.number - 1] = element;
     }
 
     return seatsArray;
@@ -50,7 +48,7 @@ function getSeatTypes(props) {
     return [];
 }
 
-function SeatEditor(props) {
+export default function SeatEditor(props) {
     const [seatArray, changeSeatArray] = useState(initializeSeatArray(props));
     const [seatTypes, changeSeatTypes] = useState(getSeatTypes(props));
 
@@ -111,7 +109,7 @@ function SeatEditor(props) {
         }
     }
 
-    function showSeatsSheme() {
+    function showSeatsScheme() {
         if (seatArray && seatTypes.length > 0) {
             return (
                 <div className="seat-editor-layout">
@@ -129,7 +127,7 @@ function SeatEditor(props) {
         <div className="seat-editor">
             <SeatTypesEditor seatTypes={seatTypes} onAddType={onAddType} onTypeDelete={onTypeDelete} />
             {showSeatTypesInstruments()}
-            {showSeatsSheme()}
+            {showSeatsScheme()}
         </div>
     );
 }
@@ -140,5 +138,3 @@ SeatEditor.propsTypes = {
     onSeatsChange: PropsTypes.func,
     onSeatTypesChange: PropsTypes.func
 };
-
-export default SeatEditor;

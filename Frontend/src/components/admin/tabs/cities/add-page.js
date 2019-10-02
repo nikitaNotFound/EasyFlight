@@ -21,8 +21,8 @@ export default function AddPage(props) {
             return;
         }
 
-        let newCity = new City(null, country.id, name);
-        
+        const newCity = new City(null, country.id, name);
+
         const insertResult = await PlaceService.addCity(newCity);
 
         if (insertResult === true) {

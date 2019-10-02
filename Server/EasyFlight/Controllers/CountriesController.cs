@@ -16,18 +16,20 @@ namespace EasyFlight.Controllers
     [EnableCors("AllowAnyHeaderAndMethod")]
     public class CountriesController : ControllerBase
     {
-        ICountryService service = null;
+        private ICountryService service;
+
         public CountriesController(ICountryService service)
         {
             this.service = service;
         }
+
 
         // GET api/countries/{id}
         [HttpGet]
         [Route("{id}")]
         public async Task<ActionResult> Get(int id)
         {
-            Country foundCountry = await service.GetById(id);
+            Country foundCountry = await service.GetByIdAsync(id);
 
             if (foundCountry != null)
             {
@@ -40,9 +42,9 @@ namespace EasyFlight.Controllers
 
         // POST api/countries
         [HttpPost]
-        public async Task<ActionResult> Add([FromBody]Country country)
+        public async Task<ActionResult> Add([FromBody] Country country)
         {
-            await service.Add(country);
+            await service.AddAsync(country);
 
             Response.StatusCode = 201;
             return new NoContentResult();
@@ -51,9 +53,9 @@ namespace EasyFlight.Controllers
         // PUT api/countries/{id}
         [HttpPut]
         [Route("{id}")]
-        public async Task<ActionResult> Update(int id, [FromBody]Country country)
+        public async Task<ActionResult> Update(int id, [FromBody] Country country)
         {
-            await service.Update(id, country);
+            await service.UpdateAsync(id, country);
 
             Response.StatusCode = 202;
             return new NoContentResult();
@@ -62,17 +64,12 @@ namespace EasyFlight.Controllers
         // POST api/countries/searches
         [HttpPost]
         [Route("searches")]
-        public async Task<ActionResult> Search([FromBody]CountrySearchOptions searchOptions)
+        public async Task<ActionResult> Search([FromBody] CountrySearchOptions searchOptions)
         {
-            var foundCountries = await service.Search(searchOptions);
+            var foundCountries = await service.SearchAsync(searchOptions);
 
-            if (foundCountries != null)
-            {
-                Response.StatusCode = 200;
-                return new ObjectResult(foundCountries);
-            }
-
-            return new NoContentResult();
+            Response.StatusCode = 200;
+            return new ObjectResult(foundCountries);
         }
     }
 }

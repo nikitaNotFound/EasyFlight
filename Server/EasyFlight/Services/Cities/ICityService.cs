@@ -8,9 +8,9 @@ namespace EasyFlight.Services.Cities
 {
     public interface ICityService
     {
-        Task<City> GetById(int id);
-        Task<IEnumerable<City>> Search(CitySearchOptions searchOptions);
-        Task Add(City country);
-        Task Update(int id, City city);
+        Task<City> GetByIdAsync(int id);
+        Task<IEnumerable<City>> SearchAsync(CitySearchOptions searchOptions);
+        Task AddAsync(City country);
+        Task UpdateAsync(int id, City city);
     }
 }

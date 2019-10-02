@@ -9,10 +9,12 @@ namespace EasyFlight
     public class Settings
     {
         private IConfiguration configuration;
+
         public Settings(IConfiguration configuration)
         {
             this.configuration = configuration;
         }
+
 
         public string ConnectionString => configuration[nameof(ConnectionString)];
     }

@@ -30,7 +30,7 @@ export default function EditPage(props) {
         fetchData();
     }, [props.match.params.id]);
 
-    function onDataSave() {
+    async function onDataSave() {
         if (!name || !country) {
             changeMessageBoxValue('Input data is not valid!');
             return;

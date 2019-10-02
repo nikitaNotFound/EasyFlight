@@ -38,15 +38,12 @@ namespace EasyFlight
                     });
             });
 
-
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddControllers();
 
             RepositoryModule.Register(services);
             ServiceModule.Register(services);
 
-            Settings settings = new Settings(Configuration);
-            services.AddSingleton<Settings>(settings);
+            services.AddSingleton<Settings>(provider => new Settings(Configuration));
 
             services.AddSingleton<ErrorsHandler>(provider => new ErrorsHandler());
         }
