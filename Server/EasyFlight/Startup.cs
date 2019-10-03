@@ -27,32 +27,34 @@ namespace EasyFlight
 
         public void ConfigureServices(IServiceCollection services)
         {
+            RepositoryModule.Register(services);
+            ServiceModule.Register(services);
+
+            Settings settings = new Settings(Configuration);
+
+            services.AddSingleton<Settings>(settings);
+
+            services.AddSingleton<ErrorsHandler>(provider => new ErrorsHandler());
+
             services.AddCors(options =>
             {
-                options.AddPolicy("AllowAnyHeaderAndMethod",
+                options.AddPolicy("AllowAllToUrlsFromConfig",
                     builder =>
                     {
-                        builder.WithOrigins("http://localhost:3000")
+                        builder.WithOrigins()
                                             .AllowAnyHeader()
                                             .AllowAnyMethod();
                     });
             });
 
             services.AddControllers();
-
-            RepositoryModule.Register(services);
-            ServiceModule.Register(services);
-
-            services.AddSingleton<Settings>(provider => new Settings(Configuration));
-
-            services.AddSingleton<ErrorsHandler>(provider => new ErrorsHandler());
         }
 
         public void Configure(IApplicationBuilder app)
         {
             app.UseErrorHandler();
             app.UseRouting();
-            app.UseCors("AllowAnyHeaderAndMethod");
+            app.UseCors("AllowAllToUrlsFromConfig");
 
             app.UseHttpsRedirection();
 

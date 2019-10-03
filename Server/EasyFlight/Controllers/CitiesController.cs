@@ -10,7 +10,7 @@ namespace EasyFlight.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [EnableCors("AllowAnyHeaderAndMethod")]
+    [EnableCors("AllowAllToUrlsFromConfig")]
     public class CitiesController : ControllerBase
     {
         private ICityService cityService;
