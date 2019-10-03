@@ -23,28 +23,24 @@ export function getCountryById(id) {
     );
 }
 
-export function searchCountries(name) {
-    return new Promise(
-        async (resolve, reject) => {
-            const response = await fetch(
-                `${API_URL}/countries/searches`,
-                {
-                    method: 'POST',
-                    mode: 'cors',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({name: name})
-                }
-            );
-
-            if (response.ok) {
-                resolve(response.json());
-            }
-
-            reject(response.status);
+export async function searchCountries(name) {
+    const response = await fetch(
+        `${API_URL}/countries/searches`,
+        {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({name: name})
         }
     );
+
+    if (response.ok) {
+        return response.json();
+    }
+
+    return response.status;
 }
 
 export function addCountry(country) {

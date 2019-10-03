@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using EasyFlight.Errors;
+using WebAPI.Errors;
 using DataAccessLayer;
 using BusinessLayer;
+using AutoMapper;
 
-namespace EasyFlight
+namespace WebAPI
 {
     public class Startup
     {
@@ -18,32 +19,44 @@ namespace EasyFlight
 
         public void ConfigureServices(IServiceCollection services)
         {
+            Settings settings = new Settings(Configuration);
+            services.AddSingleton<Settings>(settings);
+
+
             services.AddCors(options =>
             {
-                options.AddPolicy("AllowAnyHeaderAndMethod",
+                options.AddPolicy("AllowAllToUrlsFromConfig",
                     builder =>
                     {
-                        builder.WithOrigins("http://localhost:3000")
+                        builder.WithOrigins(settings.FriendlyUrls)
                                             .AllowAnyHeader()
                                             .AllowAnyMethod();
                     });
             });
 
+
+            var mappingConfig = new MapperConfiguration(config =>
+            {
+                WebAPIMapping.Initialize(config);
+                BlMapping.Initialize(config);
+                DalMapping.Initialize(config);
+            });
+            mappingConfig.CompileMappings();
+
+            services.AddSingleton<IMapper>(provider => mappingConfig.CreateMapper());
+
+
             services.AddControllers();
 
             DalModule.Register(services);
             BlModule.Register(services);
-
-            services.AddSingleton<Settings>(provider => new Settings(Configuration));
-
-            services.AddSingleton<ErrorsHandler>(provider => new ErrorsHandler());
         }
 
         public void Configure(IApplicationBuilder app)
         {
             app.UseErrorHandler();
             app.UseRouting();
-            app.UseCors("AllowAnyHeaderAndMethod");
+            app.UseCors("AllowAllToUrlsFromConfig");
 
             app.UseHttpsRedirection();
 

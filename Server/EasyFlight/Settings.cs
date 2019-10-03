@@ -18,5 +18,6 @@ namespace EasyFlight
 
 
         public string ConnectionString => configuration[nameof(ConnectionString)];
+        public string[] FriendlyUrls => configuration[nameof(FriendlyUrls)];
     }
 }
