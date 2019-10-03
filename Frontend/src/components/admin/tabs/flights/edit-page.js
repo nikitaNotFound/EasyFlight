@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react';
 
+import moment from 'moment';
+
 import Headline from '../../../common/headline';
 import SearchList from '../../../common/search-list';
 import MessageBox from '../../../common/message-box';
@@ -17,28 +19,17 @@ import * as AirportService from '../../../../services/AirportService';
 
 export default function EditPage(props) {
     const [loading, changeLoadingMode] = useState(true);
-
     const [flight, changeFlight] = useState();
-
     const [airplane, changeAirplane] = useState();
-
     const [fromPlace, changeFromPlace] = useState();
-
     const [toPlace, changeToPlace] = useState();
-
     const [desc, changeDesc] = useState();
-
-    const [departureTime, changeDepartureTime] = useState();
-    const [departureDate, changeDepartureDate] = useState();
-
+    const [departureDateTime, changeDepartureDateTime] = useState();
     const [ticketsCost, changeTicketsCost] = useState();
-
     const [suitcaseMass, changeSuitcaseMass] = useState(0);
     const [suitcaseCount, changeSuitcaseCount] = useState(0);
-
     const [carryonMass, changeCarryonMass] = useState(0);
     const [carryonCount, changeCarryonCount] = useState(0);
-
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
     useEffect(() => {
@@ -47,10 +38,8 @@ export default function EditPage(props) {
 
             changeFlight(flight);
 
-            const [toDate, toTime] = flight.departureTime.split(' ');
-
-            changeDepartureTime(toTime);
-            changeDepartureDate(toDate);
+            const dateTime = moment(flight.departurTime);
+            changeDepartureDateTime(moment(dateTime, 'YYYY-MM-DD hh:mm').format('LLL'));
 
             changeSuitcaseMass(flight.suitcaseMass);
             changeSuitcaseCount(flight.suitcaseCount);
