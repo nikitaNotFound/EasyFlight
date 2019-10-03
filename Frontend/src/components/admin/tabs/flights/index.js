@@ -5,7 +5,7 @@ import * as FlightService from '../../../../services/FlightService';
 import SearchOptions from '../../../../services/flight-models/search-options';
 import Filter from './filter';
 
-function FlightPage() {
+export default function Main() {
     const [flights, changeFlights] = useState([]);
     const [filterOptions, changeFilterOptions] = useState(new SearchOptions());
 
@@ -25,5 +25,3 @@ function FlightPage() {
         </div>
     );
 }
-
-export default FlightPage;

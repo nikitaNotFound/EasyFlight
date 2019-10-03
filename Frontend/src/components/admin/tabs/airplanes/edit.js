@@ -6,7 +6,7 @@ import Spinner from '../../../common/spinner';
 import Airplane from '../../../../services/airplane-models/airplane';
 import * as AirplaneService from '../../../../services/AirplaneService';
 
-export default function EditPage(props) {
+export default function Page(props) {
     const [loading, changeLoading] = useState(true);
     const [id, changeId] = useState();
     const [name, changeName] = useState('');

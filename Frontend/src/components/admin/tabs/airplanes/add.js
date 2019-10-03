@@ -4,7 +4,7 @@ import SeatEditor from './seat-editor';
 import MessageBox from '../../../common/message-box';
 import Airplane from '../../../../services/airplane-models/airplane';
 
-export default function AddPage() {
+export default function Add() {
     const [name, changeName] = useState('');
     const [carrying, changeCarrying] = useState(0);
     const [seats, changeSeats] = useState();

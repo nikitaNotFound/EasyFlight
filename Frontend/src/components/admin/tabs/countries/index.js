@@ -8,8 +8,7 @@ import * as PlaceService from '../../../../services/PlaceService';
 
 import SearchOptions from '../../../../services/airport-models/search-options';
 
-
-export default function CountryPage() {
+export default function Main() {
     const [countries, changeCountries] = useState([]);
     const [filterOptions, changeFilterOptions] = useState(new SearchOptions());
 

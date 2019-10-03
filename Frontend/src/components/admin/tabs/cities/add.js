@@ -9,7 +9,7 @@ import City from '../../../../services/place-models/city';
 
 import * as PlaceService from '../../../../services/PlaceService';
 
-export default function AddPage(props) {
+export default function Add(props) {
     const [loading, changeLoading] = useState(true);
     const [name, changeName] = useState();
     const [country, changeCountry] = useState(null);

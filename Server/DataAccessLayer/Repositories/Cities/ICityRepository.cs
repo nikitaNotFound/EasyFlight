@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using EasyFlight.Models.Cities;
+using DataAccessLayer.Models.Entities.Cities;
 
-namespace EasyFlight.Repositories.Cities
+namespace DataAccessLayer.Repositories.Cities
 {
-    public interface ICityRepository
+    internal interface ICityRepository
     {
         Task<City> GetAsync(int id);
         Task<IEnumerable<City>> SearchAsync(CitySearchOptions searchOptions);

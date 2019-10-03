@@ -1,18 +1,18 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState } from 'react';
 import AddButton from '../../../common/add-button';
 import Airports from './airports';
 import * as AirportService from '../../../../services/AirportService';
 import Filter from './filter';
 import SearchOptions from '../../../../services/airport-models/search-options';
 
-function AirportPage() {
+export default function Main() {
     const [airports, changeAirports] = useState([]);
     const [filterOptions, changeFilterOptions] = useState(new SearchOptions());
 
     async function onFilterApply(newFilterOptions) {
         changeFilterOptions(newFilterOptions);
 
-        const foundAirports = await AirportService.searchWithParams(newFilterOptions);
+        const foundAirports = await AirportService.search(newFilterOptions);
 
         changeAirports(foundAirports);
     }
@@ -25,5 +25,3 @@ function AirportPage() {
         </div>
     );
 }
-
-export default AirportPage;

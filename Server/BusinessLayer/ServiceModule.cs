@@ -2,9 +2,9 @@
 using EasyFlight.Services.Countries;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace EasyFlight.Services
+namespace BusinessLayer
 {
-    public static class ServiceModule
+    public static class BlModule
     {
         public static void Register(IServiceCollection services)
         {

@@ -1,10 +1,10 @@
-﻿using EasyFlight.Repositories.Cities;
-using EasyFlight.Repositories.Countries;
+﻿using DataAccessLayer.Repositories.Cities;
+using DataAccessLayer.Repositories.Countries;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace EasyFlight.Repositories
+namespace DataAccessLayer
 {
-    public static class RepositoryModule
+    public static class DalModule
     {
         public static void Register(IServiceCollection services)
         {

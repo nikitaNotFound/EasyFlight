@@ -7,7 +7,7 @@ import Airport from '../../../../services/airport-models/airport';
 import * as AirportService from '../../../../services/AirportService';
 import * as PlaceService from '../../../../services/PlaceService';
 
-export default function EditPage(props) {
+export default function Edit(props) {
     const [loading, changeLoadingMode] = useState(true);
     const [name, changeName] = useState();
     const [country, changeCountry] = useState();

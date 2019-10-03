@@ -5,7 +5,7 @@ import MessageBox from '../../../common/message-box';
 import Airport from '../../../../services/airport-models/airport';
 import * as PlaceService from '../../../../services/PlaceService';
 
-export default function AddPage() {
+export default function Add() {
     const [name, changeName] = useState();
     const [country, changeCountry] = useState();
     const [city, changeCity] = useState();

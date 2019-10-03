@@ -11,7 +11,7 @@ import * as PlaceService from '../../../../services/PlaceService';
 import SearchOptions from '../../../../services/airport-models/search-options';
 
 
-export default function CityPage() {
+export default function Main() {
     const [cities, changeCities] = useState([]);
     const [filterOptions, changeFilterOptions] = useState(new SearchOptions());
 

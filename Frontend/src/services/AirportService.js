@@ -48,30 +48,7 @@ export function getByIds(idArray) {
     );
 }
 
-export function search(searchPhrase) {
-    return new Promise(
-        (resolve, reject) => {
-            const storage = airports;
-            let airplanes = [];
-
-            const searchReg = new RegExp('^' + searchPhrase, 'ig');
-
-            for (let i = 0, len = storage.length; i < len; i++) {
-                if (storage[i].name.match(searchReg)) {
-                    airplanes.push(storage[i]);
-                }
-            }
-            //IN FUTURE HERE WILL BE CHECKING OF SUCCESFULL REQUEST TO THE API
-            if (!airplanes) {
-                reject("Error");
-            }
-
-            resolve(airplanes);
-        }
-    );
-}
-
-export async function searchWithParams(params) {
+export async function search(params) {
     return new Promise(
         async (resolve, reject) => {
             const data = airports;

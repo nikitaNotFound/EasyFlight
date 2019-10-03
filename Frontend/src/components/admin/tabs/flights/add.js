@@ -121,21 +121,21 @@ export default function AddPage() {
                         <div className="editing-params-form">
                             <div className="row">
                                 <SearchList
-                                    searchFunc={AirportService.searchWithParams}
+                                    searchFunc={AirportService.search}
                                     getItemName={getAirportName}
                                     onValueChange={changeFromPlace}
                                     currentItem={fromPlace}
                                     placeholder="From"
                                 />
                                 <SearchList
-                                    searchFunc={AirportService.searchWithParams}
+                                    searchFunc={AirportService.search}
                                     getItemName={getAirportName}
                                     onValueChange={changeToPlace}
                                     currentItem={toPlace}
                                     placeholder="To"
                                 />
                                 <SearchList
-                                    searchFunc={AirplaneService.searchWithParams}
+                                    searchFunc={AirplaneService.search}
                                     getItemName={getAirplaneName}
                                     onValueChange={changeAirplane}
                                     currentItem={airplane}

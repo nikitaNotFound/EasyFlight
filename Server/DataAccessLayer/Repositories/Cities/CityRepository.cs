@@ -1,71 +1,69 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Data.SqlClient;
 using Dapper;
+using System.Data.SqlClient;
 using System.Data;
-using EasyFlight.Models.Countries;
+using DataAccessLayer.Models.Entities.Cities;
 
-namespace EasyFlight.Repositories.Countries
+namespace DataAccessLayer.Repositories.Cities
 {
-    public class CountryRepository : ICountryRepository
+    internal class CityRepository : ICityRepository
     {
-        private Settings settings;
+        private IDalSettings settings;
 
-        public CountryRepository(Settings settings)
+        public CityRepository(IDalSettings settings)
         {
             this.settings = settings;
         }
 
 
-        public async Task<Country> GetAsync(int id)
+        public async Task<City> GetAsync(int id)
         {
             using SqlConnection db = new SqlConnection(settings.ConnectionString);
- 
-            return await db.QuerySingleOrDefaultAsync<Country>(
-                "GetCountryById",
+
+            return await db.QuerySingleOrDefaultAsync<City>(
+                "GetCityById",
                 new { id = id },
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<IEnumerable<Country>> SearchAsync(CountrySearchOptions searchOptions)
+        public async Task<IEnumerable<City>> SearchAsync(CitySearchOptions searchOptions)
         {
             using SqlConnection db = new SqlConnection(settings.ConnectionString);
 
-            return await db.QueryAsync<Country>(
-                "SearchCountries",
+            return await db.QueryAsync<City>(
+                "SeatchCities",
                 searchOptions,
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task AddAsync(Country item)
+        public async Task AddAsync(City item)
         {
             using SqlConnection db = new SqlConnection(settings.ConnectionString);
 
             await db.ExecuteAsync(
-                "AddCountry",
-                new { name = item.Name },
+                "AddCity",
+                new { name = item.Name, countryId = item.CountryId },
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task UpdateAsync(Country item)
+        public async Task UpdateAsync(City item)
         {
             using SqlConnection db = new SqlConnection(settings.ConnectionString);
 
             await db.ExecuteAsync(
-                "UpdateCountry", 
+                "UpdateCity",
                 item,
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<bool> CheckDublicateAsync(Country item)
+        public async Task<bool> CheckDublicateAsync(City item)
         {
             using SqlConnection db = new SqlConnection(settings.ConnectionString);
 
             return await db.ExecuteScalarAsync<bool>(
-                "CheckCountryDublicate",
-                new { name = item.Name },
+                "CheckCityDublicate",
+                new { name = item.Name, countryId = item.CountryId },
                 commandType: CommandType.StoredProcedure);
         }
     }

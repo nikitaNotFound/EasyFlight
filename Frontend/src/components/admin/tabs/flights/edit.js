@@ -1,7 +1,5 @@
 import React, {useState, useEffect} from 'react';
 
-import moment from 'moment';
-
 import Headline from '../../../common/headline';
 import SearchList from '../../../common/search-list';
 import MessageBox from '../../../common/message-box';
@@ -19,17 +17,28 @@ import * as AirportService from '../../../../services/AirportService';
 
 export default function EditPage(props) {
     const [loading, changeLoadingMode] = useState(true);
+
     const [flight, changeFlight] = useState();
+
     const [airplane, changeAirplane] = useState();
+
     const [fromPlace, changeFromPlace] = useState();
+
     const [toPlace, changeToPlace] = useState();
+
     const [desc, changeDesc] = useState();
-    const [departureDateTime, changeDepartureDateTime] = useState();
+
+    const [departureTime, changeDepartureTime] = useState();
+    const [departureDate, changeDepartureDate] = useState();
+
     const [ticketsCost, changeTicketsCost] = useState();
+
     const [suitcaseMass, changeSuitcaseMass] = useState(0);
     const [suitcaseCount, changeSuitcaseCount] = useState(0);
+
     const [carryonMass, changeCarryonMass] = useState(0);
     const [carryonCount, changeCarryonCount] = useState(0);
+
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
     useEffect(() => {
@@ -38,8 +47,10 @@ export default function EditPage(props) {
 
             changeFlight(flight);
 
-            const dateTime = moment(flight.departurTime);
-            changeDepartureDateTime(moment(dateTime, 'YYYY-MM-DD hh:mm').format('LLL'));
+            const [toDate, toTime] = flight.departureTime.split(' ');
+
+            changeDepartureTime(toTime);
+            changeDepartureDate(toDate);
 
             changeSuitcaseMass(flight.suitcaseMass);
             changeSuitcaseCount(flight.suitcaseCount);
@@ -148,21 +159,21 @@ export default function EditPage(props) {
                         <div className="editing-params-form">
                             <div className="row">
                                 <SearchList
-                                    searchFunc={AirportService.searchWithParams}
+                                    searchFunc={AirportService.search}
                                     getItemName={getAirportName}
                                     onValueChange={changeFromPlace}
                                     currentItem={fromPlace}
                                     placeholder="From"
                                 />
                                 <SearchList
-                                    searchFunc={AirportService.searchWithParams}
+                                    searchFunc={AirportService.search}
                                     getItemName={getAirportName}
                                     onValueChange={changeToPlace}
                                     currentItem={toPlace}
                                     placeholder="To"
                                 />
                                 <SearchList
-                                    searchFunc={AirplaneService.searchWithParams}
+                                    searchFunc={AirplaneService.search}
                                     getItemName={getAirplaneName}
                                     onValueChange={changeAirplane}
                                     currentItem={airplane}

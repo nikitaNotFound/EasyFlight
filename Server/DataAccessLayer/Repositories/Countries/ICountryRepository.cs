@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using EasyFlight.Models.Countries;
+using DataAccessLayer.Models.Entities.Countries;
 
-namespace EasyFlight.Repositories.Countries
+namespace DataAccessLayer.Repositories.Countries
 {
-    public interface ICountryRepository
+    internal interface ICountryRepository
     {
         Task<Country> GetAsync(int id);
         Task<IEnumerable<Country>> SearchAsync(CountrySearchOptions searchOptions);

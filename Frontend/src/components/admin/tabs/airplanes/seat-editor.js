@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import PropsTypes from "prop-types";
+import React, { useState } from 'react';
+import PropsTypes from 'prop-types';
 
-import SeatFloor from "./seat-floor";
-import Instruments from "./seat-editor-instruments";
-import SeatTypesEditor from "./seat-type-editor";
+import SeatFloor from './seat-floor';
+import Instruments from './seat-editor-instruments';
+import SeatTypesEditor from './seat-type-editor';
 
-import Seat from "../../../../services/airplane-models/seat";
+import Seat from '../../../../services/airplane-models/seat';
 
-import "../../../../styles/seat-editor.css";
+import '../../../../styles/seat-editor.css';
 
 function initializeSeatArray(props) {
     if (!props.seatInfo) {
