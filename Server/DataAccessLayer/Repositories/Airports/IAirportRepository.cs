@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using EasyFlight.Models.Airports;
+using DataAccessLayer.Models.DataTransfer.Airports;
 
-namespace EasyFlight.Repositories.Airports
+namespace DataAccessLayer.Repositories.Airports
 {
     public interface IAirportRepository
     {

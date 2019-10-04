@@ -5,72 +5,95 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using EasyFlight.Models.Airports;
+using WebAPI.Models.Airports;
+using BusinessLayer.Services.Airports;
+using BlAirport = BusinessLayer.Models.Airports.Airport;
+using BlAirportSearchOptions = BusinessLayer.Models.Airports.AirportSearchOptions;
+using BusinessLayer;
+using AutoMapper;
 
-namespace EasyFlight.Controllers
+namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [EnableCors("AllowAnyHeaderAndMethod")]
+    [EnableCors("AllowAllToUrlFromConfig")]
     public class AirportsController : ControllerBase
     {
-        IAirportService service = null;
-        public AirportsController(IAirportService service)
+        private IAirportService airportService;
+        private IMapper mapper;
+
+        public AirportsController(IAirportService airportService, IMapper mapper)
         {
-            this.service = service;
+            this.airportService = airportService;
+            this.mapper = mapper;
         }
 
         // GET api/airports/{id}
         [HttpGet]
         [Route("{id}")]
-        public async Task<ActionResult> Get(int id)
+        public async Task<ActionResult> GetAsync(int id)
         {
-            Airport airport = await service.GetById(id);
+            BlAirport airportBl = await airportService.GetByIdAsync(id);
+
+            var airport = mapper.Map<Airport>(airportBl);
 
             if (airport != null)
             {
-                Response.StatusCode = 200;
                 return new ObjectResult(airport);
             }
 
-            return new NoContentResult();
+            return new NotFoundResult();
         }
 
         // POST api/airports
         [HttpPost]
-        public async Task<ActionResult> Add([FromBody]Airport city)
+        public async Task<ActionResult> AddAsync([FromBody]Airport airport)
         {
-            await service.Add(city);
+            var airportBl = mapper.Map<BlAirport>(airport);
+            ResultTypes addResult = await airportService.AddAsync(airportBl);
 
-            Response.StatusCode = 201;
-            return new NoContentResult();
+            if (addResult == ResultTypes.Dublicate)
+            {
+                string message = $"{airport.Name} already exists!";
+                return new JsonResult(new ErrorInfo(message));
+            }
+
+            return new StatusCodeResult(201);
         }
 
         // PUT api/airports/{id}
         [HttpPut]
         [Route("{id}")]
-        public async Task<ActionResult> Update(int id, [FromBody]Airport city)
+        public async Task<ActionResult> UpdateAsync(int id, [FromBody]Airport airport)
         {
-            await service.Update(id, city);
+            var airportBl = mapper.Map<BlAirport>(airport);
 
-            Response.StatusCode = 202;
-            return new NoContentResult();
+            ResultTypes updateResult = await airportService.UpdateAsync(id, airportBl);
+
+            switch (updateResult)
+            {
+                case ResultTypes.Dublicate:
+                    string message = "Such name already exists!";
+                    Response.StatusCode = 409;
+                    return new JsonResult(new ErrorInfo(message));
+
+                case ResultTypes.NotFound:
+                    return new NotFoundResult();
+            }
+
+            return new AcceptedResult();
         }
 
         // POST api/airports/searches
         [HttpPost]
         [Route("searches")]
-        public async Task<ActionResult> Search([FromBody]AirportSearchOptions searchOptions)
+        public async Task<ActionResult> SearchAsync([FromBody]AirportSearchOptions searchOptions)
         {
-            var foundAirports = await service.Search(searchOptions);
+            var searchOptionsBl = mapper.Map<BlAirportSearchOptions>(searchOptions);
 
-            if (foundAirports != null)
-            {
-                Response.StatusCode = 200;
-                return new ObjectResult(foundAirports);
-            }
+            var foundAirports = await airportService.SearchAsync(searchOptionsBl);
 
-            return new NoContentResult();
+            return new ObjectResult(foundAirports);
         }
     }
 }

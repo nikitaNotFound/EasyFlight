@@ -1,4 +1,4 @@
-﻿namespace WebAPI.Models.Airports
+﻿namespace BusinessLayer.Models.Airports
 {
     public class AirportSearchOptions
     {

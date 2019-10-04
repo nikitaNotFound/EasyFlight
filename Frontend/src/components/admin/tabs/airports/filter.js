@@ -24,7 +24,11 @@ export default function Filter(props) {
             return;
         }
 
-        const newFilterOptions = new SearchOptions(name, country, city);
+        const cityId = city
+            ? city.id
+            : null;
+
+        const newFilterOptions = new SearchOptions(name, cityId);
 
         props.onFilterApply(newFilterOptions);
     }

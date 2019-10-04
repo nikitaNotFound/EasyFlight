@@ -1,6 +1,6 @@
-﻿namespace WebAPI.Models.Airports
+﻿namespace DataAccessLayer.Models.Entities.Airports
 {
-    public class Airport
+    public class AirportEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }

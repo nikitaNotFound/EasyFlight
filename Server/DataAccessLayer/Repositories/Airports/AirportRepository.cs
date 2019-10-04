@@ -3,37 +3,46 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
-using EasyFlight.Models.Airports;
+using DataAccessLayer.Models.DataTransfer.Airports;
+using DataAccessLayer.Models.Entities.Airports;
 using Dapper;
 using System.Data;
+using AutoMapper;
 
-namespace EasyFlight.Repositories.Airports
+namespace DataAccessLayer.Repositories.Airports
 {
     public class AirportRepository : IAirportRepository
     {
-        Settings settings = null;
-        public AirportRepository(Settings settings)
+        private IDalSettings settings;
+        private IMapper mapper;
+
+        public AirportRepository(IDalSettings settings, IMapper mapper)
         {
             this.settings = settings;
+            this.mapper = mapper;
         }
 
-        public async Task AddAsync(Airport item)
+        public async Task AddAsync(Airport airport)
         {
             using SqlConnection db = new SqlConnection(settings.ConnectionString);
+
+            var airportEntity = mapper.Map<AirportEntity>(airport);
 
             await db.ExecuteAsync(
                 "AddAirport",
-                new { name = item.Name, cityId = item.CityId },
+                new { name = airportEntity.Name, cityId = airportEntity.CityId },
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<bool> CheckDublicateAsync(Airport item)
+        public async Task<bool> CheckDublicateAsync(Airport airport)
         {
             using SqlConnection db = new SqlConnection(settings.ConnectionString);
 
+            var airportEntity = mapper.Map<AirportEntity>(airport);
+
             return await db.ExecuteScalarAsync<bool>(
                 "CheckAirportDublicate",
-                new { name = item.Name, cityId = item.CityId},
+                new { name = airportEntity.Name, cityId = airportEntity.CityId},
                 commandType: CommandType.StoredProcedure);
         }
 
@@ -51,9 +60,11 @@ namespace EasyFlight.Repositories.Airports
         {
             using SqlConnection db = new SqlConnection(settings.ConnectionString);
 
+            var searchOptionsDal = mapper.Map<AirportSearchOptionsEntity>(searchOptions);
+
             return await db.QueryAsync<Airport>(
                 "SearchAirports",
-                searchOptions,
+                searchOptionsDal,
                 commandType: CommandType.StoredProcedure);
         }
 
@@ -67,13 +78,15 @@ namespace EasyFlight.Repositories.Airports
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task UpdateAsync(Airport item)
+        public async Task UpdateAsync(Airport airport)
         {
             using SqlConnection db = new SqlConnection(settings.ConnectionString);
 
+            var airportDal = mapper.Map<AirportEntity>(airport);
+
             await db.ExecuteAsync(
                 "UpdateAirport",
-                new { id = item.Id, name = item.Name, cityId = item.CityId },
+                new { id = airportDal.Id, name = airportDal.Name, cityId = airportDal.CityId },
                 commandType: CommandType.StoredProcedure);
         }
     }

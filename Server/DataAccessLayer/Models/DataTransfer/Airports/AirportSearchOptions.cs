@@ -1,4 +1,4 @@
-﻿namespace WebAPI.Models.Airports
+﻿namespace DataAccessLayer.Models.DataTransfer.Airports
 {
     public class AirportSearchOptions
     {
