@@ -46,9 +46,9 @@ namespace WebAPI.Controllers
         [HttpPost]
         public async Task<ActionResult> AddAsync([FromBody] City city)
         {
-            var cityToAdd = mapper.Map<BlCity>(city);
+            var cityBl = mapper.Map<BlCity>(city);
 
-            ResultTypes addingResult = await cityService.AddAsync(cityToAdd);
+            ResultTypes addingResult = await cityService.AddAsync(cityBl);
 
             if (addingResult == ResultTypes.Dublicate)
             {
@@ -65,9 +65,9 @@ namespace WebAPI.Controllers
         [Route("{id}")]
         public async Task<ActionResult> UpdateAsync(int id, [FromBody] City city)
         {
-            var cityToUpdate = mapper.Map<City, BlCity>(city);
+            var citBl = mapper.Map<City, BlCity>(city);
 
-            ResultTypes updatingResult = await cityService.UpdateAsync(id, cityToUpdate);
+            ResultTypes updatingResult = await cityService.UpdateAsync(id, citBl);
 
             switch (updatingResult)
             {
@@ -87,9 +87,9 @@ namespace WebAPI.Controllers
         [Route("searches")]
         public async Task<ActionResult> SearchAsync([FromBody] CitySearchOptions searchOptions)
         {
-            var options = mapper.Map<CitySearchOptions, BlCitySearchOptions>(searchOptions);
+            var searchOptionsBl = mapper.Map<CitySearchOptions, BlCitySearchOptions>(searchOptions);
 
-            var foundCities = await cityService.SearchAsync(options);
+            var foundCities = await cityService.SearchAsync(searchOptionsBl);
 
             return new ObjectResult(foundCities);
         }

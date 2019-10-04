@@ -38,49 +38,49 @@ namespace DataAccessLayer.Repositories.Cities
         {
             using SqlConnection db = new SqlConnection(settings.ConnectionString);
 
-            var optionsToSearch = mapper.Map<CitySearchOptionsEntity>(searchOptions);
+            var searchOptionsEntity = mapper.Map<CitySearchOptionsEntity>(searchOptions);
 
             var foundCities = await db.QueryAsync<CityEntity>(
                 "SearchCities",
-                optionsToSearch,
+                searchOptionsEntity,
                 commandType: CommandType.StoredProcedure);
 
             return foundCities.Select(mapper.Map<City>);
         }
 
-        public async Task AddAsync(City item)
+        public async Task AddAsync(City city)
         {
             using SqlConnection db = new SqlConnection(settings.ConnectionString);
 
-            var cityToAdd = mapper.Map<CityEntity>(item);
+            var cityEntity = mapper.Map<CityEntity>(city);
 
             await db.ExecuteAsync(
                 "AddCity",
-                new { name = cityToAdd.Name, countryId = cityToAdd.CountryId },
+                new { name = cityEntity.Name, countryId = cityEntity.CountryId },
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task UpdateAsync(City item)
+        public async Task UpdateAsync(City city)
         {
             using SqlConnection db = new SqlConnection(settings.ConnectionString);
 
-            var cityToUpdate = mapper.Map<CityEntity>(item);
+            var cityEntity = mapper.Map<CityEntity>(city);
 
             await db.ExecuteAsync(
                 "UpdateCity",
-                cityToUpdate,
+                cityEntity,
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<bool> CheckDublicateAsync(City item)
+        public async Task<bool> CheckDublicateAsync(City city)
         {
             using SqlConnection db = new SqlConnection(settings.ConnectionString);
 
-            var cityToCheck = mapper.Map<CityEntity>(item);
+            var cityEntity = mapper.Map<CityEntity>(city);
 
             return await db.ExecuteScalarAsync<bool>(
                 "CheckCityDublicate",
-                new { name = cityToCheck.Name, countryId = cityToCheck.CountryId },
+                new { name = cityEntity.Name, countryId = cityEntity.CountryId },
                 commandType: CommandType.StoredProcedure);
         }
     }

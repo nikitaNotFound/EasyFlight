@@ -33,22 +33,22 @@ namespace BusinessLayer.Services.Cities
 
         public async Task<IEnumerable<City>> SearchAsync(CitySearchOptions searchOptions)
         {
-            var optionsToSearchDal = mapper.Map<DalCitySearchOptions>(searchOptions);
+            var searchOptionsDal = mapper.Map<DalCitySearchOptions>(searchOptions);
 
-            var foundCountries = await cityRepository.SearchAsync(optionsToSearchDal);
+            var foundCountries = await cityRepository.SearchAsync(searchOptionsDal);
 
             return foundCountries.Select(mapper.Map<City>);
         }
 
         public async Task<ResultTypes> AddAsync(City city)
         {
-            var cityToAddDal = mapper.Map<DalCity>(city);
+            var cityDal = mapper.Map<DalCity>(city);
 
-            bool dublicate = await cityRepository.CheckDublicateAsync(cityToAddDal);
+            bool dublicate = await cityRepository.CheckDublicateAsync(cityDal);
 
             if (!dublicate)
             {
-                await cityRepository.AddAsync(cityToAddDal);
+                await cityRepository.AddAsync(cityDal);
                 return ResultTypes.OK;
             }
 

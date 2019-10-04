@@ -31,22 +31,22 @@ namespace BusinessLayer.Services.Countries
 
         public async Task<IEnumerable<Country>> SearchAsync(CountrySearchOptions searchOptions)
         {
-            var optionsToSearchDal = mapper.Map<DalCountrySearchOptions>(searchOptions);
+            var searchOptionsDal = mapper.Map<DalCountrySearchOptions>(searchOptions);
 
-            var foundCountriesDal = await countryRepository.SearchAsync(optionsToSearchDal);
+            var foundCountriesDal = await countryRepository.SearchAsync(searchOptionsDal);
 
             return foundCountriesDal.Select(mapper.Map<Country>);
         }
 
         public async Task<ResultTypes> AddAsync(Country country)
         {
-            var countryToAddDal = mapper.Map<DalCountry>(country);
+            var countryDal = mapper.Map<DalCountry>(country);
 
-            bool dublicate = await countryRepository.CheckDublicateAsync(countryToAddDal);
+            bool dublicate = await countryRepository.CheckDublicateAsync(countryDal);
 
             if (!dublicate)
             {
-                await countryRepository.AddAsync(countryToAddDal);
+                await countryRepository.AddAsync(countryDal);
                 return ResultTypes.OK;
             }
 

@@ -39,49 +39,49 @@ namespace DataAccessLayer.Repositories.Countries
         {
             using SqlConnection db = new SqlConnection(settings.ConnectionString);
 
-            var optionsToSearch = mapper.Map<CountrySearchOptionsEntity>(searchOptions);
+            var searchOptionsEntity = mapper.Map<CountrySearchOptionsEntity>(searchOptions);
 
             var foundCountries = await db.QueryAsync<CountryEntity>(
                 "SearchCountries",
-                optionsToSearch,
+                searchOptionsEntity,
                 commandType: CommandType.StoredProcedure);
 
             return foundCountries.Select(mapper.Map<Country>);
         }
 
-        public async Task AddAsync(Country item)
+        public async Task AddAsync(Country country)
         {
             using SqlConnection db = new SqlConnection(settings.ConnectionString);
 
-            var countryToAdd = mapper.Map<CountryEntity>(item);
+            var countryEntity = mapper.Map<CountryEntity>(country);
 
             await db.ExecuteAsync(
                 "AddCountry",
-                new { name = countryToAdd.Name },
+                new { name = countryEntity.Name },
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task UpdateAsync(Country item)
+        public async Task UpdateAsync(Country country)
         {
             using SqlConnection db = new SqlConnection(settings.ConnectionString);
 
-            var countryToUpdate = mapper.Map<CountryEntity>(item);
+            var countryEntity = mapper.Map<CountryEntity>(country);
 
             await db.ExecuteAsync(
                 "UpdateCountry",
-                countryToUpdate,
+                countryEntity,
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<bool> CheckDublicateAsync(Country item)
+        public async Task<bool> CheckDublicateAsync(Country country)
         {
             using SqlConnection db = new SqlConnection(settings.ConnectionString);
 
-            var countryToCheck = mapper.Map<CountryEntity>(item);
+            var countryEntity = mapper.Map<CountryEntity>(country);
 
             return await db.ExecuteScalarAsync<bool>(
                 "CheckCountryDublicate",
-                new { name = countryToCheck.Name },
+                new { name = countryEntity.Name },
                 commandType: CommandType.StoredProcedure);
         }
     }
