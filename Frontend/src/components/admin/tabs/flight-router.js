@@ -2,8 +2,8 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import Main from './flights';
-import Add from './flights/add-page';
-import Edit from './flights/edit-page';
+import Add from './flights/add';
+import Edit from './flights/edit';
 
 export default function FlightsRouter() {
     return (

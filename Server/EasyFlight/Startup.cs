@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using WebAPI.Errors;
 using DataAccessLayer;
 using BusinessLayer;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 
 namespace WebAPI
 {
@@ -13,22 +13,23 @@ namespace WebAPI
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            settings = new Settings(Configuration);
         }
 
         public IConfiguration Configuration { get; }
 
+        Settings settings;
         public void ConfigureServices(IServiceCollection services)
         {
-            Settings settings = new Settings(Configuration);
-            services.AddSingleton<Settings>(settings);
+            services.AddSingleton<IDalSettings>(settings);
 
 
             services.AddCors(options =>
             {
-                options.AddPolicy("AllowAllToUrlsFromConfig",
+                options.AddPolicy("AllowAllToUrlFromConfig",
                     builder =>
                     {
-                        builder.WithOrigins(settings.FriendlyUrls)
+                        builder.WithOrigins(settings.FriendlyUrl)
                                             .AllowAnyHeader()
                                             .AllowAnyMethod();
                     });
@@ -54,9 +55,8 @@ namespace WebAPI
 
         public void Configure(IApplicationBuilder app)
         {
-            app.UseErrorHandler();
             app.UseRouting();
-            app.UseCors("AllowAllToUrlsFromConfig");
+            app.UseCors("AllowAllToUrlFromConfig");
 
             app.UseHttpsRedirection();
 

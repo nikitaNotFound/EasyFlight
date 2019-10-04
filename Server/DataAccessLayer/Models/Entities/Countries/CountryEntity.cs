@@ -1,7 +1,8 @@
 ﻿namespace DataAccessLayer.Models.Entities.Countries
 {
-    internal class CountrySearchOptions
+    public class CountryEntity
     {
+        public int Id { get; set; }
         public string Name { get; set; }
     }
 }

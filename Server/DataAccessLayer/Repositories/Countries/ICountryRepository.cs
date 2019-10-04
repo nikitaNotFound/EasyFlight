@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DataAccessLayer.Models.Entities.Countries;
+using DataAccessLayer.Models.DataTransfer.Countries;
 
 namespace DataAccessLayer.Repositories.Countries
 {
-    internal interface ICountryRepository
+    public interface ICountryRepository
     {
         Task<Country> GetAsync(int id);
         Task<IEnumerable<Country>> SearchAsync(CountrySearchOptions searchOptions);

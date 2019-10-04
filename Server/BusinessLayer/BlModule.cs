@@ -1,5 +1,5 @@
-﻿using EasyFlight.Services.Cities;
-using EasyFlight.Services.Countries;
+﻿using BusinessLayer.Services.Cities;
+using BusinessLayer.Services.Countries;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BusinessLayer

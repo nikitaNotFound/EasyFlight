@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react';
 
+import moment from 'moment';
+
 import Headline from '../../../common/headline';
 import SearchList from '../../../common/search-list';
 import MessageBox from '../../../common/message-box';
@@ -47,10 +49,8 @@ export default function EditPage(props) {
 
             changeFlight(flight);
 
-            const [toDate, toTime] = flight.departureTime.split(' ');
-
-            changeDepartureTime(toTime);
-            changeDepartureDate(toDate);
+            changeDepartureTime(flight.departureTime);
+            changeDepartureDate(flight.departureDate);
 
             changeSuitcaseMass(flight.suitcaseMass);
             changeSuitcaseCount(flight.suitcaseCount);
@@ -90,13 +90,12 @@ export default function EditPage(props) {
             return;
         }
 
-        const finalDepartureTime = `${departureDate} ${departureTime}`;
-
         const newFlight = new Flight(
             null,
             fromPlace.id,
             toPlace.id,
-            finalDepartureTime,
+            departureTime,
+            departureDate,
             desc,
             airplane.id,
             airplane.seats.length,

@@ -2,69 +2,78 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using EasyFlight.Models.Countries;
-using EasyFlight.Repositories.Countries;
-using EasyFlight.Errors;
+using BusinessLayer.Models.Countries;
+using DataAccessLayer.Repositories.Countries;
+using DalCountrySearchOptions = DataAccessLayer.Models.DataTransfer.Countries.CountrySearchOptions;
+using DalCountry = DataAccessLayer.Models.DataTransfer.Countries.Country;
+using AutoMapper;
 
-namespace EasyFlight.Services.Countries
+namespace BusinessLayer.Services.Countries
 {
     public class CountryService : ICountryService
     {
-        private ICountryRepository repository;
-        private ErrorsHandler errorsHandler;
+        private ICountryRepository countryRepository;
+        private IMapper mapper;
 
-        public CountryService(ICountryRepository repository, ErrorsHandler errorsHandler)
+        public CountryService(ICountryRepository countryRepository, IMapper mapper)
         {
-            this.repository = repository;
-            this.errorsHandler = errorsHandler;
+            this.countryRepository = countryRepository;
+            this.mapper = mapper;
         }
 
 
         public async Task<Country> GetByIdAsync(int id)
         {
-            var foundCountry = await repository.GetAsync(id);
+            var foundCountryDal = await countryRepository.GetAsync(id);
 
-            if (foundCountry == null)
-            {
-                errorsHandler.ReqisterError(404, null);
-            }
-
-            return foundCountry;
+            return mapper.Map<Country>(foundCountryDal);
         }
 
         public async Task<IEnumerable<Country>> SearchAsync(CountrySearchOptions searchOptions)
         {
-            return await repository.SearchAsync(searchOptions);
+            var optionsToSearchDal = mapper.Map<DalCountrySearchOptions>(searchOptions);
+
+            var foundCountriesDal = await countryRepository.SearchAsync(optionsToSearchDal);
+
+            return foundCountriesDal.Select(mapper.Map<Country>);
         }
 
-        public async Task AddAsync(Country country)
+        public async Task<ResultTypes> AddAsync(Country country)
         {
-            bool dublicate = await repository.CheckDublicateAsync(country);
+            var countryToAddDal = mapper.Map<DalCountry>(country);
+
+            bool dublicate = await countryRepository.CheckDublicateAsync(countryToAddDal);
 
             if (!dublicate)
             {
-                await repository.AddAsync(country);
+                await countryRepository.AddAsync(countryToAddDal);
+                return ResultTypes.OK;
             }
-            else
-            {
-                errorsHandler.ReqisterError(409, $"{country.Name} already exists!");
-            }
+
+            return ResultTypes.Dublicate;
         }
 
-        public async Task UpdateAsync(int id, Country country)
+        public async Task<ResultTypes> UpdateAsync(int id, Country country)
         {
-            country.Id = id;
+            var oldCountryDal = await countryRepository.GetAsync(id);
 
-            bool existing = await repository.CheckDublicateAsync(country);
+            if (oldCountryDal != null)
+            {
+                var countryDal = mapper.Map<DalCountry>(country);
+                countryDal.Id = id;
 
-            if (existing)
-            {
-                await repository.UpdateAsync(country);
+                bool dublicate = await countryRepository.CheckDublicateAsync(countryDal);
+
+                if (!dublicate)
+                {
+                    await countryRepository.UpdateAsync(countryDal);
+                    return ResultTypes.OK ;
+                }
+
+                return ResultTypes.UpdatingNameExists;
             }
-            else
-            {
-                // throw Exception
-            }
+
+            return ResultTypes.NotFound;
         }
     }
 }

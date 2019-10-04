@@ -1,71 +1,96 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
-using EasyFlight.Models.Cities;
+﻿using Microsoft.AspNetCore.Mvc;
+using WebAPI.Models.Cities;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Cors;
-using EasyFlight.Services.Cities;
+using BusinessLayer.Services.Cities;
+using BlCity = BusinessLayer.Models.Cities.City;
+using BlCitySearchOptions = BusinessLayer.Models.Cities.CitySearchOptions;
+using BusinessLayer;
+using AutoMapper;
 
-namespace EasyFlight.Controllers
+namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [EnableCors("AllowAllToUrlsFromConfig")]
+    [EnableCors("AllowAllToUrlFromConfig")]
     public class CitiesController : ControllerBase
     {
         private ICityService cityService;
+        private IMapper mapper;
 
-        public CitiesController(ICityService cityService)
+        public CitiesController(ICityService cityService, IMapper mapper)
         {
             this.cityService = cityService;
+            this.mapper = mapper;
         }
 
 
         // GET api/cities/{id}
         [HttpGet]
         [Route("{id}")]
-        public async Task<ActionResult> Get(int id)
+        public async Task<ActionResult> GetAsync(int id)
         {
-            City city = await cityService.GetByIdAsync(id);
+            BlCity blCity = await cityService.GetByIdAsync(id);
+
+            var city = mapper.Map<City>(blCity);
 
             if (city != null)
             {
-                Response.StatusCode = 200;
                 return new ObjectResult(city);
             }
 
-            return new NoContentResult();
+            return new NotFoundResult();
         }
 
         // POST api/cities
         [HttpPost]
-        public async Task<ActionResult> Add([FromBody] City city)
+        public async Task<ActionResult> AddAsync([FromBody] City city)
         {
-            await cityService.AddAsync(city);
+            var cityToAdd = mapper.Map<BlCity>(city);
 
-            Response.StatusCode = 201;
-            return new NoContentResult();
+            ResultTypes addingResult = await cityService.AddAsync(cityToAdd);
+
+            if (addingResult == ResultTypes.Dublicate)
+            {
+                string message = $"{city.Name} already exists!";
+                Response.StatusCode = 409;
+                return new JsonResult(new ErrorInfo(message));
+            }
+    
+            return new StatusCodeResult(201);
         }
 
         // PUT api/cities/{id}
         [HttpPut]
         [Route("{id}")]
-        public async Task<ActionResult> Update(int id, [FromBody] City city)
+        public async Task<ActionResult> UpdateAsync(int id, [FromBody] City city)
         {
-            await cityService.UpdateAsync(id, city);
+            var cityToUpdate = mapper.Map<City, BlCity>(city);
 
-            Response.StatusCode = 202;
-            return new NoContentResult();
+            ResultTypes updatingResult = await cityService.UpdateAsync(id, cityToUpdate);
+
+            switch (updatingResult)
+            {
+                case ResultTypes.NotFound:
+                    return new NotFoundResult();
+
+                case ResultTypes.UpdatingNameExists:
+                    Response.StatusCode = 409;
+                    return new JsonResult(new ErrorInfo("Such name already exists!"));
+            }
+
+            return new AcceptedResult();
         }
 
         // POST api/cities/searches
         [HttpPost]
         [Route("searches")]
-        public async Task<ActionResult> Search([FromBody] CitySearchOptions searchOptions)
+        public async Task<ActionResult> SearchAsync([FromBody] CitySearchOptions searchOptions)
         {
-            var foundCities = await cityService.SearchAsync(searchOptions);
+            var options = mapper.Map<CitySearchOptions, BlCitySearchOptions>(searchOptions);
 
-            Response.StatusCode = 200;
+            var foundCities = await cityService.SearchAsync(options);
+
             return new ObjectResult(foundCities);
         }
     }

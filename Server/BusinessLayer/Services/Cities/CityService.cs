@@ -1,68 +1,81 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using EasyFlight.Models.Cities;
-using EasyFlight.Repositories.Cities;
-using EasyFlight.Errors;
+using BusinessLayer.Models.Cities;
+using DalCity = DataAccessLayer.Models.DataTransfer.Cities.City;
+using DalCitySearchOptions = DataAccessLayer.Models.DataTransfer.Cities.CitySearchOptions;
+using DataAccessLayer.Repositories.Cities;
+using AutoMapper;
+using System.Linq;
 
-namespace EasyFlight.Services.Cities
+namespace BusinessLayer.Services.Cities
 {
     public class CityService : ICityService
     {
         private ICityRepository cityRepository;
-        private ErrorsHandler errorsHandler;
+        private IMapper mapper;
 
-        public CityService(ICityRepository cityRepository, ErrorsHandler errorsHandler)
+        public CityService(ICityRepository cityRepository, IMapper mapper)
         {
             this.cityRepository = cityRepository;
-            this.errorsHandler = errorsHandler;
+            this.mapper = mapper;
         }
 
 
         public async Task<City> GetByIdAsync(int id)
         {
-            var foundCity = await cityRepository.GetAsync(id);
+            var foundCityDal = await cityRepository.GetAsync(id);
 
-            if (foundCity == null)
-            {
-                errorsHandler.ReqisterError(404, null);
-            }
+            var foundCity = mapper.Map<City>(foundCityDal);
+            // some business manipulations with city
 
             return foundCity;
         }
 
         public async Task<IEnumerable<City>> SearchAsync(CitySearchOptions searchOptions)
         {
-            return await cityRepository.SearchAsync(searchOptions);
+            var optionsToSearchDal = mapper.Map<DalCitySearchOptions>(searchOptions);
+
+            var foundCountries = await cityRepository.SearchAsync(optionsToSearchDal);
+
+            return foundCountries.Select(mapper.Map<City>);
         }
 
-        public async Task AddAsync(City city)
+        public async Task<ResultTypes> AddAsync(City city)
         {
-            bool dublicate = await cityRepository.CheckDublicateAsync(city);
+            var cityToAddDal = mapper.Map<DalCity>(city);
+
+            bool dublicate = await cityRepository.CheckDublicateAsync(cityToAddDal);
 
             if (!dublicate)
             {
-                await cityRepository.AddAsync(city);
+                await cityRepository.AddAsync(cityToAddDal);
+                return ResultTypes.OK;
             }
-            else
-            {
-                errorsHandler.ReqisterError(409, $"{city.Name} already exists!");
-            }
+
+            return ResultTypes.Dublicate;
         }
 
-        public async Task UpdateAsync(int id, City country)
+        public async Task<ResultTypes> UpdateAsync(int id, City city)
         {
-            country.Id = id;
+            var oldCityDal = await cityRepository.GetAsync(id);
 
-            bool existing = await cityRepository.CheckDublicateAsync(country);
+            if (oldCityDal != null)
+            {
+                var cityDal = mapper.Map<DalCity>(city);
+                cityDal.Id = id;
 
-            if (existing)
-            {
-                await cityRepository.UpdateAsync(country);
+                bool dublicate = await cityRepository.CheckDublicateAsync(cityDal);
+
+                if (!dublicate)
+                {
+                    await cityRepository.UpdateAsync(cityDal);
+                    return ResultTypes.OK;
+                }
+
+                return ResultTypes.UpdatingNameExists;
             }
-            else
-            {
-                // throw Exception
-            }
+
+            return ResultTypes.NotFound;
         }
     }
 }

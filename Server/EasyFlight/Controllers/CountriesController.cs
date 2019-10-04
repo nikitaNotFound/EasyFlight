@@ -1,74 +1,96 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using EasyFlight.Models;
-using EasyFlight.Models.Countries;
+using WebAPI.Models.Countries;
 using Microsoft.AspNetCore.Cors;
-using EasyFlight.Services.Countries;
+using BusinessLayer.Services.Countries;
+using BlCountry = BusinessLayer.Models.Countries.Country;
+using BlCountrySearchOptions = BusinessLayer.Models.Countries.CountrySearchOptions;
+using BusinessLayer;
+using AutoMapper;
 
-namespace EasyFlight.Controllers
+namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [EnableCors("AllowAllToUrlsFromConfig")]
+    [EnableCors("AllowAllToUrlFromConfig")]
     public class CountriesController : ControllerBase
     {
-        private ICountryService service;
+        private ICountryService countryService;
+        private IMapper mapper;
 
-        public CountriesController(ICountryService service)
+        public CountriesController(ICountryService countryService, IMapper mapper)
         {
-            this.service = service;
+            this.countryService = countryService;
+            this.mapper = mapper;
         }
 
 
         // GET api/countries/{id}
         [HttpGet]
         [Route("{id}")]
-        public async Task<ActionResult> Get(int id)
+        public async Task<ActionResult> GetAsync(int id)
         {
-            Country foundCountry = await service.GetByIdAsync(id);
+            BlCountry foundCountryBl = await countryService.GetByIdAsync(id);
+
+            Country foundCountry = mapper.Map<Country>(foundCountryBl);
 
             if (foundCountry != null)
             {
-                Response.StatusCode = 200;
                 return new ObjectResult(foundCountry);
             }
 
-            return new NoContentResult();
+            return new NotFoundResult();
         }
 
         // POST api/countries
         [HttpPost]
-        public async Task<ActionResult> Add([FromBody] Country country)
+        public async Task<ActionResult> AddAsync([FromBody] Country country)
         {
-            await service.AddAsync(country);
+            BlCountry countryBl = mapper.Map<BlCountry>(country);
 
-            Response.StatusCode = 201;
-            return new NoContentResult();
+            ResultTypes addResult = await countryService.AddAsync(countryBl);
+
+            if (addResult == ResultTypes.Dublicate)
+            {
+                string message = $"{countryBl} already exists!";
+                Response.StatusCode = 409;
+                return new JsonResult(new ErrorInfo(message));
+            }
+
+            return new StatusCodeResult(201);
         }
 
         // PUT api/countries/{id}
         [HttpPut]
         [Route("{id}")]
-        public async Task<ActionResult> Update(int id, [FromBody] Country country)
+        public async Task<ActionResult> UpdateAsync(int id, [FromBody] Country country)
         {
-            await service.UpdateAsync(id, country);
+            BlCountry countryBl = mapper.Map<BlCountry>(country);
 
-            Response.StatusCode = 202;
-            return new NoContentResult();
+            ResultTypes updateResult = await countryService.UpdateAsync(id, countryBl);
+
+            switch (updateResult)
+            {
+                case ResultTypes.NotFound:
+                    return new NotFoundResult();
+
+                case ResultTypes.UpdatingNameExists:
+                    Response.StatusCode = 409;
+                    return new JsonResult(new ErrorInfo("Such name already exists!"));
+            }
+
+            return new StatusCodeResult(202);
         }
 
         // POST api/countries/searches
         [HttpPost]
         [Route("searches")]
-        public async Task<ActionResult> Search([FromBody] CountrySearchOptions searchOptions)
+        public async Task<ActionResult> SearchAsync([FromBody] CountrySearchOptions searchOptions)
         {
-            var foundCountries = await service.SearchAsync(searchOptions);
+            var searchOptionsBl = mapper.Map<BlCountrySearchOptions>(searchOptions);
 
-            Response.StatusCode = 200;
+            var foundCountries = await countryService.SearchAsync(searchOptionsBl);
+
             return new ObjectResult(foundCountries);
         }
     }

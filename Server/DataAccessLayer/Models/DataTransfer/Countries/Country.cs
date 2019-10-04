@@ -1,6 +1,6 @@
-﻿namespace DataAccessLayer.Models.Entities.Countries
+﻿namespace DataAccessLayer.Models.DataTransfer.Countries
 {
-    internal class Country
+    public class Country
     {
         public int Id { get; set; }
         public string Name { get; set; }

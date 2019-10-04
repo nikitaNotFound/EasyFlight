@@ -4,8 +4,9 @@ using System.Text;
 
 namespace DataAccessLayer.Models.Entities.Cities
 {
-    internal class CitySearchOptions
+    public class CityEntity
     {
+        public int? Id { get; set; }
         public string Name { get; set; }
         public int CountryId { get; set; }
     }

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DataAccessLayer;
 
-namespace EasyFlight
+namespace WebAPI
 {
     public class Settings : IDalSettings
     {
@@ -18,6 +18,6 @@ namespace EasyFlight
 
 
         public string ConnectionString => configuration[nameof(ConnectionString)];
-        public string[] FriendlyUrls => configuration[nameof(FriendlyUrls)];
+        public string FriendlyUrl => configuration[nameof(FriendlyUrl)];
     }
 }

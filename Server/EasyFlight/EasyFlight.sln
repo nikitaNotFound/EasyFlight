@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29009.5
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyFlight", "EasyFlight.csproj", "{8792A490-33D9-4F0D-9C36-85D746A4E583}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI", "WebAPI.csproj", "{8792A490-33D9-4F0D-9C36-85D746A4E583}"
 	ProjectSection(ProjectDependencies) = postProject
 		{93C8586C-946E-462F-BAC2-D24425C1EF09} = {93C8586C-946E-462F-BAC2-D24425C1EF09}
 		{FFF79779-7DC8-4898-894E-5228F7FAF9EB} = {FFF79779-7DC8-4898-894E-5228F7FAF9EB}
@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyFlight", "EasyFlight.cs
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccessLayer", "..\DataAccessLayer\DataAccessLayer.csproj", "{93C8586C-946E-462F-BAC2-D24425C1EF09}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLayer", "..\BusinessLayer\BusinessLayer.csproj", "{FFF79779-7DC8-4898-894E-5228F7FAF9EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLayer", "..\BusinessLayer\BusinessLayer.csproj", "{FFF79779-7DC8-4898-894E-5228F7FAF9EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
