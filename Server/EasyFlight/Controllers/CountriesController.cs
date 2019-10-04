@@ -52,7 +52,7 @@ namespace WebAPI.Controllers
 
             if (addResult == ResultTypes.Dublicate)
             {
-                string message = $"{countryBl} already exists!";
+                string message = $"{countryBl.Name} already exists!";
                 Response.StatusCode = 409;
                 return new JsonResult(new ErrorInfo(message));
             }
