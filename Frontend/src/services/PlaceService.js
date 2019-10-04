@@ -16,6 +16,7 @@ export async function getCountryById(id) {
         return response.json();
     }
 
+    console.log(response.status);
     return response.status;
 }
 
@@ -36,6 +37,7 @@ export async function searchCountries(name) {
         return response.json();
     }
 
+    console.log(response.status);
     return response.status;
 }
 
@@ -54,9 +56,10 @@ export async function addCountry(country) {
 
     if (response.ok) {
         return true;
-    } else {
-        return false;
     }
+
+    console.log(response.status);
+    return false;
 }
 
 export async function updateCountry(country) {
@@ -76,6 +79,7 @@ export async function updateCountry(country) {
        return true;
     }
 
+    console.log(response.status);
     return false;
 }
 
@@ -95,6 +99,7 @@ export async function getCityById(id) {
         return response.json();
     }
 
+    console.log(response.status);
     return response.status;
 }
 
@@ -113,9 +118,10 @@ export async function addCity(city) {
 
     if (response.ok) {
         return true;
-    } else {
-        return response.json();
     }
+
+    console.log(response.status);
+    return response.json();
 }
 
 export async function updateCity(city) {
@@ -135,6 +141,7 @@ export async function updateCity(city) {
         return true;
     }
 
+    console.log(response.status);
     return response.status;
 }
 
@@ -162,5 +169,6 @@ export async function searchCities(name, args) {
         return response.json();
     }
 
+    console.log(response.status);
     return response.status;
 }
