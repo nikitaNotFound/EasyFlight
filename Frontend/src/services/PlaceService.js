@@ -1,8 +1,8 @@
-import { API_URL } from '../config';
+import * as config  from '../config.json';
 
 export async function getCountryById(id) {
     const response = await fetch(
-        `${API_URL}/countries/${id}`,
+        `${config.API_URL}/countries/${id}`,
         {
             method: 'GET',
             mode: 'cors',
@@ -16,13 +16,12 @@ export async function getCountryById(id) {
         return response.json();
     }
 
-    console.log(response.status);
     return response.status;
 }
 
 export async function searchCountries(name) {
     const response = await fetch(
-        `${API_URL}/countries/searches`,
+        `${config.API_URL}/countries/searches`,
         {
             method: 'POST',
             mode: 'cors',
@@ -37,13 +36,12 @@ export async function searchCountries(name) {
         return response.json();
     }
 
-    console.log(response.status);
     return response.status;
 }
 
 export async function addCountry(country) {
     const response = await fetch(
-        `${API_URL}/countries`,
+        `${config.API_URL}/countries`,
         {
             method: 'POST',
             mode: 'cors',
@@ -58,13 +56,12 @@ export async function addCountry(country) {
         return true;
     }
 
-    console.log(response.status);
     return false;
 }
 
 export async function updateCountry(country) {
     const response = await fetch(
-        `${API_URL}/countries/${country.id}`,
+        `${config.API_URL}/countries/${country.id}`,
         {
             method: 'PUT',
             mode: 'cors',
@@ -79,13 +76,12 @@ export async function updateCountry(country) {
        return true;
     }
 
-    console.log(response.status);
     return false;
 }
 
 export async function getCityById(id) {
     const response = await fetch(
-        `${API_URL}/cities/${id}`,
+        `${config.API_URL}/cities/${id}`,
         {
             method: 'GET',
             mode: 'cors',
@@ -99,13 +95,12 @@ export async function getCityById(id) {
         return response.json();
     }
 
-    console.log(response.status);
     return response.status;
 }
 
 export async function addCity(city) {
     const response = await fetch(
-        `${API_URL}/cities`,
+        `${config.API_URL}/cities`,
         {
             method: 'POST',
             mode: 'cors',
@@ -120,13 +115,12 @@ export async function addCity(city) {
         return true;
     }
 
-    console.log(response.status);
     return response.json();
 }
 
 export async function updateCity(city) {
     const response = await fetch(
-        `${API_URL}/cities/${city.id}`,
+        `${config.API_URL}/cities/${city.id}`,
         {
             method: 'PUT',
             mode: 'cors',
@@ -141,7 +135,6 @@ export async function updateCity(city) {
         return true;
     }
 
-    console.log(response.status);
     return response.status;
 }
 
@@ -149,7 +142,7 @@ export async function searchCities(name, args) {
     const [countryId] = args;
 
     const response = await fetch(
-        `${API_URL}/cities/searches`,
+        `${config.API_URL}/cities/searches`,
         {
             method: 'POST',
             mode: 'cors',
@@ -169,6 +162,5 @@ export async function searchCities(name, args) {
         return response.json();
     }
 
-    console.log(response.status);
     return response.status;
 }

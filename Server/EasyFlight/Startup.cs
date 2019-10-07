@@ -10,42 +10,38 @@ namespace WebAPI
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            settings = new Settings(Configuration);
         }
 
-        public IConfiguration Configuration { get; }
 
-        Settings settings;
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IDalSettings>(settings);
+            Settings settings = new Settings(Configuration);
 
+            services.AddSingleton<IDalSettings>(settings);
 
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowAllToUrlFromConfig",
                     builder =>
                     {
-                        builder.WithOrigins(settings.FriendlyUrl)
-                                            .AllowAnyHeader()
-                                            .AllowAnyMethod();
+                        builder.WithOrigins(settings.FriendlyUrl).AllowAnyHeader().AllowAnyMethod();
                     });
             });
-
 
             var mappingConfig = new MapperConfiguration(config =>
             {
                 WebAPIMapping.Initialize(config);
                 BlMapping.Initialize(config);
-                DalMapping.Initialize(config);
             });
             mappingConfig.CompileMappings();
 
             services.AddSingleton<IMapper>(provider => mappingConfig.CreateMapper());
-
 
             services.AddControllers();
 
@@ -53,7 +49,7 @@ namespace WebAPI
             BlModule.Register(services);
         }
 
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app)  
         {
             app.UseRouting();
             app.UseCors("AllowAllToUrlFromConfig");

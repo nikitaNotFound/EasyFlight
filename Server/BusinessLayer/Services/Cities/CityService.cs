@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using BusinessLayer.Models.Cities;
-using DalCity = DataAccessLayer.Models.DataTransfer.Cities.City;
-using DalCitySearchOptions = DataAccessLayer.Models.DataTransfer.Cities.CitySearchOptions;
+using DataAccessLayer.Models.Cities;
 using DataAccessLayer.Repositories.Cities;
 using AutoMapper;
 using System.Linq;
@@ -11,64 +10,72 @@ namespace BusinessLayer.Services.Cities
 {
     public class CityService : ICityService
     {
-        private ICityRepository cityRepository;
-        private IMapper mapper;
+        private readonly ICityRepository _cityRepository;
+        private readonly IMapper _mapper;
+
 
         public CityService(ICityRepository cityRepository, IMapper mapper)
         {
-            this.cityRepository = cityRepository;
-            this.mapper = mapper;
+            _cityRepository = cityRepository;
+            _mapper = mapper;
         }
 
 
+        public async Task<IEnumerable<City>> GetAllAsync()
+        {
+            IEnumerable<CityEntity> citiesDal = await _cityRepository.GetAllAsync();
+
+            IEnumerable<City> cities = citiesDal.Select(_mapper.Map<City>);
+
+            return cities;
+        }
+
         public async Task<City> GetByIdAsync(int id)
         {
-            var foundCityDal = await cityRepository.GetAsync(id);
+            var foundCityDal = await _cityRepository.GetAsync(id);
 
-            var foundCity = mapper.Map<City>(foundCityDal);
-            // some business manipulations with city
+            var foundCity = _mapper.Map<City>(foundCityDal);
 
             return foundCity;
         }
 
         public async Task<IEnumerable<City>> SearchAsync(CitySearchOptions searchOptions)
         {
-            var searchOptionsDal = mapper.Map<DalCitySearchOptions>(searchOptions);
+            var searchOptionsDal = _mapper.Map<CitySearchOptionsEntity>(searchOptions);
 
-            var foundCountries = await cityRepository.SearchAsync(searchOptionsDal);
+            var foundCountries = await _cityRepository.SearchAsync(searchOptionsDal);
 
-            return foundCountries.Select(mapper.Map<City>);
+            return foundCountries.Select(_mapper.Map<City>);
         }
 
         public async Task<ResultTypes> AddAsync(City city)
         {
-            var cityDal = mapper.Map<DalCity>(city);
+            var cityDal = _mapper.Map<CityEntity>(city);
 
-            bool dublicate = await cityRepository.CheckDublicateAsync(cityDal);
+            bool dublicate = await _cityRepository.CheckDublicateAsync(cityDal);
 
             if (!dublicate)
             {
-                await cityRepository.AddAsync(cityDal);
+                await _cityRepository.AddAsync(cityDal);
                 return ResultTypes.OK;
             }
 
             return ResultTypes.Dublicate;
         }
 
-        public async Task<ResultTypes> UpdateAsync(int id, City city)
+        public async Task<ResultTypes> UpdateAsync(City city)
         {
-            var oldCityDal = await cityRepository.GetAsync(id);
+            var oldCityDal = await _cityRepository.GetAsync(city.Id);
 
             if (oldCityDal != null)
             {
-                var cityDal = mapper.Map<DalCity>(city);
-                cityDal.Id = id;
+                var cityDal = _mapper.Map<CityEntity>(city);
 
-                bool dublicate = await cityRepository.CheckDublicateAsync(cityDal);
+                bool dublicate = await _cityRepository.CheckDublicateAsync(cityDal);
 
                 if (!dublicate)
                 {
-                    await cityRepository.UpdateAsync(cityDal);
+                    await _cityRepository.UpdateAsync(cityDal);
                     return ResultTypes.OK;
                 }
 

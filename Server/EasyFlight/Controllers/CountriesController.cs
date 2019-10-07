@@ -7,6 +7,8 @@ using BlCountry = BusinessLayer.Models.Countries.Country;
 using BlCountrySearchOptions = BusinessLayer.Models.Countries.CountrySearchOptions;
 using BusinessLayer;
 using AutoMapper;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace WebAPI.Controllers
 {
@@ -15,24 +17,36 @@ namespace WebAPI.Controllers
     [EnableCors("AllowAllToUrlFromConfig")]
     public class CountriesController : ControllerBase
     {
-        private ICountryService countryService;
-        private IMapper mapper;
+        private readonly ICountryService _countryService;
+        private readonly IMapper _mapper;
+
 
         public CountriesController(ICountryService countryService, IMapper mapper)
         {
-            this.countryService = countryService;
-            this.mapper = mapper;
+            _countryService = countryService;
+            _mapper = mapper;
         }
 
+
+        // GET api/countries
+        [HttpGet]
+        public async Task<ActionResult> GetAllAsync()
+        {
+            IEnumerable<BlCountry> countriesBl = await _countryService.GetAllAsync();
+
+            IEnumerable<Country> countries = countriesBl.Select(_mapper.Map<Country>);
+
+            return new ObjectResult(countries);
+        }
 
         // GET api/countries/{id}
         [HttpGet]
         [Route("{id}")]
         public async Task<ActionResult> GetAsync(int id)
         {
-            BlCountry foundCountryBl = await countryService.GetByIdAsync(id);
+            BlCountry foundCountryBl = await _countryService.GetByIdAsync(id);
 
-            Country foundCountry = mapper.Map<Country>(foundCountryBl);
+            Country foundCountry = _mapper.Map<Country>(foundCountryBl);
 
             if (foundCountry != null)
             {
@@ -46,14 +60,14 @@ namespace WebAPI.Controllers
         [HttpPost]
         public async Task<ActionResult> AddAsync([FromBody] Country country)
         {
-            BlCountry countryBl = mapper.Map<BlCountry>(country);
+            BlCountry countryBl = _mapper.Map<BlCountry>(country);
 
-            ResultTypes addResult = await countryService.AddAsync(countryBl);
+            ResultTypes addResult = await _countryService.AddAsync(countryBl);
 
             if (addResult == ResultTypes.Dublicate)
             {
                 string message = $"{countryBl.Name} already exists!";
-                Response.StatusCode = 409;
+                Response.StatusCode = 400;
                 return new JsonResult(new ErrorInfo(message));
             }
 
@@ -65,9 +79,10 @@ namespace WebAPI.Controllers
         [Route("{id}")]
         public async Task<ActionResult> UpdateAsync(int id, [FromBody] Country country)
         {
-            BlCountry countryBl = mapper.Map<BlCountry>(country);
+            BlCountry countryBl = _mapper.Map<BlCountry>(country);
+            countryBl.Id = id;
 
-            ResultTypes updateResult = await countryService.UpdateAsync(id, countryBl);
+            ResultTypes updateResult = await _countryService.UpdateAsync(countryBl);
 
             switch (updateResult)
             {
@@ -75,7 +90,7 @@ namespace WebAPI.Controllers
                     return new NotFoundResult();
 
                 case ResultTypes.UpdatingNameExists:
-                    Response.StatusCode = 409;
+                    Response.StatusCode = 400;
                     return new JsonResult(new ErrorInfo("Such name already exists!"));
             }
 
@@ -87,9 +102,9 @@ namespace WebAPI.Controllers
         [Route("searches")]
         public async Task<ActionResult> SearchAsync([FromBody] CountrySearchOptions searchOptions)
         {
-            var searchOptionsBl = mapper.Map<BlCountrySearchOptions>(searchOptions);
+            var searchOptionsBl = _mapper.Map<BlCountrySearchOptions>(searchOptions);
 
-            var foundCountries = await countryService.SearchAsync(searchOptionsBl);
+            var foundCountries = await _countryService.SearchAsync(searchOptionsBl);
 
             return new ObjectResult(foundCountries);
         }

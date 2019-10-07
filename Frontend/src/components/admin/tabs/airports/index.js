@@ -5,7 +5,7 @@ import * as AirportService from '../../../../services/AirportService';
 import Filter from './filter';
 import SearchOptions from '../../../../services/airport-models/search-options';
 
-export default function Main() {
+export default function AirportList() {
     const [airports, changeAirports] = useState([]);
     const [filterOptions, changeFilterOptions] = useState(new SearchOptions());
 

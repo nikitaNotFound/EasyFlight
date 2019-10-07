@@ -9,7 +9,7 @@ import Country from '../../../../services/place-models/country';
 import * as PlaceService from '../../../../services/PlaceService';
 
 
-export default function EditPage(props) {
+export default function Edit(props) {
     const [loading, changeLoadingMode] = useState(true);
     const [name, changeName] = useState();
     const [id, changeId] = useState();

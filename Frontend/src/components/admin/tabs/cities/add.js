@@ -9,8 +9,7 @@ import City from '../../../../services/place-models/city';
 
 import * as PlaceService from '../../../../services/PlaceService';
 
-export default function Add(props) {
-    const [loading, changeLoading] = useState(true);
+export default function Add() {
     const [name, changeName] = useState();
     const [country, changeCountry] = useState(null);
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
@@ -45,14 +44,6 @@ export default function Add(props) {
 
     function getCountryName(country) {
         return country.name;
-    }
-    
-    if (loading) {
-        return (
-            <div className="list-item-action rounded editing">
-                <Spinner headline="Loading..." />
-            </div>
-        );
     }
 
     return (

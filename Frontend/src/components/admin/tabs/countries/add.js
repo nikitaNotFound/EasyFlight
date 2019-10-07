@@ -8,9 +8,8 @@ import Country from '../../../../services/place-models/country';
 import * as PlaceService from '../../../../services/PlaceService';
 
 
-export default function AddPage() {
+export default function Add() {
     const [name, changeName] = useState();
-    
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
     async function onDataSave() {
@@ -19,7 +18,7 @@ export default function AddPage() {
             return;
         }
 
-        let newCountry = new Country(0, name);
+        let newCountry = new Country(null, name);
 
         const addResult = await PlaceService.addCountry(newCountry);
 

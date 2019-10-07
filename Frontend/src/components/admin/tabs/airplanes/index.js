@@ -5,7 +5,7 @@ import * as AirplaneService from '../../../../services/AirplaneService';
 import Filter from './filter';
 import SearchOptions from '../../../../services/airplane-models/search-options';
 
-export default function Main() {
+export default function AirplaneList() {
     const [filterOptions, changeFilterOptions] = useState(new SearchOptions());
     const [airplanes, changeAirplanes] = useState([]);
 

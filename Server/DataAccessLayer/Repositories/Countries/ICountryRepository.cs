@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DataAccessLayer.Models.DataTransfer.Countries;
+using DataAccessLayer.Models.Countries;
 
 namespace DataAccessLayer.Repositories.Countries
 {
     public interface ICountryRepository
     {
-        Task<Country> GetAsync(int id);
-        Task<IEnumerable<Country>> SearchAsync(CountrySearchOptions searchOptions);
-        Task AddAsync(Country item);
-        Task UpdateAsync(Country item);
-        Task<bool> CheckDublicateAsync(Country item);
+        Task<CountryEntity> GetAsync(int id);
+        Task<IEnumerable<CountryEntity>> SearchAsync(CountrySearchOptionsEntity searchOptions);
+        Task AddAsync(CountryEntity country);
+        Task UpdateAsync(CountryEntity country);
+        Task<bool> CheckDublicateAsync(CountryEntity country);
     }
 }

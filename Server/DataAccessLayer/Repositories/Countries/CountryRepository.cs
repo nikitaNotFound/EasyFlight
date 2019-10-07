@@ -5,83 +5,79 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using Dapper;
 using System.Data;
-using DataAccessLayer.Models.DataTransfer.Countries;
-using DataAccessLayer.Models.Entities.Countries;
+using DataAccessLayer.Models.Countries;
 using AutoMapper;
 
 namespace DataAccessLayer.Repositories.Countries
 {
     internal class CountryRepository : ICountryRepository
     {
-        private IDalSettings settings;
-        private IMapper mapper;
+        private readonly IDalSettings _settings;
 
-        public CountryRepository(IDalSettings settings, IMapper mapper)
+
+        public CountryRepository(IDalSettings settings)
         {
-            this.settings = settings;
-            this.mapper = mapper;
+            _settings = settings;
         }
 
 
-        public async Task<Country> GetAsync(int id)
+        public async Task<IEnumerable<CountryEntity>> GetAllAsync()
         {
-            using SqlConnection db = new SqlConnection(settings.ConnectionString);
+            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
 
-            var foundCountry = await db.QuerySingleOrDefaultAsync<CountryEntity>(
+            return await db.QueryAsync<CountryEntity>(
+                "GetAllCountries",
+                null,
+                commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task<CountryEntity> GetAsync(int id)
+        {
+            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
+
+            return await db.QuerySingleOrDefaultAsync<CountryEntity>(
                 "GetCountryById",
                 new { id = id },
                 commandType: CommandType.StoredProcedure);
-
-            return mapper.Map<Country>(foundCountry);
         }
 
-        public async Task<IEnumerable<Country>> SearchAsync(CountrySearchOptions searchOptions)
+        public async Task<IEnumerable<CountryEntity>> SearchAsync(CountrySearchOptionsEntity searchOptions)
         {
-            using SqlConnection db = new SqlConnection(settings.ConnectionString);
+            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
 
-            var searchOptionsEntity = mapper.Map<CountrySearchOptionsEntity>(searchOptions);
-
-            var foundCountries = await db.QueryAsync<CountryEntity>(
+            return await db.QueryAsync<CountryEntity>(
                 "SearchCountries",
-                searchOptionsEntity,
+                searchOptions,
                 commandType: CommandType.StoredProcedure);
-
-            return foundCountries.Select(mapper.Map<Country>);
         }
 
-        public async Task AddAsync(Country country)
+        public async Task AddAsync(CountryEntity country)
         {
-            using SqlConnection db = new SqlConnection(settings.ConnectionString);
-
-            var countryEntity = mapper.Map<CountryEntity>(country);
+            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
 
             await db.ExecuteAsync(
                 "AddCountry",
-                new { name = countryEntity.Name },
+                new { name = country.Name },
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task UpdateAsync(Country country)
+        public async Task UpdateAsync(CountryEntity country)
         {
-            using SqlConnection db = new SqlConnection(settings.ConnectionString);
-
-            var countryEntity = mapper.Map<CountryEntity>(country);
+            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
 
             await db.ExecuteAsync(
                 "UpdateCountry",
-                countryEntity,
+                country,
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<bool> CheckDublicateAsync(Country country)
+        public async Task<bool> CheckDublicateAsync(CountryEntity country)
         {
-            using SqlConnection db = new SqlConnection(settings.ConnectionString);
-
-            var countryEntity = mapper.Map<CountryEntity>(country);
+            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
 
             return await db.ExecuteScalarAsync<bool>(
                 "CheckCountryDublicate",
-                new { name = countryEntity.Name },
+                new { name = country.Name },
                 commandType: CommandType.StoredProcedure);
         }
     }

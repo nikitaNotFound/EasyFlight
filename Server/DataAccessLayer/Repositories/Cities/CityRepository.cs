@@ -3,8 +3,7 @@ using System.Threading.Tasks;
 using Dapper;
 using System.Data.SqlClient;
 using System.Data;
-using DataAccessLayer.Models.Entities.Cities;
-using DataAccessLayer.Models.DataTransfer.Cities;
+using DataAccessLayer.Models.Cities;
 using AutoMapper;
 using System.Linq;
 
@@ -12,75 +11,72 @@ namespace DataAccessLayer.Repositories.Cities
 {
     internal class CityRepository : ICityRepository
     {
-        private IDalSettings settings;
-        private IMapper mapper;
+        private readonly IDalSettings _settings;
 
-        public CityRepository(IDalSettings settings, IMapper mapper)
+
+        public CityRepository(IDalSettings settings)
         {
-            this.settings = settings;
-            this.mapper = mapper;
+            this._settings = settings;
         }
 
 
-        public async Task<City> GetAsync(int id)
+        public async Task<IEnumerable<CityEntity>> GetAllAsync()
         {
-            using SqlConnection db = new SqlConnection(settings.ConnectionString);
+            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
 
-            var foundCity = await db.QuerySingleOrDefaultAsync<CityEntity>(
+            return await db.QueryAsync<CityEntity>(
+                "GetAllCities",
+                null,
+                commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task<CityEntity> GetAsync(int id)
+        {
+            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
+
+            return await db.QuerySingleOrDefaultAsync<CityEntity>(
                 "GetCityById",
                 new { id = id },
                 commandType: CommandType.StoredProcedure);
-
-            return mapper.Map<City>(foundCity);
         }
 
-        public async Task<IEnumerable<City>> SearchAsync(CitySearchOptions searchOptions)
+        public async Task<IEnumerable<CityEntity>> SearchAsync(CitySearchOptionsEntity searchOptions)
         {
-            using SqlConnection db = new SqlConnection(settings.ConnectionString);
+            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
 
-            var searchOptionsEntity = mapper.Map<CitySearchOptionsEntity>(searchOptions);
-
-            var foundCities = await db.QueryAsync<CityEntity>(
+            return await db.QueryAsync<CityEntity>(
                 "SearchCities",
-                searchOptionsEntity,
+                searchOptions,
                 commandType: CommandType.StoredProcedure);
-
-            return foundCities.Select(mapper.Map<City>);
         }
 
-        public async Task AddAsync(City city)
+        public async Task AddAsync(CityEntity city)
         {
-            using SqlConnection db = new SqlConnection(settings.ConnectionString);
-
-            var cityEntity = mapper.Map<CityEntity>(city);
+            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
 
             await db.ExecuteAsync(
                 "AddCity",
-                new { name = cityEntity.Name, countryId = cityEntity.CountryId },
+                new { name = city.Name, countryId = city.CountryId },
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task UpdateAsync(City city)
+        public async Task UpdateAsync(CityEntity city)
         {
-            using SqlConnection db = new SqlConnection(settings.ConnectionString);
-
-            var cityEntity = mapper.Map<CityEntity>(city);
+            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
 
             await db.ExecuteAsync(
                 "UpdateCity",
-                cityEntity,
+                city,
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<bool> CheckDublicateAsync(City city)
+        public async Task<bool> CheckDublicateAsync(CityEntity city)
         {
-            using SqlConnection db = new SqlConnection(settings.ConnectionString);
-
-            var cityEntity = mapper.Map<CityEntity>(city);
+            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
 
             return await db.ExecuteScalarAsync<bool>(
                 "CheckCityDublicate",
-                new { name = cityEntity.Name, countryId = cityEntity.CountryId },
+                new { name = city.Name, countryId = city.CountryId },
                 commandType: CommandType.StoredProcedure);
         }
     }

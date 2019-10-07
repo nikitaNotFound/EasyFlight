@@ -8,9 +8,10 @@ namespace BusinessLayer.Services.Cities
 {
     public interface ICityService
     {
+        Task<IEnumerable<City>> GetAllAsync();
         Task<City> GetByIdAsync(int id);
         Task<IEnumerable<City>> SearchAsync(CitySearchOptions searchOptions);
         Task<ResultTypes> AddAsync(City country);
-        Task<ResultTypes> UpdateAsync(int id, City city);
+        Task<ResultTypes> UpdateAsync(City city);
     }
 }

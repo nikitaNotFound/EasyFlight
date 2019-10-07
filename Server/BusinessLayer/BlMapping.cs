@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
-using DalCity = DataAccessLayer.Models.DataTransfer.Cities.City;
-using DalCitySearchOptions = DataAccessLayer.Models.DataTransfer.Cities.CitySearchOptions;
-using DalCountry = DataAccessLayer.Models.DataTransfer.Countries.Country;
-using DalCountrySearchOptions = DataAccessLayer.Models.DataTransfer.Countries.CountrySearchOptions;
+using DataAccessLayer.Models.Cities;
+using DataAccessLayer.Models.Countries;
 using BusinessLayer.Models.Cities;
 using BusinessLayer.Models.Countries;
 
@@ -12,15 +10,15 @@ namespace BusinessLayer
     {
         public static void Initialize(IMapperConfigurationExpression config)
         {
-            config.CreateMap<City, DalCity>();
-            config.CreateMap<DalCity, City>();
-            config.CreateMap<CitySearchOptions, DalCitySearchOptions>();
-            config.CreateMap<DalCitySearchOptions, CitySearchOptions>();
+            config.CreateMap<City, CityEntity>();
+            config.CreateMap<CityEntity, City>();
+            config.CreateMap<CitySearchOptions, CitySearchOptionsEntity>();
+            config.CreateMap<CitySearchOptionsEntity, CitySearchOptions>();
 
-            config.CreateMap<Country, DalCountry>();
-            config.CreateMap<DalCountry, Country>();
-            config.CreateMap<CountrySearchOptions, DalCountrySearchOptions>();
-            config.CreateMap<DalCountrySearchOptions, CountrySearchOptions>();
+            config.CreateMap<Country, CountryEntity>();
+            config.CreateMap<CountryEntity, Country>();
+            config.CreateMap<CountrySearchOptions, CountrySearchOptionsEntity>();
+            config.CreateMap<CountrySearchOptionsEntity, CountrySearchOptions>();
         }
     }
 }

@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataAccessLayer.Models.Entities.Cities
+namespace DataAccessLayer.Models.Cities
 {
-    public class CitySearchOptionsEntity
+    public class CityEntity
     {
+        public int? Id { get; set; }
         public string Name { get; set; }
         public int CountryId { get; set; }
     }

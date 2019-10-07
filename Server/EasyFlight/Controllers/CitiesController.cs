@@ -7,6 +7,8 @@ using BlCity = BusinessLayer.Models.Cities.City;
 using BlCitySearchOptions = BusinessLayer.Models.Cities.CitySearchOptions;
 using BusinessLayer;
 using AutoMapper;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace WebAPI.Controllers
 {
@@ -15,24 +17,36 @@ namespace WebAPI.Controllers
     [EnableCors("AllowAllToUrlFromConfig")]
     public class CitiesController : ControllerBase
     {
-        private ICityService cityService;
-        private IMapper mapper;
+        private readonly ICityService _cityService;
+        private readonly IMapper _mapper;
+
 
         public CitiesController(ICityService cityService, IMapper mapper)
         {
-            this.cityService = cityService;
-            this.mapper = mapper;
+            _cityService = cityService;
+            _mapper = mapper;
         }
+            
 
+        // GET api/cities
+        [HttpGet]
+        public async Task<ActionResult> GetAll()
+        {
+            IEnumerable<BlCity> citiesBl = await _cityService.GetAllAsync();
+
+            IEnumerable<City> cities = citiesBl.Select(_mapper.Map<City>);
+
+            return new ObjectResult(cities);
+        }
 
         // GET api/cities/{id}
         [HttpGet]
         [Route("{id}")]
         public async Task<ActionResult> GetAsync(int id)
         {
-            BlCity blCity = await cityService.GetByIdAsync(id);
+            BlCity blCity = await _cityService.GetByIdAsync(id);
 
-            var city = mapper.Map<City>(blCity);
+            var city = _mapper.Map<City>(blCity);
 
             if (city != null)
             {
@@ -46,14 +60,14 @@ namespace WebAPI.Controllers
         [HttpPost]
         public async Task<ActionResult> AddAsync([FromBody] City city)
         {
-            var cityBl = mapper.Map<BlCity>(city);
+            var cityBl = _mapper.Map<BlCity>(city);
 
-            ResultTypes addingResult = await cityService.AddAsync(cityBl);
+            ResultTypes addingResult = await _cityService.AddAsync(cityBl);
 
             if (addingResult == ResultTypes.Dublicate)
             {
                 string message = $"{city.Name} already exists!";
-                Response.StatusCode = 409;
+                Response.StatusCode = 400;
                 return new JsonResult(new ErrorInfo(message));
             }
     
@@ -65,9 +79,10 @@ namespace WebAPI.Controllers
         [Route("{id}")]
         public async Task<ActionResult> UpdateAsync(int id, [FromBody] City city)
         {
-            var citBl = mapper.Map<City, BlCity>(city);
+            var cityBl = _mapper.Map<City, BlCity>(city);
+            cityBl.Id = id;
 
-            ResultTypes updatingResult = await cityService.UpdateAsync(id, citBl);
+            ResultTypes updatingResult = await _cityService.UpdateAsync(cityBl);
 
             switch (updatingResult)
             {
@@ -75,7 +90,7 @@ namespace WebAPI.Controllers
                     return new NotFoundResult();
 
                 case ResultTypes.UpdatingNameExists:
-                    Response.StatusCode = 409;
+                    Response.StatusCode = 400;
                     return new JsonResult(new ErrorInfo("Such name already exists!"));
             }
 
@@ -87,9 +102,11 @@ namespace WebAPI.Controllers
         [Route("searches")]
         public async Task<ActionResult> SearchAsync([FromBody] CitySearchOptions searchOptions)
         {
-            var searchOptionsBl = mapper.Map<CitySearchOptions, BlCitySearchOptions>(searchOptions);
+            var searchOptionsBl = _mapper.Map<CitySearchOptions, BlCitySearchOptions>(searchOptions);
 
-            var foundCities = await cityService.SearchAsync(searchOptionsBl);
+            var foundCitiesBl = await _cityService.SearchAsync(searchOptionsBl);
+
+            IEnumerable<City> foundCities = foundCitiesBl.Select(_mapper.Map<City>);
 
             return new ObjectResult(foundCities);
         }

@@ -17,7 +17,7 @@ import * as AirplaneService from '../../../../services/AirplaneService';
 import * as FlightService from '../../../../services/FlightService';
 import * as AirportService from '../../../../services/AirportService';
 
-export default function EditPage(props) {
+export default function Edit(props) {
     const [loading, changeLoadingMode] = useState(true);
 
     const [flight, changeFlight] = useState();
