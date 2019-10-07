@@ -21,14 +21,13 @@ export async function getCountryById(id) {
 
 export async function searchCountries(name) {
     const response = await fetch(
-        `${config.API_URL}/countries/searches`,
+        `${config.API_URL}/countries/filters?name=${name}`,
         {
-            method: 'POST',
+            method: 'GET',
             mode: 'cors',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({name: name})
         }
     );
 
@@ -140,21 +139,19 @@ export async function updateCity(city) {
 
 export async function searchCities(name, args) {
     const [countryId] = args;
+    
+    const urlPath = !name
+        ? `countries/${countryId}/cities`
+        : `countries/${countryId}/cities/${name}`
 
     const response = await fetch(
-        `${config.API_URL}/cities/searches`,
+        `${config.API_URL}/${urlPath}`,
         {
-            method: 'POST',
+            method: 'GET',
             mode: 'cors',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(
-                {
-                    name: name,
-                    countryId: countryId
-                }
-            )
         }
     );
 

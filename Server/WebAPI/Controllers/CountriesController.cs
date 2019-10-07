@@ -56,9 +56,9 @@ namespace WebAPI.Controllers
             return new NotFoundResult();
         }
 
-        // GET api/countries/filter{?name}
+        // GET api/countries/filters{?name}
         [HttpGet]
-        [Route("filter")]
+        [Route("filters")]
         public async Task<ActionResult> GetAsync(string name)
         {
             IEnumerable<BlCountry> countriesBl = await _countryService.GetByNameAsync(name);
