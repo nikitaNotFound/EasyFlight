@@ -7,7 +7,7 @@ namespace WebAPI.Models
 {
     public class Country
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public string Name { get; set; }
     }
 }

@@ -52,7 +52,7 @@ namespace WebAPI
         public void Configure(IApplicationBuilder app)  
         {
             app.UseRouting();
-            app.UseCors("AllowAllToUrlFromConfig");
+            app.UseCors("CorsPolicy");
 
             app.UseHttpsRedirection();
 
