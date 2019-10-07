@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BusinessLayer.Models.Countries;
+using BusinessLayer.Models;
 using DataAccessLayer.Repositories.Countries;
-using DataAccessLayer.Models.Countries;
+using DataAccessLayer.Models;
 using AutoMapper;
 
 namespace BusinessLayer.Services.Countries
@@ -33,23 +33,35 @@ namespace BusinessLayer.Services.Countries
 
         public async Task<Country> GetByIdAsync(int id)
         {
-            var foundCountryDal = await _countryRepository.GetAsync(id);
+            CountryEntity foundCountryDal = await _countryRepository.GetAsync(id);
 
             return _mapper.Map<Country>(foundCountryDal);
         }
 
-        public async Task<IEnumerable<Country>> SearchAsync(CountrySearchOptions searchOptions)
+        public async Task<IEnumerable<Country>> GetByNameAsync(string name)
         {
-            var searchOptionsDal = _mapper.Map<CountrySearchOptionsEntity>(searchOptions);
-
-            var foundCountriesDal = await _countryRepository.SearchAsync(searchOptionsDal);
+            IEnumerable<CountryEntity> foundCountriesDal = await _countryRepository.GetByNameAsync(name);
 
             return foundCountriesDal.Select(_mapper.Map<Country>);
         }
 
+        public async Task<IEnumerable<City>> GetCitiesAsync(int id)
+        {
+            IEnumerable<CityEntity> citiesDal = await _countryRepository.GetCitiesAsync(id);
+
+            return citiesDal.Select(_mapper.Map<City>);
+        }
+
+        public async Task<IEnumerable<City>> GetCitiesByNameAsync(int id, string name)
+        {
+            IEnumerable<CityEntity> citiesDal = await _countryRepository.GetCitiesByNameAsync(id, name);
+
+            return citiesDal.Select(_mapper.Map<City>);
+        }
+
         public async Task<ResultTypes> AddAsync(Country country)
         {
-            var countryDal = _mapper.Map<CountryEntity>(country);
+            CountryEntity countryDal = _mapper.Map<CountryEntity>(country);
 
             bool dublicate = await _countryRepository.CheckDublicateAsync(countryDal);
 
@@ -64,11 +76,11 @@ namespace BusinessLayer.Services.Countries
 
         public async Task<ResultTypes> UpdateAsync(Country country)
         {
-            var oldCountryDal = await _countryRepository.GetAsync(country.Id);
+            CountryEntity oldCountryDal = await _countryRepository.GetAsync(country.Id);
 
             if (oldCountryDal != null)
             {
-                var countryDal = _mapper.Map<CountryEntity>(country);
+                CountryEntity countryDal = _mapper.Map<CountryEntity>(country);
 
                 bool dublicate = await _countryRepository.CheckDublicateAsync(countryDal);
 
@@ -78,7 +90,7 @@ namespace BusinessLayer.Services.Countries
                     return ResultTypes.OK ;
                 }
 
-                return ResultTypes.UpdatingNameExists;
+                return ResultTypes.Dublicate;
             }
 
             return ResultTypes.NotFound;

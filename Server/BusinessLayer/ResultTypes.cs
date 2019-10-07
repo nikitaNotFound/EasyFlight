@@ -6,9 +6,8 @@ namespace BusinessLayer
 {
     public enum ResultTypes
     {
+        OK,
         NotFound,
-        UpdatingNameExists,
-        Dublicate,
-        OK
+        Dublicate
     }
 }

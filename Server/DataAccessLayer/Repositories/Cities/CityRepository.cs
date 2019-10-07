@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Dapper;
 using System.Data.SqlClient;
 using System.Data;
-using DataAccessLayer.Models.Cities;
+using DataAccessLayer.Models;
 using AutoMapper;
 using System.Linq;
 
@@ -37,16 +37,6 @@ namespace DataAccessLayer.Repositories.Cities
             return await db.QuerySingleOrDefaultAsync<CityEntity>(
                 "GetCityById",
                 new { id = id },
-                commandType: CommandType.StoredProcedure);
-        }
-
-        public async Task<IEnumerable<CityEntity>> SearchAsync(CitySearchOptionsEntity searchOptions)
-        {
-            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
-
-            return await db.QueryAsync<CityEntity>(
-                "SearchCities",
-                searchOptions,
                 commandType: CommandType.StoredProcedure);
         }
 

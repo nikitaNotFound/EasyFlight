@@ -1,4 +1,4 @@
-﻿namespace DataAccessLayer.Models.Countries
+﻿namespace DataAccessLayer.Models
 {
     public class CountryEntity
     {

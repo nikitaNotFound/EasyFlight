@@ -1,4 +1,4 @@
-﻿using BusinessLayer.Models.Countries;
+﻿using BusinessLayer.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,9 @@ namespace BusinessLayer.Services.Countries
     {
         Task<IEnumerable<Country>> GetAllAsync();
         Task<Country> GetByIdAsync(int id);
-        Task<IEnumerable<Country>> SearchAsync(CountrySearchOptions searchOptions);
+        Task<IEnumerable<Country>> GetByNameAsync(string name);
+        Task<IEnumerable<City>> GetCitiesAsync(int id);
+        Task<IEnumerable<City>> GetCitiesByNameAsync(int id, string name);
         Task<ResultTypes> AddAsync(Country country);
         Task<ResultTypes> UpdateAsync(Country country);
     }

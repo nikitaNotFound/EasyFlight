@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using WebAPI.Models.Countries;
+using WebAPI.Models;
 using Microsoft.AspNetCore.Cors;
 using BusinessLayer.Services.Countries;
-using BlCountry = BusinessLayer.Models.Countries.Country;
-using BlCountrySearchOptions = BusinessLayer.Models.Countries.CountrySearchOptions;
+using BlCountry = BusinessLayer.Models.Country;
+using BlCity = BusinessLayer.Models.City;
 using BusinessLayer;
 using AutoMapper;
 using System.Collections.Generic;
@@ -14,7 +14,7 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [EnableCors("AllowAllToUrlFromConfig")]
+    [EnableCors("CorsPolicy")]
     public class CountriesController : ControllerBase
     {
         private readonly ICountryService _countryService;
@@ -56,6 +56,42 @@ namespace WebAPI.Controllers
             return new NotFoundResult();
         }
 
+        // GET api/countries/filter{?name}
+        [HttpGet]
+        [Route("filter")]
+        public async Task<ActionResult> GetAsync(string name)
+        {
+            IEnumerable<BlCountry> countriesBl = await _countryService.GetByNameAsync(name);
+
+            IEnumerable<Country> countries = countriesBl.Select(_mapper.Map<Country>);
+
+            return new ObjectResult(countries);
+        }
+
+        // GET api/countries/{id}/cities
+        [HttpGet]
+        [Route("{id}/cities")]
+        public async Task<ActionResult> GetCities(int id)
+        {
+            IEnumerable<BlCity> citiesBl = await _countryService.GetCitiesAsync(id);
+
+            IEnumerable<City> cities = citiesBl.Select(_mapper.Map<City>) ;
+
+            return new ObjectResult(cities);
+        }
+
+        // GET api/countries/{id}/cities{name}
+        [HttpGet]
+        [Route("{id}/cities/{name}")]
+        public async Task<ActionResult> GetCitiesByName(int id, string name)
+        {
+            IEnumerable<BlCity> citiesBl = await _countryService.GetCitiesByNameAsync(id, name);
+
+            IEnumerable<City> cities = citiesBl.Select(_mapper.Map<City>);
+
+            return new ObjectResult(cities);
+        }
+
         // POST api/countries
         [HttpPost]
         public async Task<ActionResult> AddAsync([FromBody] Country country)
@@ -67,20 +103,17 @@ namespace WebAPI.Controllers
             if (addResult == ResultTypes.Dublicate)
             {
                 string message = $"{countryBl.Name} already exists!";
-                Response.StatusCode = 400;
-                return new JsonResult(new ErrorInfo(message));
+                return new BadRequestObjectResult(new ErrorInfo(message));
             }
 
             return new StatusCodeResult(201);
         }
 
-        // PUT api/countries/{id}
+        // PUT api/countries
         [HttpPut]
-        [Route("{id}")]
-        public async Task<ActionResult> UpdateAsync(int id, [FromBody] Country country)
+        public async Task<ActionResult> UpdateAsync([FromBody] Country country)
         {
             BlCountry countryBl = _mapper.Map<BlCountry>(country);
-            countryBl.Id = id;
 
             ResultTypes updateResult = await _countryService.UpdateAsync(countryBl);
 
@@ -89,24 +122,11 @@ namespace WebAPI.Controllers
                 case ResultTypes.NotFound:
                     return new NotFoundResult();
 
-                case ResultTypes.UpdatingNameExists:
-                    Response.StatusCode = 400;
-                    return new JsonResult(new ErrorInfo("Such name already exists!"));
+                case ResultTypes.Dublicate:
+                    return new BadRequestObjectResult(new ErrorInfo("Such name already exists!"));
             }
 
             return new StatusCodeResult(202);
-        }
-
-        // POST api/countries/searches
-        [HttpPost]
-        [Route("searches")]
-        public async Task<ActionResult> SearchAsync([FromBody] CountrySearchOptions searchOptions)
-        {
-            var searchOptionsBl = _mapper.Map<BlCountrySearchOptions>(searchOptions);
-
-            var foundCountries = await _countryService.SearchAsync(searchOptionsBl);
-
-            return new ObjectResult(foundCountries);
         }
     }
 }

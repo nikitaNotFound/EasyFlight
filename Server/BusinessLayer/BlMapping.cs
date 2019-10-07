@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
-using DataAccessLayer.Models.Cities;
-using DataAccessLayer.Models.Countries;
-using BusinessLayer.Models.Cities;
-using BusinessLayer.Models.Countries;
+using DataAccessLayer.Models;
+using BusinessLayer.Models;
 
 namespace BusinessLayer
 {
@@ -12,13 +10,9 @@ namespace BusinessLayer
         {
             config.CreateMap<City, CityEntity>();
             config.CreateMap<CityEntity, City>();
-            config.CreateMap<CitySearchOptions, CitySearchOptionsEntity>();
-            config.CreateMap<CitySearchOptionsEntity, CitySearchOptions>();
 
             config.CreateMap<Country, CountryEntity>();
             config.CreateMap<CountryEntity, Country>();
-            config.CreateMap<CountrySearchOptions, CountrySearchOptionsEntity>();
-            config.CreateMap<CountrySearchOptionsEntity, CountrySearchOptions>();
         }
     }
 }

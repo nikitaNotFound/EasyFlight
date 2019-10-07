@@ -1,4 +1,4 @@
-﻿namespace BusinessLayer.Models.Cities
+﻿namespace BusinessLayer.Models
 {
     public class City
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using BusinessLayer.Models.Cities;
-using DataAccessLayer.Models.Cities;
+using BusinessLayer.Models;
+using DataAccessLayer.Models;
 using DataAccessLayer.Repositories.Cities;
 using AutoMapper;
 using System.Linq;
@@ -39,15 +39,6 @@ namespace BusinessLayer.Services.Cities
             return foundCity;
         }
 
-        public async Task<IEnumerable<City>> SearchAsync(CitySearchOptions searchOptions)
-        {
-            var searchOptionsDal = _mapper.Map<CitySearchOptionsEntity>(searchOptions);
-
-            var foundCountries = await _cityRepository.SearchAsync(searchOptionsDal);
-
-            return foundCountries.Select(_mapper.Map<City>);
-        }
-
         public async Task<ResultTypes> AddAsync(City city)
         {
             var cityDal = _mapper.Map<CityEntity>(city);
@@ -79,7 +70,7 @@ namespace BusinessLayer.Services.Cities
                     return ResultTypes.OK;
                 }
 
-                return ResultTypes.UpdatingNameExists;
+                return ResultTypes.Dublicate;
             }
 
             return ResultTypes.NotFound;

@@ -1,4 +1,4 @@
-﻿namespace BusinessLayer.Models.Countries
+﻿namespace BusinessLayer.Models
 {
     public class Country
     {

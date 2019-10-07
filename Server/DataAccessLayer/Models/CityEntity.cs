@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DataAccessLayer.Models.Cities
+﻿namespace DataAccessLayer.Models
 {
     public class CityEntity
     {

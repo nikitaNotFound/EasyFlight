@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebAPI.Models.Cities
+namespace WebAPI.Models
 {
-    public class CitySearchOptions
+    public class Country
     {
+        public int Id { get; set; }
         public string Name { get; set; }
-        public int CountryId { get; set; }
     }
 }

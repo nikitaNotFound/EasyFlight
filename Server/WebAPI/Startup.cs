@@ -27,7 +27,7 @@ namespace WebAPI
 
             services.AddCors(options =>
             {
-                options.AddPolicy("AllowAllToUrlFromConfig",
+                options.AddPolicy("CorsPolicy",
                     builder =>
                     {
                         builder.WithOrigins(settings.FriendlyUrl).AllowAnyHeader().AllowAnyMethod();

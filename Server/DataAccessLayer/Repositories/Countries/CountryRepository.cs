@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using Dapper;
 using System.Data;
-using DataAccessLayer.Models.Countries;
+using DataAccessLayer.Models;
 using AutoMapper;
 
 namespace DataAccessLayer.Repositories.Countries
@@ -41,13 +41,33 @@ namespace DataAccessLayer.Repositories.Countries
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<IEnumerable<CountryEntity>> SearchAsync(CountrySearchOptionsEntity searchOptions)
+        public async Task<IEnumerable<CountryEntity>> GetByNameAsync(string name)
         {
             using SqlConnection db = new SqlConnection(_settings.ConnectionString);
 
             return await db.QueryAsync<CountryEntity>(
                 "SearchCountries",
-                searchOptions,
+                new { name = name },
+                commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task<IEnumerable<CityEntity>> GetCitiesAsync(int id)
+        {
+            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
+
+            return await db.QueryAsync<CityEntity>(
+                "GetCountryCities",
+                new { id = id },
+                commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task<IEnumerable<CityEntity>> GetCitiesByNameAsync(int id, string name)
+        {
+            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
+
+            return await db.QueryAsync<CityEntity>(
+                "GetCountryCitiesByName",
+                new { id = id, name = name },
                 commandType: CommandType.StoredProcedure);
         }
 
