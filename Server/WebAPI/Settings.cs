@@ -9,15 +9,15 @@ namespace WebAPI
 {
     public class Settings : IDalSettings
     {
-        private IConfiguration Configuration;
+        private IConfiguration _configuration;
 
         public Settings(IConfiguration configuration)
         {
-            this.Configuration = configuration;
+            this._configuration = configuration;
         }
 
 
-        public string ConnectionString => Configuration[nameof(ConnectionString)];
-        public string AppUrl => Configuration[nameof(AppUrl)];
+        public string ConnectionString => _configuration[nameof(ConnectionString)];
+        public string AppUrl => _configuration[nameof(AppUrl)];
     }
 }
