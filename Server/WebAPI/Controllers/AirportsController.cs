@@ -22,8 +22,9 @@ namespace WebAPI.Controllers
     [EnableCors("CorsPolicy")]
     public class AirportsController : ControllerBase
     {
-        private IAirportService airportService;
-        private IMapper mapper;
+        private readonly IAirportService _airportService;
+        private readonly IMapper _mapper;
+
 
         
         public AirportsController(IAirportService airportService, IMapper mapper)
@@ -52,6 +53,7 @@ namespace WebAPI.Controllers
 
             return Ok(airports);
         }
+
 
         // GET api/airports/{id}
         [HttpGet]
