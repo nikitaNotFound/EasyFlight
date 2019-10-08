@@ -16,7 +16,7 @@ namespace DataAccessLayer.Repositories.Cities
 
         public CityRepository(IDalSettings settings)
         {
-            this._settings = settings;
+            _settings = settings;
         }
 
 
