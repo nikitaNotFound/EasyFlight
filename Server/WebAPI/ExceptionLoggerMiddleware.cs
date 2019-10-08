@@ -3,28 +3,33 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using NLog;
+using Serilog;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 
 namespace WebAPI
 {
     public static class ExceptionLoggerExtensions
     {
-        public static IApplicationBuilder UseExceptionLogger(this IApplicationBuilder builder)
+        public static IApplicationBuilder UseExceptionLogger(this IApplicationBuilder builder, IConfiguration config)
         {
-            return builder.UseMiddleware<ExceptionLoggerMiddleware>();
+            return builder.UseMiddleware<ExceptionLoggerMiddleware>(config);
         }
     }
 
     public class ExceptionLoggerMiddleware
     {
-        private readonly static Logger _logger = LogManager.GetCurrentClassLogger();
+        private readonly IConfiguration _configuration;
         private readonly RequestDelegate _next;
 
 
-        public ExceptionLoggerMiddleware(RequestDelegate next)
+        public ExceptionLoggerMiddleware(RequestDelegate next, IConfiguration config)
         {
             _next = next;
+            _configuration = config;
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(_configuration)
+                .CreateLogger();
         }
 
 
@@ -36,7 +41,7 @@ namespace WebAPI
             }
             catch (Exception ex)
             {
-                _logger.Error(ex.Message);
+                Log.Error(ex.Message);
             }
         }
     }

@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using DataAccessLayer;
 using BusinessLayer;
 using AutoMapper;
-using Microsoft.AspNetCore.Http;
+using System;
 
 namespace WebAPI
 {
@@ -49,11 +49,13 @@ namespace WebAPI
 
             DalModule.Register(services);
             BlModule.Register(services);
+
+            Environment.CurrentDirectory = AppContext.BaseDirectory;
         }
 
         public void Configure(IApplicationBuilder app)
         {
-            app.UseExceptionLogger();
+            app.UseExceptionLogger(Configuration);
 
             app.UseRouting();
             app.UseCors("CorsPolicy");
