@@ -58,7 +58,16 @@ namespace DataAccessLayer.Repositories.Cities
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task UpdateAsync(CityEntity city)
+        public async Task<IEnumerable<Airport>> GetAirportsAsync(int id)
+        {
+            IEnumerable<AirportEntity> airportsDal = await _cityRepository.GetAirportsAsync(id);
+
+            IEnumerable<Airport> airports = airportsDal.Select(_mapper.Map<Airport>);
+
+            return airports;
+        }
+
+        public async Task<ResultTypes> AddAsync(City city)
         {
             using SqlConnection db = new SqlConnection(_settings.ConnectionString);
 
