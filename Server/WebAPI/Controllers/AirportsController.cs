@@ -1,12 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using WebAPI.Models;
+using WebAPI.Models.Airports;
 using BusinessLayer.Services.Airports;
-using BlAirport = BusinessLayer.Models.Airport;
+using BlAirport = BusinessLayer.Models.Airports.Airport;
+using BlAirportSearchOptions = BusinessLayer.Models.Airports.AirportSearchOptions;
 using BusinessLayer;
 using AutoMapper;
 using Common;
@@ -20,8 +22,8 @@ namespace WebAPI.Controllers
     [EnableCors("CorsPolicy")]
     public class AirportsController : ControllerBase
     {
-        private readonly IAirportService _airportService;
-        private readonly IMapper _mapper;
+        private IAirportService airportService;
+        private IMapper mapper;
 
         
         public AirportsController(IAirportService airportService, IMapper mapper)
@@ -56,9 +58,9 @@ namespace WebAPI.Controllers
         [Route("{id}")]
         public async Task<ActionResult> GetAsync(int id)
         {
-            BlAirport airportBl = await _airportService.GetByIdAsync(id);
+            BlAirport airportBl = await airportService.GetByIdAsync(id);
 
-            Airport airport = _mapper.Map<Airport>(airportBl);
+            var airport = mapper.Map<Airport>(airportBl);
 
             if (airport == null)
             {
@@ -73,26 +75,25 @@ namespace WebAPI.Controllers
         [Authorize(nameof(AccountRole.Admin))]
         public async Task<ActionResult> AddAsync([FromBody]Airport airport)
         {
-            BlAirport airportBl = _mapper.Map<BlAirport>(airport);
-
-            ResultTypes addResult = await _airportService.AddAsync(airportBl);
+            var airportBl = mapper.Map<BlAirport>(airport);
+            ResultTypes addResult = await airportService.AddAsync(airportBl);
 
             if (addResult == ResultTypes.Duplicate)
             {
                 return BadRequest();
             }
 
-            return Ok();
+            return new StatusCodeResult(201);
         }
 
-        // PUT api/airports
+        // PUT api/airports/{id}
         [HttpPut]
         [Authorize(nameof(AccountRole.Admin))]
         public async Task<ActionResult> UpdateAsync([FromBody] Airport airport)
         {
-            BlAirport airportBl = _mapper.Map<BlAirport>(airport);
+            var airportBl = mapper.Map<BlAirport>(airport);
 
-            ResultTypes updateResult = await _airportService.UpdateAsync(airportBl);
+            ResultTypes updateResult = await airportService.UpdateAsync(id, airportBl);
 
             switch (updateResult)
             {
@@ -100,10 +101,22 @@ namespace WebAPI.Controllers
                     return BadRequest();
 
                 case ResultTypes.NotFound:
-                    return NotFound();
+                    return new NotFoundResult();
             }
 
-            return Ok();
+            return new AcceptedResult();
+        }
+
+        // POST api/airports/searches
+        [HttpPost]
+        [Route("searches")]
+        public async Task<ActionResult> SearchAsync([FromBody]AirportSearchOptions searchOptions)
+        {
+            var searchOptionsBl = mapper.Map<BlAirportSearchOptions>(searchOptions);
+
+            var foundAirports = await airportService.SearchAsync(searchOptionsBl);
+
+            return new ObjectResult(foundAirports);
         }
     }
 }
