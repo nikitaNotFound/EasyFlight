@@ -10,7 +10,7 @@ import * as PlaceService from '../../../../services/PlaceService';
 import SearchOptions from '../../../../services/airport-models/search-options';
 
 export default function CityList() {
-    const [cities, changeCities] = useState([]);
+    const [cities, changeCities] = useState(null);
     const [filterOptions, changeFilterOptions] = useState(new SearchOptions());
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
 

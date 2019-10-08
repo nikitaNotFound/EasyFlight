@@ -14,14 +14,13 @@ export async function formResult(response) {
         var responseBody = await response.json();
     } catch {}
 
-    console.log(responseBody);
     if (response.ok) {
         return new RequestResult(true, responseBody);
     } else {
         let errorInfo = getErrorInfo(response.status);
 
-        if (responseBody.message) {
-            errorInfo += ". " + responseBody.message;
+        if (responseBody) {
+            errorInfo += ". " + responseBody;
         }
 
         return new RequestResult(false, errorInfo);

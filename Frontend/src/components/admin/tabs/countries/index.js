@@ -10,7 +10,7 @@ import * as PlaceService from '../../../../services/PlaceService';
 import SearchOptions from '../../../../services/airport-models/search-options';
 
 export default function CountryList() {
-    const [countries, changeCountries] = useState([]);
+    const [countries, changeCountries] = useState(null);
     const [filterOptions, changeFilterOptions] = useState(new SearchOptions());
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
 

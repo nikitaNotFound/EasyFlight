@@ -23,10 +23,10 @@ export default function Add() {
 
         const insertResult = await PlaceService.addCity(newCity);
 
-        if (insertRequest.successful === true) {
+        if (insertResult.successful === true) {
             changeMessageBoxValue('Added!');
         } else {
-            changeMessageBoxValue(insertRequest.value);
+            changeMessageBoxValue(insertResult.value);
         }
     }
 

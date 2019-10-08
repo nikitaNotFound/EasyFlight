@@ -8,7 +8,7 @@ export function getCountryById(id) {
     return new Promise(async resolve => {
         try {
             var response = await fetch(
-                `$}/api/countries/${id}`,
+                `${config.API_URL}/countries/${id}`,
                 {
                     method: "GET",
                     mode: "cors",
@@ -92,7 +92,7 @@ export function getCityById(id) {
     return new Promise(async resolve => {
         try {
             const response = await fetch(
-                `${config.API_URL}/api/cities/${id}`, 
+                `${config.API_URL}/cities/${id}`,
                 {
                     method: "GET",
                     mode: "cors",
@@ -113,11 +113,13 @@ export function getCityById(id) {
 export function addCity(city) {
     return new Promise(async resolve => {
         try {
-            const response = await fetch(`${config.API_URL}/api/cities`, {
-                method: "POST",
-                mode: "cors",
-                headers: {
-                    "Content-Type": "application/json"
+            const response = await fetch(
+                `${config.API_URL}/cities`,
+                {
+                    method: "POST",
+                    mode: "cors",
+                    headers: {
+                        "Content-Type": "application/json"
                 },
                 body: JSON.stringify(city)
             });
