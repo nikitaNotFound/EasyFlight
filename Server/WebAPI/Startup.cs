@@ -30,7 +30,9 @@ namespace WebAPI
                 options.AddPolicy("CorsPolicy",
                     builder =>
                     {
-                        builder.WithOrigins(settings.FriendlyUrl).AllowAnyHeader().AllowAnyMethod();
+                        builder.WithOrigins(settings.AppUrl)
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
                     });
             });
 
