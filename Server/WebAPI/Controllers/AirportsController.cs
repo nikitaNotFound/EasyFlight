@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using WebAPI.Models.Airports;
+using WebAPI.Models;
 using BusinessLayer.Services.Airports;
 using BlAirport = BusinessLayer.Models.Airport;
 using BusinessLayer;

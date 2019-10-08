@@ -1,4 +1,4 @@
-﻿namespace WebAPI.Models.Airports
+﻿namespace WebAPI.Models
 {
     public class Airport
     {
