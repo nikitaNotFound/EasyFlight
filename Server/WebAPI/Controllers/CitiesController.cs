@@ -29,13 +29,13 @@ namespace WebAPI.Controllers
 
         // GET api/cities
         [HttpGet]
-        public async Task<ActionResult> GetAll()
+        public async Task<ActionResult> GetAllAsync()
         {
             IEnumerable<BlCity> citiesBl = await _cityService.GetAllAsync();
 
             IEnumerable<City> cities = citiesBl.Select(_mapper.Map<City>);
 
-            return new ObjectResult(cities);
+            return Ok(cities);
         }
 
         // GET api/cities/{id}
@@ -49,47 +49,48 @@ namespace WebAPI.Controllers
 
             if (city != null)
             {
-                return new ObjectResult(city);
+                return Ok(city);
             }
 
-            return new NotFoundResult();
+            return NotFound();
         }
 
         // POST api/cities
         [HttpPost]
         public async Task<ActionResult> AddAsync([FromBody] City city)
         {
-            var cityBl = _mapper.Map<BlCity>(city);
+            BlCity cityBl = _mapper.Map<BlCity>(city);
 
             ResultTypes addingResult = await _cityService.AddAsync(cityBl);
 
             if (addingResult == ResultTypes.Dublicate)
             {
                 string message = $"{city.Name} already exists!";
-                return new BadRequestObjectResult(new ErrorInfo(message));
+                return BadRequest(message);
             }
     
-            return new StatusCodeResult(201);
+            return StatusCode(201);
         }
 
         // PUT api/cities/{id}
         [HttpPut]
         public async Task<ActionResult> UpdateAsync([FromBody] City city)
         {
-            var cityBl = _mapper.Map<City, BlCity>(city);
+            BlCity cityBl = _mapper.Map<City, BlCity>(city);
 
             ResultTypes updatingResult = await _cityService.UpdateAsync(cityBl);
 
             switch (updatingResult)
             {
                 case ResultTypes.NotFound:
-                    return new NotFoundResult();
+                    return NotFound();
 
                 case ResultTypes.Dublicate:
-                    return new BadRequestObjectResult(new ErrorInfo("Such name already exists!"));
+                    string message = "Such name already exists!";
+                    return BadRequest(message);
             }
 
-            return new AcceptedResult();
+            return Accepted();
         }
     }
 }

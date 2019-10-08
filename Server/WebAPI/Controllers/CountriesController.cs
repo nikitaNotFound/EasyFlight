@@ -36,7 +36,7 @@ namespace WebAPI.Controllers
 
             IEnumerable<Country> countries = countriesBl.Select(_mapper.Map<Country>);
 
-            return new ObjectResult(countries);
+            return Ok(countries);
         }
 
         // GET api/countries/{id}
@@ -50,10 +50,10 @@ namespace WebAPI.Controllers
 
             if (foundCountry != null)
             {
-                return new ObjectResult(foundCountry);
+                return Ok(foundCountry);
             }
 
-            return new NotFoundResult();
+            return NotFound();
         }
 
         // GET api/countries/filters{?name}
@@ -65,7 +65,7 @@ namespace WebAPI.Controllers
 
             IEnumerable<Country> countries = countriesBl.Select(_mapper.Map<Country>);
 
-            return new ObjectResult(countries);
+            return Ok(countries);
         }
 
         // GET api/countries/{id}/cities
@@ -77,7 +77,7 @@ namespace WebAPI.Controllers
 
             IEnumerable<City> cities = citiesBl.Select(_mapper.Map<City>) ;
 
-            return new ObjectResult(cities);
+            return Ok(cities);
         }
 
         // GET api/countries/{id}/cities{name}
@@ -89,7 +89,7 @@ namespace WebAPI.Controllers
 
             IEnumerable<City> cities = citiesBl.Select(_mapper.Map<City>);
 
-            return new ObjectResult(cities);
+            return Ok(cities);
         }
 
         // POST api/countries
@@ -103,10 +103,10 @@ namespace WebAPI.Controllers
             if (addResult == ResultTypes.Dublicate)
             {
                 string message = $"{countryBl.Name} already exists!";
-                return new BadRequestObjectResult(new ErrorInfo(message));
+                return BadRequest(message);
             }
 
-            return new StatusCodeResult(201);
+            return StatusCode(201);
         }
 
         // PUT api/countries
@@ -120,13 +120,14 @@ namespace WebAPI.Controllers
             switch (updateResult)
             {
                 case ResultTypes.NotFound:
-                    return new NotFoundResult();
+                    return NotFound();
 
                 case ResultTypes.Dublicate:
-                    return new BadRequestObjectResult(new ErrorInfo("Such name already exists!"));
+                    string message = "Such name already exists!";
+                    return BadRequest(message);
             }
 
-            return new StatusCodeResult(202);
+            return StatusCode(202);
         }
     }
 }

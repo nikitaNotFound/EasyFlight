@@ -34,7 +34,7 @@ namespace WebAPI
                     });
             });
 
-            var mappingConfig = new MapperConfiguration(config =>
+            MapperConfiguration mappingConfig = new MapperConfiguration(config =>
             {
                 WebAPIMapping.Initialize(config);
                 BlMapping.Initialize(config);
