@@ -71,7 +71,7 @@ namespace WebAPI.Controllers
         // GET api/countries/{id}/cities
         [HttpGet]
         [Route("{id}/cities")]
-        public async Task<ActionResult> GetCities(int id)
+        public async Task<ActionResult> GetCitiesAsync(int id)
         {
             IEnumerable<BlCity> citiesBl = await _countryService.GetCitiesAsync(id);
 
