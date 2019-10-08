@@ -11,6 +11,7 @@ namespace DataAccessLayer.Repositories.Cities
         Task<IReadOnlyCollection<CityEntity>> GetAllAsync();
         Task<IReadOnlyCollection<CityEntity>> SearchByNameAsync(string name);
         Task<CityEntity> GetAsync(int id);
+        Task<IEnumerable<AirportEntity>> GetAirportsAsync(int id);
         Task AddAsync(CityEntity city);
         Task UpdateAsync(CityEntity city);
         Task<bool> CheckDuplicateAsync(CityEntity city);

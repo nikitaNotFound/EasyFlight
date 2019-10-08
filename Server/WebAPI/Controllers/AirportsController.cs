@@ -18,8 +18,8 @@ namespace WebAPI.Controllers
     [EnableCors("AllowAllToUrlFromConfig")]
     public class AirportsController : ControllerBase
     {
-        private IAirportService _airportService;
-        private IMapper _mapper;
+        private readonly IAirportService _airportService;
+        private readonly IMapper _mapper;
 
         public AirportsController(IAirportService airportService, IMapper mapper)
         {

@@ -12,8 +12,8 @@ namespace DataAccessLayer.Repositories.Airports
 {
     public class AirportRepository : IAirportRepository
     {
-        private IDalSettings settings;
-        private IMapper mapper;
+        private readonly IDalSettings settings;
+        private readonly IMapper mapper;
 
         public AirportRepository(IDalSettings settings, IMapper mapper)
         {
@@ -38,6 +38,16 @@ namespace DataAccessLayer.Repositories.Airports
             return await db.ExecuteScalarAsync<bool>(
                 "CheckAirportDublicate",
                 new { name = airport.Name, cityId = airport.CityId},
+                commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task<IEnumerable<AirportEntity>> GetAllAsync()
+        {
+            using SqlConnection db = new SqlConnection(settings.ConnectionString);
+
+            return await db.QueryAsync<AirportEntity>(
+                "GetAllAirports",
+                null,
                 commandType: CommandType.StoredProcedure);
         }
 

@@ -12,8 +12,8 @@ namespace BusinessLayer.Services.Airports
 {
     public class AirportService : IAirportService
     {
-        private IAirportRepository _airportRepository;
-        private IMapper _mapper;
+        private readonly IAirportRepository _airportRepository;
+        private readonly IMapper _mapper;
 
         public AirportService(IAirportRepository airportRepository, IMapper mapper)
         {

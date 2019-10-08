@@ -70,7 +70,7 @@ namespace WebAPI.Controllers
         [Route("{id}/airports")]
         public async Task<ActionResult> GetAirportsAsync(int id)
         {
-            IEnumerable<BlAirport> airportsBl = _ai
+            
         }
 
         // POST api/cities
