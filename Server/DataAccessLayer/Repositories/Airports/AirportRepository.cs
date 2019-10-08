@@ -26,7 +26,7 @@ namespace DataAccessLayer.Repositories.Airports
         {
             using SqlConnection db = new SqlConnection(settings.ConnectionString);
 
-            var airportEntity = mapper.Map<AirportEntity>(airport);
+            AirportEntity airportEntity = mapper.Map<AirportEntity>(airport);
 
             await db.ExecuteAsync(
                 "AddAirport",
@@ -38,7 +38,7 @@ namespace DataAccessLayer.Repositories.Airports
         {
             using SqlConnection db = new SqlConnection(settings.ConnectionString);
 
-            var airportEntity = mapper.Map<AirportEntity>(airport);
+            AirportEntity airportEntity = mapper.Map<AirportEntity>(airport);
 
             return await db.ExecuteScalarAsync<bool>(
                 "CheckAirportDublicate",
@@ -56,18 +56,6 @@ namespace DataAccessLayer.Repositories.Airports
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<IEnumerable<Airport>> SearchAsync(AirportSearchOptions searchOptions)
-        {
-            using SqlConnection db = new SqlConnection(settings.ConnectionString);
-
-            var searchOptionsDal = mapper.Map<AirportSearchOptionsEntity>(searchOptions);
-
-            return await db.QueryAsync<Airport>(
-                "SearchAirports",
-                searchOptionsDal,
-                commandType: CommandType.StoredProcedure);
-        }
-
         public async Task<IEnumerable<Airport>> SearchByNameAsync(string name)
         {
             using SqlConnection db = new SqlConnection(settings.ConnectionString);
@@ -82,7 +70,7 @@ namespace DataAccessLayer.Repositories.Airports
         {
             using SqlConnection db = new SqlConnection(settings.ConnectionString);
 
-            var airportDal = mapper.Map<AirportEntity>(airport);
+            var AirportEntity = mapper.Map<AirportEntity>(airport);
 
             await db.ExecuteAsync(
                 "UpdateAirport",

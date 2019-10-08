@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 using WebAPI.Models.Airports;
 using BusinessLayer.Services.Airports;
 using BlAirport = BusinessLayer.Models.Airports.Airport;
-using BlAirportSearchOptions = BusinessLayer.Models.Airports.AirportSearchOptions;
 using BusinessLayer;
 using AutoMapper;
 
@@ -19,13 +18,13 @@ namespace WebAPI.Controllers
     [EnableCors("AllowAllToUrlFromConfig")]
     public class AirportsController : ControllerBase
     {
-        private IAirportService airportService;
-        private IMapper mapper;
+        private IAirportService _airportService;
+        private IMapper _mapper;
 
         public AirportsController(IAirportService airportService, IMapper mapper)
         {
-            this.airportService = airportService;
-            this.mapper = mapper;
+            this._airportService = airportService;
+            this._mapper = mapper;
         }
 
         // GET api/airports/{id}
@@ -33,32 +32,32 @@ namespace WebAPI.Controllers
         [Route("{id}")]
         public async Task<ActionResult> GetAsync(int id)
         {
-            BlAirport airportBl = await airportService.GetByIdAsync(id);
+            BlAirport airportBl = await _airportService.GetByIdAsync(id);
 
-            var airport = mapper.Map<Airport>(airportBl);
+            Airport airport = _mapper.Map<Airport>(airportBl);
 
             if (airport != null)
             {
-                return new ObjectResult(airport);
+                return Ok(airport);
             }
 
-            return new NotFoundResult();
+            return NotFound();
         }
 
         // POST api/airports
         [HttpPost]
         public async Task<ActionResult> AddAsync([FromBody]Airport airport)
         {
-            var airportBl = mapper.Map<BlAirport>(airport);
-            ResultTypes addResult = await airportService.AddAsync(airportBl);
+            BlAirport airportBl = _mapper.Map<BlAirport>(airport);
+            ResultTypes addResult = await _airportService.AddAsync(airportBl);
 
             if (addResult == ResultTypes.Dublicate)
             {
                 string message = $"{airport.Name} already exists!";
-                return new JsonResult(new ErrorInfo(message));
+                return BadRequest(message);
             }
 
-            return new StatusCodeResult(201);
+            return StatusCode(201);
         }
 
         // PUT api/airports/{id}
@@ -66,34 +65,21 @@ namespace WebAPI.Controllers
         [Route("{id}")]
         public async Task<ActionResult> UpdateAsync(int id, [FromBody]Airport airport)
         {
-            var airportBl = mapper.Map<BlAirport>(airport);
+            BlAirport airportBl = _mapper.Map<BlAirport>(airport);
 
-            ResultTypes updateResult = await airportService.UpdateAsync(id, airportBl);
+            ResultTypes updateResult = await _airportService.UpdateAsync(id, airportBl);
 
             switch (updateResult)
             {
                 case ResultTypes.Dublicate:
                     string message = "Such name already exists!";
-                    Response.StatusCode = 409;
-                    return new JsonResult(new ErrorInfo(message));
+                    return BadRequest(message);
 
                 case ResultTypes.NotFound:
-                    return new NotFoundResult();
+                    return NotFound();
             }
 
-            return new AcceptedResult();
-        }
-
-        // POST api/airports/searches
-        [HttpPost]
-        [Route("searches")]
-        public async Task<ActionResult> SearchAsync([FromBody]AirportSearchOptions searchOptions)
-        {
-            var searchOptionsBl = mapper.Map<BlAirportSearchOptions>(searchOptions);
-
-            var foundAirports = await airportService.SearchAsync(searchOptionsBl);
-
-            return new ObjectResult(foundAirports);
+            return Accepted();
         }
     }
 }
