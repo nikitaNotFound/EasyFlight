@@ -1,4 +1,4 @@
-﻿namespace DataAccessLayer.Models.DataTransfer.Airports
+﻿namespace BusinessLayer.Models
 {
     public class Airport
     {

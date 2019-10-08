@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BusinessLayer;
-using BusinessLayer.Models.Airports;
+using BusinessLayer.Models;
 using DataAccessLayer.Repositories.Airports;
-using DalAirport = DataAccessLayer.Models.DataTransfer.Airports.Airport;
+using AirportEntity = DataAccessLayer.Models.AirportEntity;
 using AutoMapper;
 
 namespace BusinessLayer.Services.Airports
@@ -21,9 +21,18 @@ namespace BusinessLayer.Services.Airports
             _mapper = mapper;
         }
 
+        public async Task<IEnumerable<Airport>> GetAllAsync()
+        {
+            IEnumerable<AirportEntity> airportsDal = await _airportRepository.GetAllAsync();
+
+            IEnumerable<Airport> airports = airportsDal.Select(_mapper.Map<Airport>);
+
+            return airports;
+        }
+
         public async Task<ResultTypes> AddAsync(Airport airport)
         {
-            DalAirport airportDal = _mapper.Map<DalAirport>(airport);
+            AirportEntity airportDal = _mapper.Map<AirportEntity>(airport);
 
             bool dublicate = await _airportRepository.CheckDublicateAsync(airportDal);
 
@@ -38,7 +47,7 @@ namespace BusinessLayer.Services.Airports
 
         public async Task<Airport> GetByIdAsync(int id)
         {
-            DalAirport foundAirport = await _airportRepository.GetAsync(id);
+            AirportEntity foundAirport = await _airportRepository.GetAsync(id);
 
             return _mapper.Map<Airport>(foundAirport);
         }
@@ -49,7 +58,7 @@ namespace BusinessLayer.Services.Airports
 
             if (oldAirportDal != null)
             {
-                var airportDal = _mapper.Map<DalAirport>(airport);
+                var airportDal = _mapper.Map<AirportEntity>(airport);
                 airportDal.Id = id;
 
                 bool dublicate = await _airportRepository.CheckDublicateAsync(airportDal);

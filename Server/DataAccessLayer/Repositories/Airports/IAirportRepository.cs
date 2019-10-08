@@ -2,16 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DataAccessLayer.Models.DataTransfer.Airports;
+using DataAccessLayer.Models;
 
 namespace DataAccessLayer.Repositories.Airports
 {
     public interface IAirportRepository
     {
-        Task<Airport> GetAsync(int id);
-        Task<IEnumerable<Airport>> SearchByNameAsync(string name);
-        Task AddAsync(Airport item);
-        Task UpdateAsync(Airport item);
-        Task<bool> CheckDublicateAsync(Airport item);
+        Task<IEnumerable<AirportEntity>> GetAllAsync();
+        Task<AirportEntity> GetAsync(int id);
+        Task<IEnumerable<AirportEntity>> SearchByNameAsync(string name);
+        Task AddAsync(AirportEntity item);
+        Task UpdateAsync(AirportEntity item);
+        Task<bool> CheckDublicateAsync(AirportEntity item);
     }
 }

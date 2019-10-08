@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Cors;
 using BusinessLayer.Services.Cities;
 using BlCity = BusinessLayer.Models.City;
+using BlAirport = BusinessLayer.Models.Airport;
 using BusinessLayer;
 using AutoMapper;
 using System.Collections.Generic;
@@ -62,6 +63,14 @@ namespace WebAPI.Controllers
             }
 
             return NotFound();
+        }
+
+        // GET api/cities/{id}/airports
+        [HttpGet]
+        [Route("{id}/airports")]
+        public async Task<ActionResult> GetAirportsAsync(int id)
+        {
+            IEnumerable<BlAirport> airportsBl = _ai
         }
 
         // POST api/cities

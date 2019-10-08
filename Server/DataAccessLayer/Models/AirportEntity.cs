@@ -1,8 +1,8 @@
-﻿namespace DataAccessLayer.Models.Entities.Airports
+﻿namespace DataAccessLayer.Models
 {
     public class AirportEntity
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public string Name { get; set; }
         public int CityId { get; set; }
     }

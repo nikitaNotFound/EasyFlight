@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Models.Airports;
 using BusinessLayer.Services.Airports;
-using BlAirport = BusinessLayer.Models.Airports.Airport;
+using BlAirport = BusinessLayer.Models.Airport;
 using BusinessLayer;
 using AutoMapper;
 
@@ -23,8 +23,8 @@ namespace WebAPI.Controllers
 
         public AirportsController(IAirportService airportService, IMapper mapper)
         {
-            this._airportService = airportService;
-            this._mapper = mapper;
+            _airportService = airportService;
+            _mapper = mapper;
         }
 
         // GET api/airports/{id}
