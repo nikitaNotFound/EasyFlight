@@ -1,4 +1,4 @@
-import { API_URL } from '../config';
+import * as config from '../config.json';
 
 import * as RequestController from './RequestController';
 
@@ -7,7 +7,7 @@ import RequestResult from './request-result';
 export async function getById(id) {
     try {
         var response = await fetch(
-            `${API_URL}/airports/${id}`,
+            `${config.API_URL}/airports/${id}`,
             {
                 method: "GET",
                 mode: "cors",
@@ -27,7 +27,7 @@ export async function getById(id) {
 export async function add(airport) {
     try {
         var response = await fetch(
-            `${API_URL}/airports`,
+            `${config.API_URL}/airports`,
             {
                 method: "POST",
                 mode: "cors",
@@ -48,7 +48,7 @@ export async function add(airport) {
 export async function update(airport) {
     try {
         var response = await fetch(
-            `${API_URL}/airports/${airport.id}`,
+            `${config.API_URL}/airports/${airport.id}`,
             {
                 method: "PUT",
                 mode: "cors",
@@ -69,7 +69,7 @@ export async function update(airport) {
 export async function search(params) {
     try {
         var response = await fetch(
-            `${API_URL}/airports/searches`,
+            `${config.API_URL}/airports/searches`,
             {
                 method: "POST",
                 mode: "cors",
