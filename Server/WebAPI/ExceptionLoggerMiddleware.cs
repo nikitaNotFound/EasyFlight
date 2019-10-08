@@ -18,8 +18,8 @@ namespace WebAPI
 
     public class ExceptionLoggerMiddleware
     {
-        private static Logger _logger = LogManager.GetCurrentClassLogger();
-        private RequestDelegate _next;
+        private readonly static Logger _logger = LogManager.GetCurrentClassLogger();
+        private readonly RequestDelegate _next;
 
 
         public ExceptionLoggerMiddleware(RequestDelegate next)
