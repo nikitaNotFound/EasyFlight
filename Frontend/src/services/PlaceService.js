@@ -4,25 +4,23 @@ import * as RequestController from './RequestController';
 
 import RequestResult from './request-result';
 
-export function getCountryById(id) {
-    return new Promise(async resolve => {
-        try {
-            var response = await fetch(
-                `${config.API_URL}/countries/${id}`,
-                {
-                    method: "GET",
-                    mode: "cors",
-                    headers: {
-                        "Content-Type": "application/json"
-                }
-            });
+export async function getCountryById(id) {
+    try {
+        var response = await fetch(
+            `${config.API_URL}/countries/${id}`,
+            {
+                method: "GET",
+                mode: "cors",
+                headers: {
+                    "Content-Type": "application/json"
+            }
+        });
 
-            resolve(RequestController.formResult(response));
-        } catch {
-            const errorInfo = RequestController.getErrorInfo(500);
-            resolve(new RequestResult(false, errorInfo));
-        }
-    });
+        resolve(RequestController.formResult(response));
+    } catch {
+        const errorInfo = RequestController.getErrorInfo(500);
+        resolve(new RequestResult(false, errorInfo));
+    }
 }
 
 export function searchCountriesByName(nameFilter) {
@@ -68,90 +66,85 @@ export function addCountry(country) {
     }
 }
 
-export function updateCountry(country) {
-    return new Promise(async resolve => {
-        try {
-            const response = await fetch(`${config.API_URL}/countries`, {
+export async function updateCountry(country) {
+    try {
+        const response = await fetch(
+            `${config.API_URL}/countries`,
+            {
                 method: "PUT",
                 mode: "cors",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(country)
-            });
+            }
+        );
 
-            resolve(RequestController.formResult(response));
-        } catch {
-            const errorInfo = RequestController.getErrorInfo(500);
-            resolve(new RequestResult(false, errorInfo));
-        }
-    });
+        resolve(RequestController.formResult(response));
+    } catch {
+        const errorInfo = RequestController.getErrorInfo(500);
+        resolve(new RequestResult(false, errorInfo));
+    }
 }
 
-export function getCityById(id) {
-    return new Promise(async resolve => {
-        try {
-            const response = await fetch(
-                `${config.API_URL}/cities/${id}`,
-                {
-                    method: "GET",
-                    mode: "cors",
-                    headers: {
-                        "Content-Type": "application/json"
-                    }
+export async function getCityById(id) {
+    try {
+        const response = await fetch(
+            `${config.API_URL}/cities/${id}`,
+            {
+                method: "GET",
+                mode: "cors",
+                headers: {
+                    "Content-Type": "application/json"
                 }
-            );
+            }
+        );
 
-            resolve(RequestController.formResult(response));
-        } catch {
-            const errorInfo = RequestController.getErrorInfo(500);
-            resolve(new RequestResult(false, errorInfo));
-        }
-    });
+        resolve(RequestController.formResult(response));
+    } catch {
+        const errorInfo = RequestController.getErrorInfo(500);
+        resolve(new RequestResult(false, errorInfo));
+    }
 }
 
-export function addCity(city) {
-    return new Promise(async resolve => {
-        try {
-            const response = await fetch(
-                `${config.API_URL}/cities`,
-                {
-                    method: "POST",
-                    mode: "cors",
-                    headers: {
-                        "Content-Type": "application/json"
-                },
-                body: JSON.stringify(city)
-            });
+export async function addCity(city) {
+    try {
+        const response = await fetch(
+            `${config.API_URL}/cities`,
+            {
+                method: "POST",
+                mode: "cors",
+                headers: {
+                    "Content-Type": "application/json"
+            },
+            body: JSON.stringify(city)
+        });
 
-            resolve(RequestController.formResult(response));
-        } catch {
-            const errorInfo = RequestController.getErrorInfo(500);
-            resolve(new RequestResult(false, errorInfo));
-        }
-    });
+        resolve(RequestController.formResult(response));
+    } catch {
+        const errorInfo = RequestController.getErrorInfo(500);
+        resolve(new RequestResult(false, errorInfo));
+    }
 }
 
-export function updateCity(city) {
-    return new Promise(async resolve => {
-        try {
-            const response = await fetch(
-                `${config.API_URL}/cities`,
-                {
-                    method: "PUT",
-                    mode: "cors",
-                    headers: {
-                        "Content-Type": "application/json"
-                },
-                body: JSON.stringify(city)
-            });
+export async function updateCity(city) {
+    try {
+        const response = await fetch(
+            `${config.API_URL}/cities`,
+            {
+                method: "PUT",
+                mode: "cors",
+                headers: {
+                    "Content-Type": "application/json"
+            },
+            body: JSON.stringify(city)
+        });
 
-            resolve(RequestController.formResult(response));
-        } catch {
-            const errorInfo = RequestController.getErrorInfo(500);
-            resolve(new RequestResult(false, errorInfo));
-        }
-    });
+        resolve(RequestController.formResult(response));
+    } catch {
+        const errorInfo = RequestController.getErrorInfo(500);
+        resolve(new RequestResult(false, errorInfo));
+    }
 }
 
 export async function searchCitiesByName(nameFilter) {
