@@ -22,7 +22,7 @@ export default function CountryList() {
         if (airportsRequest.successful === true) {
             changeCountries(airportsRequest.value);
         } else {
-
+            changeMessageBoxValue(airportsRequest.value);
         }
     }
 

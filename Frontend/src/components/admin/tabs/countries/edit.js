@@ -39,10 +39,12 @@ export default function Edit(props) {
 
         let finalCountry = new Country(id, name);
         
-        const updateStatus = await PlaceService.updateCountry(finalCountry);
+        const updateResult = await PlaceService.updateCountry(finalCountry);
 
-        if (updateStatus) {
+        if (updateResult.successful === true) {
             changeMessageBoxValue('Updated!');
+        } else {
+            changeMessageBoxValue(updateResult.value);
         }
     }
 
