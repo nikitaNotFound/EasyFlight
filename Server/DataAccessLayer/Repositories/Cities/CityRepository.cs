@@ -24,12 +24,10 @@ namespace DataAccessLayer.Repositories.Cities
         {
             using SqlConnection db = new SqlConnection(_settings.ConnectionString);
 
-            IEnumerable<CityEntity> cities = await db.QueryAsync<CityEntity>(
+            return (IReadOnlyCollection<CityEntity>) await db.QueryAsync<CityEntity>(
                 "GetAllCities",
                 null,
                 commandType: CommandType.StoredProcedure);
-
-            return (IReadOnlyCollection<CityEntity>) cities;
         }
 
         public async Task<CityEntity> GetAsync(int id)
