@@ -12,18 +12,18 @@ namespace DataAccessLayer.Repositories.Countries
 {
     internal class CountryRepository : ICountryRepository
     {
-        private readonly IDalSettings _settings;
+        private readonly IDalSettings _dalSettings;
 
 
         public CountryRepository(IDalSettings settings)
         {
-            _settings = settings;
+            _dalSettings = settings;
         }
 
 
         public async Task<IReadOnlyCollection<CountryEntity>> GetAllAsync()
         {
-            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
+            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             return (IReadOnlyCollection<CountryEntity>) await db.QueryAsync<CountryEntity>(
                 "GetAllCountries",
@@ -33,7 +33,7 @@ namespace DataAccessLayer.Repositories.Countries
 
         public async Task<CountryEntity> GetAsync(int id)
         {
-            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
+            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             return await db.QuerySingleOrDefaultAsync<CountryEntity>(
                 "GetCountryById",
@@ -43,7 +43,7 @@ namespace DataAccessLayer.Repositories.Countries
 
         public async Task<IReadOnlyCollection<CountryEntity>> GetByNameAsync(string name)
         {
-            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
+            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             return (IReadOnlyCollection<CountryEntity>) await db.QueryAsync<CountryEntity>(
                 "SearchCountries",
@@ -53,7 +53,7 @@ namespace DataAccessLayer.Repositories.Countries
 
         public async Task<IReadOnlyCollection<CityEntity>> GetCitiesAsync(int id)
         {
-            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
+            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             return (IReadOnlyCollection<CityEntity>) await db.QueryAsync<CityEntity>(
                 "GetCountryCities",
@@ -63,7 +63,7 @@ namespace DataAccessLayer.Repositories.Countries
 
         public async Task<IReadOnlyCollection<CityEntity>> GetCitiesByNameAsync(int id, string name)
         {
-            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
+            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             return (IReadOnlyCollection<CityEntity>) await db.QueryAsync<CityEntity>(
                 "GetCountryCitiesByName",
@@ -73,7 +73,7 @@ namespace DataAccessLayer.Repositories.Countries
 
         public async Task AddAsync(CountryEntity country)
         {
-            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
+            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             await db.ExecuteAsync(
                 "AddCountry",
@@ -83,7 +83,7 @@ namespace DataAccessLayer.Repositories.Countries
 
         public async Task UpdateAsync(CountryEntity country)
         {
-            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
+            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             await db.ExecuteAsync(
                 "UpdateCountry",
@@ -93,7 +93,7 @@ namespace DataAccessLayer.Repositories.Countries
 
         public async Task<bool> CheckDublicateAsync(CountryEntity country)
         {
-            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
+            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             return await db.ExecuteScalarAsync<bool>(
                 "CheckCountryDublicate",

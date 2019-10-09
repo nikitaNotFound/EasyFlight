@@ -11,18 +11,18 @@ namespace DataAccessLayer.Repositories.Cities
 {
     internal class CityRepository : ICityRepository
     {
-        private readonly IDalSettings _settings;
+        private readonly IDalSettings _dalSettings;
 
 
         public CityRepository(IDalSettings settings)
         {
-            _settings = settings;
+            _dalSettings = settings;
         }
 
 
         public async Task<IReadOnlyCollection<CityEntity>> GetAllAsync()
         {
-            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
+            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             return (IReadOnlyCollection<CityEntity>) await db.QueryAsync<CityEntity>(
                 "GetAllCities",
@@ -32,7 +32,7 @@ namespace DataAccessLayer.Repositories.Cities
 
         public async Task<CityEntity> GetAsync(int id)
         {
-            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
+            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             return await db.QuerySingleOrDefaultAsync<CityEntity>(
                 "GetCityById",
@@ -42,7 +42,7 @@ namespace DataAccessLayer.Repositories.Cities
 
         public async Task AddAsync(CityEntity city)
         {
-            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
+            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             await db.ExecuteAsync(
                 "AddCity",
@@ -52,7 +52,7 @@ namespace DataAccessLayer.Repositories.Cities
 
         public async Task UpdateAsync(CityEntity city)
         {
-            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
+            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             await db.ExecuteAsync(
                 "UpdateCity",
@@ -62,7 +62,7 @@ namespace DataAccessLayer.Repositories.Cities
 
         public async Task<bool> CheckDublicateAsync(CityEntity city)
         {
-            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
+            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             return await db.ExecuteScalarAsync<bool>(
                 "CheckCityDublicate",
