@@ -70,7 +70,7 @@ namespace WebAPI.Controllers
         [Route("{id}/airports")]
         public async Task<ActionResult> GetAirportsAsync(int id)
         {
-            IEnumerable<BlAirport> airportsBl = await _cityService.GetAirportsAsync(id);
+            IReadOnlyCollection<BlAirport> airportsBl = await _cityService.GetAirportsAsync(id);
 
             IEnumerable<Airport> airports = airportsBl.Select(_mapper.Map<Airport>);
 

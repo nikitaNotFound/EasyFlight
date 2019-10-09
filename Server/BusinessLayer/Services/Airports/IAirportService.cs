@@ -6,9 +6,10 @@ namespace BusinessLayer.Services.Airports
 {
     public interface IAirportService
     {
-        Task<IEnumerable<Airport>> GetAllAsync();
+        Task<IReadOnlyCollection<Airport>> GetAllAsync();
+        Task<IReadOnlyCollection<Airport>> GetByNameAsync(string name);
         Task<Airport> GetByIdAsync(int id);
         Task<ResultTypes> AddAsync(Airport country);
-        Task<ResultTypes> UpdateAsync(int id, Airport city);
+        Task<ResultTypes> UpdateAsync(Airport city);
     }
 }

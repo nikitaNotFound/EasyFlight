@@ -21,13 +21,22 @@ namespace BusinessLayer.Services.Airports
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<Airport>> GetAllAsync()
+        public async Task<IReadOnlyCollection<Airport>> GetAllAsync()
         {
-            IEnumerable<AirportEntity> airportsDal = await _airportRepository.GetAllAsync();
+            IReadOnlyCollection<AirportEntity> airportsDal = await _airportRepository.GetAllAsync();
 
-            IEnumerable<Airport> airports = airportsDal.Select(_mapper.Map<Airport>);
+            IEnumerable<Airport> airports = airportsDal.Select(_mapper.Map<Airport>).ToList();
 
-            return airports;
+            return (IReadOnlyCollection<Airport>) airports;
+        }
+
+        public async Task<IReadOnlyCollection<Airport>> GetByNameAsync(string name)
+        {
+            IReadOnlyCollection<AirportEntity> airportsDal = await _airportRepository.GetByNameAsync(name);
+
+            IEnumerable<Airport> airports = airportsDal.Select(_mapper.Map<Airport>).ToList();
+
+            return (IReadOnlyCollection<Airport>) airports;
         }
 
         public async Task<ResultTypes> AddAsync(Airport airport)
@@ -52,14 +61,13 @@ namespace BusinessLayer.Services.Airports
             return _mapper.Map<Airport>(foundAirport);
         }
 
-        public async Task<ResultTypes> UpdateAsync(int id, Airport airport)
+        public async Task<ResultTypes> UpdateAsync(Airport airport)
         {
-            var oldAirportDal = await _airportRepository.GetAsync(id);
+            var oldAirportDal = await _airportRepository.GetAsync(airport.Id);
 
             if (oldAirportDal != null)
             {
                 var airportDal = _mapper.Map<AirportEntity>(airport);
-                airportDal.Id = id;
 
                 bool dublicate = await _airportRepository.CheckDublicateAsync(airportDal);
 

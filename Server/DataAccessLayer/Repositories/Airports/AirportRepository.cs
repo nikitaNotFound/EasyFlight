@@ -6,24 +6,21 @@ using System.Threading.Tasks;
 using DataAccessLayer.Models;
 using Dapper;
 using System.Data;
-using AutoMapper;
 
 namespace DataAccessLayer.Repositories.Airports
 {
     public class AirportRepository : IAirportRepository
     {
-        private readonly IDalSettings settings;
-        private readonly IMapper mapper;
+        private readonly IDalSettings _settings;
 
-        public AirportRepository(IDalSettings settings, IMapper mapper)
+        public AirportRepository(IDalSettings settings)
         {
-            this.settings = settings;
-            this.mapper = mapper;
+            _settings = settings;
         }
 
         public async Task AddAsync(AirportEntity airport)
         {
-            using SqlConnection db = new SqlConnection(settings.ConnectionString);
+            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
 
             await db.ExecuteAsync(
                 "AddAirport",
@@ -33,7 +30,7 @@ namespace DataAccessLayer.Repositories.Airports
 
         public async Task<bool> CheckDublicateAsync(AirportEntity airport)
         {
-            using SqlConnection db = new SqlConnection(settings.ConnectionString);
+            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
 
             return await db.ExecuteScalarAsync<bool>(
                 "CheckAirportDublicate",
@@ -41,11 +38,11 @@ namespace DataAccessLayer.Repositories.Airports
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<IEnumerable<AirportEntity>> GetAllAsync()
+        public async Task<IReadOnlyCollection<AirportEntity>> GetAllAsync()
         {
-            using SqlConnection db = new SqlConnection(settings.ConnectionString);
+            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
 
-            return await db.QueryAsync<AirportEntity>(
+            return (IReadOnlyCollection<AirportEntity>) await db.QueryAsync<AirportEntity>(
                 "GetAllAirports",
                 null,
                 commandType: CommandType.StoredProcedure);
@@ -53,7 +50,7 @@ namespace DataAccessLayer.Repositories.Airports
 
         public async Task<AirportEntity> GetAsync(int id)
         {
-            using SqlConnection db = new SqlConnection(settings.ConnectionString);
+            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
 
             return await db.QuerySingleOrDefaultAsync<AirportEntity>(
                 "GetAirportById",
@@ -61,11 +58,11 @@ namespace DataAccessLayer.Repositories.Airports
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<IEnumerable<AirportEntity>> SearchByNameAsync(string name)
+        public async Task<IReadOnlyCollection<AirportEntity>> GetByNameAsync(string name)
         {
-            using SqlConnection db = new SqlConnection(settings.ConnectionString);
+            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
 
-            return await db.QueryAsync<AirportEntity>(
+            return (IReadOnlyCollection<AirportEntity>) await db.QueryAsync<AirportEntity>(
                 "SearchAirportsByName",
                 new { name = name },
                 commandType: CommandType.StoredProcedure);
@@ -73,7 +70,7 @@ namespace DataAccessLayer.Repositories.Airports
 
         public async Task UpdateAsync(AirportEntity airport)
         {
-            using SqlConnection db = new SqlConnection(settings.ConnectionString);
+            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
 
             await db.ExecuteAsync(
                 "UpdateAirport",

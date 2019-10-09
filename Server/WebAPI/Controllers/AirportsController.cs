@@ -27,6 +27,30 @@ namespace WebAPI.Controllers
             _mapper = mapper;
         }
 
+
+        // GET api/airports
+        [HttpGet]
+        public async Task<ActionResult> GetAllAsync()
+        {
+            IReadOnlyCollection<BlAirport> airportsBl = await _airportService.GetAllAsync();
+
+            IEnumerable<Airport> airports = airportsBl.Select(_mapper.Map<Airport>);
+
+            return Ok(airports);
+        }
+
+        // GET api/airports/filters{?name}
+        [HttpGet]
+        [Route("filters")]
+        public async Task<ActionResult> GetByNameAsync(string name)
+        {
+            IReadOnlyCollection<BlAirport> airportsBl = await _airportService.GetByNameAsync(name);
+
+            IEnumerable<Airport> airports = airportsBl.Select(_mapper.Map<Airport>);
+
+            return Ok(airports);
+         }
+
         // GET api/airports/{id}
         [HttpGet]
         [Route("{id}")]
@@ -60,14 +84,13 @@ namespace WebAPI.Controllers
             return StatusCode(201);
         }
 
-        // PUT api/airports/{id}
+        // PUT api/airports
         [HttpPut]
-        [Route("{id}")]
-        public async Task<ActionResult> UpdateAsync(int id, [FromBody]Airport airport)
+        public async Task<ActionResult> UpdateAsync([FromBody] Airport airport)
         {
             BlAirport airportBl = _mapper.Map<BlAirport>(airport);
 
-            ResultTypes updateResult = await _airportService.UpdateAsync(id, airportBl);
+            ResultTypes updateResult = await _airportService.UpdateAsync(airportBl);
 
             switch (updateResult)
             {
