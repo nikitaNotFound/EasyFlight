@@ -84,14 +84,13 @@ namespace WebAPI.Controllers
             return new StatusCodeResult(201);
         }
 
-        // PUT api/airports/{id}
+        // PUT api/airports
         [HttpPut]
-        [Route("{id}")]
-        public async Task<ActionResult> UpdateAsync(int id, [FromBody]Airport airport)
+        public async Task<ActionResult> UpdateAsync([FromBody] Airport airport)
         {
             var airportBl = mapper.Map<BlAirport>(airport);
 
-            ResultTypes updateResult = await airportService.UpdateAsync(id, airportBl);
+            ResultTypes updateResult = await _airportService.UpdateAsync(airportBl);
 
             switch (updateResult)
             {
