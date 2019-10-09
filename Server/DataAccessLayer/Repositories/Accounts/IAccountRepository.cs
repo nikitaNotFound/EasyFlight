@@ -8,7 +8,7 @@ namespace DataAccessLayer.Repositories.Accounts
 {
     public interface IAccountRepository
     {
-        Task<bool> LoginAsync(AccountEntity account);
+        Task<AccountEntity> LoginAsync(AccountEntity account);
         Task<bool> CheckDublicateAsync(AccountEntity account);
         Task<AccountEntity> RegisterAsync(AccountEntity account);
     }

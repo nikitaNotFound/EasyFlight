@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 using Common;
 
-namespace BusinessLayer.Models
+namespace WebAPI.Models
 {
-    public class Account
+    public class ResponseAccount
     {
         public int? Id { get; set; }
         public string FirstName { get; set; }
@@ -13,15 +14,17 @@ namespace BusinessLayer.Models
         public string Email { get; set; }
         public string Password { get; set; }
         public AccountRoles Role { get; set; }
+        public string Token { get; set; }
 
 
-        public Account(
+        public ResponseAccount(
             int? id,
             string firstName,
             string secondName,
             string email,
             string password,
-            AccountRoles role
+            AccountRoles role,
+            string token
         )
         {
             Id = id;
@@ -30,6 +33,7 @@ namespace BusinessLayer.Models
             Email = email;
             Password = password;
             Role = role;
+            Token = token;
         }
     }
 }

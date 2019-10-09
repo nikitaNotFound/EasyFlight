@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using BusinessLayer.Models;
 using DataAccessLayer.Repositories.Accounts;
 using AutoMapper;
 using AccountEntity = DataAccessLayer.Models.AccountEntity;
 
-namespace BusinessLayer.Services.Users
+namespace BusinessLayer.Services.Accounts
 {
     class AccountService : IAccountService
     {
@@ -20,21 +17,21 @@ namespace BusinessLayer.Services.Users
             _accountRepository = repository;
         }
 
-        public async Task<ResultTypes> LoginAsync(Account account)
+        public async Task<Account> LoginAsync(Account account)
         {
             AccountEntity dalAccount = _mapper.Map<AccountEntity>(account);
 
-            bool login = await _accountRepository.LoginAsync(dalAccount);
+            AccountEntity authAccount = await _accountRepository.LoginAsync(dalAccount);
 
-            if (!login)
+            if (authAccount == null)
             {
-                return ResultTypes.InvalidData;
+                return null;
             }
 
-            return ResultTypes.OK;
+            return _mapper.Map<Account>(authAccount);
         }
 
-        public async Task<ResultTypes> RegisterAsync(Account account)
+        public async Task<Account> RegisterAsync(Account account)
         {
             AccountEntity dalAccount = _mapper.Map<AccountEntity>(account);
             
@@ -42,14 +39,12 @@ namespace BusinessLayer.Services.Users
 
             if (dublicate)
             {
-                return ResultTypes.Dublicate;
+                return null;
             }
 
             AccountEntity newAccount = await _accountRepository.RegisterAsync(dalAccount);
 
-            await _accountRepository.LoginAsync(newAccount);
-
-            return ResultTypes.OK;
+            return _mapper.Map<Account>(newAccount);
         }
     }
 }

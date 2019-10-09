@@ -4,11 +4,11 @@ using System.Text;
 using System.Threading.Tasks;
 using BusinessLayer.Models;
 
-namespace BusinessLayer.Services.Users
+namespace BusinessLayer.Services.Accounts
 {
     public interface IAccountService
     {
-        Task<ResultTypes> LoginAsync(Account account);
-        Task<ResultTypes> RegisterAsync(Account account);
+        Task<Account> LoginAsync(Account account);
+        Task<Account> RegisterAsync(Account account);
     }
 }

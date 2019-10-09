@@ -23,11 +23,11 @@ namespace DataAccessLayer.Repositories.Accounts
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<bool> LoginAsync(AccountEntity account)
+        public async Task<AccountEntity> LoginAsync(AccountEntity account)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
-            return await db.ExecuteScalarAsync<bool>(
+            return await db.QuerySingleOrDefaultAsync<AccountEntity>(
                 "LoginAccount",
                 new { email = account.Email, password = account.Password },
                 commandType: CommandType.StoredProcedure);
