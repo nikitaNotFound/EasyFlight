@@ -26,9 +26,9 @@ namespace BusinessLayer.Services.Countries
         {
             IReadOnlyCollection<CountryEntity> countriesDal = await _countryRepository.GetAllAsync();
 
-            IEnumerable<Country> countries = countriesDal.Select(_mapper.Map<Country>);
+            IEnumerable<Country> countries =  countriesDal.Select(_mapper.Map<Country>).ToList();
 
-            return (IReadOnlyCollection<Country>) countries;
+            return  (IReadOnlyCollection<Country>) countries;
         }
 
         public async Task<Country> GetByIdAsync(int id)
@@ -42,16 +42,16 @@ namespace BusinessLayer.Services.Countries
         {
             IReadOnlyCollection<CountryEntity> foundCountriesDal = await _countryRepository.GetByNameAsync(name);
 
-            IEnumerable<Country> countries = foundCountriesDal.Select(_mapper.Map<Country>);
+            IEnumerable<Country> countries = foundCountriesDal.Select(_mapper.Map<Country>).ToList();
 
-            return (IReadOnlyCollection<Country>)countries;
+            return (IReadOnlyCollection<Country>) countries;
         }
 
         public async Task<IReadOnlyCollection<City>> GetCitiesAsync(int id)
         {
             IReadOnlyCollection<CityEntity> citiesDal = await _countryRepository.GetCitiesAsync(id);
 
-            IEnumerable<City> cities = citiesDal.Select(_mapper.Map<City>);
+            IEnumerable<City> cities = citiesDal.Select(_mapper.Map<City>).ToList();
 
             return (IReadOnlyCollection<City>) cities;
         }
@@ -60,7 +60,7 @@ namespace BusinessLayer.Services.Countries
         {
             IReadOnlyCollection<CityEntity> citiesDal = await _countryRepository.GetCitiesByNameAsync(id, name);
 
-            IEnumerable<City> cities = citiesDal.Select(_mapper.Map<City>);
+            IEnumerable<City> cities = citiesDal.Select(_mapper.Map<City>).ToList();
 
             return (IReadOnlyCollection<City>) cities;
         } 
