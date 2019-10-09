@@ -20,14 +20,16 @@ namespace DataAccessLayer.Repositories.Cities
         }
 
 
-        public async Task<IEnumerable<CityEntity>> GetAllAsync()
+        public async Task<IReadOnlyCollection<CityEntity>> GetAllAsync()
         {
             using SqlConnection db = new SqlConnection(_settings.ConnectionString);
 
-            return await db.QueryAsync<CityEntity>(
+            IEnumerable<CityEntity> cities = await db.QueryAsync<CityEntity>(
                 "GetAllCities",
                 null,
                 commandType: CommandType.StoredProcedure);
+
+            return (IReadOnlyCollection<CityEntity>) cities;
         }
 
         public async Task<CityEntity> GetAsync(int id)

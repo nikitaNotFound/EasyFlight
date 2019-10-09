@@ -31,9 +31,9 @@ namespace WebAPI.Controllers
         [HttpGet]
         public async Task<ActionResult> GetAllAsync()
         {
-            IEnumerable<BlCity> citiesBl = await _cityService.GetAllAsync();
+            IReadOnlyCollection<BlCity> citiesBl = await _cityService.GetAllAsync();
 
-            IEnumerable<City> cities = citiesBl.Select(_mapper.Map<City>);
+            IReadOnlyCollection<City> cities = (IReadOnlyCollection<City>) citiesBl.Select(_mapper.Map<City>);
 
             return Ok(cities);
         }

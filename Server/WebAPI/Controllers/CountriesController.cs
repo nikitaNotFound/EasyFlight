@@ -32,7 +32,7 @@ namespace WebAPI.Controllers
         [HttpGet]
         public async Task<ActionResult> GetAllAsync()
         {
-            IEnumerable<BlCountry> countriesBl = await _countryService.GetAllAsync();
+            IReadOnlyCollection<BlCountry> countriesBl = await _countryService.GetAllAsync();
 
             IEnumerable<Country> countries = countriesBl.Select(_mapper.Map<Country>);
 
@@ -61,7 +61,7 @@ namespace WebAPI.Controllers
         [Route("filters")]
         public async Task<ActionResult> GetAsync(string name)
         {
-            IEnumerable<BlCountry> countriesBl = await _countryService.GetByNameAsync(name);
+            IReadOnlyCollection<BlCountry> countriesBl = await _countryService.GetByNameAsync(name);
 
             IEnumerable<Country> countries = countriesBl.Select(_mapper.Map<Country>);
 
@@ -73,7 +73,7 @@ namespace WebAPI.Controllers
         [Route("{id}/cities")]
         public async Task<ActionResult> GetCitiesAsync(int id)
         {
-            IEnumerable<BlCity> citiesBl = await _countryService.GetCitiesAsync(id);
+            IReadOnlyCollection<BlCity> citiesBl = await _countryService.GetCitiesAsync(id);
 
             IEnumerable<City> cities = citiesBl.Select(_mapper.Map<City>) ;
 
@@ -85,7 +85,7 @@ namespace WebAPI.Controllers
         [Route("{id}/cities/{name}")]
         public async Task<ActionResult> GetCitiesByName(int id, string name)
         {
-            IEnumerable<BlCity> citiesBl = await _countryService.GetCitiesByNameAsync(id, name);
+            IReadOnlyCollection<BlCity> citiesBl = await _countryService.GetCitiesByNameAsync(id, name);
 
             IEnumerable<City> cities = citiesBl.Select(_mapper.Map<City>);
 

@@ -7,17 +7,17 @@ using DataAccessLayer;
 
 namespace WebAPI
 {
-    public class Settings : IDalSettings
+    public class CorsSettings
     {
-        private IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
 
-        public Settings(IConfiguration configuration)
+
+        public CorsSettings(IConfiguration configuration)
         {
             this._configuration = configuration;
         }
 
 
-        public string ConnectionString => _configuration[nameof(ConnectionString)];
         public string AppUrl => _configuration[nameof(AppUrl)];
     }
 }

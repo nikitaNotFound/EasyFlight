@@ -21,11 +21,11 @@ namespace DataAccessLayer.Repositories.Countries
         }
 
 
-        public async Task<IEnumerable<CountryEntity>> GetAllAsync()
+        public async Task<IReadOnlyCollection<CountryEntity>> GetAllAsync()
         {
             using SqlConnection db = new SqlConnection(_settings.ConnectionString);
 
-            return await db.QueryAsync<CountryEntity>(
+            return (IReadOnlyCollection<CountryEntity>) await db.QueryAsync<CountryEntity>(
                 "GetAllCountries",
                 null,
                 commandType: CommandType.StoredProcedure);
@@ -41,31 +41,31 @@ namespace DataAccessLayer.Repositories.Countries
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<IEnumerable<CountryEntity>> GetByNameAsync(string name)
+        public async Task<IReadOnlyCollection<CountryEntity>> GetByNameAsync(string name)
         {
             using SqlConnection db = new SqlConnection(_settings.ConnectionString);
 
-            return await db.QueryAsync<CountryEntity>(
+            return (IReadOnlyCollection<CountryEntity>) await db.QueryAsync<CountryEntity>(
                 "SearchCountries",
                 new { name = name },
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<IEnumerable<CityEntity>> GetCitiesAsync(int id)
+        public async Task<IReadOnlyCollection<CityEntity>> GetCitiesAsync(int id)
         {
             using SqlConnection db = new SqlConnection(_settings.ConnectionString);
 
-            return await db.QueryAsync<CityEntity>(
+            return (IReadOnlyCollection<CityEntity>) await db.QueryAsync<CityEntity>(
                 "GetCountryCities",
                 new { id = id },
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<IEnumerable<CityEntity>> GetCitiesByNameAsync(int id, string name)
+        public async Task<IReadOnlyCollection<CityEntity>> GetCitiesByNameAsync(int id, string name)
         {
             using SqlConnection db = new SqlConnection(_settings.ConnectionString);
 
-            return await db.QueryAsync<CityEntity>(
+            return (IReadOnlyCollection<CityEntity>) await db.QueryAsync<CityEntity>(
                 "GetCountryCitiesByName",
                 new { id = id, name = name },
                 commandType: CommandType.StoredProcedure);

@@ -21,11 +21,11 @@ namespace BusinessLayer.Services.Cities
         }
 
 
-        public async Task<IEnumerable<City>> GetAllAsync()
+        public async Task<IReadOnlyCollection<City>> GetAllAsync()
         {
-            IEnumerable<CityEntity> citiesDal = await _cityRepository.GetAllAsync();
+            IReadOnlyCollection<CityEntity> citiesDal = await _cityRepository.GetAllAsync();
 
-            IEnumerable<City> cities = citiesDal.Select(_mapper.Map<City>);
+            IReadOnlyCollection<City> cities = (IReadOnlyCollection<City>) citiesDal.Select(_mapper.Map<City>);
 
             return cities;
         }
