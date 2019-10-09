@@ -60,7 +60,7 @@ export async function addCountry(country) {
 
 export async function updateCountry(country) {
     const response = await fetch(
-        `${config.API_URL}/countries/${country.id}`,
+        `${config.API_URL}/countries`,
         {
             method: 'PUT',
             mode: 'cors',
@@ -119,7 +119,7 @@ export async function addCity(city) {
 
 export async function updateCity(city) {
     const response = await fetch(
-        `${config.API_URL}/cities/${city.id}`,
+        `${config.API_URL}/cities`,
         {
             method: 'PUT',
             mode: 'cors',

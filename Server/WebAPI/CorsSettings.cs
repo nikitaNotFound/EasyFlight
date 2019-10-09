@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DataAccessLayer;
+using Newtonsoft.Json;
 
 namespace WebAPI
 {
@@ -14,10 +15,10 @@ namespace WebAPI
 
         public CorsSettings(IConfiguration configuration)
         {
-            this._configuration = configuration;
+            _configuration = configuration;
         }
 
 
-        public string AppUrl => _configuration[nameof(AppUrl)];
+        public string[] AllowedOrigins => _configuration.GetSection("AllowedOrigins").Get<string[]>();
     }
 }

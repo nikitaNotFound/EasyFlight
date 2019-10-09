@@ -33,7 +33,7 @@ namespace WebAPI.Controllers
         {
             IReadOnlyCollection<BlCity> citiesBl = await _cityService.GetAllAsync();
 
-            IReadOnlyCollection<City> cities = (IReadOnlyCollection<City>) citiesBl.Select(_mapper.Map<City>);
+            IEnumerable<City> cities = citiesBl.Select(_mapper.Map<City>);
 
             return Ok(cities);
         }
@@ -72,7 +72,7 @@ namespace WebAPI.Controllers
             return StatusCode(201);
         }
 
-        // PUT api/cities/{id}
+        // PUT api/cities
         [HttpPut]
         public async Task<ActionResult> UpdateAsync([FromBody] City city)
         {
