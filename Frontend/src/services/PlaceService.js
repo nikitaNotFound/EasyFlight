@@ -16,10 +16,10 @@ export async function getCountryById(id) {
             }
         });
 
-        resolve(RequestController.formResult(response));
+        return RequestController.formResult(response);
     } catch {
         const errorInfo = RequestController.getErrorInfo(500);
-        resolve(new RequestResult(false, errorInfo));
+        return new RequestResult(false, errorInfo);
     }
 }
 
@@ -80,10 +80,10 @@ export async function updateCountry(country) {
             }
         );
 
-        resolve(RequestController.formResult(response));
+        return RequestController.formResult(response);
     } catch {
         const errorInfo = RequestController.getErrorInfo(500);
-        resolve(new RequestResult(false, errorInfo));
+        return new RequestResult(false, errorInfo);
     }
 }
 
@@ -100,10 +100,10 @@ export async function getCityById(id) {
             }
         );
 
-        resolve(RequestController.formResult(response));
+        return RequestController.formResult(response);
     } catch {
         const errorInfo = RequestController.getErrorInfo(500);
-        resolve(new RequestResult(false, errorInfo));
+        return new RequestResult(false, errorInfo);
     }
 }
 
@@ -120,10 +120,10 @@ export async function addCity(city) {
             body: JSON.stringify(city)
         });
 
-        resolve(RequestController.formResult(response));
+        return RequestController.formResult(response);
     } catch {
         const errorInfo = RequestController.getErrorInfo(500);
-        resolve(new RequestResult(false, errorInfo));
+        return new RequestResult(false, errorInfo);
     }
 }
 
@@ -140,10 +140,10 @@ export async function updateCity(city) {
             body: JSON.stringify(city)
         });
 
-        resolve(RequestController.formResult(response));
+        return RequestController.formResult(response);
     } catch {
         const errorInfo = RequestController.getErrorInfo(500);
-        resolve(new RequestResult(false, errorInfo));
+        return new RequestResult(false, errorInfo);
     }
 }
 
@@ -197,6 +197,7 @@ export async function searchCountryCitiesByName(countryId, nameFilter) {
                 }
             }
         );
+
         return RequestController.formResult(response);
     } catch {
         const errorInfo = RequestController.getErrorInfo(500);
