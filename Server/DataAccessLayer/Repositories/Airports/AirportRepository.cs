@@ -13,7 +13,6 @@ namespace DataAccessLayer.Repositories.Airports
         private readonly IDalSettings _dalSettings;
 
 
-
         public AirportRepository(IDalSettings settings)
         {
             _dalSettings = settings;
