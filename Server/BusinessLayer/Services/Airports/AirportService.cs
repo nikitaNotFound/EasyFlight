@@ -20,7 +20,6 @@ namespace BusinessLayer.Services.Airports
             _mapper = mapper;
         }
 
-
         public async Task<IReadOnlyCollection<Airport>> GetAllAsync()
         {
             IReadOnlyCollection<AirportEntity> airportsDal = await _airportRepository.GetAllAsync();
@@ -35,6 +34,15 @@ namespace BusinessLayer.Services.Airports
             IReadOnlyCollection<AirportEntity> airportsDal = await _airportRepository.GetByNameAsync(nameFilter);
 
             IReadOnlyCollection<Airport> airports = airportsDal.Select(_mapper.Map<Airport>).ToList();
+
+            return airports;
+        }
+
+        public async Task<IReadOnlyCollection<Airport>> GetByNameAsync(string name)
+        {
+            IReadOnlyCollection<AirportEntity> airportsDal = await _airportRepository.GetByNameAsync(name);
+
+            IEnumerable<Airport> airports = airportsDal.Select(_mapper.Map<Airport>).ToList();
 
             return airports;
         }
