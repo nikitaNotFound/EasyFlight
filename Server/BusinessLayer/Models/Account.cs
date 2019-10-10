@@ -13,23 +13,5 @@ namespace BusinessLayer.Models
         public string Email { get; set; }
         public string Password { get; set; }
         public AccountRoles Role { get; set; }
-
-
-        public Account(
-            int? id,
-            string firstName,
-            string secondName,
-            string email,
-            string password,
-            AccountRoles role
-        )
-        {
-            Id = id;
-            FirstName = firstName;
-            SecondName = secondName;
-            Email = email;
-            Password = password;
-            Role = role;
-        }
     }
 }
