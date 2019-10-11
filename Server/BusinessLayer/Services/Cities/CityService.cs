@@ -48,7 +48,7 @@ namespace DataAccessLayer.Repositories.Cities
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task AddAsync(CityEntity city)
+        public async Task<IReadOnlyCollection<Airport>> GetCityAirportsAsync(int cityId)
         {
             IReadOnlyCollection<AirportEntity> airportsDal = await _cityRepository.GetCityAirportsAsync(cityId);
 
