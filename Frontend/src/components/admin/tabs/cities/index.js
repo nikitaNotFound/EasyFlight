@@ -17,14 +17,14 @@ export default function CityList() {
     async function onFilterApply(newFilterOptions) {
         changeFilterOptions(newFilterOptions);
 
-        let foundCities = null;
+        let citiesRequest = null;
 
         if (newFilterOptions.name && newFilterOptions.countryId) {
             foundCities = await PlaceService.searchCountryCitiesByName(newFilterOptions.countryId, newFilterOptions.name);
         } else if (newFilterOptions.countryId) {
-            foundCities = await PlaceService.getCountryCities(newFilterOptions.countryId);
+            citiesRequest = await PlaceService.getCountryCities(newFilterOptions.countryId);
         } else {
-            foundCities = await PlaceService.searchCitiesByName(newFilterOptions.name);
+            citiesRequest = await PlaceService.searchCitiesByName(newFilterOptions.name);
         }
 
         if (citiesRequest.successful === true) {

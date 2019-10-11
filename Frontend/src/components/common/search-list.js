@@ -80,7 +80,7 @@ function SearchList(props) {
         );
     }
 
-    function onSearchPhraseChange(event) {
+    async function onSearchPhraseChange(event) {
         changeInputValue(event.target.value);
 
         if (!event.target.value) {
@@ -90,23 +90,21 @@ function SearchList(props) {
             return;
         }
 
-        let newListLoading = null;
+        let newListResult = null;
 
         if (props.searchArgs) {
-            newListLoading = props.searchFunc(event.target.value, ...props.searchArgs);
+            newListResult = await props.searchFunc(event.target.value, ...props.searchArgs);
         } else {
-            newListLoading = props.searchFunc(event.target.value);
+            newListResult = await props.searchFunc(event.target.value);
         }
 
-        
-        newListLoading
-            .then(newList => {
-                changeList(newList);
-                changeLoading(false);
-            })
-            .catch(error => {
-                alert(error);
-            });
+        if (newListResult.successful === true) {
+            changeList(newListResult.value);
+        } else {
+            changeMessageBoxValue(newListResult.value)
+        }
+
+        changeLoading(false);
     }
     
     function showMessageBox() {

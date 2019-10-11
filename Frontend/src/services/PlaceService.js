@@ -45,7 +45,7 @@ export function searchCountriesByName(nameFilter) {
     });
 }
 
-export function addCountry(country) {
+export async function addCountry(country) {
     try {
         const response = await fetch(
             `${config.API_URL}/api/countries`,
