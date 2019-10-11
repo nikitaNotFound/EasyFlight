@@ -24,10 +24,24 @@ namespace DataAccessLayer.Repositories.Cities
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
-            return (IReadOnlyCollection<CityEntity>) await db.QueryAsync<CityEntity>(
+            IEnumerable<CityEntity> cities = await db.QueryAsync<CityEntity>(
                 "GetAllCities",
                 null,
                 commandType: CommandType.StoredProcedure);
+
+            return cities.ToList();
+        }
+
+        public async Task<IReadOnlyCollection<CityEntity>> SearchByNameAsync(string nameFilter)
+        {
+            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
+
+            IEnumerable<CityEntity> cities = await db.QueryAsync<CityEntity>(
+                "SearchCitiesByName",
+                new { name = nameFilter },
+                commandType: CommandType.StoredProcedure);
+
+            return cities.ToList();
         }
 
         public async Task<CityEntity> GetAsync(int id)

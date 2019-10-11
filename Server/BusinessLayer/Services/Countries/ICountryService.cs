@@ -10,9 +10,9 @@ namespace BusinessLayer.Services.Countries
     {
         Task<IReadOnlyCollection<Country>> GetAllAsync();
         Task<Country> GetByIdAsync(int id);
-        Task<IReadOnlyCollection<Country>> GetByNameAsync(string name);
-        Task<IReadOnlyCollection<City>> GetCitiesAsync(int id);
-        Task<IReadOnlyCollection<City>> GetCitiesByNameAsync(int id, string name);
+        Task<IReadOnlyCollection<Country>> SearchByNameAsync(string name);
+        Task<IReadOnlyCollection<City>> GetCountryCitiesAsync(int countryId);
+        Task<IReadOnlyCollection<City>> SearchCountryCitiesByNameAsync(int countryId, string name);
         Task<ResultTypes> AddAsync(Country country);
         Task<ResultTypes> UpdateAsync(Country country);
     }

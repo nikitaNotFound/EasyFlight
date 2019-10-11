@@ -26,9 +26,9 @@ namespace BusinessLayer.Services.Countries
         {
             IReadOnlyCollection<CountryEntity> countriesDal = await _countryRepository.GetAllAsync();
 
-            IEnumerable<Country> countries =  countriesDal.Select(_mapper.Map<Country>).ToList();
+            IReadOnlyCollection<Country> countries =  countriesDal.Select(_mapper.Map<Country>).ToList();
 
-            return  (IReadOnlyCollection<Country>) countries;
+            return countries;
         }
 
         public async Task<Country> GetByIdAsync(int id)
@@ -38,31 +38,33 @@ namespace BusinessLayer.Services.Countries
             return _mapper.Map<Country>(foundCountryDal);
         }
 
-        public async Task<IReadOnlyCollection<Country>> GetByNameAsync(string name)
+        public async Task<IReadOnlyCollection<Country>> SearchByNameAsync(string nameFilter)
         {
-            IReadOnlyCollection<CountryEntity> foundCountriesDal = await _countryRepository.GetByNameAsync(name);
+            IReadOnlyCollection<CountryEntity> foundCountriesDal =
+                await _countryRepository.SearchByNameAsync(nameFilter);
 
-            IEnumerable<Country> countries = foundCountriesDal.Select(_mapper.Map<Country>).ToList();
+            IReadOnlyCollection<Country> countries = foundCountriesDal.Select(_mapper.Map<Country>).ToList();
 
-            return (IReadOnlyCollection<Country>) countries;
+            return countries;
         }
 
-        public async Task<IReadOnlyCollection<City>> GetCitiesAsync(int id)
+        public async Task<IReadOnlyCollection<City>> GetCountryCitiesAsync(int countryId)
         {
-            IReadOnlyCollection<CityEntity> citiesDal = await _countryRepository.GetCitiesAsync(id);
+            IReadOnlyCollection<CityEntity> citiesDal = await _countryRepository.GetCountryCitiesAsync(countryId);
 
-            IEnumerable<City> cities = citiesDal.Select(_mapper.Map<City>).ToList();
+            IReadOnlyCollection<City> cities = citiesDal.Select(_mapper.Map<City>).ToList();
 
-            return (IReadOnlyCollection<City>) cities;
+            return cities;
         }
 
-        public async Task<IReadOnlyCollection<City>> GetCitiesByNameAsync(int id, string name)
+        public async Task<IReadOnlyCollection<City>> SearchCountryCitiesByNameAsync(int countryid, string nameFilter)
         {
-            IReadOnlyCollection<CityEntity> citiesDal = await _countryRepository.GetCitiesByNameAsync(id, name);
+            IReadOnlyCollection<CityEntity> citiesDal =
+                await _countryRepository.SearchCountryCitiesByNameAsync(countryid, nameFilter);
 
-            IEnumerable<City> cities = citiesDal.Select(_mapper.Map<City>).ToList();
+            IReadOnlyCollection<City> cities = citiesDal.Select(_mapper.Map<City>).ToList();
 
-            return (IReadOnlyCollection<City>) cities;
+            return cities;
         } 
 
         public async Task<ResultTypes> AddAsync(Country country)

@@ -21,7 +21,7 @@ export async function getCountryById(id) {
 
 export async function searchCountries(name) {
     const response = await fetch(
-        `${config.API_URL}/countries/filters?name=${name}`,
+        `${config.API_URL}/countries?name=${name}`,
         {
             method: 'GET',
             mode: 'cors',
@@ -137,21 +137,53 @@ export async function updateCity(city) {
     return response.status;
 }
 
-export async function searchCities(name, args) {
-    const [countryId] = args;
-    
-    const urlPath = !name
-        ? `countries/${countryId}/cities`
-        : `countries/${countryId}/cities/${name}`
-
+export async function searchCitiesByName(name) {
     const response = await fetch(
-        `${config.API_URL}/${urlPath}`,
+        `${config.API_URL}/cities?name=${name}`,
         {
             method: 'GET',
             mode: 'cors',
             headers: {
                 'Content-Type': 'application/json'
-            },
+            }
+        }
+    );
+
+    if (response.ok) {
+        return response.json();
+    }
+
+    return response.status;
+}
+
+export async function getCountryCities(countryId) {
+    const response = await fetch(
+        `${config.API_URL}/countries/${countryId}/cities`,
+        {
+            method: 'GET',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+    );
+
+    if (response.ok) {
+        return response.json();
+    }
+
+    return response.status;
+}
+
+export async function getCountryCitiesByName(name, countryId) {
+    const response = await fetch(
+        `${config.API_URL}/countries/${countryId}/cities?name=${name}`,
+        {
+            method: 'GET',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            }
         }
     );
 

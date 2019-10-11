@@ -25,9 +25,18 @@ namespace BusinessLayer.Services.Cities
         {
             IReadOnlyCollection<CityEntity> citiesDal = await _cityRepository.GetAllAsync();
 
-            IEnumerable<City> cities = citiesDal.Select(_mapper.Map<City>).ToList();
+            IReadOnlyCollection<City> cities = citiesDal.Select(_mapper.Map<City>).ToList();
 
-            return (IReadOnlyCollection<City>) cities;
+            return cities;
+        }
+
+        public async Task<IReadOnlyCollection<City>> SearchByNameAsync(string nameFilter)
+        {
+            IReadOnlyCollection<CityEntity> citiesDal = await _cityRepository.SearchByNameAsync(nameFilter);
+
+            IReadOnlyCollection<City> cities = citiesDal.Select(_mapper.Map<City>).ToList();
+
+            return cities;
         }
 
         public async Task<City> GetByIdAsync(int id)

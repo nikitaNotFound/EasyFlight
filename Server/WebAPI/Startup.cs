@@ -5,6 +5,7 @@ using DataAccessLayer;
 using BusinessLayer;
 using AutoMapper;
 using System;
+using Serilog;
 
 namespace WebAPI
 {
@@ -21,7 +22,11 @@ namespace WebAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IDalSettings, DalSettings>(provider => new DalSettings(Configuration));
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(Configuration)
+                .CreateLogger();
+
+            services.AddSingleton<IDalSettings, DalSettings>();
 
             CorsSettings settings = new CorsSettings(Configuration);
 
@@ -55,7 +60,7 @@ namespace WebAPI
 
         public void Configure(IApplicationBuilder app)
         {
-            app.UseExceptionLogger(Configuration);
+            app.UseExceptionLogger();
 
             app.UseRouting();
             app.UseCors("CorsPolicy");

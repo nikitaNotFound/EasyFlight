@@ -66,10 +66,18 @@ function SearchList(props) {
             return;
         }
 
-        let newListLoading = props.searchFunc(event.target.value, props.searchArgs);
+        let newListLoading = null;
 
+        if (props.searchArgs) {
+            newListLoading = props.searchFunc(event.target.value, ...props.searchArgs);
+        } else {
+            newListLoading = props.searchFunc(event.target.value);
+        }
+
+        
         newListLoading
             .then(newList => {
+                console.log(newList);
                 changeList(newList);
                 changeLoading(false);
             })

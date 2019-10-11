@@ -27,11 +27,20 @@ namespace WebAPI.Controllers
         }
             
 
-        // GET api/cities
+        // GET api/cities{?nameFilter}
         [HttpGet]
-        public async Task<ActionResult> GetAllAsync()
+        public async Task<ActionResult> GetAsync(string nameFilter)
         {
-            IReadOnlyCollection<BlCity> citiesBl = await _cityService.GetAllAsync();
+            IReadOnlyCollection<BlCity> citiesBl;
+
+            if (nameFilter == null)
+            {
+                citiesBl = await _cityService.GetAllAsync();
+            }
+            else
+            {
+                citiesBl = await _cityService.SearchByNameAsync(nameFilter);
+            }
 
             IEnumerable<City> cities = citiesBl.Select(_mapper.Map<City>);
 
@@ -65,11 +74,11 @@ namespace WebAPI.Controllers
 
             if (addingResult == ResultTypes.Dublicate)
             {
-                string message = $"{city.Name} already exists!";
+                string message = $"'{city.Name}' already exists!";
                 return BadRequest(message);
             }
     
-            return StatusCode(201);
+            return Ok();
         }
 
         // PUT api/cities
@@ -86,11 +95,11 @@ namespace WebAPI.Controllers
                     return NotFound();
 
                 case ResultTypes.Dublicate:
-                    string message = "Such name already exists!";
+                    string message = $"City with name '{city.Name}' already exists!";
                     return BadRequest(message);
             }
 
-            return Accepted();
+            return Ok();
         }
     }
 }

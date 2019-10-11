@@ -56,49 +56,26 @@ function Filter(props) {
         props.onFilterApplied(newOptions);
     }
 
-    function getCountryName(country) {
-        return country.name;
-    }
+    async function getCityName(city) {
+        const country = await PlaceService.getCountryById(city.countryId);
 
-    function getCityName(city) {
-        return city.name;
+        const finalName = `${city.name} (${country.name})`;
+
+        return finalName;
     }
 
     function getAirportName(airport) {
         return airport.name;
     }
 
-    function showCitiesChooser() {
-        if (fromCountry && toCountry) {
-            return (
-                <div className="row filter-item">
-                    <SearchList
-                        searchFunc={PlaceService.searchCities}
-                        searchArgs={[fromCountry.id]}
-                        placeholder="From city"
-                        currentItem={fromCity}
-                        getItemName={getCityName}
-                        onValueChange={changeFromCity}
-                    />
-                    <SearchList
-                        searchFunc={PlaceService.searchCities}
-                        searchArgs={[toCountry.id]}
-                        placeholder="To city"
-                        currentItem={toCity}
-                        getItemName={getCityName}
-                        onValueChange={changeToCity}
-                    />
-                </div>
-            );
-        }
-    }
-
     function showMessageBox() {
         if (messageBoxValue) {
-            return <MessageBox
-                        hideFunc={changeMessageBoxValue}
-                        message={messageBoxValue}
-                    />
+            return (
+                <MessageBox
+                    hideFunc={changeMessageBoxValue}
+                    message={messageBoxValue}
+                />
+            );
         }
     }
 
@@ -110,22 +87,20 @@ function Filter(props) {
             <div className="filter-area">
                 <div className="row filter-item">
                     <SearchList
-                        searchFunc={PlaceService.searchCountries}
-                        placeholder="From country"
-                        currentItem={fromCountry}
-                        getItemName={getCountryName}
-                        onValueChange={changeFromCountry}
+                        searchFunc={PlaceService.searchCitiesByName}
+                        placeholder="From city"
+                        currentItem={fromCity}
+                        getItemName={getCityName}
+                        onValueChange={changeFromCity}
                     />
                     <SearchList
-                        searchFunc={PlaceService.searchCountries}
-                        placeholder="To country"
-                        currentItem={toCountry}
-                        getItemName={getCountryName}
-                        onValueChange={changeToCountry}
+                        searchFunc={PlaceService.searchCitiesByName}
+                        placeholder="To city"
+                        currentItem={toCity}
+                        getItemName={getCityName}
+                        onValueChange={changeToCity}
                     />
                 </div>
-
-                {showCitiesChooser()}
 
                 <div className="row filter-item">
                     <SearchList

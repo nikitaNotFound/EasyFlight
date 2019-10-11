@@ -7,13 +7,12 @@ namespace DataAccessLayer
     {
         private readonly IConfiguration _configuration;
 
+        public string ConnectionString => _configuration[nameof(ConnectionString)];
+
 
         public DalSettings(IConfiguration configuration)
         {
             _configuration = configuration;
         }
-
-
-        public string ConnectionString => _configuration[nameof(ConnectionString)];
     }
 }

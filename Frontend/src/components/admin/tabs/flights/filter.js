@@ -5,7 +5,7 @@ import SearchOptions from '../../../../services/flight-models/search-options';
 import ComponentHeadline from '../../../common/component-headline';
 import MessageBox from '../../../common/message-box';
 import * as AirportService from '../../../../services/AirportService';
-import * as PlaceSerivce from '../../../../services/PlaceService';
+import * as PlaceService from '../../../../services/PlaceService';
 
 function Filter(props) {
     const [fromAirport, changeFromAirport] = useState(props.filterOptions.fromAirport);
@@ -56,41 +56,12 @@ function Filter(props) {
         return airport.name;
     }
 
-    function getCityName(city) {
-        return city.name;
-    }
+    async function getCityName(city) {
+        const country = await PlaceService.getCountryById(city.countryId);
 
-    function getCountryName(country) {
-        return country.name;
-    }
+        const finalName = `${city.name} (${country.name})`;
 
-    function showCitiesChooser() {
-        if (fromCountry && toCountry) {
-            return (
-                <div className="filter-row">
-                    <div className="filter-arg">
-                        <SearchList
-                            searchFunc={PlaceSerivce.searchCities}
-                            searchArgs={[fromCountry.id]}
-                            placeholder="From city"
-                            currentItem={fromCity}
-                            getItemName={getCityName}
-                            onValueChange={changeFromCity}
-                        />
-                    </div>
-                    <div className="filter-arg">
-                        <SearchList
-                            searchFunc={PlaceSerivce.searchCities}
-                            searchArgs={[toCountry.id]}
-                            placeholder="To city"
-                            currentItem={toCity}
-                            getItemName={getCityName}
-                            onValueChange={changeToCity}
-                        />
-                    </div>
-                </div>
-            );
-        }
+        return finalName;
     }
 
     function showMessageBox() {
@@ -130,25 +101,23 @@ function Filter(props) {
             <div className="filter-row">
                 <div className="filter-arg">
                     <SearchList
-                        searchFunc={PlaceSerivce.searchCountries}
-                        placeholder="From country"
-                        currentItem={fromCountry}
-                        getItemName={getCountryName}
-                        onValueChange={changeFromCountry}
+                        searchFunc={PlaceService.searchCitiesByName}
+                        placeholder="From city"
+                        currentItem={fromCity}
+                        getItemName={getCityName}
+                        onValueChange={changeFromCity}
                     />
                 </div>
                 <div className="filter-arg">
                     <SearchList
-                        searchFunc={PlaceSerivce.searchCountries}
-                        placeholder="To country"
-                        currentItem={toCountry}
-                        getItemName={getCountryName}
-                        onValueChange={changeToCountry}
+                        searchFunc={PlaceService.searchCitiesByName}
+                        placeholder="To city"
+                        currentItem={toCity}
+                        getItemName={getCityName}
+                        onValueChange={changeToCity}
                     />
                 </div>
             </div>
-
-            {showCitiesChooser()}
 
             <div className="filter-row">
                 <div className="filter-arg">

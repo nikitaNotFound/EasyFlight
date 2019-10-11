@@ -52,8 +52,12 @@ export default function Edit(props) {
         return country.name;
     }
 
-    function getCityName(city) {
-        return city.name;
+    async function getCityName(city) {
+        const country = await PlaceService.getCountryById(city.countryId);
+
+        const finalName = `${city.name} (${country.name})`;
+
+        return finalName;
     }
 
     function showMessageBox() {
@@ -71,7 +75,7 @@ export default function Edit(props) {
         if (country) {
             return (
                 <SearchList
-                    searchFunc={PlaceService.searchCities}
+                    searchFunc={PlaceService.searchCitiesByName}
                     searchArgs={[country.id]}
                     placeholder="City"
                     currentItem={city}

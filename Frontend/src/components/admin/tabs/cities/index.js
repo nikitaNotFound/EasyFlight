@@ -16,7 +16,15 @@ export default function CityList() {
     async function onFilterApply(newFilterOptions) {
         changeFilterOptions(newFilterOptions);
 
-        const foundCities = await PlaceService.searchCities(newFilterOptions.name, [newFilterOptions.countryId]);
+        let foundCities = null;
+
+        if (newFilterOptions.name && newFilterOptions.countryId) {
+            foundCities = await PlaceService.getCountryCitiesByName(newFilterOptions.name, newFilterOptions.countryId);
+        } else if (newFilterOptions.countryId) {
+            foundCities = await PlaceService.getCountryCities(newFilterOptions.countryId);
+        } else {
+            foundCities = await PlaceService.searchCitiesByName(newFilterOptions.name);
+        }
 
         changeCities(foundCities);
     }

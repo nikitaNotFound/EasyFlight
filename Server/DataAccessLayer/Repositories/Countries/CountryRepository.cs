@@ -6,7 +6,6 @@ using System.Data.SqlClient;
 using Dapper;
 using System.Data;
 using DataAccessLayer.Models;
-using AutoMapper;
 
 namespace DataAccessLayer.Repositories.Countries
 {
@@ -25,10 +24,12 @@ namespace DataAccessLayer.Repositories.Countries
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
-            return (IReadOnlyCollection<CountryEntity>) await db.QueryAsync<CountryEntity>(
+            IEnumerable<CountryEntity> countries = await db.QueryAsync<CountryEntity>(
                 "GetAllCountries",
                 null,
                 commandType: CommandType.StoredProcedure);
+
+            return countries.ToList();
         }
 
         public async Task<CountryEntity> GetAsync(int id)
@@ -41,34 +42,43 @@ namespace DataAccessLayer.Repositories.Countries
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<IReadOnlyCollection<CountryEntity>> GetByNameAsync(string name)
+        public async Task<IReadOnlyCollection<CountryEntity>> SearchByNameAsync(string name)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
-            return (IReadOnlyCollection<CountryEntity>) await db.QueryAsync<CountryEntity>(
+            IEnumerable<CountryEntity> countries = await db.QueryAsync<CountryEntity>(
                 "SearchCountries",
                 new { name = name },
                 commandType: CommandType.StoredProcedure);
+
+            return countries.ToList();
         }
 
-        public async Task<IReadOnlyCollection<CityEntity>> GetCitiesAsync(int id)
+        public async Task<IReadOnlyCollection<CityEntity>> GetCountryCitiesAsync(int countryId)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
-            return (IReadOnlyCollection<CityEntity>) await db.QueryAsync<CityEntity>(
+            IEnumerable<CityEntity> countries = await db.QueryAsync<CityEntity>(
                 "GetCountryCities",
-                new { id = id },
+                new { id = countryId },
                 commandType: CommandType.StoredProcedure);
+
+            return countries.ToList();
         }
 
-        public async Task<IReadOnlyCollection<CityEntity>> GetCitiesByNameAsync(int id, string name)
+        public async Task<IReadOnlyCollection<CityEntity>> SearchCountryCitiesByNameAsync(
+            int countryId,
+            string nameFilter
+        )
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
-            return (IReadOnlyCollection<CityEntity>) await db.QueryAsync<CityEntity>(
-                "GetCountryCitiesByName",
-                new { id = id, name = name },
+            IEnumerable<CityEntity> countries = await db.QueryAsync<CityEntity>(
+                "SearchCountryCitiesByName",
+                new { id = countryId, name = nameFilter },
                 commandType: CommandType.StoredProcedure);
+
+            return countries.ToList();
         }
 
         public async Task AddAsync(CountryEntity country)

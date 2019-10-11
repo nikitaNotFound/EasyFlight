@@ -30,3 +30,5 @@ msbuild.wrn
 
 # Visual Studio 2015
 .vs/
+Server/Database/Database.dbmdl
+Server/Database/Database.jfm
