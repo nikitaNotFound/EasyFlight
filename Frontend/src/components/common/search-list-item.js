@@ -22,7 +22,7 @@ function SearchListItem(props) {
 
     if (loading) {
         return (
-            <div className="search-item rounded" onMouseDown={onClickHandler}>
+            <div className="search-item rounded">
                 <Spinner headline="loading"/>
             </div>
         );

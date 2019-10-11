@@ -32,8 +32,8 @@ function SearchList(props) {
         changeMode(false);
     }
 
-    function searchItemChosen(item) {
-        changeInputValue(props.getItemName(item));
+    async function searchItemChosen(item) {
+        changeInputValue(await props.getItemName(item));
         changeCurrentItem(item);
         props.onValueChange(item);
     }
