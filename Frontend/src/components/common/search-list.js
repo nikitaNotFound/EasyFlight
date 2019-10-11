@@ -77,7 +77,6 @@ function SearchList(props) {
         
         newListLoading
             .then(newList => {
-                console.log(newList);
                 changeList(newList);
                 changeLoading(false);
             })

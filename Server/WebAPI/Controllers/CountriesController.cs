@@ -67,7 +67,7 @@ namespace WebAPI.Controllers
 
         // GET api/countries/{countryId}/cities{?nameFilter}
         [HttpGet]
-        [Route("{id}/cities")]
+        [Route("{countryId}/cities")]
         public async Task<ActionResult> GetCitiesAsync(int countryId, string nameFilter)
         {
             IReadOnlyCollection<BlCity> citiesBl;

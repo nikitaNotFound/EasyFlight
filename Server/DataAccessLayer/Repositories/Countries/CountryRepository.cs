@@ -42,13 +42,13 @@ namespace DataAccessLayer.Repositories.Countries
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<IReadOnlyCollection<CountryEntity>> SearchByNameAsync(string name)
+        public async Task<IReadOnlyCollection<CountryEntity>> SearchByNameAsync(string nameFilter)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             IEnumerable<CountryEntity> countries = await db.QueryAsync<CountryEntity>(
                 "SearchCountries",
-                new { name = name },
+                new { name = nameFilter },
                 commandType: CommandType.StoredProcedure);
 
             return countries.ToList();
@@ -60,7 +60,7 @@ namespace DataAccessLayer.Repositories.Countries
 
             IEnumerable<CityEntity> countries = await db.QueryAsync<CityEntity>(
                 "GetCountryCities",
-                new { id = countryId },
+                new { countryId = countryId },
                 commandType: CommandType.StoredProcedure);
 
             return countries.ToList();
@@ -75,7 +75,7 @@ namespace DataAccessLayer.Repositories.Countries
 
             IEnumerable<CityEntity> countries = await db.QueryAsync<CityEntity>(
                 "SearchCountryCitiesByName",
-                new { id = countryId, name = nameFilter },
+                new { countryId = countryId, name = nameFilter },
                 commandType: CommandType.StoredProcedure);
 
             return countries.ToList();

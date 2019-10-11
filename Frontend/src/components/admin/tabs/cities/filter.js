@@ -16,12 +16,16 @@ export default function Filter(props) {
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
     function onFilterApply() {
-        if (!country) {
+        if (!country && !name) {
             changeMessageBoxValue('Setup filter!');
             return;
         }
 
-        props.onFilterApply({name: name, countryId: country.id});
+        const countryId = country
+            ? country.id
+            : null;
+
+        props.onFilterApply({name: name, countryId: countryId});
     }
 
     function onNameChanged(event) {

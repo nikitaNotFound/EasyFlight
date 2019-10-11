@@ -22,10 +22,6 @@ namespace WebAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
-            Log.Logger = new LoggerConfiguration()
-                .ReadFrom.Configuration(Configuration)
-                .CreateLogger();
-
             services.AddSingleton<IDalSettings, DalSettings>();
 
             CorsSettings settings = new CorsSettings(Configuration);
@@ -56,6 +52,10 @@ namespace WebAPI
             BlModule.Register(services);
 
             Environment.CurrentDirectory = AppContext.BaseDirectory;
+
+            Log.Logger = new LoggerConfiguration()
+               .ReadFrom.Configuration(Configuration)
+               .CreateLogger();
         }
 
         public void Configure(IApplicationBuilder app)

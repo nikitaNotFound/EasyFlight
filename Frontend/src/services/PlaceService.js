@@ -167,7 +167,7 @@ export async function getCountryCities(countryId) {
             }
         }
     );
-
+    
     if (response.ok) {
         return response.json();
     }
@@ -175,7 +175,7 @@ export async function getCountryCities(countryId) {
     return response.status;
 }
 
-export async function getCountryCitiesByName(name, countryId) {
+export async function searchCountryCitiesByName(name, countryId) {
     const response = await fetch(
         `${config.API_URL}/countries/${countryId}/cities?nameFilter=${name}`,
         {
