@@ -2,8 +2,14 @@ import { users, userFlights } from './DataBase';
 import { isArray } from 'util';
 import User from './user-models/user';
 
+import * as RequestController from './RequestController';
+
+import RequestResult from './request-result';
+
 import store from '../store/store';
 import * as types from '../store/ActionTypes';
+
+import * as config from '../config.json';
 
 export function getCurrentUser(id) {
     return new Promise((resolve, reject) => {
@@ -45,29 +51,41 @@ export function getUserFlights(userId) {
 
 export async function login(user) {
     try {
+        const response = await fetch(
+            `${config.API_URL}/accounts/login`,
+            {
+                method: 'POST',
+                mode: 'cors',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(user)
+            }
+        );
 
-    } catch {
-        
-    }
-    let foundUser = null;
+        const result = RequestController.formResult(response);
 
-    for (let i = 0, len = users.length; i < len; i++) {
-        if (users[i].email == user.email && users[i].password == user.password) {
-            foundUser = users[i];
+        if (result.successful === false) {
+            alert(1)
+            return result;
+        } else {
+            const token = result.value.token;
+            alert(token);
+
+            store.dispatch({ type: types.CHANGE_AUTH_TOKEN, payload: token });
+
+            const userInfo = new User(
+                result.value.firstName,
+                result.value.secondName,
+                result.value.email,
+                result.value.role
+            );
+            store.dispatch({ type: types.CHANGE_USER_INFO, payload: userInfo });
         }
+    } catch {
+        const errorInfo = RequestController.getErrorInfo(500);
+        return new RequestResult(false, errorInfo);
     }
-
-    if (!foundUser) {
-        return false;
-    }
-
-    const foundUserInfo = new User(foundUser.id, foundUser.firstame, foundUser.role);
-
-    store.dispatch({ type: types.CHANGE_AUTH_TOKEN, payload: "AUTH_TOKEN_KEY" });
-    store.dispatch({ type: types.CHANGE_REFRESH_TOKEN, payload: "REFRESH_TOKEN_KEY" });
-    store.dispatch({ type: types.CHANGE_USER_INFO, payload: foundUserInfo });
-
-    return true;
 }
 
 export function logout() {

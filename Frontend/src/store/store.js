@@ -12,14 +12,14 @@ function loadState() {
     const serialisedState = localStorage.getItem(STORAGE_KEY);
 
     if (!serialisedState) {
-        return null;
+        return "";
     }
 
     return JSON.parse(serialisedState);
 }
 
 const oldState = loadState();
-const store = createStore(reducer);
+const store = createStore(reducer, oldState);
 
 store.subscribe(() => {
     saveState(store.getState());

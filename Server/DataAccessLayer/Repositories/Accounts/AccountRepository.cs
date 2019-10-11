@@ -13,6 +13,13 @@ namespace DataAccessLayer.Repositories.Accounts
     {
         private readonly IDalSettings _dalSettings;
 
+
+        public AccountRepository(IDalSettings dalSettings)
+        {
+            _dalSettings = dalSettings;
+        }
+
+
         public async Task<bool> CheckDublicateAsync(AccountEntity account)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);

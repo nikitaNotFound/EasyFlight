@@ -1,6 +1,7 @@
 using DataAccessLayer.Repositories.Cities;
 using DataAccessLayer.Repositories.Countries;
 using DataAccessLayer.Repositories.Airports;
+using DataAccessLayer.Repositories.Accounts;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DataAccessLayer
@@ -12,6 +13,7 @@ namespace DataAccessLayer
             services.AddSingleton<ICityRepository, CityRepository>();
             services.AddSingleton<ICountryRepository, CountryRepository>();
             services.AddSingleton<IAirportRepository, AirportRepository>();
+            services.AddSingleton<IAccountRepository, AccountRepository>();
         }
     }
 }

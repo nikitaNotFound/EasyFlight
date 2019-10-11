@@ -6,6 +6,7 @@ using BusinessLayer;
 using AutoMapper;
 using Serilog;
 using Microsoft.Extensions.Logging;
+using WebAPI.Services;
 
 namespace WebAPI
 {
@@ -23,6 +24,7 @@ namespace WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IDalSettings, DalSettings>();
+            services.AddSingleton<IJwtSettings, JwtSettings>();
 
             CorsSettings settings = new CorsSettings(Configuration);
 
@@ -50,6 +52,7 @@ namespace WebAPI
 
             DalModule.Register(services);
             BlModule.Register(services);
+            WebAPIModule.Register(services);
 
             Serilog.ILogger logger = new LoggerConfiguration()
                .ReadFrom.Configuration(Configuration)
