@@ -1,8 +1,10 @@
 import React from 'react'
-import PropsTypes from 'prop-types';
-import UserInfo from '../../services/user-models/user-info';
-import '../../styles/profile-bar.css';
 import { Link } from 'react-router-dom';
+import PropsTypes from 'prop-types';
+
+import '../../styles/profile-bar.css';
+
+import User from '../../services/user-models/user';
 
 function ProfileBar(props) {
     return (
@@ -20,7 +22,7 @@ function ProfileBar(props) {
 }
 
 ProfileBar.propsTypes = {
-    userInfo: PropsTypes.instanceOf(UserInfo)
+    userInfo: PropsTypes.instanceOf(User)
 }
 
 export default ProfileBar;

@@ -1,6 +1,6 @@
 import { users, userFlights } from './DataBase';
 import { isArray } from 'util';
-import UserInfo from './user-models/user-info';
+import User from './user-models/user';
 
 import store from '../store/store';
 import * as types from '../store/ActionTypes';
@@ -58,16 +58,16 @@ export async function login(user) {
     }
 
     if (!foundUser) {
-        resolve(false);
+        return false;
     }
 
-    const foundUserInfo = new UserInfo(foundUser.id, foundUser.name, foundUser.role);
+    const foundUserInfo = new User(foundUser.id, foundUser.firstame, foundUser.role);
 
-    store.dispatch({ type: types.CHANGE_AUTH_TOKEN, payload: AUTH_TOKEN_KEY });
-    store.dispatch({ type: types.CHANGE_REFRESH_TOKEN, payload: REFRESH_TOKEN_KEY });
+    store.dispatch({ type: types.CHANGE_AUTH_TOKEN, payload: "AUTH_TOKEN_KEY" });
+    store.dispatch({ type: types.CHANGE_REFRESH_TOKEN, payload: "REFRESH_TOKEN_KEY" });
     store.dispatch({ type: types.CHANGE_USER_INFO, payload: foundUserInfo });
 
-    resolve(true);
+    return true;
 }
 
 export function logout() {
