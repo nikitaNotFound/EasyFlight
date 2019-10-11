@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Cors;
@@ -16,7 +15,7 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [EnableCors("AllowAllToUrlFromConfig")]
+    [EnableCors("CorsPolicy")]
     public class AirportsController : ControllerBase
     {
         private readonly IAirportService _airportService;
@@ -52,6 +51,26 @@ namespace WebAPI.Controllers
         }
 
 
+        // GET api/airports{?nameFilter}
+        [HttpGet]
+        public async Task<ActionResult> GetAllAsync(string nameFilter)
+        {
+            IReadOnlyCollection<BlAirport> airportsBl;
+
+            if (nameFilter != null)
+            {
+                airportsBl = await _airportService.GetByNameAsync(nameFilter);
+            }
+            else
+            {
+                airportsBl = await _airportService.GetAllAsync();
+            }
+
+            IEnumerable<Airport> airports = airportsBl.Select(_mapper.Map<Airport>);
+
+            return Ok(airports);
+        }
+
         // GET api/airports/{id}
         [HttpGet]
         [Route("{id}")]
@@ -73,15 +92,16 @@ namespace WebAPI.Controllers
         [HttpPost]
         public async Task<ActionResult> AddAsync([FromBody]Airport airport)
         {
-            var airportBl = mapper.Map<BlAirport>(airport);
-            ResultTypes addResult = await airportService.AddAsync(airportBl);
+            BlAirport airportBl = _mapper.Map<BlAirport>(airport);
+
+            ResultTypes addResult = await _airportService.AddAsync(airportBl);
 
             if (addResult == ResultTypes.Duplicate)
             {
                 return BadRequest();
             }
 
-            return new StatusCodeResult(201);
+            return Ok();
         }
 
         // PUT api/airports
@@ -101,19 +121,7 @@ namespace WebAPI.Controllers
                     return new NotFoundResult();
             }
 
-            return new AcceptedResult();
-        }
-
-        // POST api/airports/searches
-        [HttpPost]
-        [Route("searches")]
-        public async Task<ActionResult> SearchAsync([FromBody]AirportSearchOptions searchOptions)
-        {
-            var searchOptionsBl = mapper.Map<BlAirportSearchOptions>(searchOptions);
-
-            var foundAirports = await airportService.SearchAsync(searchOptionsBl);
-
-            return new ObjectResult(foundAirports);
+            return Ok();
         }
     }
 }

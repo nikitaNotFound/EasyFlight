@@ -57,8 +57,6 @@ function SearchList(props) {
     }
 
     async function onSearchPhraseChange(event) {
-        changeInputValue(event.target.value);
-        
         if (!event.target.value) {
             changeLoading(true);
             changeCurrentItem(null);
