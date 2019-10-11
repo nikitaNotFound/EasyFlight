@@ -1,10 +1,14 @@
 .search-list {
   color: black;
-  width: 194px;
+  width: 300px;
   position: absolute;
   z-index: 999;
   background: rgb(139, 139, 139);
   padding: 3px;
+}
+
+.search-list-input {
+  width: 300px;
 }
 
 .search-item {

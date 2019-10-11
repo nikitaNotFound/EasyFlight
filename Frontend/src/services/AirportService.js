@@ -66,17 +66,16 @@ export async function update(airport) {
     }
 }
 
-export async function search(params) {
+export async function searchByName(name) {
     try {
         var response = await fetch(
-            `${config.API_URL}/airports/searches`,
+            `${config.API_URL}/airports?nameFilter=${name}`,
             {
-                method: "POST",
+                method: "GET",
                 mode: "cors",
                 headers: {
                     "Content-Type": "application/json"
-                },
-                body: JSON.stringify(params)
+                }
             }
         );
 

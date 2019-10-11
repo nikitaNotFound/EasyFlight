@@ -11,7 +11,7 @@ import * as PlaceService from '../../../../services/PlaceService';
 export default function Filter(props) {
     const [name, changeName] = useState(props.filterOptions.name);
     const [city, changeCity] = useState(props.filterOptions.city);
-
+ 
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
     function onFilterApply() {
@@ -49,10 +49,12 @@ export default function Filter(props) {
 
     function showMessageBox() {
         if (messageBoxValue) {
-            return <MessageBox
-                        hideFunc={changeMessageBoxValue}
-                        message={messageBoxValue}
-                    />
+            return (
+                <MessageBox
+                    hideFunc={changeMessageBoxValue}
+                    message={messageBoxValue}
+                />
+            );
         }
     }
 

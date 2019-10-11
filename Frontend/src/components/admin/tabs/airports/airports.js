@@ -6,6 +6,21 @@ import Airport from './airport';
 import '../../../../styles/items-list.css';
 
 export default function Airports(props) {
+    if (!props.airports) {
+        return (
+            <div className="items-list">
+            </div>
+        );
+    }
+
+    if (props.airports.length == 0) {
+        return (
+            <div className="items-list">
+                No result
+            </div>
+        );
+    }
+
     return (
         <div className="items-list">
                 {props.airports.map(

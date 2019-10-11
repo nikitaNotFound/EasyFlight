@@ -57,8 +57,13 @@ function Filter(props) {
         return finalName;
     }
 
-    function getAirportName(airport) {
-        return airport.name;
+    async function getAirportName(airport) {
+        const cityResult = await PlaceService.getCityById(airport.cityId);
+        const countryResult = await PlaceService.getCountryById(cityResult.value.countryId);
+
+        const finalName = `${airport.name} (${cityResult.value.name}, ${countryResult.value.name})`;
+
+        return finalName;
     }
 
     function showMessageBox() {
@@ -97,14 +102,14 @@ function Filter(props) {
 
                 <div className="row filter-item">
                     <SearchList
-                        searchFunc={AirportService.search}
+                        searchFunc={AirportService.searchByName}
                         placeholder="From airport"
                         currentItem={fromAirport}
                         getItemName={getAirportName}
                         onValueChange={changeFromAirport}
                     />
                     <SearchList
-                        searchFunc={AirportService.search}
+                        searchFunc={AirportService.searchByName}
                         placeholder="To airport"
                         currentItem={toAirport}
                         getItemName={getAirportName}

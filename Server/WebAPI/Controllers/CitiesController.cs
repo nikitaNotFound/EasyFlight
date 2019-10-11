@@ -65,12 +65,21 @@ namespace WebAPI.Controllers
             return NotFound();
         }
 
-        // GET api/cities/{id}/airports
+        // GET api/cities/{cityId}/airports{?nameFilter}
         [HttpGet]
-        [Route("{id}/airports")]
-        public async Task<ActionResult> GetAirportsAsync(int id)
+        [Route("{cityId}/airports")]
+        public async Task<ActionResult> GetAirportsAsync(int cityId, string nameFilter)
         {
-            IReadOnlyCollection<BlAirport> airportsBl = await _cityService.GetAirportsAsync(id);
+            IReadOnlyCollection<BlAirport> airportsBl;
+
+            if (nameFilter != null)
+            {
+                airportsBl = await _cityService.SearchCityAirportsByName(cityId, nameFilter);
+            }
+            else
+            {
+                airportsBl = await _cityService.GetCityAirportsAsync(cityId);
+            }
 
             IEnumerable<Airport> airports = airportsBl.Select(_mapper.Map<Airport>);
 

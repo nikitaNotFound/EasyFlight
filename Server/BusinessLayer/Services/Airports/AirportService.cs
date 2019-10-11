@@ -15,28 +15,30 @@ namespace BusinessLayer.Services.Airports
         private readonly IAirportRepository _airportRepository;
         private readonly IMapper _mapper;
 
+
         public AirportService(IAirportRepository airportRepository, IMapper mapper)
         {
             _airportRepository = airportRepository;
             _mapper = mapper;
         }
 
+
         public async Task<IReadOnlyCollection<Airport>> GetAllAsync()
         {
             IReadOnlyCollection<AirportEntity> airportsDal = await _airportRepository.GetAllAsync();
 
-            IEnumerable<Airport> airports = airportsDal.Select(_mapper.Map<Airport>).ToList();
+            IReadOnlyCollection<Airport> airports = airportsDal.Select(_mapper.Map<Airport>).ToList();
 
-            return (IReadOnlyCollection<Airport>) airports;
+            return airports;
         }
 
-        public async Task<IReadOnlyCollection<Airport>> GetByNameAsync(string name)
+        public async Task<IReadOnlyCollection<Airport>> GetByNameAsync(string nameFilter)
         {
-            IReadOnlyCollection<AirportEntity> airportsDal = await _airportRepository.GetByNameAsync(name);
+            IReadOnlyCollection<AirportEntity> airportsDal = await _airportRepository.GetByNameAsync(nameFilter);
 
-            IEnumerable<Airport> airports = airportsDal.Select(_mapper.Map<Airport>).ToList();
+            IReadOnlyCollection<Airport> airports = airportsDal.Select(_mapper.Map<Airport>).ToList();
 
-            return (IReadOnlyCollection<Airport>) airports;
+            return airports;
         }
 
         public async Task<ResultTypes> AddAsync(Airport airport)
@@ -48,10 +50,10 @@ namespace BusinessLayer.Services.Airports
             if (!dublicate)
             {
                 await _airportRepository.AddAsync(airportDal);
-                return ResultTypes.Dublicate;
+                return ResultTypes.OK;
             }
 
-            return ResultTypes.OK;
+            return ResultTypes.Dublicate;
         }
 
         public async Task<Airport> GetByIdAsync(int id)

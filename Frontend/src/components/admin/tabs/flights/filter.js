@@ -73,7 +73,7 @@ function Filter(props) {
             <div className="filter-row">
                 <div className="filter-arg">
                     <SearchList
-                        searchFunc={AirportService.search}
+                        searchFunc={AirportService.searchByName}
                         placeholder="From airport"
                         currentItem={fromAirport}
                         getItemName={getAirportName}
@@ -82,7 +82,7 @@ function Filter(props) {
                 </div>
                 <div className="filter-arg">
                     <SearchList
-                        searchFunc={AirportService.search}
+                        searchFunc={AirportService.searchByName}
                         placeholder="To airport"
                         currentItem={toAirport}
                         getItemName={getAirportName}

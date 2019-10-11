@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,10 +12,12 @@ namespace DataAccessLayer.Repositories.Airports
     {
         private readonly IDalSettings _settings;
 
+
         public AirportRepository(IDalSettings settings)
         {
             _settings = settings;
         }
+
 
         public async Task AddAsync(AirportEntity airport)
         {
@@ -42,10 +43,12 @@ namespace DataAccessLayer.Repositories.Airports
         {
             using SqlConnection db = new SqlConnection(_settings.ConnectionString);
 
-            return (IReadOnlyCollection<AirportEntity>) await db.QueryAsync<AirportEntity>(
+            IEnumerable<AirportEntity> airports = await db.QueryAsync<AirportEntity>(
                 "GetAllAirports",
                 null,
                 commandType: CommandType.StoredProcedure);
+
+            return airports.ToList();
         }
 
         public async Task<AirportEntity> GetAsync(int id)
@@ -58,14 +61,16 @@ namespace DataAccessLayer.Repositories.Airports
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<IReadOnlyCollection<AirportEntity>> GetByNameAsync(string name)
+        public async Task<IReadOnlyCollection<AirportEntity>> GetByNameAsync(string nameFilter)
         {
             using SqlConnection db = new SqlConnection(_settings.ConnectionString);
 
-            return (IReadOnlyCollection<AirportEntity>) await db.QueryAsync<AirportEntity>(
+            IEnumerable<AirportEntity> airports = await db.QueryAsync<AirportEntity>(
                 "SearchAirportsByName",
-                new { name = name },
+                new { name = nameFilter },
                 commandType: CommandType.StoredProcedure);
+
+            return airports.ToList();
         }
 
         public async Task UpdateAsync(AirportEntity airport)

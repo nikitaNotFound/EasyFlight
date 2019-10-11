@@ -28,9 +28,9 @@ function SearchList(props) {
         changeMode(true);
     }
 
-    function closeList() {
+    async function closeList() {
         if (currentItem) {
-            changeInputValue(props.getItemName(currentItem));
+            changeInputValue(await props.getItemName(currentItem));
         } else {
             changeInputValue('');
         }
@@ -38,19 +38,20 @@ function SearchList(props) {
     }
 
     async function searchItemChosen(item) {
-        changeInputValue(await props.getItemName(item));
+        changeList([]);
         changeCurrentItem(item);
+        changeInputValue(await props.getItemName(item));
         props.onValueChange(item);
     }
 
     async function onSearchPhraseChange(event) {
-        changeInputValue(event.target.value);
-
         if (!event.target.value) {
             changeLoading(true);
             changeCurrentItem(null);
             props.onValueChange(null);
             return;
+        } else {
+            changeInputValue(event.target.value);
         }
 
         try {
@@ -105,6 +106,7 @@ function SearchList(props) {
             <label htmlFor={props.placeholder}>{props.placeholder}</label>
             <input
                 id={props.placeholder}
+                className="search-list-input"
                 type="text"
                 value={inputValue}
                 autoComplete="off"

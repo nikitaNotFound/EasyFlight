@@ -48,19 +48,23 @@ namespace DataAccessLayer.Repositories.Cities
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task AddAsync(CityEntity city)
+        public async Task<IReadOnlyCollection<Airport>> GetCityAirportsAsync(int cityId)
         {
-            CityEntity cityDal = _mapper.Map<CityEntity>(city);
+            IReadOnlyCollection<AirportEntity> airportsDal = await _cityRepository.GetCityAirportsAsync(cityId);
 
-            bool dublicate = await _cityRepository.CheckDuplicateAsync(cityDal);
+            IReadOnlyCollection<Airport> airports = airportsDal.Select(_mapper.Map<Airport>).ToList();
 
-            if (!dublicate)
-            {
-                await _cityRepository.AddAsync(cityDal);
-                return ResultTypes.Ok;
-            }
+            return airports;
+        }
 
-            return ResultTypes.Duplicate;
+        public async Task<IReadOnlyCollection<Airport>> SearchCityAirportsByName(int cityId, string nameFilter)
+        {
+            IReadOnlyCollection<AirportEntity> airportsDal =
+                await _cityRepository.SearchCityAirportsByNameAsync(cityId, nameFilter);
+
+            IReadOnlyCollection<Airport> airports = airportsDal.Select(_mapper.Map<Airport>).ToList();
+
+            return airports;
         }
 
         public async Task UpdateAsync(CityEntity city)

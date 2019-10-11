@@ -54,14 +54,31 @@ namespace DataAccessLayer.Repositories.Cities
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<IReadOnlyCollection<AirportEntity>> GetAirportsAsync(int id)
+        public async Task<IReadOnlyCollection<AirportEntity>> GetCityAirportsAsync(int id)
         {
-            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
+            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
-            return (IReadOnlyCollection<AirportEntity>) await db.QueryAsync<AirportEntity>(
+            IEnumerable<AirportEntity> airports = await db.QueryAsync<AirportEntity>(
                 "GetCityAirports",
                 new { id = id },
                 commandType: CommandType.StoredProcedure);
+
+            return airports.ToList();
+        }
+
+        public async Task<IReadOnlyCollection<AirportEntity>> SearchCityAirportsByNameAsync(
+            int cityId,
+            string nameFilter
+        )
+        {
+            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
+
+            IEnumerable<AirportEntity> airports = await db.QueryAsync<AirportEntity>(
+                "SearchCityAirportsByName",
+                new { cityId = cityId, nameFilter = nameFilter },
+                commandType: CommandType.StoredProcedure);
+
+            return airports.ToList();
         }
 
         public async Task AddAsync(CityEntity city)

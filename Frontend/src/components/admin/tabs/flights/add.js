@@ -123,14 +123,14 @@ export default function Add() {
                         <div className="editing-params-form">
                             <div className="row">
                                 <SearchList
-                                    searchFunc={AirportService.search}
+                                    searchFunc={AirportService.searchByName}
                                     getItemName={getAirportName}
                                     onValueChange={changeFromPlace}
                                     currentItem={fromPlace}
                                     placeholder="From"
                                 />
                                 <SearchList
-                                    searchFunc={AirportService.search}
+                                    searchFunc={AirportService.searchByName}
                                     getItemName={getAirportName}
                                     onValueChange={changeToPlace}
                                     currentItem={toPlace}

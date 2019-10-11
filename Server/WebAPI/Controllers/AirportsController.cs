@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Cors;
@@ -15,7 +14,7 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [EnableCors("AllowAllToUrlFromConfig")]
+    [EnableCors("CorsPolicy")]
     public class AirportsController : ControllerBase
     {
         private readonly IAirportService _airportService;
@@ -28,28 +27,25 @@ namespace WebAPI.Controllers
         }
 
 
-        // GET api/airports
+        // GET api/airports{?nameFilter}
         [HttpGet]
-        public async Task<ActionResult> GetAllAsync()
+        public async Task<ActionResult> GetAllAsync(string nameFilter)
         {
-            IReadOnlyCollection<BlAirport> airportsBl = await _airportService.GetAllAsync();
+            IReadOnlyCollection<BlAirport> airportsBl;
+
+            if (nameFilter != null)
+            {
+                airportsBl = await _airportService.GetByNameAsync(nameFilter);
+            }
+            else
+            {
+                airportsBl = await _airportService.GetAllAsync();
+            }
 
             IEnumerable<Airport> airports = airportsBl.Select(_mapper.Map<Airport>);
 
             return Ok(airports);
         }
-
-        // GET api/airports/filters{?name}
-        [HttpGet]
-        [Route("filters")]
-        public async Task<ActionResult> GetByNameAsync(string name)
-        {
-            IReadOnlyCollection<BlAirport> airportsBl = await _airportService.GetByNameAsync(name);
-
-            IEnumerable<Airport> airports = airportsBl.Select(_mapper.Map<Airport>);
-
-            return Ok(airports);
-         }
 
         // GET api/airports/{id}
         [HttpGet]
@@ -73,6 +69,7 @@ namespace WebAPI.Controllers
         public async Task<ActionResult> AddAsync([FromBody]Airport airport)
         {
             BlAirport airportBl = _mapper.Map<BlAirport>(airport);
+
             ResultTypes addResult = await _airportService.AddAsync(airportBl);
 
             if (addResult == ResultTypes.Dublicate)
@@ -81,7 +78,7 @@ namespace WebAPI.Controllers
                 return BadRequest(message);
             }
 
-            return StatusCode(201);
+            return Ok();
         }
 
         // PUT api/airports
@@ -102,7 +99,7 @@ namespace WebAPI.Controllers
                     return NotFound();
             }
 
-            return Accepted();
+            return Ok();
         }
     }
 }
