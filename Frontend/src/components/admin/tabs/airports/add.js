@@ -21,7 +21,7 @@ export default function Add() {
             return;
         }
 
-        let newAirport = new Airport(0, name, city.id);
+        let newAirport = new Airport(null, name, city.id);
 
         const addingResult = await AirportService.add(newAirport);
 

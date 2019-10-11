@@ -10,14 +10,12 @@ import * as PlaceService from '../../../../services/PlaceService';
 
 export default function Filter(props) {
     const [name, changeName] = useState(props.filterOptions.name);
-    const [country, changeCountry] = useState(props.filterOptions.country);
     const [city, changeCity] = useState(props.filterOptions.city);
 
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
     function onFilterApply() {
         if (!name
-            && !country
             && !city
         ) {
             changeMessageBoxValue('Setup filter!');
@@ -41,33 +39,12 @@ export default function Filter(props) {
         changeName(event.target.value);
     }
 
-    function getCountryName(country) {
-        return country.name;
-    }
-
     async function getCityName(city) {
         const country = await PlaceService.getCountryById(city.countryId);
 
-        const finalName = `${city.name} (${country.name})`;
+        const finalName = `${city.name} (${country.value.name})`;
 
         return finalName;
-    }
-
-    function showCityChooser() {
-        if (country) {
-            return (
-                <div className="filter-arg">
-                    <SearchList
-                        searchFunc={PlaceService.searchCitiesByName}
-                        searchArgs={[country.id]}
-                        placeholder="City"
-                        currentItem={city}
-                        getItemName={getCityName}
-                        onValueChange={changeCity}
-                    />
-                </div>
-            );
-        }
     }
 
     function showMessageBox() {
@@ -97,11 +74,11 @@ export default function Filter(props) {
             <div className="filter-row">
                 <div className="filter-arg">
                     <SearchList
-                        searchFunc={PlaceService.searchCountriesByName}
-                        placeholder="Country"
-                        currentItem={country}
-                        getItemName={getCountryName}
-                        onValueChange={changeCountry}
+                        searchFunc={PlaceService.searchCitiesByName}
+                        placeholder="City"
+                        currentItem={city}
+                        getItemName={getCityName}
+                        onValueChange={changeCity}
                     />
                 </div>
 
