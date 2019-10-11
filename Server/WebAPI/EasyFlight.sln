@@ -1,4 +1,5 @@
-﻿Microsoft Visual Studio Solution File, Format Version 12.00
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29009.5
 MinimumVisualStudioVersion = 10.0.40219.1
@@ -13,6 +14,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLayer", "..\BusinessLayer\BusinessLayer.csproj", "{FFF79779-7DC8-4898-894E-5228F7FAF9EB}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Database", "..\Database\Database.sqlproj", "{B135A402-6D30-44DD-9CD8-8BEE353E4A6C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "..\Common\Common.csproj", "{2B01C095-6E2B-4BE9-BA13-394C20B7C4B2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,6 +41,10 @@ Global
 		{B135A402-6D30-44DD-9CD8-8BEE353E4A6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B135A402-6D30-44DD-9CD8-8BEE353E4A6C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B135A402-6D30-44DD-9CD8-8BEE353E4A6C}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{2B01C095-6E2B-4BE9-BA13-394C20B7C4B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B01C095-6E2B-4BE9-BA13-394C20B7C4B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B01C095-6E2B-4BE9-BA13-394C20B7C4B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B01C095-6E2B-4BE9-BA13-394C20B7C4B2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

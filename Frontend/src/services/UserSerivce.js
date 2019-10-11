@@ -43,31 +43,31 @@ export function getUserFlights(userId) {
     });
 }
 
-const REFRESH_TOKEN_KEY = "refreshToken";
-const AUTH_TOKEN_KEY = "authToken";
+export async function login(user) {
+    try {
 
-export function login(user) {
-    return new Promise(resolve => {
-        let foundUser = null;
+    } catch {
+        
+    }
+    let foundUser = null;
 
-        for (let i = 0, len = users.length; i < len; i++) {
-            if (users[i].email == user.email && users[i].password == user.password) {
-                foundUser = users[i];
-            }
+    for (let i = 0, len = users.length; i < len; i++) {
+        if (users[i].email == user.email && users[i].password == user.password) {
+            foundUser = users[i];
         }
+    }
 
-        if (!foundUser) {
-            resolve(false);
-        }
+    if (!foundUser) {
+        resolve(false);
+    }
 
-        const foundUserInfo = new UserInfo(foundUser.id, foundUser.name, foundUser.role);
+    const foundUserInfo = new UserInfo(foundUser.id, foundUser.name, foundUser.role);
 
-        store.dispatch({ type: types.CHANGE_AUTH_TOKEN, payload: AUTH_TOKEN_KEY });
-        store.dispatch({ type: types.CHANGE_REFRESH_TOKEN, payload: REFRESH_TOKEN_KEY });
-        store.dispatch({ type: types.CHANGE_USER_INFO, payload: foundUserInfo });
+    store.dispatch({ type: types.CHANGE_AUTH_TOKEN, payload: AUTH_TOKEN_KEY });
+    store.dispatch({ type: types.CHANGE_REFRESH_TOKEN, payload: REFRESH_TOKEN_KEY });
+    store.dispatch({ type: types.CHANGE_USER_INFO, payload: foundUserInfo });
 
-        resolve(true);
-    });
+    resolve(true);
 }
 
 export function logout() {
