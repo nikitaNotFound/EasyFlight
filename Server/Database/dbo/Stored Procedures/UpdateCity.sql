@@ -6,3 +6,4 @@ AS
 	UPDATE cities
 	SET name=@name, countryId=@countryId
 	WHERE id=@id
+	SELECT SCOPE_IDENTITY();

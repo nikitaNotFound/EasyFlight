@@ -4,3 +4,4 @@
 AS
 	INSERT INTO cities (name, countryId)
 	VALUES (@name, @countryId)
+	SELECT SCOPE_IDENTITY();

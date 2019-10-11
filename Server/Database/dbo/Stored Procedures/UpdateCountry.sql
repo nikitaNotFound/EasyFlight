@@ -5,3 +5,4 @@ AS
 	UPDATE countries
 	SET name=@name
 	WHERE id=@id
+	SELECT SCOPE_IDENTITY();

@@ -3,3 +3,4 @@
 AS
 	INSERT INTO countries (name)
 	VALUES (@name)
+	SELECT SCOPE_IDENTITY();
