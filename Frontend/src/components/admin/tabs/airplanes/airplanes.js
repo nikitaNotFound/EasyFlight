@@ -8,7 +8,7 @@ import '../../../../styles/items-list.css';
 export default function Airplanes(props) {
     return (
         <div className="items-list">
-                {this.props.airplanes.map(
+                {props.airplanes.map(
                     (item, index) => 
                         <Airplane 
                             name={item.name} 
