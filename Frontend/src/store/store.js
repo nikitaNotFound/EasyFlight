@@ -1,7 +1,6 @@
 import {createStore} from 'redux';
 import reducer from './reducers/index';
 
-
 const STORAGE_KEY = 'storage'
 
 function saveState(state) {
@@ -20,7 +19,7 @@ function loadState() {
 }
 
 const oldState = loadState();
-const store = createStore(reducer, oldState);
+const store = createStore(reducer);
 
 store.subscribe(() => {
     saveState(store.getState());
