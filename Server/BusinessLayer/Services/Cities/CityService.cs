@@ -50,7 +50,7 @@ namespace BusinessLayer.Services.Cities
 
         public async Task<ResultTypes> AddAsync(City city)
         {
-            CityEntity cityDal = _mapper.Map<CityEntity>(city);
+            IReadOnlyCollection<AirportEntity> airportsDal = await _cityRepository.GetCityAirportsAsync(cityId);
 
             bool duplicate = await _cityRepository.CheckDuplicateAsync(cityDal);
 
