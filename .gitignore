@@ -33,3 +33,6 @@ msbuild.wrn
 .vs/
 Server/Database/Database.dbmdl
 Server/Database/Database.jfm
+
+# Logs
+Server/WebAPI/Logs/
