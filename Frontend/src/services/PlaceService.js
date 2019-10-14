@@ -32,45 +32,6 @@ export async function searchCountriesByName(nameFilter) {
     return await createRequestResult(response, RequestTypes.ContentExpected);
 }
 
-export async function getCountryCities(countryId) {
-    try {
-        const response = await fetch(
-            `${config.API_URL}/countries/${countryId}/cities`,
-            {
-                method: 'GET',
-                mode: 'cors',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }
-        );
-        return RequestController.formResult(response);
-    } catch {
-        const errorInfo = RequestController.getErrorInfo(500);
-        return new RequestResult(false, errorInfo);
-    }
-}
-
-export async function searchCountryCitiesByName(nameFilter, countryId) {
-    try {
-        const response = await fetch(
-            `${config.API_URL}/countries/${countryId}/cities?nameFilter=${nameFilter}`,
-            {
-                method: 'GET',
-                mode: 'cors',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }
-        );
-
-        return RequestController.formResult(response);
-    } catch {
-        const errorInfo = RequestController.getErrorInfo(500);
-        return new RequestResult(false, errorInfo);
-    }
-}
-
 export async function addCountry(country) {
     const response = await fetch(
         `${config.API_URL}/countries`,
