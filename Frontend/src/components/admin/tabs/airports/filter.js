@@ -91,7 +91,7 @@ function Filter(props) {
             <div className="filter-row">
                 <div className="filter-arg">
                     <SearchList
-                        searchFunc={PlaceService.searchCountries}
+                        searchFunc={PlaceService.searchCountriesByName}
                         placeholder="Country"
                         currentItem={country}
                         getItemName={getCountryName}

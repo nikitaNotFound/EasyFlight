@@ -80,7 +80,7 @@ export default function Edit(props) {
                         <div className="editing-params-form">
                             <div className="row">
                                 <SearchList
-                                    searchFunc={PlaceService.searchCountries}
+                                    searchFunc={PlaceService.searchCountriesByName}
                                     placeholder="Country"
                                     currentItem={country}
                                     onValueChange={changeCountry}

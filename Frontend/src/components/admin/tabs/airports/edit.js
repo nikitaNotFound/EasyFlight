@@ -106,7 +106,7 @@ export default function Edit(props) {
                                         />
                                     </div>
                                     <SearchList
-                                        searchFunc={PlaceService.searchCountries}
+                                        searchFunc={PlaceService.searchCountriesByName}
                                         placeholder="Country"
                                         currentItem={country}
                                         getItemName={getCountryName}

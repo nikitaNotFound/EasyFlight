@@ -19,7 +19,7 @@ export async function getCountryById(id) {
     return response.status;
 }
 
-export async function searchCountries(nameFilter) {
+export async function searchCountriesByName(nameFilter) {
     const response = await fetch(
         `${config.API_URL}/countries?nameFilter=${nameFilter}`,
         {

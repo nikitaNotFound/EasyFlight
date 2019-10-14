@@ -15,7 +15,7 @@ export default function CountryList() {
     async function onFilterApply(newFilterOptions) {
         changeFilterOptions(newFilterOptions);
 
-        const foundAirports = await PlaceService.searchCountries(newFilterOptions);
+        const foundAirports = await PlaceService.searchCountriesByName(newFilterOptions);
 
         changeCountries(foundAirports);
     }
