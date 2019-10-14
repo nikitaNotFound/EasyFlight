@@ -25,7 +25,7 @@ export default function CityList() {
         } else {
             foundCities = await PlaceService.searchCitiesByName(newFilterOptions.name);
         }
-        console.log(foundCities);
+
         changeCities(foundCities);
     }
 
