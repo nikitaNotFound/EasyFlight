@@ -46,7 +46,7 @@ namespace DataAccessLayer.Repositories.Countries
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             IEnumerable<CountryEntity> countries = await db.QueryAsync<CountryEntity>(
-                "searchCountries",
+                "searchCountriesByName",
                 new { nameFilter = nameFilter },
                 commandType: CommandType.StoredProcedure);
 
