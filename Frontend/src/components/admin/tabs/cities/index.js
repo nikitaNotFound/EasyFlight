@@ -20,7 +20,7 @@ export default function CityList() {
         let citiesRequest = null;
 
         if (newFilterOptions.name && newFilterOptions.countryId) {
-            foundCities = await PlaceService.searchCountryCitiesByName(newFilterOptions.countryId, newFilterOptions.name);
+            citiesRequest = await PlaceService.searchCountryCitiesByName(newFilterOptions.countryId, newFilterOptions.name);
         } else if (newFilterOptions.countryId) {
             citiesRequest = await PlaceService.getCountryCities(newFilterOptions.countryId);
         } else {
