@@ -1,4 +1,4 @@
-﻿create procedure searchCities
+﻿create procedure searchCountryCitiesByName
 	@nameFilter as nvarchar(70),
 	@countryId as int
 as

@@ -1,4 +1,4 @@
-﻿create procedure searchCountries
+﻿create procedure searchCountriesByName
 	@nameFilter as nvarchar(60)
 as
 	select *
