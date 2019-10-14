@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Serilog;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace WebAPI
 {
@@ -20,12 +20,13 @@ namespace WebAPI
     public class ExceptionLoggerMiddleware
     {
         private readonly RequestDelegate _next;
+        private readonly ILogger<ExceptionLoggerMiddleware> _logger;
 
 
-        public ExceptionLoggerMiddleware(RequestDelegate next)
+        public ExceptionLoggerMiddleware(RequestDelegate next, ILogger<ExceptionLoggerMiddleware> logger)
         {
             _next = next;
-            
+            _logger = logger;
         }
 
 
@@ -37,7 +38,7 @@ namespace WebAPI
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _logger.LogError(ex.Message);
             }
         }
     }

@@ -1,6 +1,6 @@
-﻿CREATE PROCEDURE GetCountryCities
-@id as INT
-AS
-	SELECT *
-	FROM cities
-	WHERE countryId=@id;
+﻿create procedure getCountryCities
+	@id as int
+as
+	select *
+	from cities
+	where countryId = @id;

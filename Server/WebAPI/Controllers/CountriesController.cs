@@ -34,13 +34,13 @@ namespace WebAPI.Controllers
         {
             IReadOnlyCollection<BlCountry> countriesBl;
 
-            if (nameFilter != null)
+            if (string.IsNullOrEmpty(nameFilter))
             {
-                countriesBl = await _countryService.SearchByNameAsync(nameFilter);
+                countriesBl = await _countryService.GetAllAsync();
             }
             else
             {
-                countriesBl = await _countryService.GetAllAsync();
+                countriesBl = await _countryService.SearchByNameAsync(nameFilter);
             }
 
             IEnumerable<Country> countries = countriesBl.Select(_mapper.Map<Country>);
@@ -65,20 +65,20 @@ namespace WebAPI.Controllers
             return NotFound();
         }
 
-        // GET api/countries/{countryId}/cities{?nameFilter}
+        // GET api/countries/{countryid}/cities{?nameFilter}
         [HttpGet]
-        [Route("{countryId}/cities")]
-        public async Task<ActionResult> GetCitiesAsync(int countryId, string nameFilter)
+        [Route("{countryid}/cities")]
+        public async Task<ActionResult> GetCitiesAsync(int countryid, string nameFilter)
         {
             IReadOnlyCollection<BlCity> citiesBl;
 
-            if (nameFilter != null)
+            if (string.IsNullOrEmpty(nameFilter))
             {
-                citiesBl = await _countryService.SearchCountryCitiesByNameAsync(countryId, nameFilter);
+                citiesBl = await _countryService.GetCountryCitiesAsync(countryid);
             }
             else
             {
-                citiesBl = await _countryService.GetCountryCitiesAsync(countryId);
+                citiesBl = await _countryService.SearchCountryCitiesByNameAsync(countryid, nameFilter);
             }
 
             IEnumerable<City> cities = citiesBl.Select(_mapper.Map<City>) ;

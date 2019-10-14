@@ -48,9 +48,9 @@ namespace BusinessLayer.Services.Countries
             return countries;
         }
 
-        public async Task<IReadOnlyCollection<City>> GetCountryCitiesAsync(int countryId)
+        public async Task<IReadOnlyCollection<City>> GetCountryCitiesAsync(int countryid)
         {
-            IReadOnlyCollection<CityEntity> citiesDal = await _countryRepository.GetCountryCitiesAsync(countryId);
+            IReadOnlyCollection<CityEntity> citiesDal = await _countryRepository.GetCountryCitiesAsync(countryid);
 
             IReadOnlyCollection<City> cities = citiesDal.Select(_mapper.Map<City>).ToList();
 

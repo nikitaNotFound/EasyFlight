@@ -4,8 +4,8 @@ using Microsoft.Extensions.DependencyInjection;
 using DataAccessLayer;
 using BusinessLayer;
 using AutoMapper;
-using System;
 using Serilog;
+using Microsoft.Extensions.Logging;
 
 namespace WebAPI
 {
@@ -44,21 +44,24 @@ namespace WebAPI
             });
             mappingConfig.CompileMappings();
 
-            services.AddSingleton<IMapper>(provider => mappingConfig.CreateMapper());
+            services.AddSingleton<IMapper>(mappingConfig.CreateMapper());
 
             services.AddControllers();
 
             DalModule.Register(services);
             BlModule.Register(services);
 
-            Environment.CurrentDirectory = AppContext.BaseDirectory;
-
             Log.Logger = new LoggerConfiguration()
                .ReadFrom.Configuration(Configuration)
                .CreateLogger();
+
+            services.AddLogging((builder) =>
+            {
+                builder.AddSerilog(dispose: true);
+            });
         }
 
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
         {
             app.UseExceptionLogger();
 

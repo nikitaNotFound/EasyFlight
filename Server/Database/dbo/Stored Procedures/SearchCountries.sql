@@ -1,6 +1,6 @@
-﻿CREATE PROCEDURE SearchCountries
-@name AS NVARCHAR(50)
-AS
-	SELECT *
-	FROM countries
-	WHERE name LIKE @name + '%'
+﻿create procedure searchCountries
+	@nameFilter as nvarchar(60)
+as
+	select *
+	from countries
+	where name LIKE @nameFilter + '%'

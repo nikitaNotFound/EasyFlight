@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE GetAllCountries
-AS
-	SELECT *
-	FROM countries;
+﻿create procedure getAllCountries
+as
+	select *
+	from countries;

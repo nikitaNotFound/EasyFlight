@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE GetAllCities
-AS
-	SELECT *
-	FROM cities
+﻿create procedure getAllCities
+as
+	select *
+	from cities

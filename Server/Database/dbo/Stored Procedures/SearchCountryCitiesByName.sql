@@ -1,8 +1,8 @@
-﻿CREATE PROCEDURE [dbo].[SearchCities]
-@name AS NVARCHAR(50),
-@countryId AS INT
-AS
-	SELECT *
-	FROM cities
-	WHERE name LIKE @name + '%'
-		and countryId=@countryId
+﻿create procedure searchCities
+	@nameFilter as nvarchar(70),
+	@countryId as int
+as
+	select *
+	from cities
+	where name LIKE @nameFilter + '%'
+		and countryId = @countryId

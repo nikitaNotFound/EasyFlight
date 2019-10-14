@@ -33,7 +33,7 @@ namespace WebAPI.Controllers
         {
             IReadOnlyCollection<BlCity> citiesBl;
 
-            if (nameFilter == null)
+            if (string.IsNullOrEmpty(nameFilter))
             {
                 citiesBl = await _cityService.GetAllAsync();
             }

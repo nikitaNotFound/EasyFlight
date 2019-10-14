@@ -1,6 +1,6 @@
-﻿CREATE PROCEDURE GetCityById
-@id AS INT
-AS
-	SELECT TOP 1 *
-	FROM cities
-	WHERE id=@id
+﻿create procedure getCityById
+	@id as int
+as
+	select top 1 *
+	from cities
+	where id = @id

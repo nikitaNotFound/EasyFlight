@@ -1,8 +1,8 @@
-﻿CREATE PROCEDURE CheckCityDublicate
-@name AS NVARCHAR(50),
-@countryId AS INT
-AS
-	SELECT TOP 1 *
-	FROM cities
-	WHERE name=@name 
-		and countryId=@countryId
+﻿create procedure checkCityDublicate
+	@name as nvarchar(70),
+	@countryId as int
+as
+	select top 1 *
+	from cities
+	where name=@name 
+		and countryId = @countryId

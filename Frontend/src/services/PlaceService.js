@@ -19,9 +19,9 @@ export async function getCountryById(id) {
     return response.status;
 }
 
-export async function searchCountries(name) {
+export async function searchCountries(nameFilter) {
     const response = await fetch(
-        `${config.API_URL}/countries?nameFilter=${name}`,
+        `${config.API_URL}/countries?nameFilter=${nameFilter}`,
         {
             method: 'GET',
             mode: 'cors',
@@ -137,9 +137,9 @@ export async function updateCity(city) {
     return response.status;
 }
 
-export async function searchCitiesByName(name) {
+export async function searchCitiesByName(nameFilter) {
     const response = await fetch(
-        `${config.API_URL}/cities?nameFilter=${name}`,
+        `${config.API_URL}/cities?nameFilter=${nameFilter}`,
         {
             method: 'GET',
             mode: 'cors',
@@ -175,9 +175,9 @@ export async function getCountryCities(countryId) {
     return response.status;
 }
 
-export async function searchCountryCitiesByName(name, countryId) {
+export async function searchCountryCitiesByName(countryId, nameFilter) {
     const response = await fetch(
-        `${config.API_URL}/countries/${countryId}/cities?nameFilter=${name}`,
+        `${config.API_URL}/countries/${countryId}/cities?nameFilter=${nameFilter}`,
         {
             method: 'GET',
             mode: 'cors',

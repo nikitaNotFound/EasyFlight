@@ -1,7 +1,7 @@
-﻿CREATE PROCEDURE AddCity
-@name AS NVARCHAR(50),
-@countryId AS INT
-AS
-	INSERT INTO cities (name, countryId)
-	VALUES (@name, @countryId)
-	SELECT SCOPE_IDENTITY();
+﻿create procedure addCity
+	@name as nvarchar(70),
+	@countryId as int
+as
+	insert into cities (name, countryId)
+	values (@name, @countryId)
+	select SCOPE_IDENTITY();

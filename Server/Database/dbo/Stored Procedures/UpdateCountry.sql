@@ -1,8 +1,8 @@
-﻿CREATE PROCEDURE UpdateCountry
-@name AS NVARCHAR(50),
-@id AS INT
-AS
-	UPDATE countries
-	SET name=@name
-	WHERE id=@id
-	SELECT SCOPE_IDENTITY();
+﻿create procedure updateCountry
+	@name as nvarchar(50),
+	@id as int
+as
+	update countries
+	set name = @name
+	where id = @id
+	select SCOPE_IDENTITY();

@@ -25,7 +25,7 @@ namespace DataAccessLayer.Repositories.Cities
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             IEnumerable<CityEntity> cities = await db.QueryAsync<CityEntity>(
-                "GetAllCities",
+                "getAllCities",
                 null,
                 commandType: CommandType.StoredProcedure);
 
@@ -37,8 +37,8 @@ namespace DataAccessLayer.Repositories.Cities
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             IEnumerable<CityEntity> cities = await db.QueryAsync<CityEntity>(
-                "SearchCitiesByName",
-                new { name = nameFilter },
+                "searchCitiesByName",
+                new { nameFilter = nameFilter },
                 commandType: CommandType.StoredProcedure);
 
             return cities.ToList();
@@ -49,7 +49,7 @@ namespace DataAccessLayer.Repositories.Cities
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             return await db.QuerySingleOrDefaultAsync<CityEntity>(
-                "GetCityById",
+                "getCityById",
                 new { id = id },
                 commandType: CommandType.StoredProcedure);
         }
@@ -59,7 +59,7 @@ namespace DataAccessLayer.Repositories.Cities
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             await db.ExecuteAsync(
-                "AddCity",
+                "addCity",
                 new { name = city.Name, countryId = city.CountryId },
                 commandType: CommandType.StoredProcedure);
         }
@@ -69,7 +69,7 @@ namespace DataAccessLayer.Repositories.Cities
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             await db.ExecuteAsync(
-                "UpdateCity",
+                "updateCity",
                 city,
                 commandType: CommandType.StoredProcedure);
         }
@@ -79,7 +79,7 @@ namespace DataAccessLayer.Repositories.Cities
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             return await db.ExecuteScalarAsync<bool>(
-                "CheckCityDublicate",
+                "checkCityDublicate",
                 new { name = city.Name, countryId = city.CountryId },
                 commandType: CommandType.StoredProcedure);
         }

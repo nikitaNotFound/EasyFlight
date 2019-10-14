@@ -1,6 +1,6 @@
-﻿CREATE PROCEDURE AddCountry
-@name AS NVARCHAR(50)
-AS
-	INSERT INTO countries (name)
-	VALUES (@name)
-	SELECT SCOPE_IDENTITY();
+﻿create procedure addCountry
+	@name as nvarchar(60)
+as
+	insert into countries (name)
+	values (@name)
+	select SCOPE_IDENTITY();

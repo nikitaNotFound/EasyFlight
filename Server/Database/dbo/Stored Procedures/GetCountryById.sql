@@ -1,6 +1,6 @@
-﻿CREATE PROCEDURE GetCountryById
-@id AS INT
-AS
-	SELECT TOP 1 *
-	FROM countries
-	WHERE id=@id
+﻿create procedure getCountryById
+	@id as int
+as
+	select top 1 *
+	from countries
+	where id = @id
