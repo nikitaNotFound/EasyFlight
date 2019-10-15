@@ -28,7 +28,6 @@ namespace WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IDalSettings, DalSettings>();
-            services.AddSingleton<IJwtSettings, JwtSettings>();
 
             CorsSettings settings = new CorsSettings(Configuration);
 
