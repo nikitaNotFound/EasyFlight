@@ -10,12 +10,13 @@ using AutoMapper;
 using WebAPI.Models;
 using WebAPI.Services.JWT;
 using AccountBl = BusinessLayer.Models.Account;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebAPI.Controllers
 {
+    [ApiController]
     [Route("api/[controller]")]
     [EnableCors("CorsPolicy")]
-    [ApiController]
     public class AccountsController : ControllerBase
     {
         private readonly IAccountService _accountService;
@@ -32,6 +33,7 @@ namespace WebAPI.Controllers
 
 
         [HttpPost]
+        [AllowAnonymous]
         [Route("login")]
         public async Task<IActionResult> LoginAsync([FromBody] ReciveAccount account)
         {
@@ -55,7 +57,7 @@ namespace WebAPI.Controllers
                 authAccount.SecondName,
                 authAccount.Email,
                 authAccount.Password,
-                authAccount.Role,
+                authAccount.Role.ToString(),
                 token
             );
 
@@ -63,7 +65,8 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        [Route("register")]
+        [AllowAnonymous]
+        [Route("register")] 
         public async Task<IActionResult> RegisterAsync([FromBody] ReciveAccount account)
         {
             AccountBl accountBl = _mapper.Map<AccountBl>(account);
@@ -86,7 +89,7 @@ namespace WebAPI.Controllers
                 registerAccount.SecondName,
                 registerAccount.Email,
                 registerAccount.Password,
-                registerAccount.Role,
+                registerAccount.Role.ToString(),
                 token
             );
 

@@ -16,7 +16,7 @@ function Content(props) {
     const [isLoading, changeLoadingMode] = useState(true);
     const [flights, changeFlights] = useState([]);
     const [userFlights, changeUserFlights] = useState();
-    const [user, changeUser] = useState(props.userInfo);
+    const [user, changeUser] = useState(props);
 
     useEffect(() => {
         const userFlightsLoading = UserService.getUserFlights(user.id);
@@ -64,7 +64,7 @@ function Content(props) {
                         </div>
                     </div>
                     <div className="col-10">
-                        <input type="text" className="name-input" value={user.name} />
+                        <input type="text" className="name-input" value={user.firstName} />
 
                         <div className="logout rounded non-selectable" onClick={onLogout}>
                             log out

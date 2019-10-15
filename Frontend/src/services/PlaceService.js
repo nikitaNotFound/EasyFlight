@@ -35,9 +35,7 @@ export async function getCountryCities(countryId) {
             {
                 method: 'GET',
                 mode: 'cors',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+                headers: RequestController.headers
             }
         );
         return RequestController.formResult(response);
@@ -54,9 +52,7 @@ export async function searchCountryCitiesByName(nameFilter, countryId) {
             {
                 method: 'GET',
                 mode: 'cors',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+                headers: RequestController.headers
             }
         );
 

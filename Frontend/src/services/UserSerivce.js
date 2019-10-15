@@ -11,26 +11,6 @@ import * as types from '../store/ActionTypes';
 
 import * as config from '../config.json';
 
-export function getCurrentUser(id) {
-    return new Promise((resolve, reject) => {
-        const data = users;
-
-        let user = {};
-        for (let i = 0, len = data.length; i < len; i++) {
-            const element = data[i];
-
-            if (element.id == id) {
-                user = element;
-            }
-        }
-
-        if (!user) {
-            reject("Error");
-        }
-        resolve(user);
-    });
-}
-
 export function getUserFlights(userId) {
     return new Promise((resolve, reject) => {
         let data = [];
@@ -62,15 +42,12 @@ export async function login(user) {
                 body: JSON.stringify(user)
             }
         );
-
-        const result = RequestController.formResult(response);
-
+            
+        const result = await RequestController.formResult(response);
         if (result.successful === false) {
-            alert(1)
             return result;
         } else {
             const token = result.value.token;
-            alert(token);
 
             store.dispatch({ type: types.CHANGE_AUTH_TOKEN, payload: token });
 
@@ -81,6 +58,44 @@ export async function login(user) {
                 result.value.role
             );
             store.dispatch({ type: types.CHANGE_USER_INFO, payload: userInfo });
+            return result;
+        }
+    } catch {
+        const errorInfo = RequestController.getErrorInfo(500);
+        return new RequestResult(false, errorInfo);
+    }
+}
+
+export async function register(user) {
+    try {
+        const response = await fetch(
+            `${config.API_URL}/accounts/register`,
+            {
+                method: 'POST',
+                mode: 'cors',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(user)
+            }
+        );
+            
+        const result = await RequestController.formResult(response);
+        if (result.successful === false) {
+            return result;
+        } else {
+            const token = result.value.token;
+
+            store.dispatch({ type: types.CHANGE_AUTH_TOKEN, payload: token });
+
+            const userInfo = new User(
+                result.value.firstName,
+                result.value.secondName,
+                result.value.email,
+                result.value.role
+            );
+            store.dispatch({ type: types.CHANGE_USER_INFO, payload: userInfo });
+            return result;
         }
     } catch {
         const errorInfo = RequestController.getErrorInfo(500);

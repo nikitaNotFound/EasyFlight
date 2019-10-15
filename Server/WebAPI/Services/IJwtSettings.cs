@@ -7,7 +7,7 @@ namespace WebAPI.Services
 {
     public interface IJwtSettings
     {
-        string SecurityToken { get; }
+        string SecurityKey { get; }
         int ExpireDays { get; }
     }
 }

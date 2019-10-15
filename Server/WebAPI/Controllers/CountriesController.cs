@@ -9,11 +9,13 @@ using BusinessLayer;
 using AutoMapper;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebAPI.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
+    [Route("api/[controller]")]
     [EnableCors("CorsPolicy")]
     public class CountriesController : ControllerBase
     {
@@ -88,6 +90,7 @@ namespace WebAPI.Controllers
 
         // POST api/countries
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> AddAsync([FromBody] Country country)
         {
             BlCountry countryBl = _mapper.Map<BlCountry>(country);
@@ -104,6 +107,7 @@ namespace WebAPI.Controllers
 
         // PUT api/countries
         [HttpPut]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> UpdateAsync([FromBody] Country country)
         {
             BlCountry countryBl = _mapper.Map<BlCountry>(country);

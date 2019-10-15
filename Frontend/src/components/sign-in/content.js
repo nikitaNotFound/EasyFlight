@@ -13,9 +13,9 @@ function Content(props) {
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
     async function onLogin() {
-        const loginTry = await UserService.login({email: email, password: password});
+        const loginResult = await UserService.login({email: email, password: password});
 
-        if (loginTry) {
+        if (loginResult.successful === true) {
             props.history.push('/');
         } else {
             changeMessageBoxValue('Login failed!');

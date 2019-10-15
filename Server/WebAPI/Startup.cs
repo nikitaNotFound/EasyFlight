@@ -1,12 +1,15 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using DataAccessLayer;
 using BusinessLayer;
 using AutoMapper;
 using Serilog;
 using Microsoft.Extensions.Logging;
 using WebAPI.Services;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace WebAPI
 {
@@ -24,7 +27,6 @@ namespace WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IDalSettings, DalSettings>();
-            services.AddSingleton<IJwtSettings, JwtSettings>();
 
             CorsSettings settings = new CorsSettings(Configuration);
 
@@ -62,6 +64,29 @@ namespace WebAPI
             {
                 builder.AddSerilog(logger, dispose: true);
             });
+
+            JwtSettings jwtSettings = new JwtSettings(Configuration);
+
+            services.AddSingleton<IJwtSettings>(jwtSettings);
+
+            byte[] key = Encoding.ASCII.GetBytes(jwtSettings.SecurityKey);
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
         }
 
         public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
@@ -70,6 +95,9 @@ namespace WebAPI
 
             app.UseRouting();
             app.UseCors("CorsPolicy");
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseHttpsRedirection();
 

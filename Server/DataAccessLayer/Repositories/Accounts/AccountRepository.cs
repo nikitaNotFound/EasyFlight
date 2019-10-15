@@ -6,6 +6,7 @@ using DataAccessLayer.Models;
 using Dapper;
 using System.Data.SqlClient;
 using System.Data;
+using Common;
 
 namespace DataAccessLayer.Repositories.Accounts
 {
@@ -46,7 +47,13 @@ namespace DataAccessLayer.Repositories.Accounts
 
             return await db.QuerySingleOrDefaultAsync<AccountEntity>(
                 "RegisterAccount",
-                account,
+                new {
+                    firstName = account.FirstName,
+                    secondName = account.SecondName,
+                    email = account.Email,
+                    password = account.Password,
+                    role = AccountRoles.User
+                },
                 commandType: CommandType.StoredProcedure);
         }
     }
