@@ -1,4 +1,4 @@
-﻿﻿using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using DataAccessLayer.Models;
 using Dapper;
 using System.Data.SqlClient;
