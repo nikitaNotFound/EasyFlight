@@ -14,8 +14,9 @@ using Microsoft.AspNetCore.Http.Extensions;
 
 namespace WebAPI.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
+    [EnableCors("CorsPolicy")]
     public class AccountsController : ControllerBase
     {
         private readonly IAccountService _accountService;
