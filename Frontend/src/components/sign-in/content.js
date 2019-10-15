@@ -1,9 +1,13 @@
-import React, {useState} from 'react';
-import {withRouter} from 'react-router-dom';
+import React, { useState } from 'react';
+import { withRouter, Link } from 'react-router-dom';
+
+import MessageBox from '../common/message-box';
+
+import * as UserService from '../../services/UserSerivce';
+
 import googleIcon from '../../icons/google-icon.png';
 import facebookIcon from '../../icons/facebook-icon.png';
-import MessageBox from '../common/message-box';
-import * as UserService from '../../services/UserSerivce';
+
 import '../../styles/registration.css';
 
 function Content(props) {
@@ -51,6 +55,7 @@ function Content(props) {
                 <button className="btn btn-primary button-dark main-button" onClick={onLogin}>
                     Sign in
                 </button>
+
                 <div className="input-group-btn">
                     <button className="btn btn-primary button-dark sec-button">
                         <img src={googleIcon} className="login-item-img" alt="google-icon"/>
@@ -58,6 +63,12 @@ function Content(props) {
                     <button className="btn btn-primary button-dark sec-button">
                         <img src={facebookIcon} className="login-item-img" alt="facebook-icon"/>
                     </button>
+                </div>
+                
+                <div className="sign-up-option">
+                    <Link to="/signup">
+                        sign up
+                    </Link>
                 </div>
             </div>
         </main>
