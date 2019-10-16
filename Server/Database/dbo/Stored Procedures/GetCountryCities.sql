@@ -1,6 +1,6 @@
 ﻿create procedure getCountryCities
-	@countryId as int
+    @countryId as int
 as
-	select *
-	from cities
-	where countryId = @countryId;
+    select *
+    from cities
+    where countryId = @countryId;

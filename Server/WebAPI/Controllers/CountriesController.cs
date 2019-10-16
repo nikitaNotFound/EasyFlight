@@ -65,20 +65,20 @@ namespace WebAPI.Controllers
             return NotFound();
         }
 
-        // GET api/countries/{countryid}/cities{?nameFilter}
+        // GET api/countries/{countryId}/cities{?nameFilter}
         [HttpGet]
-        [Route("{countryid}/cities")]
-        public async Task<ActionResult> GetCitiesAsync(int countryid, string nameFilter)
+        [Route("{countryId}/cities")]
+        public async Task<ActionResult> GetCitiesAsync(int countryId, string nameFilter)
         {
             IReadOnlyCollection<BlCity> citiesBl;
 
             if (string.IsNullOrEmpty(nameFilter))
             {
-                citiesBl = await _countryService.GetCountryCitiesAsync(countryid);
+                citiesBl = await _countryService.GetCountryCitiesAsync(countryId);
             }
             else
             {
-                citiesBl = await _countryService.SearchCountryCitiesByNameAsync(countryid, nameFilter);
+                citiesBl = await _countryService.SearchCountryCitiesByNameAsync(countryId, nameFilter);
             }
 
             IEnumerable<City> cities = citiesBl.Select(_mapper.Map<City>) ;

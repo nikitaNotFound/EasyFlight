@@ -51,13 +51,13 @@ namespace WebAPI
             DalModule.Register(services);
             BlModule.Register(services);
 
-            Log.Logger = new LoggerConfiguration()
+            Serilog.ILogger logger = new LoggerConfiguration()
                .ReadFrom.Configuration(Configuration)
                .CreateLogger();
 
             services.AddLogging((builder) =>
             {
-                builder.AddSerilog(dispose: true);
+                builder.AddSerilog(logger, dispose: true);
             });
         }
 
