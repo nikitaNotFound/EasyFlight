@@ -1,4 +1,4 @@
-﻿create procedure [dbo].[AddCountry]
+create procedure [dbo].[AddCountry]
     @name as nvarchar(60)
 as
     insert into Countries (Name)
