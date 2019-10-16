@@ -1,7 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System.Text;
+using System.Threading.Tasks;
 using BusinessLayer.Models;
 using DataAccessLayer.Repositories.Accounts;
 using AutoMapper;
+using Microsoft.Extensions.Logging;
 using AccountEntity = DataAccessLayer.Models.AccountEntity;
 
 namespace BusinessLayer.Services.Accounts
@@ -19,7 +21,17 @@ namespace BusinessLayer.Services.Accounts
 
         public async Task<Account> LoginAsync(Account account)
         {
-            AccountEntity dalAccount = _mapper.Map<AccountEntity>(account);
+            AccountEntity dalAccount = await _accountRepository.GetByEmail(account.Email);
+
+            if (dalAccount == null)
+            {
+                return null;
+            }
+
+            dalAccount.HashedPassword = HashService.GenerateHash(
+                account.Password,
+                dalAccount.Salt
+            );
 
             AccountEntity authAccount = await _accountRepository.LoginAsync(dalAccount);
 
@@ -34,7 +46,11 @@ namespace BusinessLayer.Services.Accounts
         public async Task<Account> RegisterAsync(Account account)
         {
             AccountEntity dalAccount = _mapper.Map<AccountEntity>(account);
-            
+
+            byte[] saltForNewAccount = HashService.GenerateSalt();
+            dalAccount.Salt = saltForNewAccount;
+            dalAccount.HashedPassword = HashService.GenerateHash(account.Password, saltForNewAccount);
+
             bool dublicate = await _accountRepository.CheckDublicateAsync(dalAccount);
 
             if (dublicate)
