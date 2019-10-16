@@ -1,4 +1,4 @@
-﻿create procedure UpdateCountry
+create procedure UpdateCountry
     @name as nvarchar(50),
     @id as int
 as

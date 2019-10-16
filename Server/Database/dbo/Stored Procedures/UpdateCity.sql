@@ -1,4 +1,4 @@
-﻿create procedure UpdateCity
+create procedure UpdateCity
     @id as int,
     @name as nvarchar(70),
     @countryId as int

@@ -1,4 +1,4 @@
-﻿create procedure addCountry
+create procedure addCountry
     @name as nvarchar(60)
 as
     insert into Countries (Name)

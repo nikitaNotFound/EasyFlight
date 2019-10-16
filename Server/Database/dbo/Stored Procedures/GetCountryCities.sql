@@ -1,4 +1,4 @@
-﻿create procedure GetCountryCities
+create procedure GetCountryCities
     @countryId as int
 as
     select *
