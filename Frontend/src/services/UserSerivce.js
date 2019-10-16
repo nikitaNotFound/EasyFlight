@@ -106,7 +106,6 @@ export async function register(user) {
 export function logout() {
     return new Promise(resolve => {
         store.dispatch({ type: types.CHANGE_AUTH_TOKEN, payload: null });
-        store.dispatch({ type: types.CHANGE_REFRESH_TOKEN, payload: null });
         store.dispatch({ type: types.CHANGE_USER_INFO, payload: null });
 
         resolve(true);
