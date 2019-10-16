@@ -3,8 +3,8 @@ create procedure [dbo].[UpdateAirport]
     @name as nvarchar(50),
     @cityId as int
 as
-    update Airports
-    set Name = @name, CityId = @cityId
-    where Id = @id
+	update airports
+	set name=@name, cityId=@cityId
+	where id=@id
 
-    select SCOPE_IDENTITY();
+	select SCOPE_IDENTITY();
