@@ -1,4 +1,4 @@
-﻿create procedure [dbo].[UpdateCity]
+create procedure [dbo].[UpdateCity]
     @id as int,
     @name as nvarchar(50),
     @countryId as int
