@@ -36,3 +36,5 @@ Server/Database/Database.jfm
 
 # Logs
 Server/WebAPI/Logs/
+Server/Database/Import Schema Logs
+Server/Database/Import Script Logs
