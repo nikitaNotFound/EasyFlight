@@ -1,9 +1,9 @@
-﻿CREATE procedure [dbo].[UpdateCountry]
-	@name as nvarchar(50),
-	@id as int
+﻿create procedure [dbo].[UpdateCountry]
+    @name as nvarchar(50),
+    @id as int
 as
-	update Countries
-	set Name = @name
-	where Id = @id
+    update Countries
+    set Name = @name
+    where Id = @id
 
-	select SCOPE_IDENTITY();
+    select SCOPE_IDENTITY();

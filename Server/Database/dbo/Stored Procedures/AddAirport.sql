@@ -1,8 +1,8 @@
-﻿CREATE PROCEDURE [dbo].[AddAirport]
-	@name as nvarchar(50),
-	@cityId as int
+﻿create procedure [dbo].[AddAirport]
+    @name as nvarchar(50),
+    @cityId as int
 as
-	insert into Airports (Name, CityId)
-	values (@name, @cityId)
+    insert into Airports (Name, CityId)
+    values (@name, @cityId)
 
-	select SCOPE_IDENTITY();
+    select SCOPE_IDENTITY();

@@ -1,6 +1,6 @@
-﻿CREATE procedure [dbo].[GetCountryCities]
-	@countryId as int
+﻿create procedure [dbo].[GetCountryCities]
+    @countryId as int
 as
-	select *
-	from Cities
-	where CountryId = @countryId;
+    select *
+    from Cities
+    where CountryId = @countryId;
