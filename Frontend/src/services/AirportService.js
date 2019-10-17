@@ -1,6 +1,7 @@
 import * as config from '../config.json';
 
 import * as RequestController from './RequestController';
+import * as HttpStatus from 'http-status-codes';
 
 import RequestResult from './request-result';
 
@@ -17,9 +18,9 @@ export async function getById(id) {
             }
         );
 
-        return RequestController.formResult(response);
+        return RequestController.createRequestResult(response);
     } catch {
-        const errorInfo = RequestController.getErrorInfo(500);
+        const errorInfo = HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR);
         return new RequestResult(false, errorInfo);
     }
 }
@@ -38,9 +39,9 @@ export async function add(airport) {
             }
         );
 
-        return RequestController.formResult(response);
+        return RequestController.createRequestResult(response);
     } catch {
-        const errorInfo = RequestController.getErrorInfo(500);
+        const errorInfo = HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR);
         return new RequestResult(false, errorInfo);
     }
 }
@@ -59,9 +60,9 @@ export async function update(airport) {
             }
         );
 
-        return RequestController.formResult(response);
+        return RequestController.createRequestResult(response);
     } catch {
-        const errorInfo = RequestController.getErrorInfo(500);
+        const errorInfo = HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR);
         return new RequestResult(false, errorInfo);
     }
 }
@@ -79,9 +80,9 @@ export async function searchByName(name) {
             }
         );
 
-        return RequestController.formResult(response);
+        return RequestController.createRequestResult(response);
     } catch {
-        const errorInfo = RequestController.getErrorInfo(500);
+        const errorInfo = HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR);
         return new RequestResult(false, errorInfo);
     }
 }

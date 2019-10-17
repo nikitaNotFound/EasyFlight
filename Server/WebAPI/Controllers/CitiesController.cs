@@ -74,11 +74,11 @@ namespace WebAPI.Controllers
 
             if (string.IsNullOrEmpty(nameFilter))
             {
-                airportsBl = await _cityService.SearchCityAirportsByName(cityId, nameFilter);
+                airportsBl = await _cityService.GetCityAirportsAsync(cityId);
             }
             else
             {
-                airportsBl = await _cityService.GetCityAirportsAsync(cityId);
+                airportsBl = await _cityService.SearchCityAirportsByName(cityId, nameFilter);
             }
 
             IEnumerable<Airport> airports = airportsBl.Select(_mapper.Map<Airport>);

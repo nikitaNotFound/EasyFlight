@@ -6,7 +6,7 @@ import Airport from './airport';
 import '../../../../styles/items-list.css';
 
 export default function Airports(props) {
-    if (!props.airports) {
+    if (props.airports == null) {
         return (
             <div className="items-list">
             </div>
