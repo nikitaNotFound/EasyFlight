@@ -3,6 +3,6 @@
     @id as int
 as
     update Countries
-    set name = @name
-    where id = @id
+    set Name = @name
+    where Id = @id
     select SCOPE_IDENTITY();

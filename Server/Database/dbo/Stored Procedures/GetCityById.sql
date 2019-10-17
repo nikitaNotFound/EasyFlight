@@ -3,4 +3,4 @@
 as
     select top 1 *
     from Cities
-    where id = @id
+    where Id = @id

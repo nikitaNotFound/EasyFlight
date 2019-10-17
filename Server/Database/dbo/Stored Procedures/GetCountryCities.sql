@@ -3,4 +3,4 @@
 as
     select *
     from Cities
-    where countryId = @countryId;
+    where CountryId = @countryId;

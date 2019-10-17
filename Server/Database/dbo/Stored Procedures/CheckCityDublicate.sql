@@ -2,7 +2,7 @@
     @name as nvarchar(70),
     @countryId as int
 as
-    select top 1 *
+    select top 1 1
     from Cities
     where name = @name 
-        and countryId = @countryId
+        and CountryId = @countryId

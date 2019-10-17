@@ -3,4 +3,4 @@
 as
     select *
     from Countries
-    where name like @nameFilter + '%'
+    where Name like @nameFilter + '%'

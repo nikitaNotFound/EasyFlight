@@ -4,6 +4,6 @@
     @countryId as int
 as
     update Cities
-    set name = @name, countryId = @countryId
-    where id = @id
+    set Name = @name, CountryId = @countryId
+    where Id = @id
     select SCOPE_IDENTITY();

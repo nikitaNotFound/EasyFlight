@@ -63,21 +63,21 @@
     <Folder Include="dbo\Stored Procedures\" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="dbo\Tables\countries.sql" />
-    <Build Include="dbo\Tables\cities.sql" />
-    <Build Include="dbo\Stored Procedures\addCountry.sql" />
-    <Build Include="dbo\Stored Procedures\checkCountryDublicate.sql" />
-    <Build Include="dbo\Stored Procedures\getCountryById.sql" />
-    <Build Include="dbo\Stored Procedures\searchCountriesByName.sql" />
-    <Build Include="dbo\Stored Procedures\updateCountry.sql" />
-    <Build Include="dbo\Stored Procedures\addCity.sql" />
-    <Build Include="dbo\Stored Procedures\checkCityDublicate.sql" />
-    <Build Include="dbo\Stored Procedures\getCityById.sql" />
-    <Build Include="dbo\Stored Procedures\searchCountryCitiesByName.sql" />
-    <Build Include="dbo\Stored Procedures\updateCity.sql" />
-    <Build Include="dbo\Stored Procedures\getCountryCities.sql" />
-    <Build Include="dbo\Stored Procedures\getAllCountries.sql" />
-    <Build Include="dbo\Stored Procedures\getAllCities.sql" />
-    <Build Include="dbo\Stored Procedures\searchCitiesByName.sql" />
+    <Build Include="dbo\Tables\Countries.sql" />
+    <Build Include="dbo\Tables\Cities.sql" />
+    <Build Include="dbo\Stored Procedures\AddCountry.sql" />
+    <Build Include="dbo\Stored Procedures\CheckCountryDublicate.sql" />
+    <Build Include="dbo\Stored Procedures\GetCountryById.sql" />
+    <Build Include="dbo\Stored Procedures\SearchCountriesByName.sql" />
+    <Build Include="dbo\Stored Procedures\UpdateCountry.sql" />
+    <Build Include="dbo\Stored Procedures\AddCity.sql" />
+    <Build Include="dbo\Stored Procedures\CheckCityDublicate.sql" />
+    <Build Include="dbo\Stored Procedures\GetCityById.sql" />
+    <Build Include="dbo\Stored Procedures\SearchCountryCitiesByName.sql" />
+    <Build Include="dbo\Stored Procedures\UpdateCity.sql" />
+    <Build Include="dbo\Stored Procedures\GetCountryCities.sql" />
+    <Build Include="dbo\Stored Procedures\GetAllCountries.sql" />
+    <Build Include="dbo\Stored Procedures\GetAllCities.sql" />
+    <Build Include="dbo\Stored Procedures\SearchCitiesByName.sql" />
   </ItemGroup>
 </Project>

@@ -3,4 +3,4 @@
 as
     select *
     from Cities
-    where name like @nameFilter + '%';
+    where Name like @nameFilter + '%';

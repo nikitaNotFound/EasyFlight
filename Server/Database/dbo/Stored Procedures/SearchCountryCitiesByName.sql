@@ -4,5 +4,5 @@
 as
     select *
     from Cities
-    where name like @nameFilter + '%'
-        and countryId = @countryId
+    where Name like @nameFilter + '%'
+        and CountryId = @countryId
