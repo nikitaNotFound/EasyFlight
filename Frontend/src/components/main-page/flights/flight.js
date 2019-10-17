@@ -7,7 +7,6 @@ import * as AirportService from '../../../services/AirportService';
 import * as PlaceService from '../../../services/PlaceService';
 import { Link } from 'react-router-dom';
 
-
 function Flight(props) {
     const [loading, changeLoading] = useState(true);
 

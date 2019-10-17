@@ -1,17 +1,16 @@
-import { Switch, Route } from 'react-router-dom';
-import Page from './flights';
-import Add from './flights/add-page';
-import Edit from './flights/edit-page';
 import React from 'react';
+import { Switch, Route } from 'react-router-dom';
 
-function FlightsRouter() {
+import Main from './flights';
+import Add from './flights/add';
+import Edit from './flights/edit';
+
+export default function FlightsRouter() {
     return (
         <Switch>
-            <Route exact path="/admin/flights" component={Page}/>
+            <Route exact path="/admin/flights" component={Main}/>
             <Route path="/admin/flights/add" component={Add}/>
             <Route path="/admin/flights/edit/:id" component={Edit}/>
         </Switch>
     );
 }
-
-export default FlightsRouter;

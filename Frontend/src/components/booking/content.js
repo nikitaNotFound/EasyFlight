@@ -11,6 +11,7 @@ import BaggageController from './baggage-controller';
 import FinalButton from './final-button';
 import CostLayout from './cost-layout';
 import FlightInfo from './flight-info';
+import MessageBox from '../common/message-box';
 
 import * as AirplaneService from '../../services/AirplaneService';
 import * as FlightService from '../../services/FlightService';

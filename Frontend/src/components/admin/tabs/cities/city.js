@@ -14,7 +14,7 @@ export default function City(props) {
 
             <div className="col-2">
                 <Link to={`/admin/cities/edit/${props.city.id}`}>
-                    <div className="edit-button rounded non-selectable">
+                    <div className="button edit-button rounded non-selectable">
                         Edit
                     </div>
                 </Link>
@@ -24,5 +24,5 @@ export default function City(props) {
 }
 
 City.propsTypes = {
-    city: PropsTypes.instanceOf(CityObject),
+    city: PropsTypes.instanceOf(CityObject)
 }

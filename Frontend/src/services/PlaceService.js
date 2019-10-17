@@ -1,91 +1,195 @@
-import {countries, cities} from './DataBase';
+import * as config  from '../config.json';
 
-export function getCountryById(id) {
-    return new Promise(
-        (resolve, reject) => {
-            const data = countries;
-
-            let foundCountry = null;
-            for (let i = 0, len = data.length; i < len; i++) {
-                if (data[i].id == id) {
-                    foundCountry = data[i];
-                }
+export async function getCountryById(id) {
+    const response = await fetch(
+        `${config.API_URL}/countries/${id}`,
+        {
+            method: 'GET',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
             }
-
-            if (!foundCountry) {
-                reject('Error');
-            }
-
-            resolve(foundCountry);
         }
     );
+
+    if (response.ok) {
+        return response.json();
+    }
+
+    return response.status;
 }
 
-export function getCityById(id) {
-    return new Promise(
-        (resolve, reject) => {
-            const data = cities;
-
-            let foundCity = null;
-            for (let i = 0, len = data.length; i < len; i++) {
-                if (data[i].id == id) {
-                    foundCity = data[i];
-                }
-            }
-
-            if (!foundCity) {
-                reject('Error');
-            }
-
-            resolve(foundCity);
+export async function searchCountriesByName(nameFilter) {
+    const response = await fetch(
+        `${config.API_URL}/countries?nameFilter=${nameFilter}`,
+        {
+            method: 'GET',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
         }
     );
+
+    if (response.ok) {
+        return response.json();
+    }
+
+    return response.status;
 }
 
-export function searchCountries(searchPhrase) {
-    return new Promise(
-        (resolve, reject) => {
-            const storage = countries;
-            let foundCountries = [];
-
-            const searchReg = new RegExp('^' + searchPhrase, 'ig');
-
-            for (let i = 0, len = storage.length; i < len; i++) {
-                if (storage[i].name.match(searchReg)) {
-                    foundCountries.push(storage[i]);
-                }
-            }
-            //IN FUTURE HERE WILL BE CHECKING OF SUCCESFULL REQUEST TO THE API
-            if (false) {
-                reject("Error");
-            }
-
-            resolve(foundCountries);
+export async function addCountry(country) {
+    const response = await fetch(
+        `${config.API_URL}/countries`,
+        {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(country)
         }
     );
+
+    if (response.ok) {
+        return true;
+    }
+
+    return false;
 }
 
-export function searchCities(searchPhrase, args) {
-    return new Promise(
-        (resolve, reject) => {
-            const storage = cities;
-            const [countryId] = args
-
-            let foundCities = [];
-
-            const searchReg = new RegExp('^' + searchPhrase, 'ig');
-
-            for (let i = 0, len = storage.length; i < len; i++) {
-                if (storage[i].name.match(searchReg) && storage[i].countryId == countryId) {
-                    foundCities.push(storage[i]);
-                }
-            }
-            //IN FUTURE HERE WILL BE CHECKING OF SUCCESFULL REQUEST TO THE API
-            if (false) {
-                reject("Error");
-            }
-
-            resolve(foundCities);
+export async function updateCountry(country) {
+    const response = await fetch(
+        `${config.API_URL}/countries`,
+        {
+            method: 'PUT',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(country)
         }
     );
+
+    if (response.ok) {
+       return true;
+    }
+
+    return false;
+}
+
+export async function getCityById(id) {
+    const response = await fetch(
+        `${config.API_URL}/cities/${id}`,
+        {
+            method: 'GET',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+    );
+
+    if (response.ok) {
+        return response.json();
+    }
+
+    return response.status;
+}
+
+export async function addCity(city) {
+    const response = await fetch(
+        `${config.API_URL}/cities`,
+        {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(city)
+        }
+    );
+
+    if (response.ok) {
+        return true;
+    }
+
+    return response.json();
+}
+
+export async function updateCity(city) {
+    const response = await fetch(
+        `${config.API_URL}/cities`,
+        {
+            method: 'PUT',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(city)
+        }
+    );
+
+    if (response.ok) {
+        return true;
+    }
+
+    return response.status;
+}
+
+export async function searchCitiesByName(nameFilter) {
+    const response = await fetch(
+        `${config.API_URL}/cities?nameFilter=${nameFilter}`,
+        {
+            method: 'GET',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+    );
+
+    if (response.ok) {
+        return response.json();
+    }
+
+    return response.status;
+}
+
+export async function getCountryCities(countryId) {
+    const response = await fetch(
+        `${config.API_URL}/countries/${countryId}/cities`,
+        {
+            method: 'GET',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+    );
+    
+    if (response.ok) {
+        return response.json();
+    }
+
+    return response.status;
+}
+
+export async function searchCountryCitiesByName(countryId, nameFilter) {
+    const response = await fetch(
+        `${config.API_URL}/countries/${countryId}/cities?nameFilter=${nameFilter}`,
+        {
+            method: 'GET',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+    );
+
+    if (response.ok) {
+        return response.json();
+    }
+
+    return response.status;
 }

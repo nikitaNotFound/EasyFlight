@@ -1,13 +1,18 @@
-import React, { useState, useEffect } from "react";
-import Icon from "../../icons/test-company-2.jpg";
-import PropsTypes from "prop-types";
-import FlightObject from "../../services/flight-models/flight";
-import * as PlaceService from "../../services/PlaceService";
-import * as AirportService from "../../services/AirportService";
-import Spinner from "../common/spinner";
-import moment from "moment";
+import React, { useState, useEffect } from 'react';
+import PropsTypes from 'prop-types';
 
-function Flight(props) {
+import Spinner from '../common/spinner';
+
+import FlightObject from '../../services/flight-models/flight';
+
+import * as PlaceService from '../../services/PlaceService';
+import * as AirportService from '../../services/AirportService';
+
+import Icon from '../../icons/test-company-2.jpg';
+
+import moment from 'moment';
+
+export default function Flight(props) {
     const [loading, changeLoading] = useState(true);
 
     const [from, changeFrom] = useState();
@@ -40,7 +45,7 @@ function Flight(props) {
     function getTimeString(dateInfo) {
         let date = moment(dateInfo);
 
-        return moment(date, "YYYY-MM-DD hh:mm").format("LLL");
+        return moment(date, 'YYYY-MM-DD hh:mm').format('LLL');
     }
 
     if (loading) {
@@ -77,5 +82,3 @@ function Flight(props) {
 Flight.propsTypes = {
     flight: PropsTypes.instanceOf(FlightObject)
 };
-
-export default Flight;

@@ -32,8 +32,8 @@ function SearchList(props) {
         changeMode(false);
     }
 
-    function searchItemChosen(item) {
-        changeInputValue(props.getItemName(item));
+    async function searchItemChosen(item) {
+        changeInputValue(await props.getItemName(item));
         changeCurrentItem(item);
         props.onValueChange(item);
     }
@@ -66,8 +66,15 @@ function SearchList(props) {
             return;
         }
 
-        let newListLoading = props.searchFunc(event.target.value, props.searchArgs);
+        let newListLoading = null;
 
+        if (props.searchArgs) {
+            newListLoading = props.searchFunc(event.target.value, ...props.searchArgs);
+        } else {
+            newListLoading = props.searchFunc(event.target.value);
+        }
+
+        
         newListLoading
             .then(newList => {
                 changeList(newList);

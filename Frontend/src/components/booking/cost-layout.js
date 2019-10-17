@@ -29,6 +29,7 @@ export default function CostLayout(props) {
                     }
                 }
             }
+
             changeFinalCost(finalCost);
             changeLoading(false);
         }

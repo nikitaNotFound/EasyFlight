@@ -16,12 +16,16 @@ export default function Filter(props) {
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
     function onFilterApply() {
-        if (!name || !country) {
+        if (!country && !name) {
             changeMessageBoxValue('Setup filter!');
             return;
         }
 
-        props.onFilterApply({name: name, countryId: country.id});
+        const countryId = country
+            ? country.id
+            : null;
+
+        props.onFilterApply({name: name, countryId: countryId});
     }
 
     function onNameChanged(event) {
@@ -54,7 +58,7 @@ export default function Filter(props) {
             <div className="filter-row">
                 <div className="filter-arg">
                     <SearchList
-                        searchFunc={PlaceService.searchCountries}
+                        searchFunc={PlaceService.searchCountriesByName}
                         placeholder="Country"
                         getItemName={getCountryName}
                         onValueChange={changeCountry}
