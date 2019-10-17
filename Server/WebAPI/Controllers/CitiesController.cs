@@ -72,7 +72,7 @@ namespace WebAPI.Controllers
         {
             IReadOnlyCollection<BlAirport> airportsBl;
 
-            if (nameFilter != null)
+            if (string.IsNullOrEmpty(nameFilter))
             {
                 airportsBl = await _cityService.SearchCityAirportsByName(cityId, nameFilter);
             }
