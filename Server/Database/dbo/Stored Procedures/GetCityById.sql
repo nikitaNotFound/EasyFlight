@@ -1,6 +1,6 @@
-﻿create procedure GetCityById
-    @id as int
+﻿CREATE procedure [dbo].[GetCityById]
+	@id as int
 as
-    select top 1 *
-    from Cities
-    where Id = @id
+	select top 1 *
+	from Cities
+	where Id = @id

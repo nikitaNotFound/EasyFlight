@@ -1,6 +1,6 @@
-﻿create procedure SearchCitiesByName
-    @nameFilter as nvarchar(70)
+﻿CREATE procedure [dbo].[SearchCitiesByName]
+	@nameFilter as nvarchar(70)
 as
-    select *
-    from Cities
-    where Name like @nameFilter + '%';
+	select *
+	from Cities
+	where Name like @nameFilter + '%';

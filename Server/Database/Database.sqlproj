@@ -66,19 +66,28 @@
   <ItemGroup>
     <Build Include="dbo\Tables\Countries.sql" />
     <Build Include="dbo\Tables\Cities.sql" />
-    <Build Include="dbo\Stored Procedures\AddCountry.sql" />
-    <Build Include="dbo\Stored Procedures\CheckCountryDuplicate.sql" />
-    <Build Include="dbo\Stored Procedures\GetCountryById.sql" />
-    <Build Include="dbo\Stored Procedures\SearchCountriesByName.sql" />
+    <Build Include="dbo\Tables\Airports.sql" />
     <Build Include="dbo\Stored Procedures\UpdateCountry.sql" />
-    <Build Include="dbo\Stored Procedures\AddCity.sql" />
-    <Build Include="dbo\Stored Procedures\CheckCityDuplicate.sql" />
-    <Build Include="dbo\Stored Procedures\GetCityById.sql" />
-    <Build Include="dbo\Stored Procedures\SearchCountryCitiesByName.sql" />
     <Build Include="dbo\Stored Procedures\UpdateCity.sql" />
+    <Build Include="dbo\Stored Procedures\UpdateAirport.sql" />
+    <Build Include="dbo\Stored Procedures\SearchCountryCitiesByName.sql" />
+    <Build Include="dbo\Stored Procedures\SearchCountriesByName.sql" />
+    <Build Include="dbo\Stored Procedures\SearchCityAirportsByName.sql" />
+    <Build Include="dbo\Stored Procedures\SearchCitiesByName.sql" />
+    <Build Include="dbo\Stored Procedures\SearchAirportsByName.sql" />
     <Build Include="dbo\Stored Procedures\GetCountryCities.sql" />
+    <Build Include="dbo\Stored Procedures\GetCountryById.sql" />
+    <Build Include="dbo\Stored Procedures\GetCityById.sql" />
+    <Build Include="dbo\Stored Procedures\GetCityAirports.sql" />
     <Build Include="dbo\Stored Procedures\GetAllCountries.sql" />
     <Build Include="dbo\Stored Procedures\GetAllCities.sql" />
-    <Build Include="dbo\Stored Procedures\SearchCitiesByName.sql" />
+    <Build Include="dbo\Stored Procedures\GetAllAirports.sql" />
+    <Build Include="dbo\Stored Procedures\GetAirportById.sql" />
+    <Build Include="dbo\Stored Procedures\CheckCountryDublicate.sql" />
+    <Build Include="dbo\Stored Procedures\CheckCityDublicate.sql" />
+    <Build Include="dbo\Stored Procedures\CheckAirportDublicate.sql" />
+    <Build Include="dbo\Stored Procedures\AddCountry.sql" />
+    <Build Include="dbo\Stored Procedures\AddCity.sql" />
+    <Build Include="dbo\Stored Procedures\AddAirport.sql" />
   </ItemGroup>
 </Project>
