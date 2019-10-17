@@ -24,7 +24,7 @@ namespace DataAccessLayer.Repositories.Countries
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             IEnumerable<CountryEntity> countries = await db.QueryAsync<CountryEntity>(
-                "getAllCountries",
+                "GetAllCountries",
                 null,
                 commandType: CommandType.StoredProcedure);
 
@@ -36,7 +36,7 @@ namespace DataAccessLayer.Repositories.Countries
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             return await db.QuerySingleOrDefaultAsync<CountryEntity>(
-                "getCountryById",
+                "GetCountryById",
                 new { id = id },
                 commandType: CommandType.StoredProcedure);
         }
@@ -46,7 +46,7 @@ namespace DataAccessLayer.Repositories.Countries
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             IEnumerable<CountryEntity> countries = await db.QueryAsync<CountryEntity>(
-                "searchCountriesByName",
+                "SearchCountriesByName",
                 new { nameFilter = nameFilter },
                 commandType: CommandType.StoredProcedure);
 
@@ -58,7 +58,7 @@ namespace DataAccessLayer.Repositories.Countries
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             IEnumerable<CityEntity> countries = await db.QueryAsync<CityEntity>(
-                "getCountryCities",
+                "GetCountryCities",
                 new { countryId = countryId },
                 commandType: CommandType.StoredProcedure);
 
@@ -73,7 +73,7 @@ namespace DataAccessLayer.Repositories.Countries
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             IEnumerable<CityEntity> countries = await db.QueryAsync<CityEntity>(
-                "searchCountryCitiesByName",
+                "SearchCountryCitiesByName",
                 new { countryId = countryId, nameFilter = nameFilter },
                 commandType: CommandType.StoredProcedure);
 
@@ -85,7 +85,7 @@ namespace DataAccessLayer.Repositories.Countries
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             await db.ExecuteAsync(
-                "addCountry",
+                "AddCountry",
                 new { name = country.Name },
                 commandType: CommandType.StoredProcedure);
         }
@@ -95,7 +95,7 @@ namespace DataAccessLayer.Repositories.Countries
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             await db.ExecuteAsync(
-                "updateCountry",
+                "UpdateCountry",
                 country,
                 commandType: CommandType.StoredProcedure);
         }
@@ -105,7 +105,7 @@ namespace DataAccessLayer.Repositories.Countries
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             return await db.ExecuteScalarAsync<bool>(
-                "checkCountryDublicate",
+                "CheckCountryDublicate",
                 new { name = country.Name },
                 commandType: CommandType.StoredProcedure);
         }

@@ -1,6 +1,6 @@
-﻿create procedure getCityById
+﻿create procedure GetCityById
     @id as int
 as
     select top 1 *
-    from cities
+    from Cities
     where id = @id

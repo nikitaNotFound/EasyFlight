@@ -1,6 +1,6 @@
-﻿create procedure getCountryById
+﻿create procedure GetCountryById
     @id as int
 as
     select top 1 *
-    from countries
+    from Countries
     where id = @id

@@ -1,8 +1,8 @@
-﻿create procedure searchCountryCitiesByName
+﻿create procedure SearchCountryCitiesByName
     @nameFilter as nvarchar(70),
     @countryId as int
 as
     select *
-    from cities
-    where name LIKE @nameFilter + '%'
+    from Cities
+    where name like @nameFilter + '%'
         and countryId = @countryId

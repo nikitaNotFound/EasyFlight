@@ -1,8 +1,8 @@
-﻿create procedure checkCityDublicate
+﻿create procedure CheckCityDublicate
     @name as nvarchar(70),
     @countryId as int
 as
     select top 1 *
-    from cities
-    where name=@name 
+    from Cities
+    where name = @name 
         and countryId = @countryId

@@ -1,9 +1,9 @@
-﻿create procedure updateCity
+﻿create procedure UpdateCity
     @id as int,
     @name as nvarchar(70),
     @countryId as int
 as
-    update cities
+    update Cities
     set name = @name, countryId = @countryId
-    where id=@id
+    where id = @id
     select SCOPE_IDENTITY();

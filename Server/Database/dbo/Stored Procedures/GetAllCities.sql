@@ -1,4 +1,4 @@
-﻿create procedure getAllCities
+﻿create procedure GetAllCities
 as
     select *
-    from cities
+    from Cities
