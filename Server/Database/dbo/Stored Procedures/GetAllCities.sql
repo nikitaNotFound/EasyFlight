@@ -1,4 +1,4 @@
 ﻿create procedure [dbo].[GetAllCities]
 as
-    select *
-    from Cities
+	select *
+	from Cities
