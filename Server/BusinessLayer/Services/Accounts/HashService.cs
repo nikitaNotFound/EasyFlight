@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Text;
 using System.Security.Cryptography;
-using Microsoft.Extensions.Logging;
 
 namespace BusinessLayer.Services.Accounts
 {
