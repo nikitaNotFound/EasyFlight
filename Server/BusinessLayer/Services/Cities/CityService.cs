@@ -1,28 +1,29 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Dapper;
-using System.Data.SqlClient;
-using System.Data;
+using BusinessLayer.Models;
 using DataAccessLayer.Models;
+using DataAccessLayer.Repositories.Cities;
 using AutoMapper;
 using System.Linq;
 
-namespace DataAccessLayer.Repositories.Cities
+namespace BusinessLayer.Services.Cities
 {
     public class CityService : ICityService
     {
-        private readonly IDalSettings _settings;
+        private readonly ICityRepository _cityRepository;
+        private readonly IMapper _mapper;
 
 
-        public CityRepository(IDalSettings settings)
+        public CityService(ICityRepository cityRepository, IMapper mapper)
         {
-            _settings = settings;
+            _cityRepository = cityRepository;
+            _mapper = mapper;
         }
 
 
-        public async Task<IReadOnlyCollection<CityEntity>> GetAllAsync()
+        public async Task<IReadOnlyCollection<City>> GetAllAsync()
         {
-            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
+            IReadOnlyCollection<CityEntity> citiesDal = await _cityRepository.GetAllAsync();
 
             IReadOnlyCollection<City> cities = citiesDal.Select(_mapper.Map<City>).ToList();
 
@@ -38,14 +39,50 @@ namespace DataAccessLayer.Repositories.Cities
             return cities;
         }
 
-        public async Task<CityEntity> GetAsync(int id)
+        public async Task<City> GetByIdAsync(int id)
         {
-            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
+            CityEntity foundCityDal = await _cityRepository.GetAsync(id);
 
-            return await db.QuerySingleOrDefaultAsync<CityEntity>(
-                "GetCityById",
-                new { id = id },
-                commandType: CommandType.StoredProcedure);
+            City foundCity = _mapper.Map<City>(foundCityDal);
+
+            return foundCity;
+        }
+
+        public async Task<ResultTypes> AddAsync(City city)
+        {
+            CityEntity cityDal = _mapper.Map<CityEntity>(city);
+
+            bool dublicate = await _cityRepository.CheckDublicateAsync(cityDal);
+
+            if (!dublicate)
+            {
+                await _cityRepository.AddAsync(cityDal);
+                return ResultTypes.OK;
+            }
+
+            return ResultTypes.Dublicate;
+        }
+
+        public async Task<ResultTypes> UpdateAsync(City city)
+        {
+            CityEntity oldCityDal = await _cityRepository.GetAsync(city.Id);
+
+            if (oldCityDal != null)
+            {
+                CityEntity cityDal = _mapper.Map<CityEntity>(city);
+
+                bool dublicate = await _cityRepository.CheckDublicateAsync(cityDal);
+
+                if (!dublicate)
+                {
+                    await _cityRepository.UpdateAsync(cityDal);
+                    return ResultTypes.OK;
+                }
+
+                return ResultTypes.Dublicate;
+            }
+
+            return ResultTypes.NotFound;
         }
 
         public async Task<IReadOnlyCollection<Airport>> GetCityAirportsAsync(int cityId)
