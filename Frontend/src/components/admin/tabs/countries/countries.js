@@ -5,9 +5,8 @@ import Country from './country';
 
 import '../../../../styles/items-list.css';
 
-
 export default function Countries(props) {
-    if (!props.countries) {
+    if (props.countries == null) {
         return (
             <div className="items-list">
             </div>

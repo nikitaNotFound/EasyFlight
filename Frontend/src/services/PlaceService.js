@@ -1,6 +1,7 @@
 import * as config  from '../config.json';
 
 import * as RequestController from './RequestController';
+import * as HttpStatus from 'http-status-codes';
 
 import RequestResult from './request-result';
 
@@ -9,59 +10,57 @@ export async function getCountryById(id) {
         var response = await fetch(
             `${config.API_URL}/countries/${id}`,
             {
-                method: "GET",
-                mode: "cors",
+                method: 'GET',
+                mode: 'cors',
                 headers: {
-                    "Content-Type": "application/json"
+                    'Content-Type': 'application/json'
             }
         });
 
-        return RequestController.formResult(response);
+        return RequestController.createRequestResult(response);
     } catch {
-        const errorInfo = RequestController.getErrorInfo(500);
+        const errorInfo = HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR);
         return new RequestResult(false, errorInfo);
     }
 }
 
-export function searchCountriesByName(nameFilter) {
-    return new Promise(async resolve => {
-        try {
-            const response = await fetch(
-                `${config.API_URL}/countries?nameFilter=${nameFilter}`,
-                {
-                    method: 'GET',
-                    mode: 'cors',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
+export async function searchCountriesByName(nameFilter) {
+    try {
+        const response = await fetch(
+            `${config.API_URL}/countries?nameFilter=${nameFilter}`,
+            {
+                method: 'GET',
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json'
                 }
-            );
+            }
+        );
 
-            resolve(RequestController.formResult(response));
-        } catch {
-            const errorInfo = RequestController.getErrorInfo(500);
-            resolve(new RequestResult(false, errorInfo));
-        }
-    });
+        return RequestController.createRequestResult(response);
+    } catch {
+        const errorInfo = HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR);
+        return new RequestResult(false, errorInfo);
+    }
 }
 
 export async function addCountry(country) {
     try {
         const response = await fetch(
-            `${config.API_URL}/api/countries`,
+            `${config.API_URL}/countries`,
             {
-                method: "POST",
-                mode: "cors",
+                method: 'POST',
+                mode: 'cors',
                 headers: {
-                    "Content-Type": "application/json"
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(country)
             }
         );
 
-        return RequestController.formResult(response);
+        return RequestController.createRequestResult(response);
     } catch {
-        const errorInfo = RequestController.getErrorInfo(500);
+        const errorInfo = HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR);
         return new RequestResult(false, errorInfo);
     }
 }
@@ -71,18 +70,18 @@ export async function updateCountry(country) {
         const response = await fetch(
             `${config.API_URL}/countries`,
             {
-                method: "PUT",
-                mode: "cors",
+                method: 'PUT',
+                mode: 'cors',
                 headers: {
-                    "Content-Type": "application/json"
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(country)
             }
         );
 
-        return RequestController.formResult(response);
+        return RequestController.createRequestResult(response);
     } catch {
-        const errorInfo = RequestController.getErrorInfo(500);
+        const errorInfo = HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR);
         return new RequestResult(false, errorInfo);
     }
 }
@@ -92,17 +91,17 @@ export async function getCityById(id) {
         const response = await fetch(
             `${config.API_URL}/cities/${id}`,
             {
-                method: "GET",
-                mode: "cors",
+                method: 'GET',
+                mode: 'cors',
                 headers: {
-                    "Content-Type": "application/json"
+                    'Content-Type': 'application/json'
                 }
             }
         );
 
-        return RequestController.formResult(response);
+        return RequestController.createRequestResult(response);
     } catch {
-        const errorInfo = RequestController.getErrorInfo(500);
+        const errorInfo = HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR);
         return new RequestResult(false, errorInfo);
     }
 }
@@ -112,17 +111,17 @@ export async function addCity(city) {
         const response = await fetch(
             `${config.API_URL}/cities`,
             {
-                method: "POST",
-                mode: "cors",
+                method: 'POST',
+                mode: 'cors',
                 headers: {
-                    "Content-Type": "application/json"
+                    'Content-Type': 'application/json'
             },
             body: JSON.stringify(city)
         });
 
-        return RequestController.formResult(response);
+        return RequestController.createRequestResult(response);
     } catch {
-        const errorInfo = RequestController.getErrorInfo(500);
+        const errorInfo = HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR);
         return new RequestResult(false, errorInfo);
     }
 }
@@ -132,17 +131,17 @@ export async function updateCity(city) {
         const response = await fetch(
             `${config.API_URL}/cities`,
             {
-                method: "PUT",
-                mode: "cors",
+                method: 'PUT',
+                mode: 'cors',
                 headers: {
-                    "Content-Type": "application/json"
+                    'Content-Type': 'application/json'
             },
             body: JSON.stringify(city)
         });
 
-        return RequestController.formResult(response);
+        return RequestController.createRequestResult(response);
     } catch {
-        const errorInfo = RequestController.getErrorInfo(500);
+        const errorInfo = HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR);
         return new RequestResult(false, errorInfo);
     }
 }
@@ -159,9 +158,9 @@ export async function searchCitiesByName(nameFilter) {
                 }
             }
         );
-        return RequestController.formResult(response);
+        return RequestController.createRequestResult(response);
     } catch {
-        const errorInfo = RequestController.getErrorInfo(500);
+        const errorInfo = HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR);
         return new RequestResult(false, errorInfo);
     }
 }
@@ -178,9 +177,9 @@ export async function getCountryCities(countryId) {
                 }
             }
         );
-        return RequestController.formResult(response);
+        return RequestController.createRequestResult(response);
     } catch {
-        const errorInfo = RequestController.getErrorInfo(500);
+        const errorInfo = HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR);
         return new RequestResult(false, errorInfo);
     }
 }
@@ -198,9 +197,9 @@ export async function searchCountryCitiesByName(countryId, nameFilter) {
             }
         );
 
-        return RequestController.formResult(response);
+        return RequestController.createRequestResult(response);
     } catch {
-        const errorInfo = RequestController.getErrorInfo(500);
+        const errorInfo = HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR);
         return new RequestResult(false, errorInfo);
     }
 }

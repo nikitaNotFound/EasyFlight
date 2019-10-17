@@ -1,29 +1,20 @@
 import RequestResult from './request-result';
 
-export function getErrorInfo(code) {
-    switch (code) {
-        case 400:
-            return 'Conflict';
-        case 404:
-            return 'Not found';
-        case 500:
-            return 'Server error';
-    }
-}
+import * as HttpStatus from 'http-status-codes';
 
-export async function formResult(response) {
+export async function createRequestResult(response) {
     if (response.ok) {
         try {
             var responseBody = await response.json();
-        } catch {}
+        } catch {
+            var responseBody = null;
+        }
 
         return new RequestResult(true, responseBody);
     } else {
-        try {
-            var responseBody = await response.text();
-        } catch {}
+        const responseBody = await response.text();
 
-        let errorInfo = getErrorInfo(response.status);
+        let errorInfo = HttpStatus.getStatusText(response.status)
 
         if (responseBody) {
             errorInfo += ". " + responseBody;

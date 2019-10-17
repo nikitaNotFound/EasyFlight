@@ -6,7 +6,7 @@ import City from './city';
 import '../../../../styles/items-list.css';
 
 export default function Cities(props) {
-    if (!props.cities) {
+    if (props.cities == null) {
         return (
             <div className="items-list">
             </div>
