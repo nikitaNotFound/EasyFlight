@@ -80,21 +80,6 @@ namespace DataAccessLayer.Repositories.Cities
             return airports.ToList();
         }
 
-        public async Task<IReadOnlyCollection<AirportEntity>> SearchCityAirportsByNameAsync(
-            int cityId,
-            string nameFilter
-        )
-        {
-            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
-
-            IEnumerable<AirportEntity> airports = await db.QueryAsync<AirportEntity>(
-                "SearchCityAirportsByName",
-                new { cityId = cityId, nameFilter = nameFilter },
-                commandType: CommandType.StoredProcedure);
-
-            return airports.ToList();
-        }
-
         public async Task AddAsync(CityEntity city)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
