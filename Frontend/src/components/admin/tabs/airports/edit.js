@@ -73,7 +73,7 @@ export default function Edit(props) {
     async function getCityName(city) {
         const country = await PlaceService.getCountryById(city.countryId);
 
-        const finalName = `${city.name} (${country.name})`;
+        const finalName = `${city.name} (${country.value.name})`;
 
         return finalName;
     }
