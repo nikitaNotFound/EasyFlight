@@ -48,26 +48,19 @@ namespace BusinessLayer.Services.Cities
             return foundCity;
         }
 
-        public async Task<ResultTypes> UpdateAsync(City city)
+        public async Task<ResultTypes> AddAsync(City city)
         {
-            CityEntity oldCityDal = await _cityRepository.GetAsync(city.Id);
+            CityEntity cityDal = _mapper.Map<CityEntity>(city);
 
-            if (oldCityDal != null)
+            bool dublicate = await _cityRepository.CheckDublicateAsync(cityDal);
+
+            if (!dublicate)
             {
-                CityEntity cityDal = _mapper.Map<CityEntity>(city);
-
-                bool dublicate = await _cityRepository.CheckDublicateAsync(cityDal);
-
-                if (!dublicate)
-                {
-                    await _cityRepository.UpdateAsync(cityDal);
-                    return ResultTypes.OK;
-                }
-
-                return ResultTypes.Dublicate;
+                await _cityRepository.AddAsync(cityDal);
+                return ResultTypes.OK;
             }
 
-            return ResultTypes.NotFound;
+            return ResultTypes.Dublicate;
         }
 
         public async Task<IReadOnlyCollection<Airport>> GetCityAirportsAsync(int cityId)

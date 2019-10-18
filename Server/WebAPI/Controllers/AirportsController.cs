@@ -4,10 +4,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using WebAPI.Models.Airports;
+using WebAPI.Models;
 using BusinessLayer.Services.Airports;
-using BlAirport = BusinessLayer.Models.Airports.Airport;
-using BlAirportSearchOptions = BusinessLayer.Models.Airports.AirportSearchOptions;
+using BlAirport = BusinessLayer.Models.Airport;
 using BusinessLayer;
 using AutoMapper;
 using Common;
@@ -79,9 +78,9 @@ namespace WebAPI.Controllers
         [Route("{id}")]
         public async Task<ActionResult> GetAsync(int id)
         {
-            BlAirport airportBl = await airportService.GetByIdAsync(id);
+            BlAirport airportBl = await _airportService.GetByIdAsync(id);
 
-            var airport = mapper.Map<Airport>(airportBl);
+            var airport = _mapper.Map<Airport>(airportBl);
 
             if (airport == null)
             {
@@ -113,7 +112,7 @@ namespace WebAPI.Controllers
         [Authorize(nameof(AccountRole.Admin))]
         public async Task<ActionResult> UpdateAsync([FromBody] Airport airport)
         {
-            var airportBl = mapper.Map<BlAirport>(airport);
+            var airportBl = _mapper.Map<BlAirport>(airport);
 
             ResultTypes updateResult = await airportService.UpdateAsync(id, airportBl);
 
@@ -123,7 +122,7 @@ namespace WebAPI.Controllers
                     return BadRequest();
 
                 case ResultTypes.NotFound:
-                    return new NotFoundResult();
+                    return NotFound();
             }
 
             return Ok();
