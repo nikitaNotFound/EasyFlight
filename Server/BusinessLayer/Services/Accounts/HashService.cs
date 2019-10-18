@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 namespace BusinessLayer.Services.Accounts
 {
     internal static class HashService
-    { 
+    {
         internal static byte[] GenerateSalt()
         {
             using RNGCryptoServiceProvider crypto = new RNGCryptoServiceProvider();

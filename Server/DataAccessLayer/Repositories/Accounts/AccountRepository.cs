@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using DataAccessLayer.Models;
 using Dapper;
 using System.Data.SqlClient;
@@ -27,7 +24,7 @@ namespace DataAccessLayer.Repositories.Accounts
 
             return await db.ExecuteScalarAsync<bool>(
                 "CheckAccountDublicate",
-                new { email = account.Email},
+                new { email = account.Email },
                 commandType: CommandType.StoredProcedure);
         }
 

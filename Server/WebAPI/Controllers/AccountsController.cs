@@ -49,7 +49,7 @@ namespace WebAPI.Controllers
 
             Account authAccount = _mapper.Map<Account>(authAccountBl);
 
-            string token =_jwtService.CreateTokenAsync(authAccount);
+            string token = _jwtService.CreateTokenAsync(authAccount);
 
             ResponseAccount responseAccount = new ResponseAccount(
                 authAccount.Id,
@@ -66,7 +66,7 @@ namespace WebAPI.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        [Route("register")] 
+        [Route("register")]
         public async Task<IActionResult> RegisterAsync([FromBody] ReciveAccount account)
         {
             AccountBl accountBl = _mapper.Map<AccountBl>(account);
@@ -81,7 +81,7 @@ namespace WebAPI.Controllers
 
             Account registerAccount = _mapper.Map<Account>(registerAccountBl);
 
-            string token =  _jwtService.CreateTokenAsync(registerAccount);
+            string token = _jwtService.CreateTokenAsync(registerAccount);
 
             ResponseAccount responseAccount = new ResponseAccount(
                 registerAccount.Id,

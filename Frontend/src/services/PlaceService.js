@@ -38,27 +38,9 @@ export async function getCountryCities(countryId) {
                 headers: RequestController.headers
             }
         );
-        return RequestController.formResult(response);
+        return RequestController.createRequestResult(response);
     } catch {
-        const errorInfo = RequestController.getErrorInfo(500);
-        return new RequestResult(false, errorInfo);
-    }
-}
-
-export async function searchCountryCitiesByName(nameFilter, countryId) {
-    try {
-        const response = await fetch(
-            `${config.API_URL}/countries/${countryId}/cities?nameFilter=${nameFilter}`,
-            {
-                method: 'GET',
-                mode: 'cors',
-                headers: RequestController.headers
-            }
-        );
-
-        return RequestController.formResult(response);
-    } catch {
-        const errorInfo = RequestController.getErrorInfo(500);
+        const errorInfo = HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR);
         return new RequestResult(false, errorInfo);
     }
 }

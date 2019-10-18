@@ -17,12 +17,17 @@ function Content(props) {
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
     async function onLogin() {
+        if (!email || !password) {
+            changeMessageBoxValue('Enter account info!');
+            return;
+        }
+
         const loginResult = await UserService.login({email: email, password: password});
 
         if (loginResult.successful === true) {
             props.history.push('/');
         } else {
-            changeMessageBoxValue('Login failed!');
+            changeMessageBoxValue(loginResult.value);
         }
     }
 

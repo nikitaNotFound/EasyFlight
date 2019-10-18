@@ -3,6 +3,7 @@ import { isArray } from 'util';
 import User from './user-models/user';
 
 import * as RequestController from './RequestController';
+import * as HttpStatus from 'http-status-codes';
 
 import RequestResult from './request-result';
 
@@ -43,7 +44,7 @@ export async function login(user) {
             }
         );
             
-        const result = await RequestController.formResult(response);
+        const result = await RequestController.createRequestResult(response);
         if (result.successful === false) {
             return result;
         } else {
@@ -61,7 +62,7 @@ export async function login(user) {
             return result;
         }
     } catch {
-        const errorInfo = RequestController.getErrorInfo(500);
+        const errorInfo = HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR);
         return new RequestResult(false, errorInfo);
     }
 }
@@ -80,7 +81,7 @@ export async function register(user) {
             }
         );
             
-        const result = await RequestController.formResult(response);
+        const result = await RequestController.createRequestResult(response);
         if (result.successful === false) {
             return result;
         } else {
@@ -98,7 +99,7 @@ export async function register(user) {
             return result;
         }
     } catch {
-        const errorInfo = RequestController.getErrorInfo(500);
+        const errorInfo = HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR);
         return new RequestResult(false, errorInfo);
     }
 }
