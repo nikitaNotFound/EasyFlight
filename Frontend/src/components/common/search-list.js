@@ -1,5 +1,5 @@
 import PropsTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Spinner from './spinner';
 import Item from './search-list-item';
@@ -8,21 +8,33 @@ import MessageBox from '../common/message-box';
 import '../../styles/search-list.css';
 import { defaultErrorMessage } from './message-box-messages';
 
-function getStartItem(props) {
+async function getStartItemName(props) {
     if (!props.currentItem) {
         return;
     }
 
-    return props.getItemName(props.currentItem);
+    const startItemName = await props.getItemName(props.currentItem);
+
+    return startItemName;
 }
 
 function SearchList(props) {
     const [loading, changeLoading] = useState(true);
     const [mode, changeMode] = useState(false);
     const [list, changeList] = useState([]);
-    const [inputValue, changeInputValue] = useState(getStartItem(props));
+    const [inputValue, changeInputValue] = useState();
     const [currentItem, changeCurrentItem] = useState(props.currentItem);
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
+
+    useEffect(() => {
+        const setupData = async () => {
+            const startItemName = await getStartItemName(props);
+
+            changeInputValue(startItemName)
+        }
+
+        setupData();
+    });
 
     function openList() {
         changeMode(true);

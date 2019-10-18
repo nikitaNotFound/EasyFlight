@@ -17,7 +17,6 @@ export default function Edit(props) {
     const [name, changeName] = useState();
     const [country, changeCountry] = useState();
     const [city, changeCity] = useState();
-    const [desc, changeDesc] = useState();
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
     useEffect(() => {
@@ -30,7 +29,6 @@ export default function Edit(props) {
 
             changeId(airportResult.value.id);
             changeName(airportResult.value.name);
-            changeDesc(airportResult.value.description);
 
             const cityResult = await PlaceService.getCityById(airportResult.value.cityId);
             if (cityResult.successful === false) {
@@ -71,14 +69,10 @@ export default function Edit(props) {
         }
     }
 
-    function getCountryName(country) {
-        return country.name;
-    }
-
     async function getCityName(city) {
         const country = await PlaceService.getCountryById(city.countryId);
 
-        const finalName = `${city.name} (${country.name})`;
+        const finalName = `${city.name} (${country.value.name})`;
 
         return finalName;
     }
@@ -89,21 +83,6 @@ export default function Edit(props) {
                 <MessageBox
                     message={messageBoxValue}
                     hideFunc={changeMessageBoxValue}
-                />
-            );
-        }
-    }
-
-    function showCityChooser() {
-        if (country) {
-            return (
-                <SearchList
-                    searchFunc={PlaceService.searchCitiesByName}
-                    searchArgs={[country.id]}
-                    placeholder="City"
-                    currentItem={city}
-                    getItemName={getCityName}
-                    onValueChange={changeCity}
                 />
             );
         }
@@ -129,13 +108,13 @@ export default function Edit(props) {
                                         />
                                     </div>
                                     <SearchList
-                                        searchFunc={PlaceService.searchCountriesByName}
-                                        placeholder="Country"
-                                        currentItem={country}
-                                        getItemName={getCountryName}
-                                        onValueChange={changeCountry}
+                                        searchFunc={PlaceService.searchCitiesByName}
+                                        searchArgs={[country.id]}
+                                        placeholder="City"
+                                        currentItem={city}
+                                        getItemName={getCityName}
+                                        onValueChange={changeCity}
                                     />
-                                    {showCityChooser()}
                                 </div>
                             </div>
                         </div>
