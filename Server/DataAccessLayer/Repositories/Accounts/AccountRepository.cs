@@ -33,7 +33,7 @@ namespace DataAccessLayer.Repositories.Accounts
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             return await db.QuerySingleOrDefaultAsync<AccountEntity>(
-                "getAccountByEmail",
+                "GetAccountByEmail",
                 new { email = email },
                 commandType: CommandType.StoredProcedure);
         }
@@ -43,8 +43,8 @@ namespace DataAccessLayer.Repositories.Accounts
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             return await db.QuerySingleOrDefaultAsync<AccountEntity>(
-                "loginAccount",
-                new { email = account.Email, password = account.HashedPassword },
+                "LoginAccount",
+                new { email = account.Email, hashedPassword = account.HashedPassword },
                 commandType: CommandType.StoredProcedure);
         }
 
@@ -53,12 +53,12 @@ namespace DataAccessLayer.Repositories.Accounts
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             return await db.QuerySingleOrDefaultAsync<AccountEntity>(
-                "registerAccount",
+                "RegisterAccount",
                 new {
                     firstName = account.FirstName,
                     secondName = account.SecondName,
                     email = account.Email,
-                    password = account.HashedPassword,
+                    hashedPassword = account.HashedPassword,
                     salt = account.Salt,
                     role = AccountRoles.User
                 },

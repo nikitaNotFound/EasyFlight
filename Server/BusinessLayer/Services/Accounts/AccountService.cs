@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using System.Threading.Tasks;
 using BusinessLayer.Models;
 using DataAccessLayer.Repositories.Accounts;
@@ -13,11 +14,13 @@ namespace BusinessLayer.Services.Accounts
         private readonly IMapper _mapper;
         private readonly IAccountRepository _accountRepository;
 
+
         public AccountService(IMapper mapper, IAccountRepository repository)
         {
             _mapper = mapper;
             _accountRepository = repository;
         }
+
 
         public async Task<Account> LoginAsync(Account account)
         {
