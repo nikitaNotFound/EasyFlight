@@ -10,10 +10,10 @@ export async function getById(id) {
         var response = await fetch(
             `${config.API_URL}/airports/${id}`,
             {
-                method: "GET",
-                mode: "cors",
+                method: 'GET',
+                mode: 'cors',
                 headers: {
-                    "Content-Type": "application/json"
+                    'Content-Type': 'application/json'
                 }
             }
         );
@@ -30,10 +30,10 @@ export async function add(airport) {
         var response = await fetch(
             `${config.API_URL}/airports`,
             {
-                method: "POST",
-                mode: "cors",
+                method: 'POST',
+                mode: 'cors',
                 headers: {
-                    "Content-Type": "application/json"
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(airport)
             }
@@ -51,10 +51,10 @@ export async function update(airport) {
         var response = await fetch(
             `${config.API_URL}/airports/${airport.id}`,
             {
-                method: "PUT",
-                mode: "cors",
+                method: 'PUT',
+                mode: 'cors',
                 headers: {
-                    "Content-Type": "application/json"
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(airport)
             }
@@ -72,10 +72,10 @@ export async function searchByName(name) {
         var response = await fetch(
             `${config.API_URL}/airports?nameFilter=${name}`,
             {
-                method: "GET",
-                mode: "cors",
+                method: 'GET',
+                mode: 'cors',
                 headers: {
-                    "Content-Type": "application/json"
+                    'Content-Type': 'application/json'
                 }
             }
         );
