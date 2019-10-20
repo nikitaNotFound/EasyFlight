@@ -1,9 +1,9 @@
 export default class RequestResult {
     successful;
-    value;
+    bodyContent;
 
-    constructor (successful, value) {
+    constructor (successful, bodyContent) {
         this.successful = successful;
-        this.value = value;
+        this.bodyContent = bodyContent;
     }
 }

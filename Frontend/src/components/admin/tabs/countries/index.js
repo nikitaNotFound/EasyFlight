@@ -20,9 +20,9 @@ export default function CountryList() {
         const airportsRequest = await PlaceService.searchCountriesByName(newFilterOptions);
 
         if (airportsRequest.successful === true) {
-            changeCountries(airportsRequest.value);
+            changeCountries(airportsRequest.bodyContent);
         } else {
-            changeMessageBoxValue(airportsRequest.value);
+            changeMessageBoxValue(airportsRequest.bodyContent);
         }
     }
 

@@ -20,11 +20,11 @@ export default function Edit(props) {
             const countryRequest = await PlaceService.getCountryById(props.match.params.id);
 
             if (countryRequest.successful === true) {
-                changeName(countryRequest.value.name);
-                changeId(countryRequest.value.id);
+                changeName(countryRequest.bodyContent.name);
+                changeId(countryRequest.bodyContent.id);
                 changeLoadingMode(false);
             } else {
-                changeMessageBoxValue(countryRequest.value);
+                changeMessageBoxValue(countryRequest.bodyContent);
             }
             
         }

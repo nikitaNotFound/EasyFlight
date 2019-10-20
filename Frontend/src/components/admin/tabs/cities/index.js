@@ -28,9 +28,9 @@ export default function CityList() {
         }
 
         if (citiesRequest.successful === true) {
-            changeCities(citiesRequest.value);
+            changeCities(citiesRequest.bodyContent);
         } else {
-            changeMessageBoxValue(citiesRequest.value);
+            changeMessageBoxValue(citiesRequest.bodyContent);
         }
     }
 

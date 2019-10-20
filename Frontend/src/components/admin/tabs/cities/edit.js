@@ -20,18 +20,18 @@ export default function Edit(props) {
         const fetchData = async () => {
             const cityRequest = await PlaceService.getCityById(props.match.params.id);
             if (cityRequest.successful === true) {
-                changeId(cityRequest.value.id);
-                changeName(cityRequest.value.name);
+                changeId(cityRequest.bodyContent.id);
+                changeName(cityRequest.bodyContent.name);
             } else {
-                changeMessageBoxValue(cityRequest.value);
+                changeMessageBoxValue(cityRequest.bodyContent);
                 return;
             }
             
-            const countryRequest = await PlaceService.getCountryById(cityRequest.value.countryId);
+            const countryRequest = await PlaceService.getCountryById(cityRequest.bodyContent.countryId);
             if (countryRequest.successful === true) {
-                changeCountry(countryRequest.value);
+                changeCountry(countryRequest.bodyContent);
             } else {
-                changeMessageBoxValue(countryRequest.value);
+                changeMessageBoxValue(countryRequest.bodyContent);
                 return;
             }
 

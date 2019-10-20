@@ -59,7 +59,7 @@ function Filter(props) {
     async function getCityName(city) {
         const countryResult = await PlaceService.getCountryById(city.countryId);
 
-        const finalName = `${city.name} (${countryResult.value.name})`;
+        const finalName = `${city.name} (${countryResult.bodyContent.name})`;
 
         return finalName;
     }

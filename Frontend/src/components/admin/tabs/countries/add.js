@@ -25,7 +25,7 @@ export default function Add() {
         if (addRequest.successful === true) {
             changeMessageBoxValue('Added!');
         } else {
-            changeMessageBoxValue(addRequest.value);
+            changeMessageBoxValue(addRequest.bodyContent);
         }
     }
 

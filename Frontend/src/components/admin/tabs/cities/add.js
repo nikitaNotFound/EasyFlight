@@ -26,7 +26,7 @@ export default function Add() {
         if (insertResult.successful === true) {
             changeMessageBoxValue('Added!');
         } else {
-            changeMessageBoxValue(insertResult.value);
+            changeMessageBoxValue(insertResult.bodyContent);
         }
     }
 
