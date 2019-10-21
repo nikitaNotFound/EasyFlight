@@ -58,8 +58,7 @@ namespace WebAPI.Controllers
         // POST api/airplanes/searches
         [HttpPost]
         public async Task<ActionResult> SearchAirplanes([FromBody] AirplaneFilter airplaneFilter)
-        {
-
+        { 
             return Ok();
         }
 
@@ -71,15 +70,15 @@ namespace WebAPI.Controllers
         }
 
         // POST api/airplanes/{airplaneId}/seat-types
-        [HttpGet]
+        [HttpPost]
         [Route("{airplaneId}/seat-types")]
         public async Task<ActionResult> AddAirplaneSeatTypeAsync(int airplaneId)
         {
             return Ok();
         }
 
-        // POST api/airplanes/{airplaneId}/seat-scheme
-        [HttpGet]
+        // PUT api/airplanes/{airplaneId}/seat-scheme
+        [HttpPut]
         [Route("{airplaneId}/seats")]
         public async Task<ActionResult> AddAirplaneSeatAsync(int airplaneId)
         {

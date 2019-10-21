@@ -10,11 +10,11 @@ namespace DataAccessLayer.Repositories.Airplanes
     {
         Task<IReadOnlyCollection<AirplaneEntity>> GetAllAsync();
         Task<AirplaneEntity> GetByIdAsync(int id);
-        Task<Array[]> GetAirplaneSeatSchemeAsync(int airplaneId);
+        Task<IReadOnlyCollection<AirplaneSeatEntity>> GetAirplaneSeatsAsync(int airplaneId);
         Task<IReadOnlyCollection<AirplaneSeatTypeEntity>> GetAirplaneSeatTypesAsync(int airplaneId);
-        Task<IReadOnlyCollection<AirplaneEntity>> SearchAirplanes(AirplaneFilterEntity filter);
+        Task<IReadOnlyCollection<AirplaneEntity>> SearchAirplanesAsync(AirplaneFilterEntity filter);
         Task AddAsync(AirplaneEntity airplane);
-        Task AddAirplaneSeatSchemeAsync(Array[] seatScheme);
+        Task AddAirplaneSeatAsync(AirplaneSeatEntity seatScheme);
         Task AddAirplaneSeatTypeAsync(AirplaneSeatTypeEntity seatType);
     }
 }
