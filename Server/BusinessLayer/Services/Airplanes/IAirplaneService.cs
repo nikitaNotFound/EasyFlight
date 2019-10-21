@@ -12,7 +12,7 @@ namespace BusinessLayer.Services.Airplanes
         Task<Airplane> GetByIdAsync(int id);
         Task<Array[]> GetAirplaneSeatSchemeAsync(int airplaneId);
         Task<IReadOnlyCollection<AirplaneSeatType>> GetAirplaneSeatTypesAsync (int airplaneId);
-        Task<IReadOnlyCollection<Airplane>> SearchAirplanes(AirplaneFilter filter);
+        Task<IReadOnlyCollection<Airplane>> SearchAirplanesAsync(AirplaneFilter filter);
         Task<ResultTypes> AddAsync(Airplane airplane);
         Task<ResultTypes> AddAirplaneSeatSchemeAsync(Array[] seatScheme);
         Task<ResultTypes> AddAirplaneSeatTypeAsync(AirplaneSeatType seatType);
