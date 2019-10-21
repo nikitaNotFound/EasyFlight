@@ -24,9 +24,9 @@ namespace WebAPI.Controllers
         }
 
 
-        // GET api/airplanes{?nameFilter}
+        // GET api/airplanes
         [HttpGet]
-        public async Task<ActionResult> GetAsync(string nameFilter)
+        public async Task<ActionResult> GetAll()
         {
             return Ok();
         }
@@ -39,7 +39,7 @@ namespace WebAPI.Controllers
             return Ok();
         }
 
-        // GET api/airplanes/{airplaneId}/seats
+        // GET api/airplanes/{airplaneId}/seat-scheme
         [HttpGet]
         [Route("{airplaneId}/seats")]
         public async Task<ActionResult> GetAirplaneSeatsAsync(int airplaneId)
@@ -55,9 +55,33 @@ namespace WebAPI.Controllers
             return Ok();
         }
 
+        // POST api/airplanes/searches
+        [HttpPost]
+        public async Task<ActionResult> SearchAirplanes([FromBody] AirplaneFilter airplaneFilter)
+        {
+
+            return Ok();
+        }
+
         // POST api/airplanes
         [HttpPost]
         public async Task<ActionResult> AddAirplaneAsync([FromBody] Airplane airplane)
+        {
+            return Ok();
+        }
+
+        // POST api/airplanes/{airplaneId}/seat-types
+        [HttpGet]
+        [Route("{airplaneId}/seat-types")]
+        public async Task<ActionResult> AddAirplaneSeatTypeAsync(int airplaneId)
+        {
+            return Ok();
+        }
+
+        // POST api/airplanes/{airplaneId}/seat-scheme
+        [HttpGet]
+        [Route("{airplaneId}/seats")]
+        public async Task<ActionResult> AddAirplaneSeatAsync(int airplaneId)
         {
             return Ok();
         }
