@@ -105,7 +105,7 @@ namespace DataAccessLayer.Repositories.Countries
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             return await db.ExecuteScalarAsync<bool>(
-                "CheckCountryDublicate",
+                "CheckCountryDuplicate",
                 new { name = country.Name },
                 commandType: CommandType.StoredProcedure);
         }

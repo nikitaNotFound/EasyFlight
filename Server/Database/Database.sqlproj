@@ -66,12 +66,12 @@
     <Build Include="dbo\Tables\Countries.sql" />
     <Build Include="dbo\Tables\Cities.sql" />
     <Build Include="dbo\Stored Procedures\AddCountry.sql" />
-    <Build Include="dbo\Stored Procedures\CheckCountryDublicate.sql" />
+    <Build Include="dbo\Stored Procedures\CheckCountryDuplicate.sql" />
     <Build Include="dbo\Stored Procedures\GetCountryById.sql" />
     <Build Include="dbo\Stored Procedures\SearchCountriesByName.sql" />
     <Build Include="dbo\Stored Procedures\UpdateCountry.sql" />
     <Build Include="dbo\Stored Procedures\AddCity.sql" />
-    <Build Include="dbo\Stored Procedures\CheckCityDublicate.sql" />
+    <Build Include="dbo\Stored Procedures\CheckCityDuplicate.sql" />
     <Build Include="dbo\Stored Procedures\GetCityById.sql" />
     <Build Include="dbo\Stored Procedures\SearchCountryCitiesByName.sql" />
     <Build Include="dbo\Stored Procedures\UpdateCity.sql" />

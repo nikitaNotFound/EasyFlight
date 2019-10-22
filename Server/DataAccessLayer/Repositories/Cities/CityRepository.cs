@@ -79,7 +79,7 @@ namespace DataAccessLayer.Repositories.Cities
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             return await db.ExecuteScalarAsync<bool>(
-                "CheckCityDublicate",
+                "CheckCityDuplicate",
                 new { name = city.Name, countryId = city.CountryId },
                 commandType: CommandType.StoredProcedure);
         }
