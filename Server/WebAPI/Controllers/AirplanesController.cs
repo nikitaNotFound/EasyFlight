@@ -107,24 +107,44 @@ namespace WebAPI.Controllers
         [HttpPost]
         public async Task<ActionResult> AddAirplaneAsync([FromBody] Airplane airplane)
         {
-            ResultTypes 
+            BlAirplane airplaneBl = _mapper.Map<BlAirplane>(airplane);
             
+            ResultTypes addResult = await _airplaneService.AddAsync(airplaneBl);
+
+            if (addResult == ResultTypes.Dublicate)
+            {
+                return BadRequest();
+            }
+
             return Ok();
         }
 
         // POST api/airplanes/{airplaneId}/seat-types
         [HttpPost]
         [Route("{airplaneId}/seat-types")]
-        public async Task<ActionResult> AddAirplaneSeatTypeAsync(int airplaneId)
+        public async Task<ActionResult> AddAirplaneSeatTypeAsync(int airplaneId, [FromBody] AirplaneSeatType seatType)
         {
+            seatType.AirplaneId = airplaneId;
+            
+            BlAirplaneSeatType seatTypeBl = _mapper.Map<BlAirplaneSeatType>(seatType);
+
+            ResultTypes addResult = await _airplaneService.AddAirplaneSeatTypeAsync(seatTypeBl);
+
+            if (addResult == ResultTypes.Dublicate)
+            {
+                return BadRequest();
+            }
+
             return Ok();
         }
 
         // PUT api/airplanes/{airplaneId}/seat-scheme
         [HttpPut]
         [Route("{airplaneId}/seats")]
-        public async Task<ActionResult> AddAirplaneSeatAsync(int airplaneId)
+        public async Task<ActionResult> UpdateAirplaneSeatSchemeAsync(int airplaneId, [FromBody] Array[] seatScheme)
         {
+            ResultTypes updateResult = await _airplaneService.UpdateAirplaneSeatSchemeAsync(seatScheme);
+            
             return Ok();
         }
     }
