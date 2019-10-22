@@ -3,9 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using BusinessLayer;
+using BusinessLayer.Services.Airplanes;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using BlAirplane = BusinessLayer.Models.Airplane;
+using BlAirplaneFilter = BusinessLayer.Models.AirplaneFilter;
+using BlAirplaneSeatType = BusinessLayer.Models.AirplaneSeatType;
 using WebAPI.Models;
 
 namespace WebAPI.Controllers
@@ -16,11 +21,13 @@ namespace WebAPI.Controllers
     public class AirplanesController : ControllerBase
     {
         private readonly IMapper _mapper;
+        private readonly IAirplaneService _airplaneService;
 
 
-        public AirplanesController(IMapper mapper)
+        public AirplanesController(IMapper mapper, IAirplaneService airplaneService)
         {
             _mapper = mapper;
+            _airplaneService = airplaneService;
         }
 
 
@@ -28,7 +35,11 @@ namespace WebAPI.Controllers
         [HttpGet]
         public async Task<ActionResult> GetAll()
         {
-            return Ok();
+            IReadOnlyCollection<BlAirplane> airplanesBl = await _airplaneService.GetAllAsync();
+
+            IEnumerable<Airplane> airplanes = airplanesBl.Select(_mapper.Map<Airplane>);
+            
+            return Ok(airplanes);
         }
 
         // GET api/airplanes/{id}
@@ -36,15 +47,21 @@ namespace WebAPI.Controllers
         [Route("{id}")]
         public async Task<ActionResult> GetByIdAsync(int id)
         {
-            return Ok();
+            BlAirplane airplaneBl = await _airplaneService.GetByIdAsync(id);
+
+            Airplane airplane = _mapper.Map<Airplane>(airplaneBl);
+            
+            return Ok(airplane);
         }
 
         // GET api/airplanes/{airplaneId}/seat-scheme
         [HttpGet]
-        [Route("{airplaneId}/seats")]
+        [Route("{airplaneId}/seats-scheme")]
         public async Task<ActionResult> GetAirplaneSeatsAsync(int airplaneId)
         {
-            return Ok();
+            Array[] seatCheme = await _airplaneService.GetAirplaneSeatSchemeAsync(airplaneId);
+            
+            return Ok(seatCheme);
         }
 
         // GET api/airplanes/{airplaneId}/seat-types
@@ -52,20 +69,46 @@ namespace WebAPI.Controllers
         [Route("{airplaneId}/seat-types")]
         public async Task<ActionResult> GetAirplaneSeatTypesAsync(int airplaneId)
         {
+            IReadOnlyCollection<BlAirplaneSeatType> seatTypesBl =
+                await _airplaneService.GetAirplaneSeatTypesAsync(airplaneId);
+
+            IEnumerable<AirplaneSeatType> seatTypes = seatTypesBl.Select(_mapper.Map<AirplaneSeatType>);
+            
             return Ok();
         }
 
-        // POST api/airplanes/searches
-        [HttpPost]
-        public async Task<ActionResult> SearchAirplanes([FromBody] AirplaneFilter airplaneFilter)
-        { 
-            return Ok();
-        }
+        // GET api/airplanes/searches{?nameFilter}{?minCarryingKg}{?maxCarryingKg}{?minSeatCount}{?maxSeatCount}
+        [HttpGet]
+        public async Task<ActionResult> SearchAirplanes(
+            string nameFilter,
+            int minCarryingKg,
+            int maxCarryingKg,
+            int minSeatCount,
+            int maxSeatCount
+        )
+        {
+            AirplaneFilter airplaneFilter = new AirplaneFilter(
+                nameFilter,
+                minCarryingKg,
+                maxCarryingKg,
+                minSeatCount,
+                maxSeatCount);
+
+            BlAirplaneFilter airplaneFilterBl = _mapper.Map<BlAirplaneFilter>(airplaneFilter);
+
+            IEnumerable<BlAirplane> airplanesBl = await _airplaneService.SearchAirplanesAsync(airplaneFilterBl);
+
+            IEnumerable<Airplane> airplanes = airplanesBl.Select(_mapper.Map<Airplane>);
+            
+            return Ok(airplanes);
+        }   
 
         // POST api/airplanes
         [HttpPost]
         public async Task<ActionResult> AddAirplaneAsync([FromBody] Airplane airplane)
         {
+            ResultTypes 
+            
             return Ok();
         }
 

@@ -72,6 +72,16 @@ namespace DataAccessLayer.Repositories.Airplanes
             return seats.ToList();
         }
 
+        public async Task DeleteAirplaneSeatsAsync(int airplaneId)
+        {
+            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
+            
+            IEnumerable<AirplaneSeatTypeEntity> seatTypes = await db.QueryAsync<AirplaneSeatTypeEntity>(
+                 "GetAirplaneSeatTypes",
+               new {AirplaneId = airplaneId},
+               commandType:CommandType.StoredProcedure);
+        }
+
         public async Task<IReadOnlyCollection<AirplaneSeatTypeEntity>> GetAirplaneSeatTypesAsync(int airplaneId)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
@@ -106,9 +116,16 @@ namespace DataAccessLayer.Repositories.Airplanes
                 commandType: CommandType.StoredProcedure);
         }
 
-        public Task<IReadOnlyCollection<AirplaneEntity>> SearchAirplanesAsync(AirplaneFilterEntity filter)
+        public async Task<IReadOnlyCollection<AirplaneEntity>> SearchAirplanesAsync(AirplaneFilterEntity filter)
         {
-            throw new NotImplementedException();
+            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
+
+            IEnumerable<AirplaneEntity> airplanes = await db.QueryAsync<AirplaneEntity>(
+                "GetAirplaneById",
+                filter,
+                commandType: CommandType.StoredProcedure);
+
+            return airplanes.ToList();
         }
     }
 }

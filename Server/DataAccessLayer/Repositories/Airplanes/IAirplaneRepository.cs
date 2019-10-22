@@ -11,6 +11,7 @@ namespace DataAccessLayer.Repositories.Airplanes
         Task<IReadOnlyCollection<AirplaneEntity>> GetAllAsync();
         Task<AirplaneEntity> GetByIdAsync(int id);
         Task<IReadOnlyCollection<AirplaneSeatEntity>> GetAirplaneSeatsAsync(int airplaneId);
+        Task DeleteAirplaneSeatsAsync(int airplaneId);
         Task<IReadOnlyCollection<AirplaneSeatTypeEntity>> GetAirplaneSeatTypesAsync(int airplaneId);
         Task<IReadOnlyCollection<AirplaneEntity>> SearchAirplanesAsync(AirplaneFilterEntity filter);
         Task AddAsync(AirplaneEntity airplane);
