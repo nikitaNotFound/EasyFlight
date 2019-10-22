@@ -94,10 +94,9 @@ namespace WebAPI.Controllers
 
             ResultTypes addResult = await _countryService.AddAsync(countryBl);
 
-            if (addResult == ResultTypes.Dublicate)
+            if (addResult == ResultTypes.Duplicate)
             {
-                string message = $"'{countryBl.Name}' already exists!";
-                return BadRequest(message);
+                return BadRequest();
             }
 
             return Ok();
@@ -116,9 +115,8 @@ namespace WebAPI.Controllers
                 case ResultTypes.NotFound:
                     return NotFound();
 
-                case ResultTypes.Dublicate:
-                    string message = "Such name already exists!";
-                    return BadRequest(message);
+                case ResultTypes.Duplicate:
+                    return BadRequest();
             }
 
             return Ok();

@@ -20,12 +20,14 @@ export default function Add() {
 
         let newCountry = new Country(null, name);
 
-        const addRequest = await PlaceService.addCountry(newCountry);
-
-        if (addRequest.successful === true) {
-            changeMessageBoxValue('Added!');
-        } else {
-            changeMessageBoxValue(addRequest.bodyContent);
+        try {
+            await PlaceService.addCountry(newCountry);
+        } catch (ex) {
+            if (ex.name == 'BadRequestError') {
+                changeMessageBoxValue(`${name} already exists!`);
+            } else {
+                changeMessageBoxValue(ex.message);
+            }
         }
     }
 

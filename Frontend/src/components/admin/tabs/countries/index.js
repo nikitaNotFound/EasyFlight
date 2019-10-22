@@ -17,12 +17,11 @@ export default function CountryList() {
     async function onFilterApply(newFilterOptions) {
         changeFilterOptions(newFilterOptions);
 
-        const airportsRequest = await PlaceService.searchCountriesByName(newFilterOptions);
-
-        if (airportsRequest.successful === true) {
-            changeCountries(airportsRequest.bodyContent);
-        } else {
-            changeMessageBoxValue(airportsRequest.bodyContent);
+        try {
+            const countriesRequest = await PlaceService.searchCountriesByName(newFilterOptions);
+            changeCountries(countriesRequest);
+        } catch (ex) {
+            changeMessageBoxValue(ex.message);
         }
     }
 
@@ -42,7 +41,7 @@ export default function CountryList() {
             {showMessageBox()}
             <Filter filterOptions={filterOptions} onFilterApply={onFilterApply}/>
             <AddButton catalog="countries"/>
-            <Countries countries={countries}/>
+            <Countries countries={countries} startCitiesValue={null}/>
         </div>
     );
 }

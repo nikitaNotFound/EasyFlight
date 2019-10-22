@@ -72,10 +72,9 @@ namespace WebAPI.Controllers
 
             ResultTypes addingResult = await _cityService.AddAsync(cityBl);
 
-            if (addingResult == ResultTypes.Dublicate)
+            if (addingResult == ResultTypes.Duplicate)
             {
-                string message = $"'{city.Name}' already exists!";
-                return BadRequest(message);
+                return BadRequest();
             }
     
             return Ok();
@@ -92,11 +91,10 @@ namespace WebAPI.Controllers
             switch (updatingResult)
             {
                 case ResultTypes.NotFound:
-                    return NotFound();
+                    return NotFound(city.Id);
 
-                case ResultTypes.Dublicate:
-                    string message = $"City with name '{city.Name}' already exists!";
-                    return BadRequest(message);
+                case ResultTypes.Duplicate:
+                    return BadRequest();
             }
 
             return Ok();

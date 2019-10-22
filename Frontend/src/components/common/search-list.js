@@ -44,7 +44,7 @@ function SearchList(props) {
 
     async function onSearchPhraseChange(event) {
         changeInputValue(event.target.value);
-        
+
         if (!event.target.value) {
             changeLoading(true);
             changeCurrentItem(null);
@@ -52,13 +52,20 @@ function SearchList(props) {
             return;
         }
 
-        let newListRequest = await props.searchFunc(event.target.value, props.searchArgs);
+        try {
+            let newListResult = null;
 
-        if (newListRequest.successful === true) {
-            changeList(newListRequest.value);
+            if (props.searchArgs) {
+                newListResult = await props.searchFunc(event.target.value, ...props.searchArgs);
+            } else {
+                newListResult = await props.searchFunc(event.target.value);
+            }
+
+            changeList(newListResult);
+
             changeLoading(false);
-        } else {
-            changeMessageBoxValue(newListRequest.value)
+        } catch (ex) {
+            changeMessageBoxValue(ex.message);
         }
     }
 
@@ -78,33 +85,6 @@ function SearchList(props) {
                     />
             )
         );
-    }
-
-    async function onSearchPhraseChange(event) {
-        changeInputValue(event.target.value);
-
-        if (!event.target.value) {
-            changeLoading(true);
-            changeCurrentItem(null);
-            props.onValueChange(null);
-            return;
-        }
-
-        let newListResult = null;
-
-        if (props.searchArgs) {
-            newListResult = await props.searchFunc(event.target.value, ...props.searchArgs);
-        } else {
-            newListResult = await props.searchFunc(event.target.value);
-        }
-
-        if (newListResult.successful === true) {
-            changeList(newListResult.value);
-        } else {
-            changeMessageBoxValue(newListResult.value)
-        }
-
-        changeLoading(false);
     }
     
     function showMessageBox() {
@@ -136,7 +116,7 @@ function SearchList(props) {
 
             <div className={`search-list non-selectable 
                 ${mode === true 
-                    ? '' 
+                    ? ''
                     : 'search-item-hide'}`}>
 
                 {getList()}

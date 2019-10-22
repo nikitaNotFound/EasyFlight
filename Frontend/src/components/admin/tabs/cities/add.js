@@ -21,12 +21,15 @@ export default function Add() {
 
         const newCity = new City(null, country.id, name);
 
-        const insertResult = await PlaceService.addCity(newCity);
-
-        if (insertResult.successful === true) {
+        try {
+            await PlaceService.addCity(newCity);
             changeMessageBoxValue('Added!');
-        } else {
-            changeMessageBoxValue(insertResult.bodyContent);
+        } catch (ex) {
+            if (ex.name == 'BadRequestError') {
+                changeMessageBoxValue(`${name} already exists!`);
+            } else {
+                changeMessageBoxValue(ex.message);
+            }
         }
     }
 

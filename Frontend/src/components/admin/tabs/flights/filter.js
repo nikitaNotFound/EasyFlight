@@ -11,9 +11,6 @@ function Filter(props) {
     const [fromAirport, changeFromAirport] = useState(props.filterOptions.fromAirport);
     const [toAirport, changeToAirport] = useState(props.filterOptions.toAirport);
 
-    const [fromCountry, changeFromCountry] = useState(props.filterOptions.fromCity);
-    const [toCountry, changeToCountry] = useState(props.filterOptions.toCity);
-
     const [fromCity, changeFromCity] = useState(props.filterOptions.fromCity);
     const [toCity, changeToCity] = useState(props.filterOptions.toCity);
 
@@ -25,8 +22,6 @@ function Filter(props) {
     function onFilterApply() {
         if (!fromAirport
             && !toAirport
-            && !fromCountry
-            && !toCountry
             && !fromCity
             && !toCity
             && !departureDate
@@ -45,8 +40,6 @@ function Filter(props) {
             departureBackDate,
             null,
             null,
-            fromCountry,
-            toCountry
         );
 
         props.onFilterApply(newFilter);

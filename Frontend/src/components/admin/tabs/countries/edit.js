@@ -17,16 +17,15 @@ export default function Edit(props) {
 
     useEffect(() => {
         const fetchData = async () => {
-            const countryRequest = await PlaceService.getCountryById(props.match.params.id);
+            try {
+                const countryRequest = await PlaceService.getCountryById(props.match.params.id);
 
-            if (countryRequest.successful === true) {
-                changeName(countryRequest.bodyContent.name);
-                changeId(countryRequest.bodyContent.id);
+                changeName(countryRequest.name);
+                changeId(countryRequest.id);
                 changeLoadingMode(false);
-            } else {
-                changeMessageBoxValue(countryRequest.bodyContent);
+            } catch (ex) {
+                changeMessageBoxValue(ex.message);
             }
-            
         }
         fetchData();
     }, [props.match.params.id]);
@@ -39,12 +38,15 @@ export default function Edit(props) {
 
         let finalCountry = new Country(id, name);
         
-        const updateResult = await PlaceService.updateCountry(finalCountry);
-
-        if (updateResult.successful === true) {
-            changeMessageBoxValue('Updated!');
-        } else {
-            changeMessageBoxValue(updateResult.value);
+        try {
+            await PlaceService.updateCountry(finalCountry);
+            changeMessageBoxValue('Saved!');
+        } catch (ex) {
+            if (ex.name == 'BadRequestError') {
+                changeMessageBoxValue(`${name} already exists!`);
+            } else {
+                changeMessageBoxValue(ex.message);
+            }
         }
     }
 

@@ -57,10 +57,10 @@ namespace BusinessLayer.Services.Cities
             if (!dublicate)
             {
                 await _cityRepository.AddAsync(cityDal);
-                return ResultTypes.OK;
+                return ResultTypes.Ok;
             }
 
-            return ResultTypes.Dublicate;
+            return ResultTypes.Duplicate;
         }
 
         public async Task<ResultTypes> UpdateAsync(City city)
@@ -76,10 +76,10 @@ namespace BusinessLayer.Services.Cities
                 if (!dublicate)
                 {
                     await _cityRepository.UpdateAsync(cityDal);
-                    return ResultTypes.OK;
+                    return ResultTypes.Ok;
                 }
 
-                return ResultTypes.Dublicate;
+                return ResultTypes.Duplicate;
             }
 
             return ResultTypes.NotFound;

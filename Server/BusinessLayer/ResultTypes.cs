@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BusinessLayer
+﻿namespace BusinessLayer
 {
     public enum ResultTypes
     {
-        OK,
+        Ok,
         NotFound,
-        Dublicate
+        Duplicate
     }
 }

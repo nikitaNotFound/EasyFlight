@@ -76,10 +76,10 @@ namespace BusinessLayer.Services.Countries
             if (!dublicate)
             {
                 await _countryRepository.AddAsync(countryDal);
-                return ResultTypes.OK;
+                return ResultTypes.Ok;
             }
 
-            return ResultTypes.Dublicate;
+            return ResultTypes.Duplicate;
         }
 
         public async Task<ResultTypes> UpdateAsync(Country country)
@@ -95,10 +95,10 @@ namespace BusinessLayer.Services.Countries
                 if (!dublicate)
                 {
                     await _countryRepository.UpdateAsync(countryDal);
-                    return ResultTypes.OK ;
+                    return ResultTypes.Ok ;
                 }
 
-                return ResultTypes.Dublicate;
+                return ResultTypes.Duplicate;
             }
 
             return ResultTypes.NotFound;

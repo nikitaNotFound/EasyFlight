@@ -17,20 +17,20 @@ export default function CityList() {
     async function onFilterApply(newFilterOptions) {
         changeFilterOptions(newFilterOptions);
 
-        let citiesRequest = null;
+        try {
+            let citiesRequest = null;
 
-        if (newFilterOptions.name && newFilterOptions.countryId) {
-            citiesRequest = await PlaceService.searchCountryCitiesByName(newFilterOptions.countryId, newFilterOptions.name);
-        } else if (newFilterOptions.countryId) {
-            citiesRequest = await PlaceService.getCountryCities(newFilterOptions.countryId);
-        } else {
-            citiesRequest = await PlaceService.searchCitiesByName(newFilterOptions.name);
-        }
+            if (newFilterOptions.name && newFilterOptions.countryId) {
+                citiesRequest = await PlaceService.searchCountryCitiesByName(newFilterOptions.countryId, newFilterOptions.name);
+            } else if (newFilterOptions.countryId) {
+                citiesRequest = await PlaceService.getCountryCities(newFilterOptions.countryId);
+            } else {
+                citiesRequest = await PlaceService.searchCitiesByName(newFilterOptions.name);
+            }
 
-        if (citiesRequest.successful === true) {
-            changeCities(citiesRequest.bodyContent);
-        } else {
-            changeMessageBoxValue(citiesRequest.bodyContent);
+            changeCities(citiesRequest);
+        } catch (ex) {
+            changeMessageBoxValue(ex.message);
         }
     }
 
@@ -50,7 +50,7 @@ export default function CityList() {
             {showMessageBox()}
             <Filter filterOptions={filterOptions} onFilterApply={onFilterApply}/>
             <AddButton catalog="cities"/>
-            <Cities cities={cities}/>
+            <Cities cities={cities} startCitiesValue={null}/>
         </div>
     );
 }

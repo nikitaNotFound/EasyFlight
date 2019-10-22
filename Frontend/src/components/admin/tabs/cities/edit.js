@@ -18,24 +18,18 @@ export default function Edit(props) {
 
     useEffect(() => {
         const fetchData = async () => {
-            const cityRequest = await PlaceService.getCityById(props.match.params.id);
-            if (cityRequest.successful === true) {
-                changeId(cityRequest.bodyContent.id);
-                changeName(cityRequest.bodyContent.name);
-            } else {
-                changeMessageBoxValue(cityRequest.bodyContent);
-                return;
-            }
-            
-            const countryRequest = await PlaceService.getCountryById(cityRequest.bodyContent.countryId);
-            if (countryRequest.successful === true) {
-                changeCountry(countryRequest.bodyContent);
-            } else {
-                changeMessageBoxValue(countryRequest.bodyContent);
-                return;
-            }
+            try {
+                const cityRequest = await PlaceService.getCityById(props.match.params.id);
+                changeName(cityRequest.name);
+                changeId(cityRequest.id);
 
-            changeLoadingMode(false);
+                const countryRequest = await PlaceService.getCountryById(cityRequest.countryId);
+                changeCountry(countryRequest);
+
+                changeLoadingMode(false);
+            } catch (ex) {
+                changeMessageBoxValue(ex.message);
+            }
         }
         fetchData();
     }, [props.match.params.id]);
@@ -48,12 +42,15 @@ export default function Edit(props) {
 
         let newCity = new City(id, country.id, name);
 
-        const updateResult = await PlaceService.updateCity(newCity);
-
-        if (updateResult) {
+        try {
+            await PlaceService.updateCity(newCity);
             changeMessageBoxValue('Saved!');
-        } else {
-            changeMessageBoxValue(updateResult);
+        } catch (ex) {
+            if (ex.name == 'BadRequestError') {
+                changeMessageBoxValue(`${name} already exists!`);
+            } else {
+                changeMessageBoxValue(ex.message);
+            }
         }
     }
 
