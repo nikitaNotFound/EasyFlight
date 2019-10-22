@@ -144,7 +144,12 @@ namespace WebAPI.Controllers
         public async Task<ActionResult> UpdateAirplaneSeatSchemeAsync(int airplaneId, [FromBody] Array[] seatScheme)
         {
             ResultTypes updateResult = await _airplaneService.UpdateAirplaneSeatSchemeAsync(seatScheme);
-            
+
+            if (updateResult == ResultTypes.NotFound)
+            {
+                return NotFound();
+            }
+
             return Ok();
         }
     }
