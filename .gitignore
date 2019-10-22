@@ -38,3 +38,6 @@ Server/Database/Database.jfm
 Server/WebAPI/Logs/
 Server/Database/Import Schema Logs
 Server/Database/Import Script Logs
+
+# IDE
+.idea/
