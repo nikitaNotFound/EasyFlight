@@ -71,7 +71,7 @@ namespace BusinessLayer.Services.Countries
         {
             CountryEntity countryDal = _mapper.Map<CountryEntity>(country);
 
-            bool dublicate = await _countryRepository.CheckDublicateAsync(countryDal);
+            bool dublicate = await _countryRepository.CheckDuplicateAsync(countryDal);
 
             if (!dublicate)
             {
@@ -90,7 +90,7 @@ namespace BusinessLayer.Services.Countries
             {
                 CountryEntity countryDal = _mapper.Map<CountryEntity>(country);
 
-                bool dublicate = await _countryRepository.CheckDublicateAsync(countryDal);
+                bool dublicate = await _countryRepository.CheckDuplicateAsync(countryDal);
 
                 if (!dublicate)
                 {

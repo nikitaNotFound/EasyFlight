@@ -100,7 +100,7 @@ namespace DataAccessLayer.Repositories.Countries
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<bool> CheckDublicateAsync(CountryEntity country)
+        public async Task<bool> CheckDuplicateAsync(CountryEntity country)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 

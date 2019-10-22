@@ -52,7 +52,7 @@ namespace BusinessLayer.Services.Cities
         {
             CityEntity cityDal = _mapper.Map<CityEntity>(city);
 
-            bool dublicate = await _cityRepository.CheckDublicateAsync(cityDal);
+            bool dublicate = await _cityRepository.CheckDuplicateAsync(cityDal);
 
             if (!dublicate)
             {
@@ -71,7 +71,7 @@ namespace BusinessLayer.Services.Cities
             {
                 CityEntity cityDal = _mapper.Map<CityEntity>(city);
 
-                bool dublicate = await _cityRepository.CheckDublicateAsync(cityDal);
+                bool dublicate = await _cityRepository.CheckDuplicateAsync(cityDal);
 
                 if (!dublicate)
                 {

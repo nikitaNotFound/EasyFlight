@@ -13,6 +13,6 @@ namespace DataAccessLayer.Repositories.Cities
         Task<CityEntity> GetAsync(int id);
         Task AddAsync(CityEntity city);
         Task UpdateAsync(CityEntity city);
-        Task<bool> CheckDublicateAsync(CityEntity city);
+        Task<bool> CheckDuplicateAsync(CityEntity city);
     }
 }

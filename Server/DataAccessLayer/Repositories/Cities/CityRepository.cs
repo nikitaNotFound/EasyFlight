@@ -74,7 +74,7 @@ namespace DataAccessLayer.Repositories.Cities
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<bool> CheckDublicateAsync(CityEntity city)
+        public async Task<bool> CheckDuplicateAsync(CityEntity city)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
