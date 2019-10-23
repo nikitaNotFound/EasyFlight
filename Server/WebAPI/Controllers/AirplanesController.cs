@@ -33,14 +33,43 @@ namespace WebAPI.Controllers
         }
 
 
-        // GET api/airplanes
+        // GET api/airplanes{?nameFilter}{?minCarryingKg}{?maxCarryingKg}{?minSeatCount}{?maxSeatCount}
         [HttpGet]
-        public async Task<ActionResult> GetAll()
+        public async Task<ActionResult> GetAsync(
+            string nameFilter,
+            int? minCarryingKg,
+            int? maxCarryingKg,
+            int? minSeatCount,
+            int? maxSeatCount
+        )
         {
-            IReadOnlyCollection<BlAirplane> airplanesBl = await _airplaneService.GetAllAsync();
+            IReadOnlyCollection<BlAirplane> airplanesBl;
+
+            if (!string.IsNullOrEmpty(nameFilter)
+                || minCarryingKg != null
+                || maxCarryingKg != null
+                || minSeatCount != null
+                || maxSeatCount != null
+            )
+            {
+                AirplaneFilter airplaneFilter = new AirplaneFilter(
+                    nameFilter,
+                    minCarryingKg,
+                    maxCarryingKg,
+                    minSeatCount,
+                    maxSeatCount);
+
+                BlAirplaneFilter airplaneFilterBl = _mapper.Map<BlAirplaneFilter>(airplaneFilter);
+
+                airplanesBl = await _airplaneService.SearchAirplanesAsync(airplaneFilterBl);
+            }
+            else
+            {
+                airplanesBl = await _airplaneService.GetAllAsync();
+            }
 
             IEnumerable<Airplane> airplanes = airplanesBl.Select(_mapper.Map<Airplane>);
-            
+
             return Ok(airplanes);
         }
 
@@ -81,32 +110,6 @@ namespace WebAPI.Controllers
             return Ok();
         }
 
-        // GET api/airplanes{?nameFilter}{?minCarryingKg}{?maxCarryingKg}{?minSeatCount}{?maxSeatCount}
-        [HttpGet]
-        public async Task<ActionResult> SearchAirplanes(
-            string nameFilter,
-            int minCarryingKg,
-            int maxCarryingKg,
-            int minSeatCount,
-            int maxSeatCount
-        )
-        {
-            AirplaneFilter airplaneFilter = new AirplaneFilter(
-                nameFilter,
-                minCarryingKg,
-                maxCarryingKg,
-                minSeatCount,
-                maxSeatCount);
-
-            BlAirplaneFilter airplaneFilterBl = _mapper.Map<BlAirplaneFilter>(airplaneFilter);
-
-            IEnumerable<BlAirplane> airplanesBl = await _airplaneService.SearchAirplanesAsync(airplaneFilterBl);
-
-            IEnumerable<Airplane> airplanes = airplanesBl.Select(_mapper.Map<Airplane>);
-            
-            return Ok(airplanes);
-        }   
-
         // POST api/airplanes
         [HttpPost]
         public async Task<ActionResult> AddAirplaneAsync([FromBody] Airplane airplane)
@@ -118,6 +121,25 @@ namespace WebAPI.Controllers
             if (addResult == ResultTypes.Duplicate)
             {
                 return BadRequest();
+            }
+
+            return Ok();
+        }
+        
+        // PUT api/airplanes
+        [HttpPut]
+        public async Task<ActionResult> UpdateAirplaneAsync([FromBody] Airplane airplane)
+        {
+            BlAirplane airplaneBl = _mapper.Map<BlAirplane>(airplane);
+            
+            ResultTypes addResult = await _airplaneService.UpdateAsync(airplaneBl);
+
+            switch (addResult)
+            {
+                case ResultTypes.Duplicate:
+                    return BadRequest();
+                case ResultTypes.NotFound:
+                    return NotFound();
             }
 
             return Ok();
@@ -134,11 +156,14 @@ namespace WebAPI.Controllers
 
             ResultTypes addResult = await _airplaneService.AddAirplaneSeatTypeAsync(seatTypeBl);
 
-            if (addResult == ResultTypes.Duplicate)
+            switch (addResult)
             {
-                return BadRequest();
+                case ResultTypes.Duplicate:
+                    return BadRequest();
+                case ResultTypes.NotFound:
+                    return NotFound();
             }
-
+            
             return Ok();
         }
         
@@ -148,6 +173,11 @@ namespace WebAPI.Controllers
         public async Task<ActionResult> DeleteAirplaneSeatTypeAsync(int airplaneId, int seatTypeId)
         {
             ResultTypes deleteResult = await _airplaneService.DeleteAirplaneSeatTypeAsync(airplaneId, seatTypeId);
+
+            if (deleteResult == ResultTypes.NotFound)
+            {
+                return NotFound();
+            }
 
             return Ok();
         }
@@ -161,9 +191,12 @@ namespace WebAPI.Controllers
             
             ResultTypes updateResult = await _airplaneService.UpdateAirplaneSeatsAsync(airplaneId, seatsBl);
 
-            if (updateResult == ResultTypes.NotFound)
+            switch (updateResult)
             {
-                return NotFound();
+                case ResultTypes.Duplicate:
+                    return BadRequest();
+                case ResultTypes.NotFound:
+                    return NotFound();
             }
 
             return Ok();

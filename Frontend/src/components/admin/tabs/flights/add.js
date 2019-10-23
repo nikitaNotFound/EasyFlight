@@ -122,7 +122,7 @@ export default function Add() {
                                     placeholder="To"
                                 />
                                 <SearchList
-                                    searchFunc={AirplaneService.search}
+                                    searchFunc={AirplaneService.searchWithParams}
                                     getItemName={getAirplaneName}
                                     onValueChange={changeAirplane}
                                     currentItem={airplane}

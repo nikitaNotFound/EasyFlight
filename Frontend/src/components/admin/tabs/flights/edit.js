@@ -177,7 +177,7 @@ export default function Edit(props) {
                                     placeholder="To"
                                 />
                                 <SearchList
-                                    searchFunc={AirplaneService.search}
+                                    searchFunc={AirplaneService.searchWithParams}
                                     getItemName={getAirplaneName}
                                     onValueChange={changeAirplane}
                                     currentItem={airplane}
