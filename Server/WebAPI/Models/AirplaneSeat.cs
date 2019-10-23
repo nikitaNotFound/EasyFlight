@@ -6,25 +6,24 @@ namespace WebAPI.Models
     {
         public int Id { get; set; }
         
-        [Required]
         public int AirplaneId { get; set; }
         
         [Required]
-        public int Floor { get; set; }
+        public int? Floor { get; set; }
         
         [Required]
-        public int Section { get; set; }
+        public int? Section { get; set; }
         
         [Required]
-        public int Zone { get; set; }
+        public int? Zone { get; set; }
         
         [Required]
-        public int Row { get; set; }
+        public int? Row { get; set; }
         
         [Required]
-        public int Number { get; set; }
+        public int? Number { get; set; }
         
         [Required]
-        public int TypeId { get; set; }
+        public int? TypeId { get; set; }
     }
 }

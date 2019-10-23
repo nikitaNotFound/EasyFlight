@@ -1,7 +1,7 @@
 class SearchOptions {
     name;
-    carryingMax;
-    carryingMin;
+    carryingMaxKg;
+    carryingMinKg;
     seatCountMax;
     seatCountMin;
 

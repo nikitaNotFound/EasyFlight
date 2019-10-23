@@ -59,7 +59,12 @@ namespace DataAccessLayer.Repositories.Airplanes
 
             await db.ExecuteAsync(
                 "AddAirplaneSeatType",
-                new {airplaneId = seatType.AirplaneId, name = seatType.Name, color = seatType.Color},
+                new
+                {
+                    airplaneId = seatType.AirplaneId,
+                    name = seatType.Name,
+                    color = seatType.Color
+                },
                 commandType: CommandType.StoredProcedure);
         }
 
@@ -80,6 +85,31 @@ namespace DataAccessLayer.Repositories.Airplanes
             return await db.ExecuteScalarAsync<bool>(
                 "CheckAirplaneDuplicate",
                 new { Name = airplane.Name },
+                commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task<bool> CheckSeatTypeDuplicate(AirplaneSeatTypeEntity seatType)
+        {
+            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
+
+            return await db.ExecuteScalarAsync<bool>(
+                "CheckSeatTypeDuplicate",
+                new
+                {
+                    airplaneId = seatType.AirplaneId,
+                    name = seatType.Name,
+                    color = seatType.Color
+                },
+                commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task<bool> CheckSeatTypeExistence(int seatTypeId)
+        {
+            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
+
+            return await db.ExecuteScalarAsync<bool>(
+                "CheckSeatTypeDuplicate",
+                new { seatTypeId = seatTypeId },
                 commandType: CommandType.StoredProcedure);
         }
 
@@ -153,9 +183,36 @@ namespace DataAccessLayer.Repositories.Airplanes
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
+            DynamicParameters parameters = new DynamicParameters();
+
+            if (!string.IsNullOrEmpty(filter.NameFilter))
+            {
+                parameters.Add("@nameFilter", value: filter.NameFilter);
+            }
+
+            if (filter.MaxCarryingKg != null)
+            {
+                parameters.Add("@maxCarryingKg", value: filter.MaxCarryingKg);
+            }
+
+            if (filter.MinCarryingKg != null)
+            {
+                parameters.Add("@minCarryingKg", value: filter.MinCarryingKg);
+            }
+            
+            if (filter.MaxSeatCount != null)
+            {
+                parameters.Add("@maxSeatCount", value: filter.MaxSeatCount);
+            }
+
+            if (filter.MinSeatCount != null)
+            {
+                parameters.Add("@minSeatCount", value: filter.MinSeatCount);
+            }
+
             IEnumerable<AirplaneEntity> airplanes = await db.QueryAsync<AirplaneEntity>(
                 "SearchAirplanes",
-                filter,
+                parameters,
                 commandType: CommandType.StoredProcedure);
 
             return airplanes.ToList();

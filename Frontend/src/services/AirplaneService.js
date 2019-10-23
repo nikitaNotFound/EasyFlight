@@ -1,5 +1,8 @@
 import {airplanes} from './DataBase';
 
+import * as config from '../config.json';
+
+import * as RequestController from './RequestController';
 
 export function getById(id) {
     return new Promise(
@@ -21,83 +24,23 @@ export function getById(id) {
     );
 }
 
-export function search(searchPhrase) {
-    return new Promise(
-        (resolve, reject) => {
-            const storage = airplanes;
-            let foundAirplanes = [];
+export async function searchWithParams(filter) {
+    const {name, carryingMaxKg, carryingMinKg, seatCountMax, seatCountMin} = filter;
 
-            const searchReg = new RegExp('^' + searchPhrase, 'ig');
-
-            for (let i = 0, len = storage.length; i < len; i++) {
-                if (storage[i].name.match(searchReg)) {
-                    foundAirplanes.push(storage[i]);
-                }
-            }
-            //IN FUTURE HERE WILL BE CHECKING OF SUCCESFULL REQUEST TO THE API
-            if (false) {
-                reject("Error");
-            }
-
-            resolve(foundAirplanes);
+    const response = fetch(
+        `${config.API_URL}/airplanes
+            ?nameFilter=${name}
+            &minCarryingKg=${carryingMinKg}
+            &maxCarryingKg=${carryingMaxKg}
+            &minSeatCount=${seatCountMin}
+            &maxSeatCount=${seatCountMax}
+        `,
+        {
+            method: 'GET',
+            mode: 'cors',
+            headers: RequestController.headers
         }
     );
-}
 
-export function searchWithParams(params) {
-    return new Promise(
-        (resolve, reject) => {
-            const data = airplanes;
-
-            const carryingMin = params.carryingMin
-                ? params.carryingMin
-                : 0;
-            const carryingMax = params.carryingMax
-                ? params.carryingMax
-                : Infinity;
-
-            const seatCountMin = params.seatCountMin
-                ? params.seatCountMin
-                : 0;
-            const seatCountMax = params.seatCountMax
-                ? params.seatCountMax
-                : Infinity;
-
-            let foundAirplanes = [];
-
-            for (let i = 0, len = data.length; i < len; i++) {
-                const element = data[i];
-
-                if (params.name) {
-                    const searchReg = new RegExp('^' + params.name, 'ig');
-
-                    if (!element.name.match(searchReg)) {
-                        continue;
-                    }
-                }
-
-                if (carryingMax
-                    && (carryingMin || carryingMin == 0)
-                    && !((element.carrying > carryingMin) && (element.carrying < carryingMax))
-                ) {
-                    continue;
-                }
-                
-
-                if (seatCountMax
-                    && (seatCountMin || seatCountMin == 0)
-                    && !((element.seats.length > seatCountMin) && (element.seats.length < seatCountMax))
-                ) {
-                    continue;
-                }
-
-                foundAirplanes.push(element);
-            }
-
-            if (!foundAirplanes) {
-                reject('Error');
-            }
-            resolve(foundAirplanes);
-        }
-    );
+    return RequestController.createRequestResult(response);
 }

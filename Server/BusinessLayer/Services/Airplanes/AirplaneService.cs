@@ -124,6 +124,16 @@ namespace BusinessLayer.Services.Airplanes
                 return ResultTypes.NotFound;
             }
 
+            // checks if all seats from 'seats' array have unique position
+            bool unique = seats
+                .GroupBy(x => new { x.AirplaneId, x.Floor, x.Section, x.Zone, x.Row, x.Number })
+                .All(g => g.Count() == 1);
+
+            if (!unique)
+            {
+                return ResultTypes.Duplicate;
+            }
+
             await _airplaneRepository.DeleteAirplaneSeatsAsync(airplaneId);
 
             AirplaneSeatEntity[] seatsDal = seats.Select(_mapper.Map<AirplaneSeatEntity>).ToArray();
@@ -144,6 +154,13 @@ namespace BusinessLayer.Services.Airplanes
 
             AirplaneSeatTypeEntity seatTypeDal = _mapper.Map<AirplaneSeatTypeEntity>(seatType);
             
+            bool duplicate = await _airplaneRepository.CheckSeatTypeDuplicate(seatTypeDal);
+
+            if (duplicate)
+            {
+                return ResultTypes.Duplicate;
+            }
+
             await _airplaneRepository.AddAirplaneSeatTypeAsync(seatTypeDal);
 
             return ResultTypes.Ok;
