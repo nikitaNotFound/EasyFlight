@@ -15,7 +15,10 @@ namespace DataAccessLayer.Repositories.Airplanes
         Task<IReadOnlyCollection<AirplaneSeatTypeEntity>> GetAirplaneSeatTypesAsync(int airplaneId);
         Task<IReadOnlyCollection<AirplaneEntity>> SearchAirplanesAsync(AirplaneFilterEntity filter);
         Task AddAsync(AirplaneEntity airplane);
-        Task AddAirplaneSeatAsync(AirplaneSeatEntity seatScheme);
+        Task UpdateAsync(AirplaneEntity airplane);
+        Task AddAirplaneSeatsAsync(int airplaneId, AirplaneSeatEntity[] seats);
         Task AddAirplaneSeatTypeAsync(AirplaneSeatTypeEntity seatType);
+        Task DeleteAirplaneSeatTypeAsync(int airplaneId, int seatTypeId);
+        Task<bool> CheckAirplaneDuplicate(AirplaneEntity airplane);
     }
 }
