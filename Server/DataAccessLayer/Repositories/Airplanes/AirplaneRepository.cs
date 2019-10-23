@@ -21,23 +21,36 @@ namespace DataAccessLayer.Repositories.Airplanes
         }
 
 
-        public async Task AddAirplaneSeatAsync(AirplaneSeatEntity seat)
+        public async Task UpdateAsync(AirplaneEntity airplane)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             await db.ExecuteAsync(
-                "AddAirplaneSeat",
-                new
-                {
-                    airplaneId = seat.AirplaneId,
-                    floor = seat.Floor,
-                    section = seat.Section,
-                    zone = seat.Zone,
-                    row = seat.Row,
-                    number = seat.Number,
-                    typeId = seat.TypeId
-                },
+                "UpdateAirplane",
+                airplane,
                 commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task AddAirplaneSeatsAsync(int airplaneId, AirplaneSeatEntity[] seats)
+        {
+            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
+
+            foreach (AirplaneSeatEntity seat in seats)
+            {
+                await db.ExecuteAsync(
+                    "AddAirplaneSeat",
+                    new
+                    {
+                        airplaneId = airplaneId,
+                        floor = seat.Floor,
+                        section = seat.Section,
+                        zone = seat.Zone,
+                        row = seat.Row,
+                        number = seat.Number,
+                        typeId = seat.TypeId
+                    },
+                    commandType: CommandType.StoredProcedure);
+            }
         }
 
         public async Task AddAirplaneSeatTypeAsync(AirplaneSeatTypeEntity seatType)
@@ -47,6 +60,26 @@ namespace DataAccessLayer.Repositories.Airplanes
             await db.ExecuteAsync(
                 "AddAirplaneSeatType",
                 new {airplaneId = seatType.AirplaneId, name = seatType.Name, color = seatType.Color},
+                commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task DeleteAirplaneSeatTypeAsync(int airplaneId, int seatTypeId)
+        {
+            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
+
+            await db.ExecuteAsync(
+                "DeleteAirplaneSeatType",
+                new { AirplaneId = airplaneId, SeatTypeId = seatTypeId },
+                commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task<bool> CheckAirplaneDuplicate(AirplaneEntity airplane)
+        {
+            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
+
+            return await db.ExecuteScalarAsync<bool>(
+                "CheckAirplaneDuplicate",
+                new { Name = airplane.Name },
                 commandType: CommandType.StoredProcedure);
         }
 
@@ -77,7 +110,7 @@ namespace DataAccessLayer.Repositories.Airplanes
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
             
             IEnumerable<AirplaneSeatTypeEntity> seatTypes = await db.QueryAsync<AirplaneSeatTypeEntity>(
-                 "GetAirplaneSeatTypes",
+                 "DeleteAirplaneSeats",
                new {AirplaneId = airplaneId},
                commandType:CommandType.StoredProcedure);
         }
@@ -121,7 +154,7 @@ namespace DataAccessLayer.Repositories.Airplanes
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             IEnumerable<AirplaneEntity> airplanes = await db.QueryAsync<AirplaneEntity>(
-                "GetAirplaneById",
+                "SearchAirplanes",
                 filter,
                 commandType: CommandType.StoredProcedure);
 

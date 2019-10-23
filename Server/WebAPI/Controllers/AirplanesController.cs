@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 using AutoMapper;
 using BusinessLayer;
 using BusinessLayer.Services.Airplanes;
+using DataAccessLayer.Models;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using BlAirplane = BusinessLayer.Models.Airplane;
 using BlAirplaneFilter = BusinessLayer.Models.AirplaneFilter;
 using BlAirplaneSeatType = BusinessLayer.Models.AirplaneSeatType;
+using BlAirplaneSeat = BusinessLayer.Models.AirplaneSeat;
 using WebAPI.Models;
 
 namespace WebAPI.Controllers
@@ -54,14 +56,16 @@ namespace WebAPI.Controllers
             return Ok(airplane);
         }
 
-        // GET api/airplanes/{airplaneId}/seat-scheme
+        // GET api/airplanes/{airplaneId}/seats
         [HttpGet]
-        [Route("{airplaneId}/seats-scheme")]
+        [Route("{airplaneId}/seats")]
         public async Task<ActionResult> GetAirplaneSeatsAsync(int airplaneId)
         {
-            Array[] seatCheme = await _airplaneService.GetAirplaneSeatSchemeAsync(airplaneId);
+            IReadOnlyCollection<BlAirplaneSeat> seatsBl = await _airplaneService.GetAirplaneSeatsAsync(airplaneId);
+
+            IReadOnlyCollection<AirplaneSeat> seats = seatsBl.Select(_mapper.Map<AirplaneSeat>).ToList();
             
-            return Ok(seatCheme);
+            return Ok(seats);
         }
 
         // GET api/airplanes/{airplaneId}/seat-types
@@ -77,7 +81,7 @@ namespace WebAPI.Controllers
             return Ok();
         }
 
-        // GET api/airplanes/searches{?nameFilter}{?minCarryingKg}{?maxCarryingKg}{?minSeatCount}{?maxSeatCount}
+        // GET api/airplanes{?nameFilter}{?minCarryingKg}{?maxCarryingKg}{?minSeatCount}{?maxSeatCount}
         [HttpGet]
         public async Task<ActionResult> SearchAirplanes(
             string nameFilter,
@@ -111,7 +115,7 @@ namespace WebAPI.Controllers
             
             ResultTypes addResult = await _airplaneService.AddAsync(airplaneBl);
 
-            if (addResult == ResultTypes.Dublicate)
+            if (addResult == ResultTypes.Duplicate)
             {
                 return BadRequest();
             }
@@ -130,20 +134,32 @@ namespace WebAPI.Controllers
 
             ResultTypes addResult = await _airplaneService.AddAirplaneSeatTypeAsync(seatTypeBl);
 
-            if (addResult == ResultTypes.Dublicate)
+            if (addResult == ResultTypes.Duplicate)
             {
                 return BadRequest();
             }
 
             return Ok();
         }
+        
+        // DELETE api/airplanes/{airplaneId}/seat-types/{seatTypeId}
+        [HttpDelete]
+        [Route("{airplaneId}/seat-types/{seatTypeId}")]
+        public async Task<ActionResult> DeleteAirplaneSeatTypeAsync(int airplaneId, int seatTypeId)
+        {
+            ResultTypes deleteResult = await _airplaneService.DeleteAirplaneSeatTypeAsync(airplaneId, seatTypeId);
 
-        // PUT api/airplanes/{airplaneId}/seat-scheme
+            return Ok();
+        }
+
+        // PUT api/airplanes/{airplaneId}/seats
         [HttpPut]
         [Route("{airplaneId}/seats")]
-        public async Task<ActionResult> UpdateAirplaneSeatSchemeAsync(int airplaneId, [FromBody] Array[] seatScheme)
+        public async Task<ActionResult> UpdateAirplaneSeatsAsync(int airplaneId, [FromBody] AirplaneSeat[] seats)
         {
-            ResultTypes updateResult = await _airplaneService.UpdateAirplaneSeatSchemeAsync(seatScheme);
+            BlAirplaneSeat[] seatsBl = seats.Select(_mapper.Map<BlAirplaneSeat>).ToArray();
+            
+            ResultTypes updateResult = await _airplaneService.UpdateAirplaneSeatsAsync(airplaneId, seatsBl);
 
             if (updateResult == ResultTypes.NotFound)
             {
