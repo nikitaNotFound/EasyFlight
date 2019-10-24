@@ -5,7 +5,7 @@ import MessageBox from '../../../common/message-box';
 import SearchList from '../../../common/search-list';
 
 import City from '../../../../services/place-models/city';
-import { duplicate, defaultErrorMessage, invalidInput } from '../../../common/error-messages';
+import { duplicate, defaultErrorMessage, invalidInput, added } from '../../../common/message-box-messages';
 
 import * as PlaceService from '../../../../services/PlaceService';
 import { BadRequestError } from '../../../../services/Errors';
@@ -25,7 +25,7 @@ export default function Add() {
 
         try {
             await PlaceService.addCity(newCity);
-            changeMessageBoxValue('Added!');
+            changeMessageBoxValue(added());
         } catch (ex) {
             if (ex instanceof BadRequestError) {
                 changeMessageBoxValue(duplicate(name));

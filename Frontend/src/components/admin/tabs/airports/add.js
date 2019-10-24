@@ -7,7 +7,6 @@ import MessageBox from '../../../common/message-box';
 import Airport from '../../../../services/airport-models/airport';
 
 import * as PlaceService from '../../../../services/PlaceService';
-import { invalidInput } from '../../../common/error-messages';
 
 export default function Add() {
     const [name, changeName] = useState();

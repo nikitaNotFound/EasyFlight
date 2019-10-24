@@ -6,7 +6,7 @@ import MessageBox from '../../../common/message-box';
 import SearchList from '../../../common/search-list';
 
 import City from '../../../../services/place-models/city';
-import { notFound, duplicate, defaultErrorMessage, invalidInput } from '../../../common/error-messages';
+import { notFound, duplicate, defaultErrorMessage, invalidInput, saved } from '../../../common/message-box-messages';
 
 import * as PlaceService from '../../../../services/PlaceService';
 import { NotFoundError, BadRequestError } from '../../../../services/Errors';
@@ -50,7 +50,7 @@ export default function Edit(props) {
 
         try {
             await PlaceService.updateCity(newCity);
-            changeMessageBoxValue('Saved!');
+            changeMessageBoxValue(saved());
         } catch (ex) {
             if (ex instanceof BadRequestError) {
                 changeMessageBoxValue(duplicate(name));

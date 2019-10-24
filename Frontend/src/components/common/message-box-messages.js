@@ -13,3 +13,11 @@ export function defaultErrorMessage() {
 export function invalidInput() {
     return 'Input data is not valid!';
 }
+
+export function added() {
+    return 'Added!';
+}
+
+export function saved() {
+    return 'Saved!'
+}

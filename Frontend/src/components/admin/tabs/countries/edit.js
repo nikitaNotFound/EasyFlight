@@ -5,7 +5,7 @@ import Spinner from '../../../common/spinner';
 import MessageBox from '../../../common/message-box';
 
 import Country from '../../../../services/place-models/country';
-import { notFound, duplicate, defaultErrorMessage, invalidInput } from '../../../common/error-messages';
+import { notFound, duplicate, defaultErrorMessage, invalidInput, saved } from '../../../common/message-box-messages';
 
 import * as PlaceService from '../../../../services/PlaceService';
 import { NotFoundError, BadRequestError } from '../../../../services/Errors';
@@ -46,7 +46,7 @@ export default function Edit(props) {
         
         try {
             await PlaceService.updateCountry(finalCountry);
-            changeMessageBoxValue('Saved!');
+            changeMessageBoxValue(saved());
         } catch (ex) {
             if (ex instanceof BadRequestError) {
                 changeMessageBoxValue(duplicate(name));
