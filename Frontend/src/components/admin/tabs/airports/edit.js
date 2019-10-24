@@ -9,6 +9,7 @@ import Airport from '../../../../services/airport-models/airport';
 
 import * as AirportService from '../../../../services/AirportService';
 import * as PlaceService from '../../../../services/PlaceService';
+import { invalidInput } from '../../../common/error-messages';
 
 export default function Edit(props) {
     const [loading, changeLoadingMode] = useState(true);
@@ -43,7 +44,7 @@ export default function Edit(props) {
 
     function onDataSave() {
         if (!name || !country || !city || !desc) {
-            changeMessageBoxValue('Input data is not valid!');
+            changeMessageBoxValue(invalidInput());
             return;
         }
 

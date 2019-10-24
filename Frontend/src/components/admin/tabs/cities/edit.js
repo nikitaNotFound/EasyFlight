@@ -6,8 +6,10 @@ import MessageBox from '../../../common/message-box';
 import SearchList from '../../../common/search-list';
 
 import City from '../../../../services/place-models/city';
+import { notFound, duplicate, defaultMessage, invalidInput } from '../../../common/error-messages';
 
 import * as PlaceService from '../../../../services/PlaceService';
+import { NotFoundError, BadRequestError } from '../../../../services/Errors';
 
 export default function Edit(props) {
     const [loading, changeLoadingMode] = useState(true);
@@ -28,10 +30,10 @@ export default function Edit(props) {
 
                 changeLoadingMode(false);
             } catch (ex) {
-                if (ex.name == 'NotFoundError') {
-                    changeMessageBoxValue(`City with id '${props.match.params.id}' not found!`);
+                if (ex instanceof NotFoundError) {
+                    changeMessageBoxValue(notFound(name));
                 } else {
-                    changeMessageBoxValue("Something went wrong...");
+                    changeMessageBoxValue(defaultMessage());
                 }
             }
         }
@@ -40,7 +42,7 @@ export default function Edit(props) {
 
     async function onDataSave() {
         if (!name || !country) {
-            changeMessageBoxValue('Input data is not valid!');
+            changeMessageBoxValue(invalidInput());
             return;
         }
 
@@ -50,10 +52,10 @@ export default function Edit(props) {
             await PlaceService.updateCity(newCity);
             changeMessageBoxValue('Saved!');
         } catch (ex) {
-            if (ex.name == 'BadRequestError') {
-                changeMessageBoxValue(`${name} already exists!`);
+            if (ex instanceof BadRequestError) {
+                changeMessageBoxValue(duplicate(name));
             } else {
-                changeMessageBoxValue("Something went wrong...");
+                changeMessageBoxValue(defaultMessage());
             }
         }
     }

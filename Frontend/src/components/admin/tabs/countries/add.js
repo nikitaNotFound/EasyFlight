@@ -4,8 +4,10 @@ import Headline from '../../../common/headline';
 import MessageBox from '../../../common/message-box';
 
 import Country from '../../../../services/place-models/country';
+import { duplicate, defaultMessage, invalidInput } from '../../../common/error-messages';
 
 import * as PlaceService from '../../../../services/PlaceService';
+import { BadRequestError } from '../../../../services/Errors';
 
 
 export default function Add() {
@@ -14,7 +16,7 @@ export default function Add() {
 
     async function onDataSave() {
         if (!name) {
-            changeMessageBoxValue('Input data is not valid!');
+            changeMessageBoxValue(invalidInput());
             return;
         }
 
@@ -23,10 +25,10 @@ export default function Add() {
         try {
             await PlaceService.addCountry(newCountry);
         } catch (ex) {
-            if (ex.name == 'BadRequestError') {
-                changeMessageBoxValue(`${name} already exists!`);
+            if (ex instanceof BadRequestError) {
+                changeMessageBoxValue(duplicate(name));
             } else {
-                changeMessageBoxValue('Something went wrong...');
+                changeMessageBoxValue(defaultMessage());
             }
         }
     }

@@ -7,6 +7,7 @@ import MessageBox from '../../../common/message-box';
 import Airport from '../../../../services/airport-models/airport';
 
 import * as PlaceService from '../../../../services/PlaceService';
+import { invalidInput } from '../../../common/error-messages';
 
 export default function Add() {
     const [name, changeName] = useState();
@@ -16,7 +17,7 @@ export default function Add() {
 
     function onDataSave() {
         if (!name || !city || !desc) {
-            changeMessageBoxValue('Input data is not valid!');
+            changeMessageBoxValue(invalidInput());
             return;
         }
 

@@ -8,6 +8,8 @@ import TicketsCostEditor from './tickets-cost-editor';
 import Flight from '../../../../services/flight-models/flight';
 import ParamFiled from './param-field';
 
+import { invalidInput } from '../../../common/error-messages';
+
 import * as AirportService from '../../../../services/AirportService';
 import * as AirplaneService from '../../../../services/AirplaneService';
 
@@ -42,7 +44,7 @@ export default function Add() {
             || !ticketsCost
             || !desc
         ) {
-            changeMessageBoxValue('Input data is not valid!');
+            changeMessageBoxValue(invalidInput());
             return;
         }
 

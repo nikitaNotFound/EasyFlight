@@ -14,7 +14,7 @@ export async function getCountryById(id) {
         }
     );
 
-    return await createRequestResult(response);
+    return await createRequestResult(response, true);
 }
 
 export async function searchCountriesByName(nameFilter) {
@@ -29,7 +29,7 @@ export async function searchCountriesByName(nameFilter) {
         }
     );
 
-    return await createRequestResult(response);
+    return await createRequestResult(response, true);
 }
 
 export async function addCountry(country) {
@@ -45,7 +45,7 @@ export async function addCountry(country) {
         }
     );
 
-    return createRequestResult(response);
+    return createRequestResult(response, false);
 }
 
 export async function updateCountry(country) {
@@ -61,7 +61,7 @@ export async function updateCountry(country) {
         }
     );
 
-    return createRequestResult(response);
+    return createRequestResult(response, false);
 }
 
 export async function getCityById(id) {
@@ -76,7 +76,7 @@ export async function getCityById(id) {
         }
     );
 
-    return createRequestResult(response);
+    return createRequestResult(response, true);
 }
 
 export async function addCity(city) {
@@ -92,7 +92,7 @@ export async function addCity(city) {
         }
     );
 
-    return await createRequestResult(response);
+    return await createRequestResult(response, false);
 }
 
 export async function updateCity(city) {
@@ -108,7 +108,7 @@ export async function updateCity(city) {
         }
     );
 
-    return createRequestResult(response);
+    return createRequestResult(response, false);
 }
 
 export async function searchCitiesByName(nameFilter) {
@@ -123,7 +123,7 @@ export async function searchCitiesByName(nameFilter) {
         }
     );
     
-    return createRequestResult(response);
+    return createRequestResult(response, true);
 }
 
 export async function getCountryCities(countryId) {
@@ -138,7 +138,7 @@ export async function getCountryCities(countryId) {
         }
     );
 
-    return createRequestResult(response);
+    return createRequestResult(response, true);
 }
 
 export async function searchCountryCitiesByName(countryId, nameFilter) {
@@ -153,5 +153,5 @@ export async function searchCountryCitiesByName(countryId, nameFilter) {
         }
     );
 
-    return createRequestResult(response);
+    return createRequestResult(response, true);
 }

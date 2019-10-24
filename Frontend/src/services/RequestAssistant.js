@@ -1,11 +1,14 @@
-import * as HttpStatus from 'http-status-codes';
 import { BadRequestError, NotFoundError } from './Errors';
 
-export async function createRequestResult(response) {
+export async function createRequestResult(response, expectedContent) {
     if (response.ok) {
-        try {
-            var result = await response.json();
-        } catch {
+        if (expectedContent) {
+            try {
+                var result = await response.json();
+            } catch {
+                throw new Error();
+            }
+        } else {
             var result = null;
         }
 
@@ -16,7 +19,7 @@ export async function createRequestResult(response) {
         } else if (response.status == 404) {
             throw new NotFoundError();
         } else {
-            throw new Error(HttpStatus.getStatusText(response.status));
+            throw new Error();
         }
     }
 }

@@ -5,8 +5,10 @@ import Spinner from '../../../common/spinner';
 import MessageBox from '../../../common/message-box';
 
 import Country from '../../../../services/place-models/country';
+import { notFound, duplicate, defaultMessage, invalidInput } from '../../../common/error-messages';
 
 import * as PlaceService from '../../../../services/PlaceService';
+import { NotFoundError, BadRequestError } from '../../../../services/Errors';
 
 
 export default function Edit(props) {
@@ -24,10 +26,10 @@ export default function Edit(props) {
                 changeId(countryRequest.id);
                 changeLoadingMode(false);
             } catch (ex) {
-                if (ex.name == 'NotFoundError') {
-                    changeMessageBoxValue();
+                if (ex instanceof NotFoundError) {
+                    changeMessageBoxValue(notFound(name));
                 } else {
-                    changeMessageBoxValue('Something went wrong...');
+                    changeMessageBoxValue(defaultMessage());
                 }
             }
         }
@@ -36,7 +38,7 @@ export default function Edit(props) {
 
     async function onDataSave() {
         if (!name) {
-            changeMessageBoxValue('Input data is not valid!');
+            changeMessageBoxValue(invalidInput());
             return;
         }
 
@@ -46,10 +48,10 @@ export default function Edit(props) {
             await PlaceService.updateCountry(finalCountry);
             changeMessageBoxValue('Saved!');
         } catch (ex) {
-            if (ex.name == 'BadRequestError') {
-                changeMessageBoxValue(`${name} already exists!`);
+            if (ex instanceof BadRequestError) {
+                changeMessageBoxValue(duplicate(name));
             } else {
-                changeMessageBoxValue(ex.message);
+                changeMessageBoxValue(defaultMessage());
             }
         }
     }

@@ -8,6 +8,7 @@ import Spinner from '../../../common/spinner';
 import Airplane from '../../../../services/airplane-models/airplane';
 
 import * as AirplaneService from '../../../../services/AirplaneService';
+import { invalidInput } from '../../../common/error-messages';
 
 export default function Edit(props) {
     const [loading, changeLoading] = useState(true);
@@ -45,7 +46,7 @@ export default function Edit(props) {
             || !seats
             || !seatTypes
         ) {
-            changeMessageBoxValue('Input data is not valid');
+            changeMessageBoxValue(invalidInput());
             return;
         }
 
