@@ -84,8 +84,6 @@ export default function Filter(props) {
                     />
                 </div>
 
-                {showCityChooser()}
-
                 <button className="filter-apply rounded" onClick={onFilterApply}>
                     apply
                 </button>

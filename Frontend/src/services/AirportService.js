@@ -1,88 +1,57 @@
-import * as config from '../config.json';
+import * as config  from '../config.json';
 
-import * as RequestController from './RequestController';
-import * as HttpStatus from 'http-status-codes';
-
-import RequestResult from './request-result';
+import { createRequestResult, headers } from './RequestAssistant';
 
 export async function getById(id) {
-    try {
-        var response = await fetch(
-            `${config.API_URL}/airports/${id}`,
-            {
-                method: 'GET',
-                mode: 'cors',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }
-        );
+    const response = await fetch(
+        `${config.API_URL}/airports/${id}`,
+        {
+            method: 'GET',
+            mode: 'cors',
+            headers: headers
+        }
+    );
 
-        return RequestController.createRequestResult(response);
-    } catch {
-        const errorInfo = HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR);
-        return new RequestResult(false, errorInfo);
-    }
+    return await createRequestResult(response, true);
 }
 
 export async function add(airport) {
-    try {
-        var response = await fetch(
-            `${config.API_URL}/airports`,
-            {
-                method: 'POST',
-                mode: 'cors',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(airport)
-            }
-        );
+    const response = await fetch(
+        `${config.API_URL}/airports`,
+        {
+            method: 'POST',
+            mode: 'cors',
+            headers: headers,
+            body: JSON.stringify(airport)
+        }
+    );
 
-        return RequestController.createRequestResult(response);
-    } catch {
-        const errorInfo = HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR);
-        return new RequestResult(false, errorInfo);
-    }
+    return await createRequestResult(response, false);
 }
 
 export async function update(airport) {
-    try {
-        var response = await fetch(
-            `${config.API_URL}/airports/${airport.id}`,
-            {
-                method: 'PUT',
-                mode: 'cors',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(airport)
-            }
-        );
+    const response = await fetch(
+        `${config.API_URL}/airports/${airport.id}`,
+        {
+            method: 'PUT',
+            mode: 'cors',
+            headers: headers,
+            body: JSON.stringify(airport)
+        }
+    );
 
-        return RequestController.createRequestResult(response);
-    } catch {
-        const errorInfo = HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR);
-        return new RequestResult(false, errorInfo);
-    }
+    return await createRequestResult(response, false);
 }
 
-export async function searchByName(name) {
-    try {
-        var response = await fetch(
-            `${config.API_URL}/airports?nameFilter=${name}`,
-            {
-                method: 'GET',
-                mode: 'cors',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }
-        );
+export async function searchByName(nameFilter) {
+    const response = await fetch(
+        `${config.API_URL}/airports?nameFilter=${nameFilter}`,
+        {
+            method: 'GET',
+            mode: 'cors',
+            headers: headers
+        }
+    );
 
-        return RequestController.createRequestResult(response);
-    } catch {
-        const errorInfo = HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR);
-        return new RequestResult(false, errorInfo);
-    }
+    return await createRequestResult(response, true);
 }

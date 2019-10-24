@@ -16,7 +16,7 @@ export default function Add() {
     const [city, changeCity] = useState();
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
-    function onDataSave() {
+    async function onDataSave() {
         if (!name || !city) {
             changeMessageBoxValue(invalidInput());
             return;

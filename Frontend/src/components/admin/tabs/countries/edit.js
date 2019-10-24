@@ -10,7 +10,6 @@ import {  duplicate, defaultErrorMessage, invalidInput, saved } from '../../../c
 import * as PlaceService from '../../../../services/PlaceService';
 import { NotFoundError, BadRequestError } from '../../../../services/RequestErrors';
 
-
 export default function Edit(props) {
     const [loading, changeLoadingMode] = useState(true);
     const [name, changeName] = useState();

@@ -9,7 +9,8 @@ import Airport from '../../../../services/airport-models/airport';
 
 import * as AirportService from '../../../../services/AirportService';
 import * as PlaceService from '../../../../services/PlaceService';
-import { invalidInput, notFound, duplicate, saved } from '../../../common/message-box-messages';
+import { invalidInput, notFound, duplicate, saved, defaultErrorMessage } from '../../../common/message-box-messages';
+import { NotFoundError, BadRequestError } from '../../../../services/Errors';
 
 export default function Edit(props) {
     const [loading, changeLoadingMode] = useState(true);
@@ -37,13 +38,17 @@ export default function Edit(props) {
 
                 changeLoadingMode(false);
             } catch (ex) {
-                
+                if (ex instanceof NotFoundError) {
+                    changeMessageBoxValue(notFound());
+                } else {
+                    changeMessageBoxValue(defaultErrorMessage());
+                }
             }
         }
         fetchData();
     }, [props.match.params.id]);
 
-    function onDataSave() {
+    async function onDataSave() {
         if (!name || !country || !city) {
             changeMessageBoxValue(invalidInput());
 
@@ -52,12 +57,15 @@ export default function Edit(props) {
 
         let newAirport = new Airport(id, name, city.id);
         
-        const updateResult = await AirportService.update(newAirport)
-
-        if (updateResult.successful === true) {
-            changeMessageBoxValue('Updated!');
-        } else {
-            changeMessageBoxValue(updateResult.value);
+        try {
+            await AirportService.update(newAirport)
+            changeMessageBoxValue(saved());
+        } catch (ex) {
+            if (ex instanceof BadRequestError) {
+                changeMessageBoxValue(duplicate(name));
+            } else {
+                changeMessageBoxValue(defaultErrorMessage());
+            }
         }
     }
 
