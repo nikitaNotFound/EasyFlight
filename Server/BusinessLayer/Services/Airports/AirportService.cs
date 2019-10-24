@@ -63,24 +63,25 @@ namespace BusinessLayer.Services.Airports
 
         public async Task<ResultTypes> UpdateAsync(Airport airport)
         {
-            var oldAirportDal = await _airportRepository.GetAsync(airport.Id);
+            AirportEntity oldAirportDal = await _airportRepository.GetAsync(airport.Id);
 
-            if (oldAirportDal != null)
+            if (oldAirportDal == null)
             {
-                var airportDal = _mapper.Map<AirportEntity>(airport);
+                return ResultTypes.NotFound;
+            }
 
-                bool duplicate = await _airportRepository.CheckDuplicateAsync(airportDal);
+            AirportEntity airportDal = _mapper.Map<AirportEntity>(airport);
 
-                if (!duplicate)
-                {
-                    await _airportRepository.UpdateAsync(airportDal);
-                    return ResultTypes.Ok;
-                }
+            bool duplicate = await _airportRepository.CheckDuplicateAsync(airportDal);
 
+            if (duplicate)
+            {
                 return ResultTypes.Duplicate;
             }
 
-            return ResultTypes.NotFound;
+            await _airportRepository.UpdateAsync(airportDal);
+
+            return ResultTypes.Ok;
         }
     }
 }

@@ -9,6 +9,7 @@ import * as AirportService from '../../../../services/AirportService';
 import * as PlaceService from '../../../../services/PlaceService';
 
 import SearchOptions from '../../../../services/airport-models/search-options';
+import { defaultErrorMessage } from '../../../common/message-box-messages';
 
 export default function AirportList() {
     const [airports, changeAirports] = useState(null);
@@ -20,20 +21,19 @@ export default function AirportList() {
         changeFilterOptions(newFilterOptions);
 
         let airportsResult = null;
-        
-        if (newFilterOptions.name && newFilterOptions.cityId) {
-            airportsResult =
-                await PlaceService.searchCityAirportsByName(newFilterOptions.cityId, newFilterOptions.name);
-        } else if (newFilterOptions.name) {
-            airportsResult = await AirportService.searchByName(newFilterOptions.name);
-        } else {
-            airportsResult = await PlaceService.getCityAirports(newFilterOptions.cityId);
-        }
+        try {
+            if (newFilterOptions.name && newFilterOptions.cityId) {
+                airportsResult =
+                    await PlaceService.searchCityAirportsByName(newFilterOptions.cityId, newFilterOptions.name);
+            } else if (newFilterOptions.name) {
+                airportsResult = await AirportService.searchByName(newFilterOptions.name);
+            } else {
+                airportsResult = await PlaceService.getCityAirports(newFilterOptions.cityId);
+            }
 
-        if (airportsResult.successful === true) {
-            changeAirports(airportsResult.value);
-        } else {
-            changeMessageBoxValue(airportsResult.value);
+            changeAirports(airportsResult);
+        } catch {
+            changeMessageBoxValue(defaultErrorMessage());
         }
     }
 

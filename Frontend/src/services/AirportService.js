@@ -31,7 +31,7 @@ export async function add(airport) {
 
 export async function update(airport) {
     const response = await fetch(
-        `${config.API_URL}/airports/${airport.id}`,
+        `${config.API_URL}/airports`,
         {
             method: 'PUT',
             mode: 'cors',

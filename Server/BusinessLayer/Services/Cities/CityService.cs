@@ -54,35 +54,35 @@ namespace BusinessLayer.Services.Cities
 
             bool duplicate = await _cityRepository.CheckDuplicateAsync(cityDal);
 
-            if (!duplicate)
+            if (duplicate)
             {
-                await _cityRepository.AddAsync(cityDal);
-                return ResultTypes.Ok;
+                return ResultTypes.Duplicate;
             }
 
-            return ResultTypes.Duplicate;
+            await _cityRepository.AddAsync(cityDal);
+            return ResultTypes.Ok;
         }
 
         public async Task<ResultTypes> UpdateAsync(City city)
         {
             CityEntity oldCityDal = await _cityRepository.GetAsync(city.Id);
 
-            if (oldCityDal != null)
+            if (oldCityDal == null)
             {
-                CityEntity cityDal = _mapper.Map<CityEntity>(city);
-
-                bool duplicate = await _cityRepository.CheckDuplicateAsync(cityDal);
-
-                if (!duplicate)
-                {
-                    await _cityRepository.UpdateAsync(cityDal);
-                    return ResultTypes.Ok;
-                }
-
-                return ResultTypes.Duplicate;
+                return ResultTypes.NotFound;
             }
 
-            return ResultTypes.NotFound;
+            CityEntity cityDal = _mapper.Map<CityEntity>(city);
+
+            bool duplicate = await _cityRepository.CheckDuplicateAsync(cityDal);
+
+            if (duplicate)
+            {
+                return ResultTypes.Duplicate;
+            }
+            
+            await _cityRepository.UpdateAsync(cityDal);
+            return ResultTypes.Ok;
         }
 
         public async Task<IReadOnlyCollection<Airport>> GetCityAirportsAsync(int cityId)

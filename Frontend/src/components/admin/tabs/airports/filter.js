@@ -42,7 +42,7 @@ export default function Filter(props) {
     async function getCityName(city) {
         const country = await PlaceService.getCountryById(city.countryId);
 
-        const finalName = `${city.name} (${country.value.name})`;
+        const finalName = `${city.name} (${country.name})`;
 
         return finalName;
     }

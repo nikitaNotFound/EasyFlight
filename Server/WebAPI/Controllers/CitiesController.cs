@@ -57,12 +57,12 @@ namespace WebAPI.Controllers
 
             City city = _mapper.Map<City>(blCity);
 
-            if (city != null)
+            if (city == null)
             {
-                return Ok(city);
+                return NotFound();
             }
 
-            return NotFound();
+            return Ok(city);
         }
 
         // GET api/cities/{cityId}/airports{?nameFilter}

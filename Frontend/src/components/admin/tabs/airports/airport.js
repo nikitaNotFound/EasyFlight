@@ -8,6 +8,7 @@ import Spinner from '../../../common/spinner';
 import AirportObject from '../../../../services/airport-models/airport';
 
 import * as PlaceService from '../../../../services/PlaceService';
+import { defaultErrorMessage } from '../../../common/message-box-messages';
 
 export default function Airport(props) {
     const [loading, changeLoading] = useState(true);
@@ -17,23 +18,17 @@ export default function Airport(props) {
 
     useEffect(() => {
         const fetchData = async () => {
-            const cityResult = await PlaceService.getCityById(props.airport.cityId);
-            if (cityResult.successful === false) {
-                changeMessageBoxValue(cityResult.value);
-                return;
+            try {
+                const cityResult = await PlaceService.getCityById(props.airport.cityId);
+                changeCity(cityResult.name);
+
+                const countryResult = await PlaceService.getCountryById(cityResult.countryId);
+                changeCountry(countryResult.name);
+
+                changeLoading(false);
+            } catch {
+                changeMessageBoxValue(defaultErrorMessage());
             }
-
-            changeCity(cityResult.value.name);
-
-            const countryResult = await PlaceService.getCountryById(cityResult.value.countryId);
-            if (countryResult.successful === false) {
-                changeMessageBoxValue(countryResult.value);
-                return;
-            }
-
-            changeCountry(countryResult.value.name);
-
-            changeLoading(false);
         }
         fetchData();
     }, [props.airport.id]);

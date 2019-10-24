@@ -33,7 +33,7 @@ namespace WebAPI.Controllers
         {
             IReadOnlyCollection<BlAirport> airportsBl;
 
-            if (nameFilter != null)
+            if (!string.IsNullOrEmpty(nameFilter))
             {
                 airportsBl = await _airportService.GetByNameAsync(nameFilter);
             }
@@ -56,12 +56,12 @@ namespace WebAPI.Controllers
 
             Airport airport = _mapper.Map<Airport>(airportBl);
 
-            if (airport != null)
+            if (airport == null)
             {
-                return Ok(airport);
+                return NotFound();
             }
 
-            return NotFound();
+            return Ok(airport);
         }
 
         // POST api/airports
@@ -91,8 +91,7 @@ namespace WebAPI.Controllers
             switch (updateResult)
             {
                 case ResultTypes.Duplicate:
-                    string message = "Such name already exists!";
-                    return BadRequest(message);
+                    return BadRequest();
 
                 case ResultTypes.NotFound:
                     return NotFound();

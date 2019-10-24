@@ -28,11 +28,11 @@ export default function Edit(props) {
                 changeId(airportResult.id);
                 changeName(airportResult.name);
 
-                const cityResult = await PlaceService.getCityById(airportResult.value.cityId);
+                const cityResult = await PlaceService.getCityById(airportResult.cityId);
 
                 changeCity(cityResult);
 
-                const countryResult = await PlaceService.getCountryById(cityResult.value.countryId);
+                const countryResult = await PlaceService.getCountryById(cityResult.countryId);
 
                 changeCountry(countryResult);
 
@@ -72,7 +72,7 @@ export default function Edit(props) {
     async function getCityName(city) {
         const country = await PlaceService.getCountryById(city.countryId);
 
-        const finalName = `${city.name} (${country.value.name})`;
+        const finalName = `${city.name} (${country.name})`;
 
         return finalName;
     }
