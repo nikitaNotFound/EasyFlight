@@ -72,7 +72,7 @@ namespace WebAPI.Controllers
 
             ResultTypes addResult = await _airportService.AddAsync(airportBl);
 
-            if (addResult == ResultTypes.Dublicate)
+            if (addResult == ResultTypes.Duplicate)
             {
                 string message = $"{airport.Name} already exists!";
                 return BadRequest(message);
@@ -91,7 +91,7 @@ namespace WebAPI.Controllers
 
             switch (updateResult)
             {
-                case ResultTypes.Dublicate:
+                case ResultTypes.Duplicate:
                     string message = "Such name already exists!";
                     return BadRequest(message);
 

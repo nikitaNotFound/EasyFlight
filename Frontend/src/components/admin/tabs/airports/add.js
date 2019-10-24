@@ -6,9 +6,11 @@ import MessageBox from '../../../common/message-box';
 
 import { invalidInput } from '../../../common/message-box-messages';
 import Airport from '../../../../services/airport-models/airport';
+import { invalidInput, duplicate, defaultErrorMessage } from '../../../common/error-messages';
 
 import * as PlaceService from '../../../../services/PlaceService';
 import * as AirportService from '../../../../services/AirportService';
+import { BadRequestError } from '../../../../services/Errors';
 
 export default function Add() {
     const [name, changeName] = useState();
@@ -23,12 +25,15 @@ export default function Add() {
 
         let newAirport = new Airport(null, name, city.id);
 
-        const addingResult = await AirportService.add(newAirport);
-
-        if (addingResult.successful === true) {
-            changeMessageBoxValue("Added!");
-        } else {
-            changeMessageBoxValue(addingResult.value);
+        try {
+            await AirportService.add(newAirport);
+            changeMessageBoxValue('Added!');
+        } catch (ex) {
+            if (ex instanceof BadRequestError) {
+                changeMessageBoxValue(duplicate(name));
+            } else {
+                changeMessageBoxValue(defaultErrorMessage());
+            }
         }
     }
 

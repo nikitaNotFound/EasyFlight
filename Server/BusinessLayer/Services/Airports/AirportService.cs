@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BusinessLayer;
 using BusinessLayer.Models;
 using DataAccessLayer.Repositories.Airports;
 using AirportEntity = DataAccessLayer.Models.AirportEntity;
@@ -45,15 +43,15 @@ namespace BusinessLayer.Services.Airports
         {
             AirportEntity airportDal = _mapper.Map<AirportEntity>(airport);
 
-            bool dublicate = await _airportRepository.CheckDublicateAsync(airportDal);
+            bool duplicate = await _airportRepository.CheckDublicateAsync(airportDal);
 
-            if (!dublicate)
+            if (!duplicate)
             {
                 await _airportRepository.AddAsync(airportDal);
-                return ResultTypes.OK;
+                return ResultTypes.Ok;
             }
 
-            return ResultTypes.Dublicate;
+            return ResultTypes.Duplicate;
         }
 
         public async Task<Airport> GetByIdAsync(int id)
@@ -71,15 +69,15 @@ namespace BusinessLayer.Services.Airports
             {
                 var airportDal = _mapper.Map<AirportEntity>(airport);
 
-                bool dublicate = await _airportRepository.CheckDublicateAsync(airportDal);
+                bool duplicate = await _airportRepository.CheckDublicateAsync(airportDal);
 
-                if (!dublicate)
+                if (!duplicate)
                 {
                     await _airportRepository.UpdateAsync(airportDal);
-                    return ResultTypes.OK;
+                    return ResultTypes.Ok;
                 }
 
-                return ResultTypes.Dublicate;
+                return ResultTypes.Duplicate;
             }
 
             return ResultTypes.NotFound;
