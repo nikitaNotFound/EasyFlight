@@ -26,7 +26,7 @@ export default function Add() {
             if (ex.name == 'BadRequestError') {
                 changeMessageBoxValue(`${name} already exists!`);
             } else {
-                changeMessageBoxValue(ex.message);
+                changeMessageBoxValue('Something went wrong...');
             }
         }
     }

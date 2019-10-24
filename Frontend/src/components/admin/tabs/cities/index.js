@@ -29,8 +29,8 @@ export default function CityList() {
             }
 
             changeCities(citiesRequest);
-        } catch (ex) {
-            changeMessageBoxValue(ex.message);
+        } catch {
+            changeMessageBoxValue('Something went wrong...');
         }
     }
 

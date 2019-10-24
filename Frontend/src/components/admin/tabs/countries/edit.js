@@ -24,7 +24,11 @@ export default function Edit(props) {
                 changeId(countryRequest.id);
                 changeLoadingMode(false);
             } catch (ex) {
-                changeMessageBoxValue(ex.message);
+                if (ex.name == 'NotFoundError') {
+                    changeMessageBoxValue();
+                } else {
+                    changeMessageBoxValue('Something went wrong...');
+                }
             }
         }
         fetchData();
