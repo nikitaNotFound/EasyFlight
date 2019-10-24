@@ -6,6 +6,7 @@ import Item from './search-list-item';
 import MessageBox from '../common/message-box';
 
 import '../../styles/search-list.css';
+import { defaultErrorMessage } from './message-box-messages';
 
 function getStartItem(props) {
     if (!props.currentItem) {
@@ -64,8 +65,8 @@ function SearchList(props) {
             changeList(newListResult);
 
             changeLoading(false);
-        } catch (ex) {
-            changeMessageBoxValue(ex.message);
+        } catch {
+            changeMessageBoxValue(defaultErrorMessage());
         }
     }
 
