@@ -74,8 +74,7 @@ namespace WebAPI.Controllers
 
             if (addResult == ResultTypes.Duplicate)
             {
-                string message = $"{airport.Name} already exists!";
-                return BadRequest(message);
+                return BadRequest();
             }
 
             return Ok();

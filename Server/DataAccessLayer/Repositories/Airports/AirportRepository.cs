@@ -29,12 +29,12 @@ namespace DataAccessLayer.Repositories.Airports
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<bool> CheckDublicateAsync(AirportEntity airport)
+        public async Task<bool> CheckDuplicateAsync(AirportEntity airport)
         {
             using SqlConnection db = new SqlConnection(_settings.ConnectionString);
 
             return await db.ExecuteScalarAsync<bool>(
-                "CheckAirportDublicate",
+                "CheckAirportDuplicate",
                 new { name = airport.Name, cityId = airport.CityId},
                 commandType: CommandType.StoredProcedure);
         }

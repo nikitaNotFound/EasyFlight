@@ -43,15 +43,15 @@ namespace BusinessLayer.Services.Airports
         {
             AirportEntity airportDal = _mapper.Map<AirportEntity>(airport);
 
-            bool duplicate = await _airportRepository.CheckDublicateAsync(airportDal);
+            bool duplicate = await _airportRepository.CheckDuplicateAsync(airportDal);
 
-            if (!duplicate)
+            if (duplicate)
             {
-                await _airportRepository.AddAsync(airportDal);
-                return ResultTypes.Ok;
+                return ResultTypes.Duplicate;
             }
 
-            return ResultTypes.Duplicate;
+            await _airportRepository.AddAsync(airportDal);
+            return ResultTypes.Ok;
         }
 
         public async Task<Airport> GetByIdAsync(int id)
@@ -69,7 +69,7 @@ namespace BusinessLayer.Services.Airports
             {
                 var airportDal = _mapper.Map<AirportEntity>(airport);
 
-                bool duplicate = await _airportRepository.CheckDublicateAsync(airportDal);
+                bool duplicate = await _airportRepository.CheckDuplicateAsync(airportDal);
 
                 if (!duplicate)
                 {
