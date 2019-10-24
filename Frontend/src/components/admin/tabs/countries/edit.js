@@ -27,7 +27,7 @@ export default function Edit(props) {
                 changeLoadingMode(false);
             } catch (ex) {
                 if (ex instanceof NotFoundError) {
-                    changeMessageBoxValue(notFound(name));
+                    changeMessageBoxValue(notFound());
                 } else {
                     changeMessageBoxValue(defaultErrorMessage());
                 }
