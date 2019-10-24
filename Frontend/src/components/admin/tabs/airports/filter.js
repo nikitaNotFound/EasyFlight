@@ -103,9 +103,9 @@ export default function Filter(props) {
 
                 {showCityChooser()}
 
-                <div className="filter-apply rounded" onClick={onFilterApply}>
+                <button className="filter-apply rounded" onClick={onFilterApply}>
                     apply
-                </div>
+                </button>
             </div>
         </div>
     );

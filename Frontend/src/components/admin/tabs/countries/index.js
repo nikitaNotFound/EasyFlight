@@ -20,8 +20,8 @@ export default function CountryList() {
         try {
             const countriesRequest = await PlaceService.searchCountriesByName(newFilterOptions);
             changeCountries(countriesRequest);
-        } catch (ex) {
-            changeMessageBoxValue(ex.message);
+        } catch {
+            changeMessageBoxValue('Something went wrong...');
         }
     }
 

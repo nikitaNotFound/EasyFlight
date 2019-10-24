@@ -6,7 +6,7 @@ export async function createRequestResult(response) {
         try {
             var result = await response.json();
         } catch {
-            var result = true;
+            var result = null;
         }
 
         return result;

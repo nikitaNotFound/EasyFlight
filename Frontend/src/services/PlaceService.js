@@ -1,6 +1,6 @@
 import * as config  from '../config.json';
 
-import * as RequestController from './RequestController';
+import { createRequestResult } from './RequestAssistant';
 
 export async function getCountryById(id) {
     const response = await fetch(
@@ -14,7 +14,7 @@ export async function getCountryById(id) {
         }
     );
 
-    return await RequestController.createRequestResult(response);
+    return await createRequestResult(response);
 }
 
 export async function searchCountriesByName(nameFilter) {
@@ -29,7 +29,7 @@ export async function searchCountriesByName(nameFilter) {
         }
     );
 
-    return await RequestController.createRequestResult(response);
+    return await createRequestResult(response);
 }
 
 export async function addCountry(country) {
@@ -45,7 +45,7 @@ export async function addCountry(country) {
         }
     );
 
-    return RequestController.createRequestResult(response);
+    return createRequestResult(response);
 }
 
 export async function updateCountry(country) {
@@ -61,7 +61,7 @@ export async function updateCountry(country) {
         }
     );
 
-    return RequestController.createRequestResult(response);
+    return createRequestResult(response);
 }
 
 export async function getCityById(id) {
@@ -76,7 +76,7 @@ export async function getCityById(id) {
         }
     );
 
-    return RequestController.createRequestResult(response);
+    return createRequestResult(response);
 }
 
 export async function addCity(city) {
@@ -92,7 +92,7 @@ export async function addCity(city) {
         }
     );
 
-    return await RequestController.createRequestResult(response);
+    return await createRequestResult(response);
 }
 
 export async function updateCity(city) {
@@ -108,7 +108,7 @@ export async function updateCity(city) {
         }
     );
 
-    return RequestController.createRequestResult(response);
+    return createRequestResult(response);
 }
 
 export async function searchCitiesByName(nameFilter) {
@@ -123,7 +123,7 @@ export async function searchCitiesByName(nameFilter) {
         }
     );
     
-    return RequestController.createRequestResult(response);
+    return createRequestResult(response);
 }
 
 export async function getCountryCities(countryId) {
@@ -138,7 +138,7 @@ export async function getCountryCities(countryId) {
         }
     );
 
-    return RequestController.createRequestResult(response);
+    return createRequestResult(response);
 }
 
 export async function searchCountryCitiesByName(countryId, nameFilter) {
@@ -153,5 +153,5 @@ export async function searchCountryCitiesByName(countryId, nameFilter) {
         }
     );
 
-    return RequestController.createRequestResult(response);
+    return createRequestResult(response);
 }
