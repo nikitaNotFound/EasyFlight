@@ -8,7 +8,7 @@ import TicketsCostEditor from './tickets-cost-editor';
 import Flight from '../../../../services/flight-models/flight';
 import ParamFiled from './param-field';
 
-import { invalidInput } from '../../../common/error-messages';
+import { invalidInput } from '../../../common/message-box-messages';
 
 import * as AirportService from '../../../../services/AirportService';
 import * as AirplaneService from '../../../../services/AirplaneService';

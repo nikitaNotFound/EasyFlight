@@ -8,7 +8,7 @@ import Spinner from '../../../common/spinner';
 import Airplane from '../../../../services/airplane-models/airplane';
 
 import * as AirplaneService from '../../../../services/AirplaneService';
-import { invalidInput } from '../../../common/error-messages';
+import { invalidInput } from '../../../common/message-box-messages';
 
 export default function Edit(props) {
     const [loading, changeLoading] = useState(true);

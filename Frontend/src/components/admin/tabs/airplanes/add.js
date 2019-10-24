@@ -5,7 +5,7 @@ import SeatEditor from './seat-editor';
 import MessageBox from '../../../common/message-box';
 
 import Airplane from '../../../../services/airplane-models/airplane';
-import { invalidInput } from '../../../common/error-messages';
+import { invalidInput } from '../../../common/message-box-messages';
 
 export default function Add() {
     const [name, changeName] = useState('');
