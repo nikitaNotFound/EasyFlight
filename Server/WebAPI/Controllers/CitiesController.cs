@@ -91,7 +91,7 @@ namespace WebAPI.Controllers
             switch (updatingResult)
             {
                 case ResultTypes.NotFound:
-                    return NotFound(city.Id);
+                    return NotFound();
 
                 case ResultTypes.Duplicate:
                     return BadRequest();

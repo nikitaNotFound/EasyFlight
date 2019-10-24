@@ -1,5 +1,5 @@
 import * as HttpStatus from 'http-status-codes';
-import * as errors from './Errors';
+import { BadRequestError, NotFoundError } from './Errors';
 
 export async function createRequestResult(response) {
     if (response.ok) {
@@ -12,7 +12,9 @@ export async function createRequestResult(response) {
         return result;
     } else {
         if (response.status == 400) {
-            throw new errors.BadRequestError();
+            throw new BadRequestError();
+        } else if (response.status == 404) {
+            throw new NotFoundError();
         } else {
             throw new Error(HttpStatus.getStatusText(response.status));
         }

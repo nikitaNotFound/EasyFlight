@@ -50,7 +50,7 @@ export default function CityList() {
             {showMessageBox()}
             <Filter filterOptions={filterOptions} onFilterApply={onFilterApply}/>
             <AddButton catalog="cities"/>
-            <Cities cities={cities} startCitiesValue={null}/>
+            <Cities cities={cities}/>
         </div>
     );
 }

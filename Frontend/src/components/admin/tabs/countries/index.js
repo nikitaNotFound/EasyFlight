@@ -41,7 +41,7 @@ export default function CountryList() {
             {showMessageBox()}
             <Filter filterOptions={filterOptions} onFilterApply={onFilterApply}/>
             <AddButton catalog="countries"/>
-            <Countries countries={countries} startCitiesValue={null}/>
+            <Countries countries={countries}/>
         </div>
     );
 }

@@ -28,7 +28,11 @@ export default function Edit(props) {
 
                 changeLoadingMode(false);
             } catch (ex) {
-                changeMessageBoxValue(ex.message);
+                if (ex.name == 'NotFoundError') {
+                    changeMessageBoxValue(`City with id '${props.match.params.id}' not found!`);
+                } else {
+                    changeMessageBoxValue("Something went wrong...");
+                }
             }
         }
         fetchData();
@@ -49,7 +53,7 @@ export default function Edit(props) {
             if (ex.name == 'BadRequestError') {
                 changeMessageBoxValue(`${name} already exists!`);
             } else {
-                changeMessageBoxValue(ex.message);
+                changeMessageBoxValue("Something went wrong...");
             }
         }
     }

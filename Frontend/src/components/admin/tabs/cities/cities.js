@@ -6,7 +6,8 @@ import City from './city';
 import '../../../../styles/items-list.css';
 
 export default function Cities(props) {
-    if (props.cities === props.startCitiesValue) {
+    // before user press search
+    if (props.cities == null) {
         return (
             <div className="items-list">
             </div>
@@ -36,8 +37,5 @@ export default function Cities(props) {
 }
 
 Cities.propsTypes = {
-    cities: PropsTypes.array,
-    
-    // this property indicates when search didnt start and there nothing to show to user
-    startCitiesValue: PropsTypes.any
+    cities: PropsTypes.array
 }

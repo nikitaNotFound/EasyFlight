@@ -3,15 +3,16 @@ import * as config  from '../config.json';
 import * as RequestController from './RequestController';
 
 export async function getCountryById(id) {
-    var response = await fetch(
+    const response = await fetch(
         `${config.API_URL}/countries/${id}`,
         {
             method: 'GET',
             mode: 'cors',
             headers: {
                 'Content-Type': 'application/json'
+            }
         }
-    });
+    );
 
     return await RequestController.createRequestResult(response);
 }
@@ -87,7 +88,7 @@ export async function addCity(city) {
             headers: {
                 'Content-Type': 'application/json'
             },
-        body: JSON.stringify(city)
+            body: JSON.stringify(city)
         }
     );
 
@@ -103,7 +104,7 @@ export async function updateCity(city) {
             headers: {
                 'Content-Type': 'application/json'
             },
-        body: JSON.stringify(city)
+            body: JSON.stringify(city)
         }
     );
 
@@ -121,6 +122,7 @@ export async function searchCitiesByName(nameFilter) {
             }
         }
     );
+    
     return RequestController.createRequestResult(response);
 }
 
@@ -135,6 +137,7 @@ export async function getCountryCities(countryId) {
             }
         }
     );
+
     return RequestController.createRequestResult(response);
 }
 
