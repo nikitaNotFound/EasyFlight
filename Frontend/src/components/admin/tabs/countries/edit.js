@@ -5,7 +5,7 @@ import Spinner from '../../../common/spinner';
 import MessageBox from '../../../common/message-box';
 
 import Country from '../../../../services/place-models/country';
-import { notFound, duplicate, defaultMessage, invalidInput } from '../../../common/error-messages';
+import { notFound, duplicate, defaultErrorMessage, invalidInput } from '../../../common/error-messages';
 
 import * as PlaceService from '../../../../services/PlaceService';
 import { NotFoundError, BadRequestError } from '../../../../services/Errors';
@@ -29,7 +29,7 @@ export default function Edit(props) {
                 if (ex instanceof NotFoundError) {
                     changeMessageBoxValue(notFound(name));
                 } else {
-                    changeMessageBoxValue(defaultMessage());
+                    changeMessageBoxValue(defaultErrorMessage());
                 }
             }
         }
@@ -51,7 +51,7 @@ export default function Edit(props) {
             if (ex instanceof BadRequestError) {
                 changeMessageBoxValue(duplicate(name));
             } else {
-                changeMessageBoxValue(defaultMessage());
+                changeMessageBoxValue(defaultErrorMessage());
             }
         }
     }

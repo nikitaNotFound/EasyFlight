@@ -6,7 +6,7 @@ export function duplicate(name = 'Item') {
     return `${name} already exists!`;
 }
 
-export function defaultMessage() {
+export function defaultErrorMessage() {
     return 'Something went wrong...';
 }
 
