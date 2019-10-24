@@ -4,9 +4,8 @@ import Headline from '../../../common/headline';
 import SearchList from '../../../common/search-list';
 import MessageBox from '../../../common/message-box';
 
-import { invalidInput } from '../../../common/message-box-messages';
 import Airport from '../../../../services/airport-models/airport';
-import { invalidInput, duplicate, defaultErrorMessage } from '../../../common/error-messages';
+import { invalidInput, duplicate, defaultErrorMessage, added } from '../../../common/message-box-messages';
 
 import * as PlaceService from '../../../../services/PlaceService';
 import * as AirportService from '../../../../services/AirportService';
@@ -27,7 +26,7 @@ export default function Add() {
 
         try {
             await AirportService.add(newAirport);
-            changeMessageBoxValue('Added!');
+            changeMessageBoxValue(added());
         } catch (ex) {
             if (ex instanceof BadRequestError) {
                 changeMessageBoxValue(duplicate(name));

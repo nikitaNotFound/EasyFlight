@@ -9,7 +9,7 @@ import Airport from '../../../../services/airport-models/airport';
 
 import * as AirportService from '../../../../services/AirportService';
 import * as PlaceService from '../../../../services/PlaceService';
-import { invalidInput } from '../../../common/message-box-messages';
+import { invalidInput, notFound, duplicate, saved } from '../../../common/message-box-messages';
 
 export default function Edit(props) {
     const [loading, changeLoadingMode] = useState(true);
@@ -21,32 +21,24 @@ export default function Edit(props) {
 
     useEffect(() => {
         const fetchData = async () => {
-            const airportResult = await AirportService.getById(props.match.params.id);
-            if (airportResult.successful === false) {
-                changeMessageBoxValue(airportResult.value);
-                return;
+            try {
+                const airportResult = await AirportService.getById(props.match.params.id);
+
+                changeId(airportResult.id);
+                changeName(airportResult.name);
+
+                const cityResult = await PlaceService.getCityById(airportResult.value.cityId);
+
+                changeCity(cityResult);
+
+                const countryResult = await PlaceService.getCountryById(cityResult.value.countryId);
+
+                changeCountry(countryResult);
+
+                changeLoadingMode(false);
+            } catch (ex) {
+                
             }
-
-            changeId(airportResult.value.id);
-            changeName(airportResult.value.name);
-
-            const cityResult = await PlaceService.getCityById(airportResult.value.cityId);
-            if (cityResult.successful === false) {
-                changeMessageBoxValue(cityResult.value);
-                return;
-            }
-
-            changeCity(cityResult.value);
-
-            const countryResult = await PlaceService.getCountryById(cityResult.value.countryId);
-            if (countryResult.successful === false) {
-                changeMessageBoxValue(countryResult.value);
-                return;
-            }
-
-            changeCountry(countryResult.value);
-
-            changeLoadingMode(false);
         }
         fetchData();
     }, [props.match.params.id]);
