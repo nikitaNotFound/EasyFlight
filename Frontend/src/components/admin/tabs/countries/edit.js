@@ -8,7 +8,7 @@ import Country from '../../../../services/place-models/country';
 import { notFound, duplicate, defaultErrorMessage, invalidInput, saved } from '../../../common/message-box-messages';
 
 import * as PlaceService from '../../../../services/PlaceService';
-import { NotFoundError, BadRequestError } from '../../../../services/Errors';
+import { NotFoundError, BadRequestError } from '../../../../services/RequestErrors';
 
 
 export default function Edit(props) {

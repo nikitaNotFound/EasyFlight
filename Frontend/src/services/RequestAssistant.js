@@ -1,25 +1,27 @@
-import { BadRequestError, NotFoundError } from './Errors';
+import { BadRequestError, NotFoundError } from './RequestErrors';
+import HttpStatus from 'http-status-codes';
 
-export async function createRequestResult(response, expectedContent) {
+export async function createRequestResult(response, requestType) {
     if (response.ok) {
-        if (expectedContent) {
-            try {
-                var result = await response.json();
-            } catch {
-                throw new Error();
-            }
+        if (requestType == RequestTypes.contentExpected) {
+            var result = await response.json();
         } else {
             var result = null;
         }
 
         return result;
     } else {
-        if (response.status == 400) {
+        if (response.status == HttpStatus.BAD_REQUEST) {
             throw new BadRequestError();
-        } else if (response.status == 404) {
+        } else if (response.status == HttpStatus.NOT_FOUND) {
             throw new NotFoundError();
         } else {
             throw new Error();
         }
     }
+}
+
+export const RequestTypes = {
+    contentExpected: 0,
+    contentNonExpected: 1
 }

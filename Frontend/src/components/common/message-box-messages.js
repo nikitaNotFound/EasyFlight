@@ -1,8 +1,18 @@
-export function notFound(name = 'Item') {
+import { NameNotDefinedError } from './Errors';
+
+export function notFound(name) {
+    if (!name) {
+        throw new NameNotDefinedError();
+    }
+
     return `${name} not found!`;
 }
 
-export function duplicate(name = 'Item') {
+export function duplicate(name) {
+    if (!name) {
+        throw new NameNotDefinedError();
+    }
+
     return `${name} already exists!`;
 }
 

@@ -7,7 +7,7 @@ import Country from '../../../../services/place-models/country';
 import { duplicate, defaultErrorMessage, invalidInput, added } from '../../../common/message-box-messages';
 
 import * as PlaceService from '../../../../services/PlaceService';
-import { BadRequestError } from '../../../../services/Errors';
+import { BadRequestError } from '../../../../services/RequestErrors';
 
 export default function Add() {
     const [name, changeName] = useState();
