@@ -10,18 +10,18 @@ namespace DataAccessLayer.Repositories.Airports
 {
     public class AirportRepository : IAirportRepository
     {
-        private readonly IDalSettings _settings;
+        private readonly IDalSettings _dalSettings;
 
 
         public AirportRepository(IDalSettings settings)
         {
-            _settings = settings;
+            _dalSettings = settings;
         }
 
 
         public async Task AddAsync(AirportEntity airport)
         {
-            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
+            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             await db.ExecuteAsync(
                 "AddAirport",
@@ -31,7 +31,7 @@ namespace DataAccessLayer.Repositories.Airports
 
         public async Task<bool> CheckDuplicateAsync(AirportEntity airport)
         {
-            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
+            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             return await db.ExecuteScalarAsync<bool>(
                 "CheckAirportDuplicate",
@@ -41,7 +41,7 @@ namespace DataAccessLayer.Repositories.Airports
 
         public async Task<IReadOnlyCollection<AirportEntity>> GetAllAsync()
         {
-            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
+            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             IEnumerable<AirportEntity> airports = await db.QueryAsync<AirportEntity>(
                 "GetAllAirports",
@@ -53,7 +53,7 @@ namespace DataAccessLayer.Repositories.Airports
 
         public async Task<AirportEntity> GetAsync(int id)
         {
-            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
+            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             return await db.QuerySingleOrDefaultAsync<AirportEntity>(
                 "GetAirportById",
@@ -63,7 +63,7 @@ namespace DataAccessLayer.Repositories.Airports
 
         public async Task<IReadOnlyCollection<AirportEntity>> GetByNameAsync(string nameFilter)
         {
-            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
+            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             IEnumerable<AirportEntity> airports = await db.QueryAsync<AirportEntity>(
                 "SearchAirportsByName",
@@ -75,7 +75,7 @@ namespace DataAccessLayer.Repositories.Airports
 
         public async Task UpdateAsync(AirportEntity airport)
         {
-            using SqlConnection db = new SqlConnection(_settings.ConnectionString);
+            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             await db.ExecuteAsync(
                 "UpdateAirport",
