@@ -51,27 +51,6 @@ namespace WebAPI.Controllers
             return Ok(airports);
         }
 
-
-        // GET api/airports{?nameFilter}
-        [HttpGet]
-        public async Task<ActionResult> GetAllAsync(string nameFilter)
-        {
-            IReadOnlyCollection<BlAirport> airportsBl;
-
-            if (nameFilter != null)
-            {
-                airportsBl = await _airportService.GetByNameAsync(nameFilter);
-            }
-            else
-            {
-                airportsBl = await _airportService.GetAllAsync();
-            }
-
-            IEnumerable<Airport> airports = airportsBl.Select(_mapper.Map<Airport>);
-
-            return Ok(airports);
-        }
-
         // GET api/airports/{id}
         [HttpGet]
         [Route("{id}")]
