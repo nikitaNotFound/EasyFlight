@@ -1,9 +1,9 @@
 import React from 'react';
 import Content from './sign-up/content';
-import Footer from './sign-up/footer';
-import Header from './sign-up/header';
+import Footer from './common/footer';
+import Header from './common/header';
 
-function SignUp() {
+export default function SignUp() {
     return (
         <div className="wrapper container-fluid content">
             <Header/>
@@ -12,5 +12,3 @@ function SignUp() {
         </div>
     );
 }
-
-export default SignUp;

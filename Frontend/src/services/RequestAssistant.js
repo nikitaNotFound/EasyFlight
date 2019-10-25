@@ -22,6 +22,6 @@ export async function createRequestResult(response, requestType) {
 }
 
 export const RequestTypes = {
-    contentExpected: 0,
-    contentNonExpected: 1
+    ContentExpected: 0,
+    noContentExpected: 1
 }

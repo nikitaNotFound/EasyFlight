@@ -1,9 +1,9 @@
 import React from 'react';
-import Header from './profile/header';
+import Header from './common/header';
 import Content from './profile/content';
-import Footer from './profile/footer';
+import Footer from './common/footer';
 
-function Profile() {
+export default function Profile() {
     return (
         <div className="wrapper container-fluid content">
             <Header/>
@@ -12,5 +12,3 @@ function Profile() {
         </div>
     );
 }
-
-export default Profile;
