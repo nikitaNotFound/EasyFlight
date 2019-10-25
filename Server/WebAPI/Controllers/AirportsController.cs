@@ -22,7 +22,6 @@ namespace WebAPI.Controllers
         private readonly IAirportService _airportService;
         private readonly IMapper _mapper;
 
-
         
         public AirportsController(IAirportService airportService, IMapper mapper)
         {
@@ -58,7 +57,7 @@ namespace WebAPI.Controllers
         {
             BlAirport airportBl = await _airportService.GetByIdAsync(id);
 
-            var airport = _mapper.Map<Airport>(airportBl);
+            Airport airport = _mapper.Map<Airport>(airportBl);
 
             if (airport == null)
             {
@@ -90,7 +89,7 @@ namespace WebAPI.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult> UpdateAsync([FromBody] Airport airport)
         {
-            var airportBl = _mapper.Map<BlAirport>(airport);
+            BlAirport airportBl = _mapper.Map<BlAirport>(airport);
 
             ResultTypes updateResult = await _airportService.UpdateAsync(airportBl);
 

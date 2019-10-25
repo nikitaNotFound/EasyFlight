@@ -28,7 +28,7 @@ namespace DataAccessLayer.Repositories.Accounts
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<AccountEntity> GetByEmail(string email)
+        public async Task<AccountEntity> GetByEmailAsync(string email)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 

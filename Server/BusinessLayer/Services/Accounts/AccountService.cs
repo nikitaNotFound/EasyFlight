@@ -24,7 +24,7 @@ namespace BusinessLayer.Services.Accounts
 
         public async Task<Account> LoginAsync(Account account)
         {
-            AccountEntity dalAccount = await _accountRepository.GetByEmail(account.Email);
+            AccountEntity dalAccount = await _accountRepository.GetByEmailAsync(account.Email);
 
             if (dalAccount == null)
             {

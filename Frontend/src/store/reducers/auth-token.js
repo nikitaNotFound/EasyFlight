@@ -1,8 +1,6 @@
 import * as types from '../ActionTypes';
 
-const initialState = {
-    authToken: null
-}
+const initialState = null;
 
 export default function authToken(state = initialState, action) {
     switch (action.type) {

@@ -12,7 +12,9 @@ function loadState() {
     const serialisedState = localStorage.getItem(STORAGE_KEY);
 
     if (!serialisedState) {
-        return "";
+        // it means that there no serilised state in localStorage, so
+        // i return empty array, like it said in redux documentation
+        return [];
     }
 
     return JSON.parse(serialisedState);

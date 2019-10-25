@@ -25,7 +25,7 @@ export async function searchCountriesByName(nameFilter) {
         }
     );
 
-    return await createRequestResult(response, RequestTypes.contentExpected);
+    return await createRequestResult(response, RequestTypes.ContentExpected);
 }
 
 export async function addCountry(country) {
