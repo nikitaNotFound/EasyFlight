@@ -38,9 +38,9 @@ export default function Add() {
     }
 
     async function getCityName(city) {
-        const countryResult = await PlaceService.getCountryById(city.countryId);
+        const country = await PlaceService.getCountryById(city.countryId);
 
-        const finalName = `${city.name} (${countryResult.name})`;
+        const finalName = `${city.name} (${country.name})`;
 
         return finalName;
     }

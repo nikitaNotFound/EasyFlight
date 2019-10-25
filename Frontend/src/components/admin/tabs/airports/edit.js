@@ -24,16 +24,16 @@ export default function Edit(props) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const airportResult = await AirportService.getById(props.match.params.id);
+                const airport = await AirportService.getById(props.match.params.id);
 
-                changeId(airportResult.id);
-                changeName(airportResult.name);
+                changeId(airport.id);
+                changeName(airport.name);
 
-                const cityResult = await PlaceService.getCityById(airportResult.cityId);
+                const city = await PlaceService.getCityById(airport.cityId);
 
-                changeCity(cityResult);
+                changeCity(city);
 
-                const countryResult = await PlaceService.getCountryById(cityResult.countryId);
+                const countryResult = await PlaceService.getCountryById(city.countryId);
 
                 changeCountry(countryResult);
 

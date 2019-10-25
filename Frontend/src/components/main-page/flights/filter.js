@@ -58,10 +58,10 @@ function Filter(props) {
     }
 
     async function getAirportName(airport) {
-        const cityResult = await PlaceService.getCityById(airport.cityId);
-        const countryResult = await PlaceService.getCountryById(cityResult.value.countryId);
+        const city = await PlaceService.getCityById(airport.cityId);
+        const country = await PlaceService.getCountryById(city.value.countryId);
 
-        const finalName = `${airport.name} (${cityResult.name}, ${countryResult.name})`;
+        const finalName = `${airport.name} (${city.name}, ${country.name})`;
 
         return finalName;
     }
