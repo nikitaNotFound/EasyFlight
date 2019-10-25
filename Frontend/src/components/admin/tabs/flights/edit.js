@@ -8,6 +8,7 @@ import MessageBox from '../../../common/message-box';
 import Spinner from '../../../common/spinner';
 import TicketsCostEditor from './tickets-cost-editor';
 import ParamField from './param-field';
+import ConfirmActionButton from '../../../common/confirm-action-button';
 
 import BuyIcon from '../../../../icons/add-image.png';
 
@@ -239,9 +240,7 @@ export default function Edit(props) {
                         </div>
                     </div>
                 </div>
-                <div className="custom-button big" onClick={onDataSave}>
-                    Save
-                </div>
+                <ConfirmActionButton onClick={onDataSave} buttonContent="Save"/>
             </div>
             {showMessageBox()}
         </div>

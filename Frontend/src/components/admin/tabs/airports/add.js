@@ -10,6 +10,7 @@ import { invalidInput, duplicate, defaultErrorMessage, added } from '../../../co
 import * as PlaceService from '../../../../services/PlaceService';
 import * as AirportService from '../../../../services/AirportService';
 import { BadRequestError } from '../../../../services/RequestErrors';
+import ConfirmActionButton from '../../../common/confirm-action-button';
 
 export default function Add() {
     const [name, changeName] = useState();
@@ -22,7 +23,7 @@ export default function Add() {
             return;
         }
 
-        let newAirport = new Airport(null, name, city.id);
+        const newAirport = new Airport(null, name, city.id);
 
         try {
             await AirportService.add(newAirport);
@@ -86,9 +87,7 @@ export default function Add() {
                         </div>
                     </div>
                 </div>
-                <div className="custom-button big" onClick={onDataSave}>
-                    Add
-                </div>
+                <ConfirmActionButton onClick={onDataSave} buttonContent="Add"/>
             </div>
             {showMessageBox()}
         </div>

@@ -9,6 +9,7 @@ import Airplane from '../../../../services/airplane-models/airplane';
 
 import * as AirplaneService from '../../../../services/AirplaneService';
 import { invalidInput } from '../../../common/message-box-messages';
+import ConfirmActionButton from '../../../common/confirm-action-button';
 
 export default function Edit(props) {
     const [loading, changeLoading] = useState(true);
@@ -112,7 +113,7 @@ export default function Edit(props) {
                         />
                     </div>
                 </div>
-                <div className="custom-button big" onClick={onDataSave}>Save</div>
+                <ConfirmActionButton onClick={onDataSave} buttonContent="Save"/>
                 {showMessageBox()}
             </div>
         );

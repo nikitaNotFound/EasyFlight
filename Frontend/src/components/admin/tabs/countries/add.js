@@ -8,6 +8,7 @@ import { duplicate, defaultErrorMessage, invalidInput, added } from '../../../co
 
 import * as PlaceService from '../../../../services/PlaceService';
 import { BadRequestError } from '../../../../services/RequestErrors';
+import ConfirmActionButton from '../../../common/confirm-action-button';
 
 export default function Add() {
     const [name, changeName] = useState();
@@ -66,7 +67,7 @@ export default function Add() {
                         </div>
                     </div>
                 </div>
-                <div className="custom-button big" onClick={onDataSave}>Add</div>
+                <ConfirmActionButton onClick={onDataSave} buttonContent="Add"/>
             </div>
             {showMessageBox()}
         </div>

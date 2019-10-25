@@ -6,6 +6,7 @@ import MessageBox from '../../../common/message-box';
 
 import Airplane from '../../../../services/airplane-models/airplane';
 import { invalidInput } from '../../../common/message-box-messages';
+import ConfirmActionButton from '../../../common/confirm-action-button';
 
 export default function Add() {
     const [name, changeName] = useState('');
@@ -85,7 +86,7 @@ export default function Add() {
                     </div>
                 </div>
             </div>
-            <div className="custom-button big" onClick={onDataSave}>Save</div>
+            <ConfirmActionButton onClick={onDataSave} buttonContent="Add"/>
             {showMessageBox()}
         </div>
     );

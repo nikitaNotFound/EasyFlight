@@ -11,6 +11,7 @@ import * as AirportService from '../../../../services/AirportService';
 import * as PlaceService from '../../../../services/PlaceService';
 import { invalidInput, duplicate, saved, defaultErrorMessage } from '../../../common/message-box-messages';
 import { NotFoundError, BadRequestError } from '../../../../services/RequestErrors';
+import ConfirmActionButton from '../../../common/confirm-action-button';
 
 export default function Edit(props) {
     const [loading, changeLoadingMode] = useState(true);
@@ -119,7 +120,7 @@ export default function Edit(props) {
                             </div>
                         </div>
                     </div>
-                    <div className="custom-button big" onClick={onDataSave}>Save</div>
+                    <ConfirmActionButton onClick={onDataSave} buttonContent="Save"/>
                 </form>
                 {showMessageBox()}
             </div>

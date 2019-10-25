@@ -9,6 +9,7 @@ import {  duplicate, defaultErrorMessage, invalidInput, saved } from '../../../c
 
 import * as PlaceService from '../../../../services/PlaceService';
 import { NotFoundError, BadRequestError } from '../../../../services/RequestErrors';
+import ConfirmActionButton from '../../../common/confirm-action-button';
 
 export default function Edit(props) {
     const [loading, changeLoadingMode] = useState(true);
@@ -97,7 +98,7 @@ export default function Edit(props) {
                         </div>
                     </div>
                 </div>
-                <div className="custom-button big" onClick={onDataSave}>Save</div>
+                <ConfirmActionButton onClick={onDataSave} buttonContent="Save"/>
             </div>
             {showMessageBox()}
         </div>
