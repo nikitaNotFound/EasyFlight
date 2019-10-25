@@ -3,7 +3,7 @@ import HttpStatus from 'http-status-codes';
 
 export async function createRequestResult(response, requestType) {
     if (response.ok) {
-        if (requestType == RequestTypes.contentExpected) {
+        if (requestType == RequestTypes.ContentExpected) {
             var result = await response.json();
         } else {
             var result = null;
@@ -23,5 +23,5 @@ export async function createRequestResult(response, requestType) {
 
 export const RequestTypes = {
     ContentExpected: 0,
-    noContentExpected: 1
+    NoContentExpected: 1
 }
