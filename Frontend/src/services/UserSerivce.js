@@ -40,17 +40,17 @@ export async function login(user) {
         }
     );
         
-    const result = await createRequestResult(response);
+    const result = await createRequestResult(response, RequestTypes.ContentExpected);
 
-    const token = result.value.token;
+    const token = result.token;
 
     store.dispatch({ type: types.CHANGE_AUTH_TOKEN, payload: token });
 
     const userInfo = new User(
-        result.value.firstName,
-        result.value.secondName,
-        result.value.email,
-        result.value.role
+        result.firstName,
+        result.secondName,
+        result.email,
+        result.role
     );
     store.dispatch({ type: types.CHANGE_USER_INFO, payload: userInfo });
     return result;

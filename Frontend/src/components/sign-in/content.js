@@ -9,6 +9,8 @@ import googleIcon from '../../icons/google-icon.png';
 import facebookIcon from '../../icons/facebook-icon.png';
 
 import '../../styles/registration.css';
+import { BadRequestError } from '../../services/RequestErrors';
+import { invalidInput, defaultErrorMessage } from '../common/message-box-messages';
 
 function Content(props) {
     const [email, changeEmail] = useState(null);
@@ -22,12 +24,15 @@ function Content(props) {
             return;
         }
 
-        const loginResult = await UserService.login({email: email, password: password});
-
-        if (loginResult.successful === true) {
+        try {
+            await UserService.login({email: email, password: password});
             props.history.push('/');
-        } else {
-            changeMessageBoxValue(loginResult.value);
+        } catch (ex) {
+            if (ex instanceof BadRequestError) {
+                changeMessageBoxValue(invalidInput());
+            } else {
+                changeMessageBoxValue(defaultErrorMessage());
+            }
         }
     }
 

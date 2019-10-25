@@ -43,8 +43,7 @@ namespace WebAPI.Controllers
 
             if (authAccountBl == null)
             {
-                string message = "Invalid email or password!";
-                return BadRequest(message);
+                return BadRequest();
             }
 
             Account authAccount = _mapper.Map<Account>(authAccountBl);
@@ -75,8 +74,7 @@ namespace WebAPI.Controllers
 
             if (registerAccountBl == null)
             {
-                string message = "Account with such email already exists!";
-                return BadRequest(message);
+                return BadRequest();
             }
 
             Account registerAccount = _mapper.Map<Account>(registerAccountBl);

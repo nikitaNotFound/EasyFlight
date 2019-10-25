@@ -11,6 +11,8 @@ import googleIcon from '../../icons/google-icon.png';
 import facebookIcon from '../../icons/facebook-icon.png';
 
 import '../../styles/registration.css';
+import { BadRequestError } from '../../services/RequestErrors';
+import { invalidInput, defaultErrorMessage } from '../common/message-box-messages';
 
 function Content(props) {
     const [name, changeName] = useState();
@@ -33,12 +35,15 @@ function Content(props) {
             password
         );
 
-        const registrationResult = await UserService.register(newUser);
-
-        if (registrationResult.successful === true) {
+        try {
+            await UserService.register(newUser);
             props.history.push('/');
-        } else {
-            changeMessageBoxValue(registrationResult.value);
+        } catch (ex) {
+            if (ex instanceof BadRequestError) {
+                changeMessageBoxValue(invalidInput());
+            } else {
+                changeMessageBoxValue(defaultErrorMessage());
+            }
         }
     }
 
