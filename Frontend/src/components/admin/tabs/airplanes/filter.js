@@ -106,9 +106,9 @@ function Filter(props) {
                     />
                 </div>
 
-                <div className="filter-apply rounded" onClick={onFilterApply}>
+                <button className="filter-apply rounded" onClick={onFilterApply}>
                     apply
-                </div>
+                </button>
             </div>
         </div>
     );

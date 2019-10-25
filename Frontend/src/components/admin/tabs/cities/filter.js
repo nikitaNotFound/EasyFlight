@@ -73,14 +73,12 @@ export default function Filter(props) {
                         type="text"
                         value={name}
                         onChange={onNameChanged}
-                        getItemName={getCountryName}
-                        onValueChange={changeCountry}
                     />
                 </div>
             </div>
-            <div className="filter-apply rounded" onClick={onFilterApply}>
+            <button className="filter-apply rounded" onClick={onFilterApply}>
                 apply
-            </div>
+            </button>
         </div>
     );
 }

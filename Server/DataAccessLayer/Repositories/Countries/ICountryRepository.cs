@@ -14,6 +14,6 @@ namespace DataAccessLayer.Repositories.Countries
         Task<IReadOnlyCollection<CityEntity>> SearchCountryCitiesByNameAsync(int countryId, string name);
         Task AddAsync(CountryEntity country);
         Task UpdateAsync(CountryEntity country);
-        Task<bool> CheckDublicateAsync(CountryEntity country);
+        Task<bool> CheckDuplicateAsync(CountryEntity country);
     }
 }

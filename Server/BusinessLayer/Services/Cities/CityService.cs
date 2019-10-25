@@ -52,15 +52,15 @@ namespace BusinessLayer.Services.Cities
         {
             CityEntity cityDal = _mapper.Map<CityEntity>(city);
 
-            bool dublicate = await _cityRepository.CheckDublicateAsync(cityDal);
+            bool dublicate = await _cityRepository.CheckDuplicateAsync(cityDal);
 
             if (!dublicate)
             {
                 await _cityRepository.AddAsync(cityDal);
-                return ResultTypes.OK;
+                return ResultTypes.Ok;
             }
 
-            return ResultTypes.Dublicate;
+            return ResultTypes.Duplicate;
         }
 
         public async Task<ResultTypes> UpdateAsync(City city)
@@ -71,15 +71,15 @@ namespace BusinessLayer.Services.Cities
             {
                 CityEntity cityDal = _mapper.Map<CityEntity>(city);
 
-                bool dublicate = await _cityRepository.CheckDublicateAsync(cityDal);
+                bool dublicate = await _cityRepository.CheckDuplicateAsync(cityDal);
 
                 if (!dublicate)
                 {
                     await _cityRepository.UpdateAsync(cityDal);
-                    return ResultTypes.OK;
+                    return ResultTypes.Ok;
                 }
 
-                return ResultTypes.Dublicate;
+                return ResultTypes.Duplicate;
             }
 
             return ResultTypes.NotFound;

@@ -1,8 +1,11 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import PropsTypes from 'prop-types';
+
 import ColorWheel from 'color-wheel';
 import SeatTypeItem from './seat-type';
+
 import SeatType from '../../../../services/airplane-models/seat-type';
+
 import '../../../../styles/seat-types-editor.css';
 
 function SeatTypesEditor(props) {

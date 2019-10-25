@@ -1,7 +1,7 @@
 import React from 'react';
-import Header from './sign-in/header';
+import Header from './common/header';
 import Content from './sign-in/content';
-import Footer from './sign-in/footer';
+import Footer from './common/footer';
 
 export default function SignIn() {
     return (

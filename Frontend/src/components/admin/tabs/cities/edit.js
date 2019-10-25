@@ -6,8 +6,10 @@ import MessageBox from '../../../common/message-box';
 import SearchList from '../../../common/search-list';
 
 import City from '../../../../services/place-models/city';
+import {  duplicate, defaultErrorMessage, invalidInput, saved } from '../../../common/message-box-messages';
 
 import * as PlaceService from '../../../../services/PlaceService';
+import { NotFoundError, BadRequestError } from '../../../../services/RequestErrors';
 
 export default function Edit(props) {
     const [loading, changeLoadingMode] = useState(true);
@@ -18,32 +20,43 @@ export default function Edit(props) {
 
     useEffect(() => {
         const fetchData = async () => {
-            const foundCity = await PlaceService.getCityById(props.match.params.id);
-            changeId(foundCity.id);
-            changeName(foundCity.name);
+            try {
+                const cityRequest = await PlaceService.getCityById(props.match.params.id);
+                changeName(cityRequest.name);
+                changeId(cityRequest.id);
 
-            const foundCountry = await PlaceService.getCountryById(foundCity.countryId);
-            changeCountry(foundCountry);
+                const countryRequest = await PlaceService.getCountryById(cityRequest.countryId);
+                changeCountry(countryRequest);
 
-            changeLoadingMode(false);
+                changeLoadingMode(false);
+            } catch (ex) {
+                if (ex instanceof NotFoundError) {
+                    props.history.push('/not-found');
+                } else {
+                    changeMessageBoxValue(defaultErrorMessage());
+                }
+            }
         }
         fetchData();
     }, [props.match.params.id]);
 
     async function onDataSave() {
         if (!name || !country) {
-            changeMessageBoxValue('Input data is not valid!');
+            changeMessageBoxValue(invalidInput());
             return;
         }
 
         let newCity = new City(id, country.id, name);
 
-        const updateResult = await PlaceService.updateCity(newCity);
-
-        if (updateResult) {
-            changeMessageBoxValue('Saved!');
-        } else {
-            changeMessageBoxValue(updateResult);
+        try {
+            await PlaceService.updateCity(newCity);
+            changeMessageBoxValue(saved());
+        } catch (ex) {
+            if (ex instanceof BadRequestError) {
+                changeMessageBoxValue(duplicate(name));
+            } else {
+                changeMessageBoxValue(defaultErrorMessage());
+            }
         }
     }
 
@@ -65,6 +78,7 @@ export default function Edit(props) {
     if (loading) {
         return (
             <div className="list-item-action rounded editing">
+                {showMessageBox()}
                 <Spinner headline="Loading..."/>
             </div>
         );

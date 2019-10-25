@@ -4,9 +4,10 @@ import Headline from '../../../common/headline';
 import MessageBox from '../../../common/message-box';
 
 import Country from '../../../../services/place-models/country';
+import { duplicate, defaultErrorMessage, invalidInput, added } from '../../../common/message-box-messages';
 
 import * as PlaceService from '../../../../services/PlaceService';
-
+import { BadRequestError } from '../../../../services/RequestErrors';
 
 export default function Add() {
     const [name, changeName] = useState();
@@ -14,18 +15,21 @@ export default function Add() {
 
     async function onDataSave() {
         if (!name) {
-            changeMessageBoxValue('Input data is not valid!');
+            changeMessageBoxValue(invalidInput());
             return;
         }
 
         let newCountry = new Country(null, name);
 
-        const addResult = await PlaceService.addCountry(newCountry);
-
-        if (addResult === true) {
-            changeMessageBoxValue('Added!');
-        } else {
-            changeMessageBoxValue(addResult.message);
+        try {
+            await PlaceService.addCountry(newCountry);
+            changeMessageBoxValue(added());
+        } catch (ex) {
+            if (ex instanceof BadRequestError) {
+                changeMessageBoxValue(duplicate(name));
+            } else {
+                changeMessageBoxValue(defaultErrorMessage());
+            }
         }
     }
 

@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import PropsTypes from "prop-types";
+import React, { useState } from 'react';
+import PropsTypes from 'prop-types';
 
-import SeatObject from "../../../../services/airplane-models/seat";
+import SeatObject from '../../../../services/airplane-models/seat';
 
 const UNDEFINED_SEAT_TYPE_INDEX = -1;
 

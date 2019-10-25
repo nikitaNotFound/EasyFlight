@@ -5,8 +5,10 @@ import Spinner from '../../../common/spinner';
 import MessageBox from '../../../common/message-box';
 
 import Country from '../../../../services/place-models/country';
+import {  duplicate, defaultErrorMessage, invalidInput, saved } from '../../../common/message-box-messages';
 
 import * as PlaceService from '../../../../services/PlaceService';
+import { NotFoundError, BadRequestError } from '../../../../services/RequestErrors';
 
 
 export default function Edit(props) {
@@ -17,26 +19,40 @@ export default function Edit(props) {
 
     useEffect(() => {
         const fetchData = async () => {
-            const foundCountry = await PlaceService.getCountryById(props.match.params.id);
-            changeName(foundCountry.name);
-            changeId(foundCountry.id);
-            changeLoadingMode(false);
+            try {
+                const countryRequest = await PlaceService.getCountryById(props.match.params.id);
+
+                changeName(countryRequest.name);
+                changeId(countryRequest.id);
+                changeLoadingMode(false);
+            } catch (ex) {
+                if (ex instanceof NotFoundError) {
+                    props.history.push('/not-found');
+                } else {
+                    changeMessageBoxValue(defaultErrorMessage());
+                }
+            }
         }
         fetchData();
     }, [props.match.params.id]);
 
     async function onDataSave() {
         if (!name) {
-            changeMessageBoxValue('Input data is not valid!');
+            changeMessageBoxValue(invalidInput());
             return;
         }
 
         let finalCountry = new Country(id, name);
         
-        const updateStatus = await PlaceService.updateCountry(finalCountry);
-
-        if (updateStatus) {
-            changeMessageBoxValue('Updated!');
+        try {
+            await PlaceService.updateCountry(finalCountry);
+            changeMessageBoxValue(saved());
+        } catch (ex) {
+            if (ex instanceof BadRequestError) {
+                changeMessageBoxValue(duplicate(name));
+            } else {
+                changeMessageBoxValue(defaultErrorMessage());
+            }
         }
     }
 
@@ -54,6 +70,7 @@ export default function Edit(props) {
     if (loading) {
         return (
             <div className="list-item-action rounded editing">
+                {showMessageBox()}
                 <Spinner headline="Loading..."/>
             </div>
         );

@@ -1,9 +1,13 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
+
 import Headline from '../../../common/headline';
 import SearchList from '../../../common/search-list';
 import MessageBox from '../../../common/message-box';
+
 import Airport from '../../../../services/airport-models/airport';
+
 import * as PlaceService from '../../../../services/PlaceService';
+import { invalidInput } from '../../../common/message-box-messages';
 
 export default function Add() {
     const [name, changeName] = useState();
@@ -13,7 +17,7 @@ export default function Add() {
 
     function onDataSave() {
         if (!name || !city || !desc) {
-            changeMessageBoxValue('Input data is not valid!');
+            changeMessageBoxValue(invalidInput());
             return;
         }
 

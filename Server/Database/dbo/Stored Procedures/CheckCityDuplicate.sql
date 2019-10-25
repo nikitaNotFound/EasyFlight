@@ -1,4 +1,4 @@
-﻿create procedure CheckCityDublicate
+﻿create procedure CheckCityDuplicate
     @name as nvarchar(70),
     @countryId as int
 as

@@ -1,8 +1,12 @@
 import PropsTypes from 'prop-types';
 import React, {useState} from 'react';
+
 import Spinner from './spinner';
 import Item from './search-list-item';
+import MessageBox from '../common/message-box';
+
 import '../../styles/search-list.css';
+import { defaultErrorMessage } from './message-box-messages';
 
 function getStartItem(props) {
     if (!props.currentItem) {
@@ -18,6 +22,7 @@ function SearchList(props) {
     const [list, changeList] = useState([]);
     const [inputValue, changeInputValue] = useState(getStartItem(props));
     const [currentItem, changeCurrentItem] = useState(props.currentItem);
+    const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
     function openList() {
         changeMode(true);
@@ -38,6 +43,33 @@ function SearchList(props) {
         props.onValueChange(item);
     }
 
+    async function onSearchPhraseChange(event) {
+        changeInputValue(event.target.value);
+
+        if (!event.target.value) {
+            changeLoading(true);
+            changeCurrentItem(null);
+            props.onValueChange(null);
+            return;
+        }
+
+        try {
+            let newListResult = null;
+
+            if (props.searchArgs) {
+                newListResult = await props.searchFunc(event.target.value, ...props.searchArgs);
+            } else {
+                newListResult = await props.searchFunc(event.target.value);
+            }
+
+            changeList(newListResult);
+
+            changeLoading(false);
+        } catch {
+            changeMessageBoxValue(defaultErrorMessage());
+        }
+    }
+
     function getList() {
         if (loading) {
             return <Spinner headline="Waiting..."/>
@@ -55,38 +87,21 @@ function SearchList(props) {
             )
         );
     }
-
-    function onSearchPhraseChange(event) {
-        changeInputValue(event.target.value);
-
-        if (!event.target.value) {
-            changeLoading(true);
-            changeCurrentItem(null);
-            props.onValueChange(null);
-            return;
+    
+    function showMessageBox() {
+        if (messageBoxValue) {
+            return (
+                <MessageBox
+                    message={messageBoxValue}
+                    hideFunc={changeMessageBoxValue}
+                />
+            );
         }
-
-        let newListLoading = null;
-
-        if (props.searchArgs) {
-            newListLoading = props.searchFunc(event.target.value, ...props.searchArgs);
-        } else {
-            newListLoading = props.searchFunc(event.target.value);
-        }
-
-        
-        newListLoading
-            .then(newList => {
-                changeList(newList);
-                changeLoading(false);
-            })
-            .catch(error => {
-                alert(error);
-            });
     }
 
     return (
         <div className="form-item">
+            {showMessageBox()}
             <label htmlFor={props.placeholder}>{props.placeholder}</label>
             <input
                 id={props.placeholder}
@@ -102,7 +117,7 @@ function SearchList(props) {
 
             <div className={`search-list non-selectable 
                 ${mode === true 
-                    ? '' 
+                    ? ''
                     : 'search-item-hide'}`}>
 
                 {getList()}

@@ -10,27 +10,44 @@ import * as PlaceService from '../../../../services/PlaceService';
 import SearchOptions from '../../../../services/airport-models/search-options';
 
 export default function CityList() {
-    const [cities, changeCities] = useState([]);
+    const [cities, changeCities] = useState(null);
     const [filterOptions, changeFilterOptions] = useState(new SearchOptions());
+    const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
     async function onFilterApply(newFilterOptions) {
         changeFilterOptions(newFilterOptions);
 
-        let foundCities = null;
+        try {
+            let citiesRequest = null;
 
-        if (newFilterOptions.name && newFilterOptions.countryId) {
-            foundCities = await PlaceService.searchCountryCitiesByName(newFilterOptions.countryId, newFilterOptions.name);
-        } else if (newFilterOptions.countryId) {
-            foundCities = await PlaceService.getCountryCities(newFilterOptions.countryId);
-        } else {
-            foundCities = await PlaceService.searchCitiesByName(newFilterOptions.name);
+            if (newFilterOptions.name && newFilterOptions.countryId) {
+                citiesRequest = await PlaceService.searchCountryCitiesByName(newFilterOptions.countryId, newFilterOptions.name);
+            } else if (newFilterOptions.countryId) {
+                citiesRequest = await PlaceService.getCountryCities(newFilterOptions.countryId);
+            } else {
+                citiesRequest = await PlaceService.searchCitiesByName(newFilterOptions.name);
+            }
+
+            changeCities(citiesRequest);
+        } catch {
+            changeMessageBoxValue('Something went wrong...');
         }
+    }
 
-        changeCities(foundCities);
+    function showMessageBox() {
+        if (messageBoxValue) {
+            return (
+                <MessageBox
+                    message={messageBoxValue}
+                    hideFunc={changeMessageBoxValue}
+                />
+            );
+        }
     }
 
     return (
         <div className="tab-content">
+            {showMessageBox()}
             <Filter filterOptions={filterOptions} onFilterApply={onFilterApply}/>
             <AddButton catalog="cities"/>
             <Cities cities={cities}/>

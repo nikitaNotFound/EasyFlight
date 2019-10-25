@@ -12,6 +12,7 @@ import ParamField from './param-field';
 import BuyIcon from '../../../../icons/add-image.png';
 
 import Flight from '../../../../services/flight-models/flight';
+import { invalidInput } from '../../../common/message-box-messages';
 
 import * as AirplaneService from '../../../../services/AirplaneService';
 import * as FlightService from '../../../../services/FlightService';
@@ -86,7 +87,7 @@ export default function Edit(props) {
             || !ticketsCost
             || !desc
         ) {
-            changeMessageBoxValue('Input data is not valid!');
+            changeMessageBoxValue(invalidInput());
             return;
         }
 

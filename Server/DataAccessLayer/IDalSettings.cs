@@ -2,6 +2,6 @@
 {
     public interface IDalSettings
     {
-        public string ConnectionString { get; }
+        string ConnectionString { get; }
     }
 }

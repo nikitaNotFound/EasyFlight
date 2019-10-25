@@ -1,12 +1,14 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import PropsTypes from 'prop-types';
-import SearchOptions from '../../../../services/airport-models/search-options';
+
 import ComponentHeadline from '../../../common/component-headline';
 import MessageBox from '../../../common/message-box';
 import SearchList from '../../../common/search-list';
+
+import SearchOptions from '../../../../services/airport-models/search-options';
 import * as PlaceService from '../../../../services/PlaceService';
 
-function Filter(props) {
+export default function Filter(props) {
     const [name, changeName] = useState(props.filterOptions.name);
     const [country, changeCountry] = useState(props.filterOptions.country);
     const [city, changeCity] = useState(props.filterOptions.city);
@@ -101,9 +103,9 @@ function Filter(props) {
 
                 {showCityChooser()}
 
-                <div className="filter-apply rounded" onClick={onFilterApply}>
+                <button className="filter-apply rounded" onClick={onFilterApply}>
                     apply
-                </div>
+                </button>
             </div>
         </div>
     );
@@ -113,5 +115,3 @@ Filter.propsTypes = {
     onFilterApply: PropsTypes.func,
     filterOptions: PropsTypes.instanceOf(SearchOptions)
 }
-
-export default Filter;

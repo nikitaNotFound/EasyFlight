@@ -1,13 +1,14 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 
 import Headline from '../../../common/headline';
-import Spinner from '../../../common/spinner';
 import MessageBox from '../../../common/message-box';
 import SearchList from '../../../common/search-list';
 
 import City from '../../../../services/place-models/city';
+import { duplicate, defaultErrorMessage, invalidInput, added } from '../../../common/message-box-messages';
 
 import * as PlaceService from '../../../../services/PlaceService';
+import { BadRequestError } from '../../../../services/RequestErrors';
 
 export default function Add() {
     const [name, changeName] = useState();
@@ -16,18 +17,21 @@ export default function Add() {
 
     async function onDataSave() {
         if (!name || !country) {
-            changeMessageBoxValue('Input data is not valid!');
+            changeMessageBoxValue(invalidInput());
             return;
         }
 
         const newCity = new City(null, country.id, name);
 
-        const insertResult = await PlaceService.addCity(newCity);
-
-        if (insertResult === true) {
-            changeMessageBoxValue('Added!');
-        } else {
-            changeMessageBoxValue(insertResult.message);
+        try {
+            await PlaceService.addCity(newCity);
+            changeMessageBoxValue(added());
+        } catch (ex) {
+            if (ex instanceof BadRequestError) {
+                changeMessageBoxValue(duplicate(name));
+            } else {
+                changeMessageBoxValue(defaultErrorMessage());
+            }
         }
     }
 

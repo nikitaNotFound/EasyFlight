@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import PropsTypes from 'prop-types';
 import SeatRow from './seat-row';
 

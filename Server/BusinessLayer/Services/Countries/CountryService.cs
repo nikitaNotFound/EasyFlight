@@ -71,15 +71,15 @@ namespace BusinessLayer.Services.Countries
         {
             CountryEntity countryDal = _mapper.Map<CountryEntity>(country);
 
-            bool dublicate = await _countryRepository.CheckDublicateAsync(countryDal);
+            bool dublicate = await _countryRepository.CheckDuplicateAsync(countryDal);
 
             if (!dublicate)
             {
                 await _countryRepository.AddAsync(countryDal);
-                return ResultTypes.OK;
+                return ResultTypes.Ok;
             }
 
-            return ResultTypes.Dublicate;
+            return ResultTypes.Duplicate;
         }
 
         public async Task<ResultTypes> UpdateAsync(Country country)
@@ -90,15 +90,15 @@ namespace BusinessLayer.Services.Countries
             {
                 CountryEntity countryDal = _mapper.Map<CountryEntity>(country);
 
-                bool dublicate = await _countryRepository.CheckDublicateAsync(countryDal);
+                bool dublicate = await _countryRepository.CheckDuplicateAsync(countryDal);
 
                 if (!dublicate)
                 {
                     await _countryRepository.UpdateAsync(countryDal);
-                    return ResultTypes.OK ;
+                    return ResultTypes.Ok ;
                 }
 
-                return ResultTypes.Dublicate;
+                return ResultTypes.Duplicate;
             }
 
             return ResultTypes.NotFound;

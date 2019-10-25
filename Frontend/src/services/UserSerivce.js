@@ -1,9 +1,9 @@
-import { users, userFlights } from "./DataBase";
-import { isArray } from "util";
-import UserInfo from "./user-models/user-info";
+import { users, userFlights } from './DataBase';
+import { isArray } from 'util';
+import UserInfo from './user-models/user-info';
 
-import store from "../store/store";
-import * as types from "../store/ActionTypes";
+import store from '../store/store';
+import * as types from '../store/ActionTypes';
 
 export function getCurrentUser(id) {
     return new Promise((resolve, reject) => {
@@ -81,12 +81,11 @@ export function logout() {
 }
 
 export function checkLogin() {
-    // later there will be api request checks is token valid
     const storeObject = store.getState();
 
-    if (!storeObject.authToken.authToken || !storeObject.refreshToken.refreshToken || !storeObject.userInfo.userInfo) {
+    if (!storeObject.authToken || !storeObject.userInfo) {
         return { authorized: false, admin: false};
     }
 
-    return { authorized: true, admin: storeObject.userInfo.userInfo.role == 'admin' ? true : false };
+    return { authorized: true, admin: storeObject.userInfo.role == 'Admin' ? true : false };
 }

@@ -29,8 +29,13 @@
     color: black;
     font-size: 30px;
     text-align: center;
+    border: none;
 }
 
 .filter-apply:hover {
     background: rgb(185, 185, 185);
+}
+
+.filter-apply:focus {
+    outline: 0;
 }

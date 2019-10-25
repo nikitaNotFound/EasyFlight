@@ -1,11 +1,10 @@
 import React from 'react';
 
-import Header from './admin/header';
-import Footer from './admin/footer';
+import Header from './common/header';
+import Footer from './common/footer';
 import Content from './admin/content';
 
 import '../styles/admin.css';
-
 
 export default function Admin() {
     return (

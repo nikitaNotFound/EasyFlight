@@ -1,10 +1,14 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
+
 import Headline from '../../../common/headline';
 import MessageBox from '../../../common/message-box';
 import SeatEditor from './seat-editor';
 import Spinner from '../../../common/spinner';
+
 import Airplane from '../../../../services/airplane-models/airplane';
+
 import * as AirplaneService from '../../../../services/AirplaneService';
+import { invalidInput } from '../../../common/message-box-messages';
 
 export default function Edit(props) {
     const [loading, changeLoading] = useState(true);
@@ -42,7 +46,7 @@ export default function Edit(props) {
             || !seats
             || !seatTypes
         ) {
-            changeMessageBoxValue('Input data is not valid');
+            changeMessageBoxValue(invalidInput());
             return;
         }
 

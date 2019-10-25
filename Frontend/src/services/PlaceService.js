@@ -1,5 +1,7 @@
 import * as config  from '../config.json';
 
+import { createRequestResult, RequestTypes } from './RequestAssistant';
+
 export async function getCountryById(id) {
     const response = await fetch(
         `${config.API_URL}/countries/${id}`,
@@ -12,11 +14,7 @@ export async function getCountryById(id) {
         }
     );
 
-    if (response.ok) {
-        return response.json();
-    }
-
-    return response.status;
+    return await createRequestResult(response, RequestTypes.ContentExpected);
 }
 
 export async function searchCountriesByName(nameFilter) {
@@ -27,15 +25,11 @@ export async function searchCountriesByName(nameFilter) {
             mode: 'cors',
             headers: {
                 'Content-Type': 'application/json'
-            },
+            }
         }
     );
 
-    if (response.ok) {
-        return response.json();
-    }
-
-    return response.status;
+    return await createRequestResult(response, RequestTypes.ContentExpected);
 }
 
 export async function addCountry(country) {
@@ -51,11 +45,7 @@ export async function addCountry(country) {
         }
     );
 
-    if (response.ok) {
-        return true;
-    }
-
-    return false;
+    return createRequestResult(response, RequestTypes.NoContentExpected);
 }
 
 export async function updateCountry(country) {
@@ -71,11 +61,7 @@ export async function updateCountry(country) {
         }
     );
 
-    if (response.ok) {
-       return true;
-    }
-
-    return false;
+    return createRequestResult(response, RequestTypes.NoContentExpected);
 }
 
 export async function getCityById(id) {
@@ -90,11 +76,7 @@ export async function getCityById(id) {
         }
     );
 
-    if (response.ok) {
-        return response.json();
-    }
-
-    return response.status;
+    return createRequestResult(response, RequestTypes.ContentExpected);
 }
 
 export async function addCity(city) {
@@ -110,11 +92,7 @@ export async function addCity(city) {
         }
     );
 
-    if (response.ok) {
-        return true;
-    }
-
-    return response.json();
+    return await createRequestResult(response, RequestTypes.NoContentExpected);
 }
 
 export async function updateCity(city) {
@@ -130,11 +108,7 @@ export async function updateCity(city) {
         }
     );
 
-    if (response.ok) {
-        return true;
-    }
-
-    return response.status;
+    return createRequestResult(response, RequestTypes.ContentNonExpected);
 }
 
 export async function searchCitiesByName(nameFilter) {
@@ -148,12 +122,8 @@ export async function searchCitiesByName(nameFilter) {
             }
         }
     );
-
-    if (response.ok) {
-        return response.json();
-    }
-
-    return response.status;
+    
+    return createRequestResult(response, RequestTypes.ContentExpected);
 }
 
 export async function getCountryCities(countryId) {
@@ -167,12 +137,8 @@ export async function getCountryCities(countryId) {
             }
         }
     );
-    
-    if (response.ok) {
-        return response.json();
-    }
 
-    return response.status;
+    return createRequestResult(response, RequestTypes.ContentExpected);
 }
 
 export async function searchCountryCitiesByName(countryId, nameFilter) {
@@ -187,9 +153,5 @@ export async function searchCountryCitiesByName(countryId, nameFilter) {
         }
     );
 
-    if (response.ok) {
-        return response.json();
-    }
-
-    return response.status;
+    return createRequestResult(response, RequestTypes.ContentExpected);
 }

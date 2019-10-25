@@ -8,9 +8,6 @@ import SearchList from '../../common/search-list';
 import PropsTypes from 'prop-types';
 
 function Filter(props) {
-    const [fromCountry, changeFromCountry] = useState(props.filterOptions.fromCountry);
-    const [toCountry, changeToCountry] = useState(props.filterOptions.toCountry);
-
     const [fromCity, changeFromCity] = useState(props.filterOptions.fromCity);
     const [toCity, changeToCity] = useState(props.filterOptions.toCity);
 
@@ -26,9 +23,7 @@ function Filter(props) {
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
     function onFilterApplied() {
-        if (!fromCountry
-            && !toCountry
-            && !fromCity
+        if (!fromCity
             && !toCity
             && !fromAirport
             && !toAirport
@@ -48,18 +43,16 @@ function Filter(props) {
             departureTime,
             departureBackTime,
             ticketCount,
-            searchToAndBack,
-            fromCountry,
-            toCountry
+            searchToAndBack
         );
 
         props.onFilterApplied(newOptions);
     }
 
     async function getCityName(city) {
-        const country = await PlaceService.getCountryById(city.countryId);
+        const countryResult = await PlaceService.getCountryById(city.countryId);
 
-        const finalName = `${city.name} (${country.name})`;
+        const finalName = `${city.name} (${countryResult.name})`;
 
         return finalName;
     }
@@ -174,10 +167,7 @@ function Filter(props) {
                 </div>
 
                 <div className="row filter-item">
-                    <button
-                        className="btn btn-primary button-filter"
-                        onClick={onFilterApplied}
-                    >
+                    <button className="btn btn-primary button-filter" onClick={onFilterApplied}>
                         Apply filter
                     </button>
                 </div>

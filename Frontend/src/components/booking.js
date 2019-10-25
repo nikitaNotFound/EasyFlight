@@ -1,8 +1,8 @@
 import React from "react";
 
-import Header from "./booking/header";
+import Header from "./common/header";
 import Content from "./booking/content";
-import Footer from "./booking/footer";
+import Footer from "./common/footer";
 
 export default function Booking({props=props}) {
     return (

@@ -7,7 +7,7 @@ export default function UnauthorizedRoute({ component: Component, ...rest }) {
     return (
         <Route
             {...rest}
-            render={() => (UserService.checkLogin().status === false ? <Component /> : <Redirect to="/profile" />)}
+            render={() => (UserService.checkLogin().authorized === false ? <Component /> : <Redirect to="/profile" />)}
         />
     );
 }
