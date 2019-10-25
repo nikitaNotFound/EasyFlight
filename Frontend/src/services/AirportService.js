@@ -12,7 +12,7 @@ export async function getById(id) {
         }
     );
 
-    return await createRequestResult(response, RequestTypes.contentExpected);
+    return await createRequestResult(response, RequestTypes.ContentExpected);
 }
 
 export async function add(airport) {
@@ -26,7 +26,7 @@ export async function add(airport) {
         }
     );
 
-    return await createRequestResult(response, RequestTypes.contentNotExpected);
+    return await createRequestResult(response, RequestTypes.NoContentExpected);
 }
 
 export async function update(airport) {
@@ -40,7 +40,7 @@ export async function update(airport) {
         }
     );
 
-    return await createRequestResult(response, RequestTypes.contentNotExpected);
+    return await createRequestResult(response, RequestTypes.NoContentExpected);
 }
 
 export async function searchByName(nameFilter) {
@@ -53,5 +53,5 @@ export async function searchByName(nameFilter) {
         }
     );
 
-    return await createRequestResult(response, RequestTypes.contentExpected);
+    return await createRequestResult(response, RequestTypes.ContentExpected);
 }

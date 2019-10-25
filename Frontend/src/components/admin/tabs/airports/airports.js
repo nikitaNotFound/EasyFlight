@@ -6,6 +6,7 @@ import Airport from './airport';
 import '../../../../styles/items-list.css';
 
 export default function Airports(props) {
+    // before user press search
     if (props.airports == null) {
         return (
             <div className="items-list">
@@ -13,6 +14,7 @@ export default function Airports(props) {
         );
     }
 
+    // when search doesnt give any result
     if (props.airports.length == 0) {
         return (
             <div className="items-list">

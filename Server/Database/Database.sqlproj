@@ -82,11 +82,10 @@
     <Build Include="dbo\Stored Procedures\GetAllCities.sql" />
     <Build Include="dbo\Stored Procedures\GetAllAirports.sql" />
     <Build Include="dbo\Stored Procedures\GetAirportById.sql" />
-    <Build Include="dbo\Stored Procedures\CheckCountryDublicate.sql" />
-    <Build Include="dbo\Stored Procedures\CheckCityDublicate.sql" />
-    <Build Include="dbo\Stored Procedures\CheckAirportDublicate.sql" />
     <Build Include="dbo\Stored Procedures\AddCountry.sql" />
     <Build Include="dbo\Stored Procedures\AddCity.sql" />
     <Build Include="dbo\Stored Procedures\AddAirport.sql" />
+    <Build Include="dbo\Stored Procedures\CheckCountryDuplicate.sql" />
+    <Build Include="dbo\Stored Procedures\CheckCityDuplicate.sql" />
   </ItemGroup>
 </Project>
