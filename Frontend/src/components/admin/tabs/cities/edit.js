@@ -6,7 +6,7 @@ import MessageBox from '../../../common/message-box';
 import SearchList from '../../../common/search-list';
 
 import City from '../../../../services/place-models/city';
-import { notFound, duplicate, defaultErrorMessage, invalidInput, saved } from '../../../common/message-box-messages';
+import {  duplicate, defaultErrorMessage, invalidInput, saved } from '../../../common/message-box-messages';
 
 import * as PlaceService from '../../../../services/PlaceService';
 import { NotFoundError, BadRequestError } from '../../../../services/RequestErrors';
@@ -31,7 +31,7 @@ export default function Edit(props) {
                 changeLoadingMode(false);
             } catch (ex) {
                 if (ex instanceof NotFoundError) {
-                    changeMessageBoxValue(notFound());
+                    props.history.push('/not-found');
                 } else {
                     changeMessageBoxValue(defaultErrorMessage());
                 }
