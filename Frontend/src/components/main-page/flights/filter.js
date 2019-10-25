@@ -61,7 +61,7 @@ function Filter(props) {
         const cityResult = await PlaceService.getCityById(airport.cityId);
         const countryResult = await PlaceService.getCountryById(cityResult.value.countryId);
 
-        const finalName = `${airport.name} (${cityResult.value.name}, ${countryResult.value.name})`;
+        const finalName = `${airport.name} (${cityResult.name}, ${countryResult.name})`;
 
         return finalName;
     }

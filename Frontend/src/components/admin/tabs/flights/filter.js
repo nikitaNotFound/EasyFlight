@@ -59,10 +59,12 @@ function Filter(props) {
 
     function showMessageBox() {
         if (messageBoxValue) {
-            return <MessageBox
-                        hideFunc={changeMessageBoxValue}
-                        message={messageBoxValue}
-                    />
+            return (
+                <MessageBox
+                    hideFunc={changeMessageBoxValue}
+                    message={messageBoxValue}
+                />
+            );
         }
     }
 

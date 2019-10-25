@@ -1,7 +1,7 @@
 ﻿create procedure [dbo].[UpdateAirport]
-    @id AS INT,
-    @name AS NVARCHAR(50),
-    @cityId AS INT
+    @id as int,
+    @name as nvarchar(50),
+    @cityId as int
 as
     update Airports
     set Name = @name, CityId = @cityId
