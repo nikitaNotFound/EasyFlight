@@ -10,7 +10,7 @@ namespace DataAccessLayer.Repositories.Accounts
     {
         Task<AccountEntity> GetByEmail(string email);
         Task<AccountEntity> LoginAsync(AccountEntity account);
-        Task<bool> CheckDublicateAsync(AccountEntity account);
+        Task<bool> CheckDuplicateAsync(AccountEntity account);
         Task<AccountEntity> RegisterAsync(AccountEntity account);
     }
 }

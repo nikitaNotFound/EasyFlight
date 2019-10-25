@@ -5,14 +5,14 @@ import MessageBox from '../common/message-box';
 
 import * as UserService from '../../services/UserSerivce';
 
-import User from '../../services/user-models/user';
+import RegistrationUser from '../../services/user-models/registration-user';
 
 import googleIcon from '../../icons/google-icon.png';
 import facebookIcon from '../../icons/facebook-icon.png';
 
 import '../../styles/registration.css';
 import { BadRequestError } from '../../services/RequestErrors';
-import { invalidInput, defaultErrorMessage } from '../common/message-box-messages';
+import { invalidInput, defaultErrorMessage, duplicate } from '../common/message-box-messages';
 
 function Content(props) {
     const [name, changeName] = useState();
@@ -23,12 +23,21 @@ function Content(props) {
     const [messageBoxValue, changeMessageBoxValue] = useState();
 
     async function onRegister() {
+        if (!name
+            || !surname
+            || !email
+            || !password
+            || !confirmPassword
+        ) {
+            changeMessageBoxValue(invalidInput());
+        }
+        
         if (password != confirmPassword) {
-            changeMessageBoxValue("Password confirming failed!");
+            changeMessageBoxValue("Passwords do not match!");
             return;
         }
 
-        const newUser = new User(
+        const newUser = new RegistrationUser(
             name,
             surname,
             email,
@@ -40,7 +49,7 @@ function Content(props) {
             props.history.push('/');
         } catch (ex) {
             if (ex instanceof BadRequestError) {
-                changeMessageBoxValue(invalidInput());
+                changeMessageBoxValue(duplicate(email));
             } else {
                 changeMessageBoxValue(defaultErrorMessage());
             }

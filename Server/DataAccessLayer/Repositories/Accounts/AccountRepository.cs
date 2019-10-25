@@ -18,12 +18,12 @@ namespace DataAccessLayer.Repositories.Accounts
         }
 
 
-        public async Task<bool> CheckDublicateAsync(AccountEntity account)
+        public async Task<bool> CheckDuplicateAsync(AccountEntity account)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             return await db.ExecuteScalarAsync<bool>(
-                "CheckAccountDublicate",
+                "CheckAccountDuplicate",
                 new { email = account.Email },
                 commandType: CommandType.StoredProcedure);
         }

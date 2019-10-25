@@ -6,10 +6,10 @@ import '../../styles/login.css';
 
 import { connect } from 'react-redux';
 
-function Header(userInfo) {
+function Header(state) {
     function showBar() {
-        if (userInfo) {
-            return <ProfileBar userInfo={userInfo} />;
+        if (state.userInfo) {
+            return <ProfileBar userInfo={state.userInfo} />;
         }
         return <SignBar />;
     }
@@ -29,4 +29,4 @@ function Header(userInfo) {
     );
 }
 
-export default connect(state => state.userInfo)(Header);
+export default connect(state => state)(Header);

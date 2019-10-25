@@ -23,3 +23,7 @@ export function added() {
 export function saved() {
     return 'Saved!'
 }
+
+export function badLoginData() {
+    return 'Incorrect login or password!';
+}

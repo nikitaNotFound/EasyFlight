@@ -10,7 +10,7 @@ import facebookIcon from '../../icons/facebook-icon.png';
 
 import '../../styles/registration.css';
 import { BadRequestError } from '../../services/RequestErrors';
-import { invalidInput, defaultErrorMessage } from '../common/message-box-messages';
+import { invalidInput, defaultErrorMessage, badLoginData } from '../common/message-box-messages';
 
 function Content(props) {
     const [email, changeEmail] = useState(null);
@@ -20,7 +20,7 @@ function Content(props) {
 
     async function onLogin() {
         if (!email || !password) {
-            changeMessageBoxValue('Enter account info!');
+            changeMessageBoxValue(invalidInput());
             return;
         }
 
@@ -29,7 +29,7 @@ function Content(props) {
             props.history.push('/');
         } catch (ex) {
             if (ex instanceof BadRequestError) {
-                changeMessageBoxValue(invalidInput());
+                changeMessageBoxValue(badLoginData());
             } else {
                 changeMessageBoxValue(defaultErrorMessage());
             }

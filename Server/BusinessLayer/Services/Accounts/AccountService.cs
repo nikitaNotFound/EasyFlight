@@ -54,9 +54,9 @@ namespace BusinessLayer.Services.Accounts
             dalAccount.Salt = saltForNewAccount;
             dalAccount.HashedPassword = HashService.GenerateHash(account.Password, saltForNewAccount);
 
-            bool dublicate = await _accountRepository.CheckDublicateAsync(dalAccount);
+            bool duplicate = await _accountRepository.CheckDuplicateAsync(dalAccount);
 
-            if (dublicate)
+            if (duplicate)
             {
                 return null;
             }

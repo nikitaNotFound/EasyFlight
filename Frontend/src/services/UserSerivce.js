@@ -69,7 +69,7 @@ export async function register(user) {
         }
     );
         
-    const result = await createRequestResult(response);
+    const result = await createRequestResult(response, RequestTypes.ContentExpected);
 
     const token = result.value.token;
 

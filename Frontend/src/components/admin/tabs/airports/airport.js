@@ -20,11 +20,11 @@ export default function Airport(props) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const cityResult = await PlaceService.getCityById(props.airport.cityId);
-                changeCity(cityResult.name);
+                const city = await PlaceService.getCityById(props.airport.cityId);
+                changeCity(city.name);
 
-                const countryResult = await PlaceService.getCountryById(cityResult.countryId);
-                changeCountry(countryResult.name);
+                const country = await PlaceService.getCountryById(city.countryId);
+                changeCountry(country.name);
 
                 changeLoading(false);
             } catch {
