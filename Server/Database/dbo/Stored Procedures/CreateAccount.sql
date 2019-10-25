@@ -1,4 +1,4 @@
-﻿create procedure [dbo].[CreateAccount]
+create procedure [dbo].[CreateAccount]
     @firstName as nvarchar(50),
     @secondName as nvarchar(50),
     @email as nvarchar(50),
