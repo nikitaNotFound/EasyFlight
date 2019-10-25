@@ -1,4 +1,4 @@
-﻿create procedure [dbo].[GetAccount] 
+create procedure [dbo].[GetAccount] 
     @email as nvarchar(50),
     @hashedPassword as varbinary(255)
 as

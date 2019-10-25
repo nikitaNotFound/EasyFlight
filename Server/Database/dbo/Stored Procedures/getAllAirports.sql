@@ -1,4 +1,4 @@
-create procedure [dbo].[GetAllAirports]
+﻿CREATE PROCEDURE [dbo].[GetAllAirports]
 as
-    select *
-    from Airports;
+	select *
+	from Airports;

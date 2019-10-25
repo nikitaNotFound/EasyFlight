@@ -1,4 +1,4 @@
-﻿create procedure [dbo].[CheckCountryDuplicate]
+create procedure [dbo].[CheckCountryDuplicate]
     @name as nvarchar(60)
 as
     select top 1 1
