@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 import AirportHeadline from './airport-headline';
 import Spinner from '../../../common/spinner';
+import MessageBox from '../../../common/message-box';
 
 import AirportObject from '../../../../services/airport-models/airport';
 
@@ -37,13 +38,21 @@ export default function Airport(props) {
         return <Spinner headline="Receiving information about airport..."/>
     }
 
+    function showMessageBox() {
+        if (messageBoxValue) {
+            return (
+                <MessageBox
+                    message={messageBoxValue}
+                    hideFunc={changeMessageBoxValue}
+                />
+            );
+        }
+    }
+
     return (
         <div className="row rounded list-item">
-            <div className="col-lg-2 col-sm-3">
-                <img src="" className="list-item-img" alt="airport"/>
-            </div>
-
-            <div className="col-lg-9 col-sm-9">
+            {showMessageBox()}
+            <div className="col-lg-10 col-sm-12">
                 <AirportHeadline
                     name={props.airport.name}
                     location={`${city}, ${counrty}`}
@@ -51,7 +60,7 @@ export default function Airport(props) {
                 {props.desc}
             </div>
 
-            <div className="col-lg-1 col-sm-12">
+            <div className="col-lg-2 col-sm-12">
                 <Link to={`/admin/airports/edit/${props.airport.id}`}>
                     <div className="button edit-button rounded non-selectable">
                         Edit

@@ -9,8 +9,8 @@ import Airport from '../../../../services/airport-models/airport';
 
 import * as AirportService from '../../../../services/AirportService';
 import * as PlaceService from '../../../../services/PlaceService';
-import { invalidInput, notFound, duplicate, saved, defaultErrorMessage } from '../../../common/message-box-messages';
-import { NotFoundError, BadRequestError } from '../../../../services/Errors';
+import { invalidInput, duplicate, saved, defaultErrorMessage } from '../../../common/message-box-messages';
+import { NotFoundError, BadRequestError } from '../../../../services/RequestErrors';
 
 export default function Edit(props) {
     const [loading, changeLoadingMode] = useState(true);
@@ -39,7 +39,7 @@ export default function Edit(props) {
                 changeLoadingMode(false);
             } catch (ex) {
                 if (ex instanceof NotFoundError) {
-                    changeMessageBoxValue(notFound());
+                    props.history.push('/not-found');
                 } else {
                     changeMessageBoxValue(defaultErrorMessage());
                 }

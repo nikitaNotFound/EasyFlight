@@ -1,6 +1,6 @@
 import * as config  from '../config.json';
 
-import { createRequestResult, headers } from './RequestAssistant';
+import { createRequestResult, headers, RequestTypes } from './RequestAssistant';
 
 export async function getById(id) {
     const response = await fetch(
@@ -12,7 +12,7 @@ export async function getById(id) {
         }
     );
 
-    return await createRequestResult(response, true);
+    return await createRequestResult(response, RequestTypes.contentExpected);
 }
 
 export async function add(airport) {
@@ -26,7 +26,7 @@ export async function add(airport) {
         }
     );
 
-    return await createRequestResult(response, false);
+    return await createRequestResult(response, RequestTypes.contentNotExpected);
 }
 
 export async function update(airport) {
@@ -40,7 +40,7 @@ export async function update(airport) {
         }
     );
 
-    return await createRequestResult(response, false);
+    return await createRequestResult(response, RequestTypes.contentNotExpected);
 }
 
 export async function searchByName(nameFilter) {
@@ -53,5 +53,5 @@ export async function searchByName(nameFilter) {
         }
     );
 
-    return await createRequestResult(response, true);
+    return await createRequestResult(response, RequestTypes.contentExpected);
 }

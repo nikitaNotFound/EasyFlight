@@ -135,3 +135,28 @@ export async function searchCountryCitiesByName(countryId, nameFilter) {
 
     return createRequestResult(response, RequestTypes.ContentExpected);
 }
+
+export async function getCityAirports(cityId) {
+    const response = await fetch(
+        `${config.API_URL}/cities/${cityId}/airports`,
+        {
+            method: 'GET',
+            mode: 'cors',
+            headers: headers
+        }
+    );
+    return await createRequestResult(response, RequestTypes.ContentExpected);
+}
+
+export async function searchCityAirportsByName(cityId, nameFilter) {
+    const response = await fetch(
+        `${config.API_URL}/cities/${cityId}/airports?nameFilter=${nameFilter}`,
+        {
+            method: 'GET',
+            mode: 'cors',
+            headers: headers
+        }
+    );
+
+    return await createRequestResult(response, RequestTypes.ContentExpected);
+}

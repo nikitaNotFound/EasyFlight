@@ -9,7 +9,7 @@ import { invalidInput, duplicate, defaultErrorMessage, added } from '../../../co
 
 import * as PlaceService from '../../../../services/PlaceService';
 import * as AirportService from '../../../../services/AirportService';
-import { BadRequestError } from '../../../../services/Errors';
+import { BadRequestError } from '../../../../services/RequestErrors';
 
 export default function Add() {
     const [name, changeName] = useState();
