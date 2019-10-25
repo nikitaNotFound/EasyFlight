@@ -2,10 +2,7 @@ import { users, userFlights } from './DataBase';
 import { isArray } from 'util';
 import User from './user-models/user';
 
-import * as RequestController from './RequestController';
-import * as HttpStatus from 'http-status-codes';
-
-import RequestResult from './request-result';
+import { createRequestResult, RequestTypes } from './RequestAssistant';
 
 import store from '../store/store';
 import * as types from '../store/ActionTypes';
@@ -31,77 +28,61 @@ export function getUserFlights(userId) {
 }
 
 export async function login(user) {
-    try {
-        const response = await fetch(
-            `${config.API_URL}/accounts/login`,
-            {
-                method: 'POST',
-                mode: 'cors',
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(user)
-            }
-        );
-            
-        const result = await RequestController.createRequestResult(response);
-        if (result.successful === false) {
-            return result;
-        } else {
-            const token = result.value.token;
-
-            store.dispatch({ type: types.CHANGE_AUTH_TOKEN, payload: token });
-
-            const userInfo = new User(
-                result.value.firstName,
-                result.value.secondName,
-                result.value.email,
-                result.value.role
-            );
-            store.dispatch({ type: types.CHANGE_USER_INFO, payload: userInfo });
-            return result;
+    const response = await fetch(
+        `${config.API_URL}/accounts/login`,
+        {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(user)
         }
-    } catch {
-        const errorInfo = HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR);
-        return new RequestResult(false, errorInfo);
-    }
+    );
+        
+    const result = await createRequestResult(response);
+
+    const token = result.value.token;
+
+    store.dispatch({ type: types.CHANGE_AUTH_TOKEN, payload: token });
+
+    const userInfo = new User(
+        result.value.firstName,
+        result.value.secondName,
+        result.value.email,
+        result.value.role
+    );
+    store.dispatch({ type: types.CHANGE_USER_INFO, payload: userInfo });
+    return result;
 }
 
 export async function register(user) {
-    try {
-        const response = await fetch(
-            `${config.API_URL}/accounts/register`,
-            {
-                method: 'POST',
-                mode: 'cors',
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(user)
-            }
-        );
-            
-        const result = await RequestController.createRequestResult(response);
-        if (result.successful === false) {
-            return result;
-        } else {
-            const token = result.value.token;
-
-            store.dispatch({ type: types.CHANGE_AUTH_TOKEN, payload: token });
-
-            const userInfo = new User(
-                result.value.firstName,
-                result.value.secondName,
-                result.value.email,
-                result.value.role
-            );
-            store.dispatch({ type: types.CHANGE_USER_INFO, payload: userInfo });
-            return result;
+    const response = await fetch(
+        `${config.API_URL}/accounts/register`,
+        {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(user)
         }
-    } catch {
-        const errorInfo = HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR);
-        return new RequestResult(false, errorInfo);
-    }
+    );
+        
+    const result = await createRequestResult(response);
+
+    const token = result.value.token;
+
+    store.dispatch({ type: types.CHANGE_AUTH_TOKEN, payload: token });
+
+    const userInfo = new User(
+        result.value.firstName,
+        result.value.secondName,
+        result.value.email,
+        result.value.role
+    );
+    store.dispatch({ type: types.CHANGE_USER_INFO, payload: userInfo });
+    return result;
 }
 
 export function logout() {
