@@ -2,7 +2,7 @@ import {airplanes} from './DataBase';
 
 import * as config from '../config.json';
 
-import * as RequestController from './RequestController';
+import * as RequestController from './RequestAssistant';
 
 export function getById(id) {
     return new Promise(
