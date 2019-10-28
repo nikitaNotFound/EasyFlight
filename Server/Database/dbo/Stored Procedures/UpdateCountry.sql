@@ -1,4 +1,4 @@
-create procedure [dbo].[UpdateCountry]
+﻿create procedure [dbo].[UpdateCountry]
     @name as nvarchar(50),
     @id as int
 as
