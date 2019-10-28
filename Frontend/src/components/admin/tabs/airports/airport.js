@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import PropsTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 
 import AirportHeadline from './airport-headline';
 import Spinner from '../../../common/spinner';
 import MessageBox from '../../../common/message-box';
+import EditButton from '../../../common/edit-button';
 
 import AirportObject from '../../../../services/airport-models/airport';
 
@@ -61,11 +61,7 @@ export default function Airport(props) {
             </div>
 
             <div className="col-lg-2 col-sm-12">
-                <Link to={`/admin/airports/edit/${props.airport.id}`}>
-                    <div className="button edit-button rounded non-selectable">
-                        Edit
-                    </div>
-                </Link>
+                <EditButton categoty="airports" editingItemId={props.airport.id}/>
             </div>
         </div>
     );

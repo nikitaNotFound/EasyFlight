@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace DataAccessLayer.Repositories.Cities
 {
-    internal class CityRepository : ICityRepository
+    public class CityRepository : ICityRepository
     {
         private readonly IDalSettings _dalSettings;
 

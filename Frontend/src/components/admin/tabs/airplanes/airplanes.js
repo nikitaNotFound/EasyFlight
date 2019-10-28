@@ -11,12 +11,7 @@ export default function Airplanes(props) {
             {props.airplanes.map(
                 (item, index) => 
                     <Airplane 
-                        name={item.name} 
-                        seatCount={item.seats.length}
-                        carrying={item.carrying}
-                        airplaneId={item.id}
-                        onEdit={props.onEdit}
-                        displayLayout={props.displayLayout}
+                        airplane={item}
                         key={index}
                     />
             )}
