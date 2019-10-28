@@ -27,7 +27,7 @@ export default function App() {
                     <AuthorizedRoute path="/profile" component={Profile} />
                     <AuthorizedRoute path="/booking/:id" component={Booking} />
                     <Route path="/not-found" component={NotFoundPage} />
-                    <Route path="/" component={MainPage} />
+                    <AuthorizedRoute path="/" component={MainPage} />
                 </Switch>
             </BrowserRouter>
         </Provider>

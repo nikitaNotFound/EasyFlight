@@ -6,5 +6,5 @@
     [HashedPassword] VARBINARY (255) NOT NULL,
     [Salt]           BINARY (20)     NOT NULL,
     [Role]           INT             NOT NULL,
-    CONSTRAINT [PK_accounts] PRIMARY KEY CLUSTERED ([Id] ASC)
+    CONSTRAINT [PK_Accounts] PRIMARY KEY CLUSTERED ([Id] ASC)
 );

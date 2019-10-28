@@ -35,7 +35,7 @@ namespace WebAPI.Controllers
         [HttpPost]
         [AllowAnonymous]
         [Route("login")]
-        public async Task<IActionResult> LoginAsync([FromBody] ReciveAccount account)
+        public async Task<IActionResult> LoginAsync([FromBody] RequestAccount account)
         {
             AccountBl accountBl = _mapper.Map<AccountBl>(account);
 
@@ -66,7 +66,7 @@ namespace WebAPI.Controllers
         [HttpPost]
         [AllowAnonymous]
         [Route("register")]
-        public async Task<IActionResult> RegisterAsync([FromBody] ReciveAccount account)
+        public async Task<IActionResult> RegisterAsync([FromBody] RequestAccount account)
         {
             AccountBl accountBl = _mapper.Map<AccountBl>(account);
 

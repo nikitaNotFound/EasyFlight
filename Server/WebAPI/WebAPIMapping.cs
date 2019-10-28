@@ -22,7 +22,7 @@ namespace WebAPI
 
             config.CreateMap<Account, BlAccount>();
             config.CreateMap<BlAccount, Account>();
-            config.CreateMap<ReciveAccount, BlAccount>();
+            config.CreateMap<RequestAccount, BlAccount>();
         }
     }
 }

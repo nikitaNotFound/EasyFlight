@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using BusinessLayer.Models;
 using DataAccessLayer.Repositories.Accounts;
 using AutoMapper;
-using Microsoft.Extensions.Logging;
 using AccountEntity = DataAccessLayer.Models.AccountEntity;
 
 namespace BusinessLayer.Services.Accounts
