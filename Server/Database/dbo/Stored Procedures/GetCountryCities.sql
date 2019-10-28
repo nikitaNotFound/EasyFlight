@@ -1,4 +1,4 @@
-﻿CREATE procedure [dbo].[GetCountryCities]
+﻿create procedure [dbo].[GetCountryCities]
 	@countryId as int
 as
 	select *
