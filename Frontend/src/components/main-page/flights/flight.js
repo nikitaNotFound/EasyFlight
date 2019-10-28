@@ -4,7 +4,8 @@ import PropsTypes from 'prop-types';
 import Spinner from '../../common/spinner';
 import FlightObject from '../../../services/flight-models/flight';
 import * as AirportService from '../../../services/AirportService';
-import * as PlaceService from '../../../services/PlaceService';
+import * as CityService from '../../../services/CityService';
+import * as CountryService from '../../../services/CountryService';
 import { Link } from 'react-router-dom';
 
 function Flight(props) {
@@ -29,8 +30,8 @@ function Flight(props) {
                 changeFromAirport(fromAirport);
                 changeToAirport(toAirport);
 
-                const fromCityLoading = PlaceService.getCityById(fromAirport.cityId);
-                const toCityLoading = PlaceService.getCityById(toAirport.cityId);
+                const fromCityLoading = CityService.getCityById(fromAirport.cityId);
+                const toCityLoading = CityService.getCityById(toAirport.cityId);
 
                 return Promise.all([fromCityLoading, toCityLoading]);
             })
@@ -40,8 +41,8 @@ function Flight(props) {
                 changeFromCity(fromCity);
                 changeToCity(toCity);
 
-                const fromCountryLoading = PlaceService.getCountryById(fromCity.countryId);
-                const toCountryLoading = PlaceService.getCountryById(toCity.countryId);
+                const fromCountryLoading = CountryService.getCountryById(fromCity.countryId);
+                const toCountryLoading = CountryService.getCountryById(toCity.countryId);
 
                 return Promise.all([fromCountryLoading, toCountryLoading]);
             })

@@ -5,7 +5,8 @@ import Cities from './cities';
 import Filter from './filter';
 import MessageBox from '../../../common/message-box';
 
-import * as PlaceService from '../../../../services/PlaceService';
+import * as CityService from '../../../../services/CityService';
+import * as CountryService from '../../../../services/CountryService';
 
 import SearchOptions from '../../../../services/airport-models/search-options';
 
@@ -21,11 +22,11 @@ export default function CityList() {
             let citiesRequest = null;
 
             if (newFilterOptions.name && newFilterOptions.countryId) {
-                citiesRequest = await PlaceService.searchCountryCitiesByName(newFilterOptions.countryId, newFilterOptions.name);
+                citiesRequest = await CountryService.searchCountryCitiesByName(newFilterOptions.countryId, newFilterOptions.name);
             } else if (newFilterOptions.countryId) {
-                citiesRequest = await PlaceService.getCountryCities(newFilterOptions.countryId);
+                citiesRequest = await CountryService.getCountryCities(newFilterOptions.countryId);
             } else {
-                citiesRequest = await PlaceService.searchCitiesByName(newFilterOptions.name);
+                citiesRequest = await CityService.searchCitiesByName(newFilterOptions.name);
             }
 
             changeCities(citiesRequest);

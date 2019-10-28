@@ -8,7 +8,8 @@ import ConfirmActionButton from '../../../common/confirm-action-button';
 import City from '../../../../services/place-models/city';
 import { duplicate, defaultErrorMessage, invalidInput, added } from '../../../common/message-box-messages';
 
-import * as PlaceService from '../../../../services/PlaceService';
+import * as CityService from '../../../../services/CityService';
+import * as CountryService from '../../../../services/CountryService';
 import { BadRequestError } from '../../../../services/RequestErrors';
 
 export default function Add() {
@@ -25,7 +26,7 @@ export default function Add() {
         const newCity = new City(null, country.id, name);
 
         try {
-            await PlaceService.addCity(newCity);
+            await CityService.addCity(newCity);
             changeMessageBoxValue(added());
         } catch (ex) {
             if (ex instanceof BadRequestError) {
@@ -61,7 +62,7 @@ export default function Add() {
                         <div className="editing-params-form">
                             <div className="row">
                                 <SearchList
-                                    searchFunc={PlaceService.searchCountriesByName}
+                                    searchFunc={CountryService.searchCountriesByName}
                                     placeholder="Country"
                                     currentItem={country}
                                     onValueChange={changeCountry}

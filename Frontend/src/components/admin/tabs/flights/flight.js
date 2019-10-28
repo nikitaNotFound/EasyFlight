@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from "react";
-import PropsTypes from "prop-types";
+import React, { useState, useEffect } from 'react';
+import PropsTypes from 'prop-types';
 
-import FlightHeadline from "./flight-headline";
-import Spinner from "../../../common/spinner";
+import FlightHeadline from './flight-headline';
+import Spinner from '../../../common/spinner';
 import EditButton from '../../../common/edit-button';
 
-import * as PlaceService from "../../../../services/PlaceService";
-import * as AirportService from "../../../../services/AirportService";
+import * as CityService from '../../../../services/CityService';
+import * as CountryService from '../../../../services/CountryService';
+import * as AirportService from '../../../../services/AirportService';
 
 function Flight(props) {
     const [loading, changeLoading] = useState(true);
@@ -30,8 +31,8 @@ function Flight(props) {
                 changeFromAirport(fromAirport);
                 changeToAirport(toAirport);
 
-                const fromCityLoading = PlaceService.getCityById(fromAirport.cityId);
-                const toCityLoading = PlaceService.getCityById(toAirport.cityId);
+                const fromCityLoading = CityService.getCityById(fromAirport.cityId);
+                const toCityLoading = CityService.getCityById(toAirport.cityId);
 
                 return Promise.all([fromCityLoading, toCityLoading]);
             })
@@ -41,8 +42,8 @@ function Flight(props) {
                 changeFromCity(fromCity);
                 changeToCity(toCity);
 
-                const fromCountryLoading = PlaceService.getCountryById(fromCity.countryId);
-                const toCountryLoading = PlaceService.getCountryById(toCity.countryId);
+                const fromCountryLoading = CountryService.getCountryById(fromCity.countryId);
+                const toCountryLoading = CountryService.getCountryById(toCity.countryId);
 
                 return Promise.all([fromCountryLoading, toCountryLoading]);
             })

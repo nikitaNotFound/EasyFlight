@@ -8,7 +8,8 @@ import MessageBox from '../../../common/message-box';
 import Airport from '../../../../services/airport-models/airport';
 
 import * as AirportService from '../../../../services/AirportService';
-import * as PlaceService from '../../../../services/PlaceService';
+import * as CityService from '../../../../services/CityService';
+import * as CountryService from '../../../../services/CountryService';
 import { invalidInput, duplicate, saved, defaultErrorMessage } from '../../../common/message-box-messages';
 import { NotFoundError, BadRequestError } from '../../../../services/RequestErrors';
 import ConfirmActionButton from '../../../common/confirm-action-button';
@@ -29,11 +30,11 @@ export default function Edit(props) {
                 changeId(airport.id);
                 changeName(airport.name);
 
-                const city = await PlaceService.getCityById(airport.cityId);
+                const city = await CityService.getCityById(airport.cityId);
 
                 changeCity(city);
 
-                const countryResult = await PlaceService.getCountryById(city.countryId);
+                const countryResult = await CountryService.getCountryById(city.countryId);
 
                 changeCountry(countryResult);
 
@@ -71,7 +72,7 @@ export default function Edit(props) {
     }
 
     async function getCityName(city) {
-        const country = await PlaceService.getCountryById(city.countryId);
+        const country = await CountryService.getCountryById(city.countryId);
 
         const finalName = `${city.name} (${country.name})`;
 
@@ -109,7 +110,7 @@ export default function Edit(props) {
                                         />
                                     </div>
                                     <SearchList
-                                        searchFunc={PlaceService.searchCitiesByName}
+                                        searchFunc={CityService.searchCitiesByName}
                                         searchArgs={[country.id]}
                                         placeholder="City"
                                         currentItem={city}

@@ -6,7 +6,7 @@ import Filter from './filter';
 import MessageBox from '../../../common/message-box';
 
 import * as AirportService from '../../../../services/AirportService';
-import * as PlaceService from '../../../../services/PlaceService';
+import * as CityService from '../../../../services/CityService';
 
 import SearchOptions from '../../../../services/airport-models/search-options';
 import { defaultErrorMessage } from '../../../common/message-box-messages';
@@ -24,11 +24,11 @@ export default function AirportList() {
         try {
             if (newFilterOptions.name && newFilterOptions.cityId) {
                 airportsResult =
-                    await PlaceService.searchCityAirportsByName(newFilterOptions.cityId, newFilterOptions.name);
+                    await CityService.searchCityAirportsByName(newFilterOptions.cityId, newFilterOptions.name);
             } else if (newFilterOptions.name) {
                 airportsResult = await AirportService.searchByName(newFilterOptions.name);
             } else {
-                airportsResult = await PlaceService.getCityAirports(newFilterOptions.cityId);
+                airportsResult = await CityService.getCityAirports(newFilterOptions.cityId);
             }
 
             changeAirports(airportsResult);

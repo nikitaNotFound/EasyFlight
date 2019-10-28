@@ -8,4 +8,3 @@
     [Role]           INT             NOT NULL,
     CONSTRAINT [PK_accounts] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
-

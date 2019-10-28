@@ -5,7 +5,8 @@ import SearchOptions from '../../../../services/flight-models/search-options';
 import ComponentHeadline from '../../../common/component-headline';
 import MessageBox from '../../../common/message-box';
 import * as AirportService from '../../../../services/AirportService';
-import * as PlaceService from '../../../../services/PlaceService';
+import * as CountryService from '../../../../services/CountryService';
+import * as CityService from '../../../../services/CityService';
 
 function Filter(props) {
     const [fromAirport, changeFromAirport] = useState(props.filterOptions.fromAirport);
@@ -50,7 +51,7 @@ function Filter(props) {
     }
 
     async function getCityName(city) {
-        const country = await PlaceService.getCountryById(city.countryId);
+        const country = await CountryService.getCountryById(city.countryId);
 
         const finalName = `${city.name} (${country.name})`;
 
@@ -96,7 +97,7 @@ function Filter(props) {
             <div className="filter-row">
                 <div className="filter-arg">
                     <SearchList
-                        searchFunc={PlaceService.searchCitiesByName}
+                        searchFunc={CityService.searchCitiesByName}
                         placeholder="From city"
                         currentItem={fromCity}
                         getItemName={getCityName}
@@ -105,7 +106,7 @@ function Filter(props) {
                 </div>
                 <div className="filter-arg">
                     <SearchList
-                        searchFunc={PlaceService.searchCitiesByName}
+                        searchFunc={CityService.searchCitiesByName}
                         placeholder="To city"
                         currentItem={toCity}
                         getItemName={getCityName}

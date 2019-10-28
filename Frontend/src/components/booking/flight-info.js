@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from "react";
-import PropsTypes from "prop-types";
+import React, { useState, useEffect } from 'react';
+import PropsTypes from 'prop-types';
 
-import FlightObject from "../../services/flight-models/flight";
+import FlightObject from '../../services/flight-models/flight';
 
-import LayoutHeadline from "./layout-headline";
-import Spinner from "../common/spinner";
+import LayoutHeadline from './layout-headline';
+import Spinner from '../common/spinner';
 
-import * as PlaceService from "../../services/PlaceService";
-import * as AirportService from "../../services/AirportService";
+import * as CountryService from '../../services/CountryService';
+import * as CityService from '../../services/CityService';
+import * as AirportService from '../../services/AirportService';
 
-import moment from "moment";
+import moment from 'moment';
 
 export default function FlightInfo(props) {
     const [from, changeFrom] = useState(null);
@@ -25,13 +26,13 @@ export default function FlightInfo(props) {
             ]);
 
             const [fromCity, toCity] = Promise.all([
-                PlaceService.getCityById(fromAirport.cityId),
-                PlaceService.getCityById(toAirport.cityId)
+                CityService.getCityById(fromAirport.cityId),
+                CityService.getCityById(toAirport.cityId)
             ]);
 
             const [fromCountry, toCountry] = Promise.all([
-                PlaceService.getCountryById(fromCity.countryId),
-                PlaceService.getCountryById(toCity.countryId)
+                CountryService.getCountryById(fromCity.countryId),
+                CountryService.getCountryById(toCity.countryId)
             ]);
 
             changeFrom(`${fromAirport.name} (${fromCity.name}, ${fromCountry.name})`);

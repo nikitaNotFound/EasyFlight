@@ -6,7 +6,8 @@ import MessageBox from '../../../common/message-box';
 import SearchList from '../../../common/search-list';
 
 import SearchOptions from '../../../../services/airport-models/search-options';
-import * as PlaceService from '../../../../services/PlaceService';
+import * as CityService from '../../../../services/CityService';
+import * as CountryService from '../../../../services/CountryService';
 
 export default function Filter(props) {
     const [name, changeName] = useState(props.filterOptions.name);
@@ -40,7 +41,7 @@ export default function Filter(props) {
     }
 
     async function getCityName(city) {
-        const country = await PlaceService.getCountryById(city.countryId);
+        const country = await CountryService.getCountryById(city.countryId);
 
         const finalName = `${city.name} (${country.name})`;
 
@@ -76,7 +77,7 @@ export default function Filter(props) {
             <div className="filter-row">
                 <div className="filter-arg">
                     <SearchList
-                        searchFunc={PlaceService.searchCitiesByName}
+                        searchFunc={CityService.searchCitiesByName}
                         placeholder="City"
                         currentItem={city}
                         getItemName={getCityName}

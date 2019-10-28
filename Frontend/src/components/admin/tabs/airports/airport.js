@@ -8,7 +8,8 @@ import EditButton from '../../../common/edit-button';
 
 import AirportObject from '../../../../services/airport-models/airport';
 
-import * as PlaceService from '../../../../services/PlaceService';
+import * as CityService from '../../../../services/CityService';
+import * as CountryService from '../../../../services/CountryService';
 import { defaultErrorMessage } from '../../../common/message-box-messages';
 
 export default function Airport(props) {
@@ -20,10 +21,10 @@ export default function Airport(props) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const city = await PlaceService.getCityById(props.airport.cityId);
+                const city = await CityService.getCityById(props.airport.cityId);
                 changeCity(city.name);
 
-                const country = await PlaceService.getCountryById(city.countryId);
+                const country = await CountryService.getCountryById(city.countryId);
                 changeCountry(country.name);
 
                 changeLoading(false);

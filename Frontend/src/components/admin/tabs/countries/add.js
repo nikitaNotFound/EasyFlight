@@ -6,7 +6,7 @@ import MessageBox from '../../../common/message-box';
 import Country from '../../../../services/place-models/country';
 import { duplicate, defaultErrorMessage, invalidInput, added } from '../../../common/message-box-messages';
 
-import * as PlaceService from '../../../../services/PlaceService';
+import * as CountryService from '../../../../services/CountryService';
 import { BadRequestError } from '../../../../services/RequestErrors';
 import ConfirmActionButton from '../../../common/confirm-action-button';
 
@@ -23,7 +23,7 @@ export default function Add() {
         let newCountry = new Country(null, name);
 
         try {
-            await PlaceService.addCountry(newCountry);
+            await CountryService.addCountry(newCountry);
             changeMessageBoxValue(added());
         } catch (ex) {
             if (ex instanceof BadRequestError) {
