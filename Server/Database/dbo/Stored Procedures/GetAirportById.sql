@@ -1,6 +1,6 @@
 ﻿create procedure [dbo].[GetAirportById]
     @id as int
 as
-    select top 1 *
+    select top *
     from Airports
     where Id = @id

@@ -1,6 +1,6 @@
 ﻿create procedure [dbo].[GetCountryById]
     @id as int
 as
-    select top 1 *
+    select top *
     from Countries
     where Id = @id
