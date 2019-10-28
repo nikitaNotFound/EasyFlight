@@ -1,4 +1,4 @@
-﻿CREATE procedure [dbo].[CheckSeatTypeDuplicate]
+﻿create procedure [dbo].[CheckSeatTypeDuplicate]
 	@airplaneId as int,
 	@name as nvarchar(50),
 	@color as nvarchar(50)

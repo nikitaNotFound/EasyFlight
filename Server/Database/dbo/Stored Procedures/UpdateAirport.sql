@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[UpdateAirport]
+﻿create procedure [dbo].[UpdateAirport]
 	@id as int,
 	@name as nvarchar(50),
 	@cityId as int
