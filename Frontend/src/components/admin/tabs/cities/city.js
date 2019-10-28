@@ -1,9 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import PropsTypes from 'prop-types';
 
-import CityObject from '../../../../services/place-models/city';
+import EditButton from '../../../common/edit-button';
 
+import CityObject from '../../../../services/place-models/city';
 
 export default function City(props) {
     return (
@@ -13,11 +13,7 @@ export default function City(props) {
             </div>
 
             <div className="col-2">
-                <Link to={`/admin/cities/edit/${props.city.id}`}>
-                    <div className="button edit-button rounded non-selectable">
-                        Edit
-                    </div>
-                </Link>
+                <EditButton categoty="cities" editingItemId={props.city.id}/>
             </div>
         </div>
     );

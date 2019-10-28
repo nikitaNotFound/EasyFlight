@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace BusinessLayer.Services.Cities
 {
-    internal class CityService : ICityService
+    public class CityService : ICityService
     {
         private readonly ICityRepository _cityRepository;
         private readonly IMapper _mapper;

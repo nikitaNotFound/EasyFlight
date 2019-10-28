@@ -8,7 +8,7 @@ using DataAccessLayer.Models;
 
 namespace DataAccessLayer.Repositories.Countries
 {
-    internal class CountryRepository : ICountryRepository
+    public class CountryRepository : ICountryRepository
     {
         private readonly IDalSettings _dalSettings;
 
