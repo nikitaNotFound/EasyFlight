@@ -8,4 +8,3 @@
     [Role]         int             not null,
     constraint [PK_Accounts] primary key clustered ([Id] asc)
 );
-
