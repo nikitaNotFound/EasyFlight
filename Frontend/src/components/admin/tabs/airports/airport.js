@@ -1,47 +1,58 @@
 import React, { useState, useEffect } from 'react';
 import PropsTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 
 import AirportHeadline from './airport-headline';
 import Spinner from '../../../common/spinner';
+import MessageBox from '../../../common/message-box';
+import EditButton from '../../../common/edit-button';
 
 import AirportObject from '../../../../services/airport-models/airport';
 
 import * as PlaceService from '../../../../services/PlaceService';
+import { defaultErrorMessage } from '../../../common/message-box-messages';
 
 export default function Airport(props) {
     const [loading, changeLoading] = useState(true);
-
     const [city, changeCity] = useState();
     const [counrty, changeCountry] = useState();
+    const [messageBoxValue, changeMessageBoxValue] = useState();
 
     useEffect(() => {
-        const cityLoading = PlaceService.getCityById(props.airport.cityId);
+        const fetchData = async () => {
+            try {
+                const cityResult = await PlaceService.getCityById(props.airport.cityId);
+                changeCity(cityResult.name);
 
-        cityLoading
-            .then(foundCity => {
-                changeCity(foundCity.name);
+                const countryResult = await PlaceService.getCountryById(cityResult.countryId);
+                changeCountry(countryResult.name);
 
-                return PlaceService.getCountryById(foundCity.countryId);
-            })
-            .then(foundCountry => {
-                changeCountry(foundCountry.name);
                 changeLoading(false);
-            })
-            .catch();
+            } catch {
+                changeMessageBoxValue(defaultErrorMessage());
+            }
+        }
+        fetchData();
     }, [props.airport.id]);
 
     if (loading) {
         return <Spinner headline="Receiving information about airport..."/>
     }
 
+    function showMessageBox() {
+        if (messageBoxValue) {
+            return (
+                <MessageBox
+                    message={messageBoxValue}
+                    hideFunc={changeMessageBoxValue}
+                />
+            );
+        }
+    }
+
     return (
         <div className="row rounded list-item">
-            <div className="col-lg-2 col-sm-3">
-                <img src="" className="list-item-img" alt="airport"/>
-            </div>
-
-            <div className="col-lg-9 col-sm-9">
+            {showMessageBox()}
+            <div className="col-lg-10 col-sm-12">
                 <AirportHeadline
                     name={props.airport.name}
                     location={`${city}, ${counrty}`}
@@ -49,12 +60,8 @@ export default function Airport(props) {
                 {props.desc}
             </div>
 
-            <div className="col-lg-1 col-sm-12">
-                <Link to={`/admin/airports/edit/${props.airport.id}`}>
-                    <div className="edit-button rounded non-selectable">
-                        Edit
-                    </div>
-                </Link>
+            <div className="col-lg-2 col-sm-12">
+                <EditButton categoty="airports" editingItemId={props.airport.id}/>
             </div>
         </div>
     );

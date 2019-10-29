@@ -9,51 +9,65 @@ import Airport from '../../../../services/airport-models/airport';
 
 import * as AirportService from '../../../../services/AirportService';
 import * as PlaceService from '../../../../services/PlaceService';
-import { invalidInput } from '../../../common/message-box-messages';
+import { invalidInput, duplicate, saved, defaultErrorMessage } from '../../../common/message-box-messages';
+import { NotFoundError, BadRequestError } from '../../../../services/RequestErrors';
+import ConfirmActionButton from '../../../common/confirm-action-button';
 
 export default function Edit(props) {
     const [loading, changeLoadingMode] = useState(true);
+    const [id, changeId] = useState();
     const [name, changeName] = useState();
     const [country, changeCountry] = useState();
     const [city, changeCity] = useState();
-    const [desc, changeDesc] = useState();
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
     useEffect(() => {
-        const airportLoading = AirportService.getById(props.match.params.id);
-        airportLoading
-            .then(foundAirport => {
-                changeName(foundAirport.name);
-                changeDesc(foundAirport.description);
+        const fetchData = async () => {
+            try {
+                const airport = await AirportService.getById(props.match.params.id);
 
-                return PlaceService.getCityById(foundAirport.cityId);
-            })
-            .then(foundCity => {
-                changeCity(foundCity);
+                changeId(airport.id);
+                changeName(airport.name);
 
-                return PlaceService.getCountryById(foundCity.countryId);
-            })
-            .then(foundCountry => {
-                changeCountry(foundCountry);
+                const city = await PlaceService.getCityById(airport.cityId);
+
+                changeCity(city);
+
+                const countryResult = await PlaceService.getCountryById(city.countryId);
+
+                changeCountry(countryResult);
+
                 changeLoadingMode(false);
-            })
-            .catch(error => {
-                alert(error);
-            });
+            } catch (ex) {
+                if (ex instanceof NotFoundError) {
+                    props.history.push('/not-found');
+                } else {
+                    changeMessageBoxValue(defaultErrorMessage());
+                }
+            }
+        }
+        fetchData();
     }, [props.match.params.id]);
 
-    function onDataSave() {
-        if (!name || !country || !city || !desc) {
+    async function onDataSave() {
+        if (!name || !country || !city) {
             changeMessageBoxValue(invalidInput());
+
             return;
         }
 
-        let newAirport = new Airport(null, name, city.id, desc);
-        // HERE WILL BE HTTP REQUEST
-    }
-
-    function getCountryName(country) {
-        return country.name;
+        let newAirport = new Airport(id, name, city.id);
+        
+        try {
+            await AirportService.update(newAirport)
+            changeMessageBoxValue(saved());
+        } catch (ex) {
+            if (ex instanceof BadRequestError) {
+                changeMessageBoxValue(duplicate(name));
+            } else {
+                changeMessageBoxValue(defaultErrorMessage());
+            }
+        }
     }
 
     async function getCityName(city) {
@@ -70,21 +84,6 @@ export default function Edit(props) {
                 <MessageBox
                     message={messageBoxValue}
                     hideFunc={changeMessageBoxValue}
-                />
-            );
-        }
-    }
-
-    function showCityChooser() {
-        if (country) {
-            return (
-                <SearchList
-                    searchFunc={PlaceService.searchCitiesByName}
-                    searchArgs={[country.id]}
-                    placeholder="City"
-                    currentItem={city}
-                    getItemName={getCityName}
-                    onValueChange={changeCity}
                 />
             );
         }
@@ -110,19 +109,18 @@ export default function Edit(props) {
                                         />
                                     </div>
                                     <SearchList
-                                        searchFunc={PlaceService.searchCountriesByName}
-                                        placeholder="Country"
-                                        currentItem={country}
-                                        getItemName={getCountryName}
-                                        onValueChange={changeCountry}
+                                        searchFunc={PlaceService.searchCitiesByName}
+                                        searchArgs={[country.id]}
+                                        placeholder="City"
+                                        currentItem={city}
+                                        getItemName={getCityName}
+                                        onValueChange={changeCity}
                                     />
-                                    {showCityChooser()}
                                 </div>
-                                <textarea onChange={changeDesc} value={desc}/>
                             </div>
                         </div>
                     </div>
-                    <div className="custom-button big" onClick={onDataSave}>Save</div>
+                    <ConfirmActionButton onClick={onDataSave} buttonContent="Save"/>
                 </form>
                 {showMessageBox()}
             </div>

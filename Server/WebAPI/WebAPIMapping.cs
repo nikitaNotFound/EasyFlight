@@ -2,6 +2,7 @@
 using WebAPI.Models;
 using BlCity = BusinessLayer.Models.City;
 using BlCountry = BusinessLayer.Models.Country;
+using BlAirport = BusinessLayer.Models.Airport;
 
 namespace WebAPI
 {
@@ -14,6 +15,9 @@ namespace WebAPI
 
             config.CreateMap<Country, BlCountry>();
             config.CreateMap<BlCountry, Country>();
+
+            config.CreateMap<Airport, BlAirport>();
+            config.CreateMap<BlAirport, Airport>();
         }
     }
 }

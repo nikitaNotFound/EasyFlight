@@ -5,24 +5,36 @@ import SearchList from '../../../common/search-list';
 import MessageBox from '../../../common/message-box';
 
 import Airport from '../../../../services/airport-models/airport';
+import { invalidInput, duplicate, defaultErrorMessage, added } from '../../../common/message-box-messages';
 
 import * as PlaceService from '../../../../services/PlaceService';
-import { invalidInput } from '../../../common/message-box-messages';
+import * as AirportService from '../../../../services/AirportService';
+import { BadRequestError } from '../../../../services/RequestErrors';
+import ConfirmActionButton from '../../../common/confirm-action-button';
 
 export default function Add() {
     const [name, changeName] = useState();
     const [city, changeCity] = useState();
-    const [desc, changeDesc] = useState();
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
-    function onDataSave() {
-        if (!name || !city || !desc) {
+    async function onDataSave() {
+        if (!name || !city) {
             changeMessageBoxValue(invalidInput());
             return;
         }
 
-        let newAirport = new Airport(null, name, city.id, desc);
-        //HERE WILL BE HTTP REQUEST
+        const newAirport = new Airport(null, name, city.id);
+
+        try {
+            await AirportService.add(newAirport);
+            changeMessageBoxValue(added());
+        } catch (ex) {
+            if (ex instanceof BadRequestError) {
+                changeMessageBoxValue(duplicate(name));
+            } else {
+                changeMessageBoxValue(defaultErrorMessage());
+            }
+        }
     }
 
     async function getCityName(city) {
@@ -72,17 +84,10 @@ export default function Add() {
                                 />
                                 <br/>
                             </div>
-                            <textarea
-                                onChange={(event) => changeDesc(event.target.value)}
-                                value={desc}
-                                placeholder="description"
-                            />
                         </div>
                     </div>
                 </div>
-                <div className="custom-button big" onClick={onDataSave}>
-                    Save
-                </div>
+                <ConfirmActionButton onClick={onDataSave} buttonContent="Add"/>
             </div>
             {showMessageBox()}
         </div>

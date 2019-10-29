@@ -13,6 +13,9 @@ namespace BusinessLayer
 
             config.CreateMap<Country, CountryEntity>();
             config.CreateMap<CountryEntity, Country>();
+
+            config.CreateMap<Airport, AirportEntity>();
+            config.CreateMap<AirportEntity, Airport>();
         }
     }
 }

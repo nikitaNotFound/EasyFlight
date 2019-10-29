@@ -1,6 +1,6 @@
 import * as config  from '../config.json';
 
-import { createRequestResult, RequestTypes } from './RequestAssistant';
+import { createRequestResult, RequestTypes, headers } from './RequestAssistant';
 
 export async function getCountryById(id) {
     const response = await fetch(
@@ -8,9 +8,7 @@ export async function getCountryById(id) {
         {
             method: 'GET',
             mode: 'cors',
-            headers: {
-                'Content-Type': 'application/json'
-            }
+            headers: headers
         }
     );
 
@@ -23,9 +21,7 @@ export async function searchCountriesByName(nameFilter) {
         {
             method: 'GET',
             mode: 'cors',
-            headers: {
-                'Content-Type': 'application/json'
-            }
+            headers: headers
         }
     );
 
@@ -38,9 +34,7 @@ export async function addCountry(country) {
         {
             method: 'POST',
             mode: 'cors',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: headers,
             body: JSON.stringify(country)
         }
     );
@@ -54,9 +48,7 @@ export async function updateCountry(country) {
         {
             method: 'PUT',
             mode: 'cors',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: headers,
             body: JSON.stringify(country)
         }
     );
@@ -70,9 +62,7 @@ export async function getCityById(id) {
         {
             method: 'GET',
             mode: 'cors',
-            headers: {
-                'Content-Type': 'application/json'
-            }
+            headers: headers
         }
     );
 
@@ -85,9 +75,7 @@ export async function addCity(city) {
         {
             method: 'POST',
             mode: 'cors',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: headers,
             body: JSON.stringify(city)
         }
     );
@@ -101,9 +89,7 @@ export async function updateCity(city) {
         {
             method: 'PUT',
             mode: 'cors',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: headers,
             body: JSON.stringify(city)
         }
     );
@@ -117,9 +103,7 @@ export async function searchCitiesByName(nameFilter) {
         {
             method: 'GET',
             mode: 'cors',
-            headers: {
-                'Content-Type': 'application/json'
-            }
+            headers: headers
         }
     );
     
@@ -132,9 +116,7 @@ export async function getCountryCities(countryId) {
         {
             method: 'GET',
             mode: 'cors',
-            headers: {
-                'Content-Type': 'application/json'
-            }
+            headers: headers
         }
     );
 
@@ -147,11 +129,34 @@ export async function searchCountryCitiesByName(countryId, nameFilter) {
         {
             method: 'GET',
             mode: 'cors',
-            headers: {
-                'Content-Type': 'application/json'
-            }
+            headers: headers
         }
     );
 
     return createRequestResult(response, RequestTypes.ContentExpected);
+}
+
+export async function getCityAirports(cityId) {
+    const response = await fetch(
+        `${config.API_URL}/cities/${cityId}/airports`,
+        {
+            method: 'GET',
+            mode: 'cors',
+            headers: headers
+        }
+    );
+    return await createRequestResult(response, RequestTypes.ContentExpected);
+}
+
+export async function searchCityAirportsByName(cityId, nameFilter) {
+    const response = await fetch(
+        `${config.API_URL}/cities/${cityId}/airports?nameFilter=${nameFilter}`,
+        {
+            method: 'GET',
+            mode: 'cors',
+            headers: headers
+        }
+    );
+
+    return await createRequestResult(response, RequestTypes.ContentExpected);
 }

@@ -1,5 +1,6 @@
-﻿using BusinessLayer.Services.Cities;
+using BusinessLayer.Services.Cities;
 using BusinessLayer.Services.Countries;
+using BusinessLayer.Services.Airports;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BusinessLayer
@@ -10,6 +11,7 @@ namespace BusinessLayer
         {
             services.AddSingleton<ICityService, CityService>();
             services.AddSingleton<ICountryService, CountryService>();
+            services.AddSingleton<IAirportService, AirportService>();
         }
     }
 }

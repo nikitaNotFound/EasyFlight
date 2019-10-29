@@ -25,3 +25,7 @@ export const RequestTypes = {
     ContentExpected: 0,
     NoContentExpected: 1
 }
+
+export const headers = {
+    'Content-Type': 'application/json'
+}

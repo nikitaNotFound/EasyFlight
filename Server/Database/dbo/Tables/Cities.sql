@@ -4,3 +4,4 @@
     [CountryId] INT           NOT NULL,
     CONSTRAINT [PK_Cities] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
+

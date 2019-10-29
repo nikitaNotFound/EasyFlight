@@ -1,4 +1,4 @@
-﻿create procedure SearchCountriesByName
+﻿create procedure [dbo].[SearchCountriesByName]
     @nameFilter as nvarchar(60)
 as
     select *

@@ -3,3 +3,4 @@
     [Name] NVARCHAR (50) NOT NULL,
     CONSTRAINT [PK_Countries] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
+

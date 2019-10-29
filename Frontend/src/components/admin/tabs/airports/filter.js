@@ -10,21 +10,23 @@ import * as PlaceService from '../../../../services/PlaceService';
 
 export default function Filter(props) {
     const [name, changeName] = useState(props.filterOptions.name);
-    const [country, changeCountry] = useState(props.filterOptions.country);
     const [city, changeCity] = useState(props.filterOptions.city);
-
+ 
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
     function onFilterApply() {
         if (!name
-            && !country
             && !city
         ) {
             changeMessageBoxValue('Setup filter!');
             return;
         }
 
-        const newFilterOptions = new SearchOptions(name, country, city);
+        const cityId = city
+            ? city.id
+            : null;
+
+        const newFilterOptions = new SearchOptions(name, cityId);
 
         props.onFilterApply(newFilterOptions);
     }
@@ -37,10 +39,6 @@ export default function Filter(props) {
         changeName(event.target.value);
     }
 
-    function getCountryName(country) {
-        return country.name;
-    }
-
     async function getCityName(city) {
         const country = await PlaceService.getCountryById(city.countryId);
 
@@ -49,29 +47,14 @@ export default function Filter(props) {
         return finalName;
     }
 
-    function showCityChooser() {
-        if (country) {
-            return (
-                <div className="filter-arg">
-                    <SearchList
-                        searchFunc={PlaceService.searchCitiesByName}
-                        searchArgs={[country.id]}
-                        placeholder="City"
-                        currentItem={city}
-                        getItemName={getCityName}
-                        onValueChange={changeCity}
-                    />
-                </div>
-            );
-        }
-    }
-
     function showMessageBox() {
         if (messageBoxValue) {
-            return <MessageBox
-                        hideFunc={changeMessageBoxValue}
-                        message={messageBoxValue}
-                    />
+            return (
+                <MessageBox
+                    hideFunc={changeMessageBoxValue}
+                    message={messageBoxValue}
+                />
+            );
         }
     }
 
@@ -93,15 +76,13 @@ export default function Filter(props) {
             <div className="filter-row">
                 <div className="filter-arg">
                     <SearchList
-                        searchFunc={PlaceService.searchCountriesByName}
-                        placeholder="Country"
-                        currentItem={country}
-                        getItemName={getCountryName}
-                        onValueChange={changeCountry}
+                        searchFunc={PlaceService.searchCitiesByName}
+                        placeholder="City"
+                        currentItem={city}
+                        getItemName={getCityName}
+                        onValueChange={changeCity}
                     />
                 </div>
-
-                {showCityChooser()}
 
                 <button className="filter-apply rounded" onClick={onFilterApply}>
                     apply

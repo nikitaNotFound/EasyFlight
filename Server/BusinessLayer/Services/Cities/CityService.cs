@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using BusinessLayer.Models;
 using DataAccessLayer.Models;
@@ -52,37 +52,56 @@ namespace BusinessLayer.Services.Cities
         {
             CityEntity cityDal = _mapper.Map<CityEntity>(city);
 
-            bool dublicate = await _cityRepository.CheckDuplicateAsync(cityDal);
+            bool duplicate = await _cityRepository.CheckDuplicateAsync(cityDal);
 
-            if (!dublicate)
+            if (duplicate)
             {
-                await _cityRepository.AddAsync(cityDal);
-                return ResultTypes.Ok;
+                return ResultTypes.Duplicate;
             }
 
-            return ResultTypes.Duplicate;
+            await _cityRepository.AddAsync(cityDal);
+            return ResultTypes.Ok;
         }
 
         public async Task<ResultTypes> UpdateAsync(City city)
         {
             CityEntity oldCityDal = await _cityRepository.GetAsync(city.Id);
 
-            if (oldCityDal != null)
+            if (oldCityDal == null)
             {
-                CityEntity cityDal = _mapper.Map<CityEntity>(city);
-
-                bool dublicate = await _cityRepository.CheckDuplicateAsync(cityDal);
-
-                if (!dublicate)
-                {
-                    await _cityRepository.UpdateAsync(cityDal);
-                    return ResultTypes.Ok;
-                }
-
-                return ResultTypes.Duplicate;
+                return ResultTypes.NotFound;
             }
 
-            return ResultTypes.NotFound;
+            CityEntity cityDal = _mapper.Map<CityEntity>(city);
+
+            bool duplicate = await _cityRepository.CheckDuplicateAsync(cityDal);
+
+            if (duplicate)
+            {
+                return ResultTypes.Duplicate;
+            }
+            
+            await _cityRepository.UpdateAsync(cityDal);
+            return ResultTypes.Ok;
+        }
+
+        public async Task<IReadOnlyCollection<Airport>> GetCityAirportsAsync(int cityId)
+        {
+            IReadOnlyCollection<AirportEntity> airportsDal = await _cityRepository.GetCityAirportsAsync(cityId);
+
+            IReadOnlyCollection<Airport> airports = airportsDal.Select(_mapper.Map<Airport>).ToList();
+
+            return airports;
+        }
+
+        public async Task<IReadOnlyCollection<Airport>> SearchCityAirportsByName(int cityId, string nameFilter)
+        {
+            IReadOnlyCollection<AirportEntity> airportsDal =
+                await _cityRepository.SearchCityAirportsByNameAsync(cityId, nameFilter);
+
+            IReadOnlyCollection<Airport> airports = airportsDal.Select(_mapper.Map<Airport>).ToList();
+
+            return airports;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿create procedure GetAllCountries
+﻿create procedure [dbo].[GetAllCountries]
 as
     select *
     from Countries;

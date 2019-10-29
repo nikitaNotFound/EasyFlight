@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Cors;
 using BusinessLayer.Services.Cities;
 using BlCity = BusinessLayer.Models.City;
+using BlAirport = BusinessLayer.Models.Airport;
 using BusinessLayer;
 using AutoMapper;
 using System.Collections.Generic;
@@ -56,12 +57,33 @@ namespace WebAPI.Controllers
 
             City city = _mapper.Map<City>(blCity);
 
-            if (city != null)
+            if (city == null)
             {
-                return Ok(city);
+                return NotFound();
             }
 
-            return NotFound();
+            return Ok(city);
+        }
+
+        // GET api/cities/{cityId}/airports{?nameFilter}
+        [HttpGet]
+        [Route("{cityId}/airports")]
+        public async Task<ActionResult> GetAirportsAsync(int cityId, string nameFilter)
+        {
+            IReadOnlyCollection<BlAirport> airportsBl;
+
+            if (string.IsNullOrEmpty(nameFilter))
+            {
+                airportsBl = await _cityService.GetCityAirportsAsync(cityId);
+            }
+            else
+            {
+                airportsBl = await _cityService.SearchCityAirportsByName(cityId, nameFilter);
+            }
+
+            IEnumerable<Airport> airports = airportsBl.Select(_mapper.Map<Airport>);
+
+            return Ok(airports);
         }
 
         // POST api/cities

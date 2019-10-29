@@ -1,6 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import PropsTypes from 'prop-types';
+
+import EditButton from '../../../common/edit-button';
 
 import CountryObject from '../../../../services/place-models/country';
 
@@ -13,11 +14,7 @@ export default function Country(props) {
             </div>
 
             <div className="col-2">
-                <Link to={`/admin/countries/edit/${props.country.id}`}>
-                    <div className="button edit-button rounded non-selectable">
-                        Edit
-                    </div>
-                </Link>
+                <EditButton categoty="countries" editingItemId={props.country.id}/>
             </div>
         </div>
     );

@@ -57,12 +57,12 @@ namespace WebAPI.Controllers
 
             Country foundCountry = _mapper.Map<Country>(foundCountryBl);
 
-            if (foundCountry != null)
+            if (foundCountry == null)
             {
-                return Ok(foundCountry);
+                return NotFound();
             }
-
-            return NotFound();
+            
+            return Ok(foundCountry);
         }
 
         // GET api/countries/{countryId}/cities{?nameFilter}

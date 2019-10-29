@@ -1,8 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import PropsTypes from 'prop-types';
 
 import AirplaneHeadline from './airplane-headline';
+import EditButton from '../../../common/edit-button';
+
+import AirplaneObject from '../../../../services/airplane-models/airplane';
 
 export default function Airplane(props) {
     return (
@@ -13,26 +15,19 @@ export default function Airplane(props) {
 
             <div className="col-9">
                 <AirplaneHeadline 
-                    name={props.name}
-                    seatCount={`${props.seatCount} seats`}
+                    name={props.airplane.name}
+                    seatCount={`${props.airplane.seats.length} seats`}
                 />
-                {`max mass = ${props.carrying}kg`}
+                {`max mass = ${props.airplane.carrying}kg`}
             </div>
 
             <div className="col-1">
-                <Link to={`/admin/airplanes/edit/${props.airplaneId}`}>
-                    <div className="edit-button rounded non-selectable">
-                        Edit
-                    </div>
-                </Link>
+                <EditButton categoty="airplanes" editingItemId={props.airplane.id}/>
             </div>
         </div>
     );
 }
 
 Airplane.propsTypes = {
-    name: PropsTypes.string,
-    seatCount: PropsTypes.number,
-    carrying: PropsTypes.number,
-    airplaneId: PropsTypes.number,
+    airplane: PropsTypes.instanceOf(AirplaneObject)
 }

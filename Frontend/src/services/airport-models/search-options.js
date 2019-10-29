@@ -1,12 +1,10 @@
 class SearchOptions {
     name;
-    country;
-    city;
+    cityId;
 
-    constructor(name, country, city) {
+    constructor(name, cityId) {
         this.name = name;
-        this.country = country;
-        this.city = city;
+        this.cityId = cityId;
     }
 }
 

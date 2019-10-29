@@ -3,7 +3,6 @@ import PropsTypes from 'prop-types'
 
 import SeatTypeObject from '../../../services/airplane-models/seat-type';
 
-
 export default function SeatType(props) {
     return (
         <div className="item">

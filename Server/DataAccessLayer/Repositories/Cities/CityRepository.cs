@@ -4,12 +4,11 @@ using Dapper;
 using System.Data.SqlClient;
 using System.Data;
 using DataAccessLayer.Models;
-using AutoMapper;
 using System.Linq;
 
 namespace DataAccessLayer.Repositories.Cities
 {
-    internal class CityRepository : ICityRepository
+    public class CityRepository : ICityRepository
     {
         private readonly IDalSettings _dalSettings;
 
@@ -52,6 +51,33 @@ namespace DataAccessLayer.Repositories.Cities
                 "GetCityById",
                 new { id = id },
                 commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task<IReadOnlyCollection<AirportEntity>> GetCityAirportsAsync(int cityId)
+        {
+            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
+
+            IEnumerable<AirportEntity> airports = await db.QueryAsync<AirportEntity>(
+                "GetCityAirports",
+                new { cityId = cityId },
+                commandType: CommandType.StoredProcedure);
+
+            return airports.ToList();
+        }
+
+        public async Task<IReadOnlyCollection<AirportEntity>> SearchCityAirportsByNameAsync(
+            int cityId,
+            string nameFilter
+        )
+        {
+            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
+
+            IEnumerable<AirportEntity> airports = await db.QueryAsync<AirportEntity>(
+                "SearchCityAirportsByName",
+                new { cityId = cityId, nameFilter = nameFilter },
+                commandType: CommandType.StoredProcedure);
+
+            return airports.ToList();
         }
 
         public async Task AddAsync(CityEntity city)

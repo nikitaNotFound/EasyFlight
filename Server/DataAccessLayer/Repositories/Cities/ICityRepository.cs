@@ -9,8 +9,10 @@ namespace DataAccessLayer.Repositories.Cities
     public interface ICityRepository
     {
         Task<IReadOnlyCollection<CityEntity>> GetAllAsync();
-        Task<IReadOnlyCollection<CityEntity>> SearchByNameAsync(string name);
+        Task<IReadOnlyCollection<CityEntity>> SearchByNameAsync(string nameFilter);
         Task<CityEntity> GetAsync(int id);
+        Task<IReadOnlyCollection<AirportEntity>> GetCityAirportsAsync(int id);
+        Task<IReadOnlyCollection<AirportEntity>> SearchCityAirportsByNameAsync(int cityId, string nameFilter);
         Task AddAsync(CityEntity city);
         Task UpdateAsync(CityEntity city);
         Task<bool> CheckDuplicateAsync(CityEntity city);

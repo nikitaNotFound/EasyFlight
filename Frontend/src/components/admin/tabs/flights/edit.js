@@ -8,6 +8,7 @@ import MessageBox from '../../../common/message-box';
 import Spinner from '../../../common/spinner';
 import TicketsCostEditor from './tickets-cost-editor';
 import ParamField from './param-field';
+import ConfirmActionButton from '../../../common/confirm-action-button';
 
 import BuyIcon from '../../../../icons/add-image.png';
 
@@ -63,7 +64,10 @@ export default function Edit(props) {
 
             const [airplane, airports] = Promise.all([
                 AirplaneService.getById(flight.airplaneId),
-                AirportService.getByIds([flight.fromId, flight.toId])
+                Promise.all([
+                    AirportService.getById(flight.fromId),
+                    AirportService.getById(flight.toId)
+                ])
             ]);
 
             changeAirplane(airplane);
@@ -159,14 +163,14 @@ export default function Edit(props) {
                         <div className="editing-params-form">
                             <div className="row">
                                 <SearchList
-                                    searchFunc={AirportService.search}
+                                    searchFunc={AirportService.searchByName}
                                     getItemName={getAirportName}
                                     onValueChange={changeFromPlace}
                                     currentItem={fromPlace}
                                     placeholder="From"
                                 />
                                 <SearchList
-                                    searchFunc={AirportService.search}
+                                    searchFunc={AirportService.searchByName}
                                     getItemName={getAirportName}
                                     onValueChange={changeToPlace}
                                     currentItem={toPlace}
@@ -236,9 +240,7 @@ export default function Edit(props) {
                         </div>
                     </div>
                 </div>
-                <div className="custom-button big" onClick={onDataSave}>
-                    Save
-                </div>
+                <ConfirmActionButton onClick={onDataSave} buttonContent="Save"/>
             </div>
             {showMessageBox()}
         </div>

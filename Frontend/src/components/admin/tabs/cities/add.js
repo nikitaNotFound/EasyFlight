@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 import Headline from '../../../common/headline';
 import MessageBox from '../../../common/message-box';
 import SearchList from '../../../common/search-list';
+import ConfirmActionButton from '../../../common/confirm-action-button';
 
 import City from '../../../../services/place-models/city';
 import { duplicate, defaultErrorMessage, invalidInput, added } from '../../../common/message-box-messages';
@@ -79,7 +80,7 @@ export default function Add() {
                         </div>
                     </div>
                 </div>
-                <div className="custom-button big" onClick={onDataSave}>Add</div>
+                <ConfirmActionButton onClick={onDataSave} buttonContent="Add"/>
             </div>
             {showMessageBox()}
         </div>

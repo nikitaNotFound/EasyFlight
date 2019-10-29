@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 
 import Headline from '../../../common/headline';
-import BuyIcon from '../../../../icons/add-image.png';
 import SearchList from '../../../common/search-list';
 import MessageBox from '../../../common/message-box';
 import TicketsCostEditor from './tickets-cost-editor';
@@ -12,6 +11,7 @@ import { invalidInput } from '../../../common/message-box-messages';
 
 import * as AirportService from '../../../../services/AirportService';
 import * as AirplaneService from '../../../../services/AirplaneService';
+import ConfirmActionButton from '../../../common/confirm-action-button';
 
 export default function Add() {
     const [airplane, changeAirplane] = useState();
@@ -104,33 +104,18 @@ export default function Add() {
 
             <div className="adding-form">
                 <div className="row">
-                    <div className="col-2">
-                        <input
-                            type="file"
-                            name="image"
-                            id="file-input"
-                            className="file-upload"
-                        />
-                        <label htmlFor="file-input">
-                            <img
-                                src={BuyIcon}
-                                className="adding-form-img"
-                                alt="add"
-                            />
-                        </label>
-                    </div>
-                    <div className="col-10">
+                    <div className="col-12">
                         <div className="editing-params-form">
                             <div className="row">
                                 <SearchList
-                                    searchFunc={AirportService.search}
+                                    searchFunc={AirportService.searchByName}
                                     getItemName={getAirportName}
                                     onValueChange={changeFromPlace}
                                     currentItem={fromPlace}
                                     placeholder="From"
                                 />
                                 <SearchList
-                                    searchFunc={AirportService.search}
+                                    searchFunc={AirportService.searchByName}
                                     getItemName={getAirportName}
                                     onValueChange={changeToPlace}
                                     currentItem={toPlace}
@@ -202,9 +187,7 @@ export default function Add() {
                                 </div>
                             </div>
                         </div>
-                        <div className="custom-button big" onClick={onDataSave}>
-                            Save
-                        </div>
+                        <ConfirmActionButton onClick={onDataSave} buttonContent="Add"/>
                     </div>
                 </div>
             </div>

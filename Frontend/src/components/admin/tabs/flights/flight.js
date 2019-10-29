@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import PropsTypes from "prop-types";
-import { Link } from "react-router-dom";
 
 import FlightHeadline from "./flight-headline";
 import Spinner from "../../../common/spinner";
+import EditButton from '../../../common/edit-button';
 
 import * as PlaceService from "../../../../services/PlaceService";
 import * as AirportService from "../../../../services/AirportService";
@@ -75,11 +75,7 @@ function Flight(props) {
             </div>
 
             <div className="col-lg-1 col-sm-12">
-                <Link to={`/admin/flights/edit/${props.flight.id}`}>
-                    <div className="edit-button rounded non-selectable">
-                        Edit
-                    </div>
-                </Link>
+                <EditButton categoty="flights" editingItemId={props.flight.id}/>
             </div>
         </div>
     );
