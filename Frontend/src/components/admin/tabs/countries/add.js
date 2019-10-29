@@ -23,7 +23,7 @@ export default function Add() {
         let newCountry = new Country(null, name);
 
         try {
-            await CountryService.addCountry(newCountry);
+            await CountryService.add(newCountry);
             changeMessageBoxValue(added());
         } catch (ex) {
             if (ex instanceof BadRequestError) {

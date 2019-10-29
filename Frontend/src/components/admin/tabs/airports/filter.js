@@ -41,7 +41,7 @@ export default function Filter(props) {
     }
 
     async function getCityName(city) {
-        const country = await CountryService.getCountryById(city.countryId);
+        const country = await CountryService.getById(city.countryId);
 
         const finalName = `${city.name} (${country.name})`;
 
@@ -77,7 +77,7 @@ export default function Filter(props) {
             <div className="filter-row">
                 <div className="filter-arg">
                     <SearchList
-                        searchFunc={CityService.searchCitiesByName}
+                        searchFunc={CityService.searchByName}
                         placeholder="City"
                         currentItem={city}
                         getItemName={getCityName}

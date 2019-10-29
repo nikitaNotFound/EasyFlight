@@ -2,7 +2,7 @@ import * as config  from '../config.json';
 
 import { createRequestResult, RequestTypes, headers } from './RequestAssistant';
 
-export async function getCountryById(id) {
+export async function getById(id) {
     const response = await fetch(
         `${config.API_URL}/countries/${id}`,
         {
@@ -15,7 +15,7 @@ export async function getCountryById(id) {
     return await createRequestResult(response, RequestTypes.ContentExpected);
 }
 
-export async function searchCountriesByName(nameFilter) {
+export async function searchByName(nameFilter) {
     const response = await fetch(
         `${config.API_URL}/countries?nameFilter=${nameFilter}`,
         {
@@ -28,7 +28,7 @@ export async function searchCountriesByName(nameFilter) {
     return await createRequestResult(response, RequestTypes.ContentExpected);
 }
 
-export async function addCountry(country) {
+export async function add(country) {
     const response = await fetch(
         `${config.API_URL}/countries`,
         {
@@ -42,7 +42,7 @@ export async function addCountry(country) {
     return createRequestResult(response, RequestTypes.NoContentExpected);
 }
 
-export async function updateCountry(country) {
+export async function update(country) {
     const response = await fetch(
         `${config.API_URL}/countries`,
         {

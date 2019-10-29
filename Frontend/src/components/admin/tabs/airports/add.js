@@ -39,7 +39,7 @@ export default function Add() {
     }
 
     async function getCityName(city) {
-        const country = await CountryService.getCountryById(city.countryId);
+        const country = await CountryService.getById(city.countryId);
 
         const finalName = `${city.name} (${country.name})`;
 
@@ -77,7 +77,7 @@ export default function Add() {
                                     />
                                 </div>
                                 <SearchList
-                                    searchFunc={CityService.searchCitiesByName}
+                                    searchFunc={CityService.searchByName}
                                     placeholder="City"
                                     currentItem={city}
                                     getItemName={getCityName}

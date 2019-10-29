@@ -23,11 +23,11 @@ export default function Edit(props) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const cityRequest = await CityService.getCityById(props.match.params.id);
+                const cityRequest = await CityService.getById(props.match.params.id);
                 changeName(cityRequest.name);
                 changeId(cityRequest.id);
 
-                const countryRequest = await CountryService.getCountryById(cityRequest.countryId);
+                const countryRequest = await CountryService.getById(cityRequest.countryId);
                 changeCountry(countryRequest);
 
                 changeLoadingMode(false);
@@ -51,7 +51,7 @@ export default function Edit(props) {
         let newCity = new City(id, country.id, name);
 
         try {
-            await CityService.updateCity(newCity);
+            await CityService.update(newCity);
             changeMessageBoxValue(saved());
         } catch (ex) {
             if (ex instanceof BadRequestError) {
@@ -96,7 +96,7 @@ export default function Edit(props) {
                         <div className="editing-params-form">
                             <div className="row">
                                 <SearchList
-                                    searchFunc={CountryService.searchCountriesByName}
+                                    searchFunc={CountryService.searchByName}
                                     placeholder="Country"
                                     currentItem={country}
                                     onValueChange={changeCountry}

@@ -30,8 +30,8 @@ function Flight(props) {
                 changeFromAirport(fromAirport);
                 changeToAirport(toAirport);
 
-                const fromCityLoading = CityService.getCityById(fromAirport.cityId);
-                const toCityLoading = CityService.getCityById(toAirport.cityId);
+                const fromCityLoading = CityService.getById(fromAirport.cityId);
+                const toCityLoading = CityService.getById(toAirport.cityId);
 
                 return Promise.all([fromCityLoading, toCityLoading]);
             })
@@ -41,8 +41,8 @@ function Flight(props) {
                 changeFromCity(fromCity);
                 changeToCity(toCity);
 
-                const fromCountryLoading = CountryService.getCountryById(fromCity.countryId);
-                const toCountryLoading = CountryService.getCountryById(toCity.countryId);
+                const fromCountryLoading = CountryService.getById(fromCity.countryId);
+                const toCountryLoading = CountryService.getById(toCity.countryId);
 
                 return Promise.all([fromCountryLoading, toCountryLoading]);
             })

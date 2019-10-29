@@ -20,7 +20,7 @@ export default function Edit(props) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const countryRequest = await CountryService.getCountryById(props.match.params.id);
+                const countryRequest = await CountryService.getById(props.match.params.id);
 
                 changeName(countryRequest.name);
                 changeId(countryRequest.id);
@@ -45,7 +45,7 @@ export default function Edit(props) {
         let finalCountry = new Country(id, name);
         
         try {
-            await CountryService.updateCountry(finalCountry);
+            await CountryService.update(finalCountry);
             changeMessageBoxValue(saved());
         } catch (ex) {
             if (ex instanceof BadRequestError) {

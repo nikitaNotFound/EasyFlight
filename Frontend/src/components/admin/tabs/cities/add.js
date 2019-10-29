@@ -26,7 +26,7 @@ export default function Add() {
         const newCity = new City(null, country.id, name);
 
         try {
-            await CityService.addCity(newCity);
+            await CityService.add(newCity);
             changeMessageBoxValue(added());
         } catch (ex) {
             if (ex instanceof BadRequestError) {
@@ -62,7 +62,7 @@ export default function Add() {
                         <div className="editing-params-form">
                             <div className="row">
                                 <SearchList
-                                    searchFunc={CountryService.searchCountriesByName}
+                                    searchFunc={CountryService.searchByName}
                                     placeholder="Country"
                                     currentItem={country}
                                     onValueChange={changeCountry}

@@ -26,7 +26,7 @@ export default function CityList() {
             } else if (newFilterOptions.countryId) {
                 citiesRequest = await CountryService.getCountryCities(newFilterOptions.countryId);
             } else {
-                citiesRequest = await CityService.searchCitiesByName(newFilterOptions.name);
+                citiesRequest = await CityService.searchByName(newFilterOptions.name);
             }
 
             changeCities(citiesRequest);

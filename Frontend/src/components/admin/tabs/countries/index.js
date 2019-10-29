@@ -18,7 +18,7 @@ export default function CountryList() {
         changeFilterOptions(newFilterOptions);
 
         try {
-            const countriesRequest = await CountryService.searchCountriesByName(newFilterOptions);
+            const countriesRequest = await CountryService.searchByName(newFilterOptions);
             changeCountries(countriesRequest);
         } catch {
             changeMessageBoxValue('Something went wrong...');

@@ -26,13 +26,13 @@ export default function FlightInfo(props) {
             ]);
 
             const [fromCity, toCity] = Promise.all([
-                CityService.getCityById(fromAirport.cityId),
-                CityService.getCityById(toAirport.cityId)
+                CityService.getById(fromAirport.cityId),
+                CityService.getById(toAirport.cityId)
             ]);
 
             const [fromCountry, toCountry] = Promise.all([
-                CountryService.getCountryById(fromCity.countryId),
-                CountryService.getCountryById(toCity.countryId)
+                CountryService.getById(fromCity.countryId),
+                CountryService.getById(toCity.countryId)
             ]);
 
             changeFrom(`${fromAirport.name} (${fromCity.name}, ${fromCountry.name})`);

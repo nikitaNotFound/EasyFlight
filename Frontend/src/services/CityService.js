@@ -2,7 +2,7 @@ import * as config  from '../config.json';
 
 import { createRequestResult, RequestTypes, headers } from './RequestAssistant';
 
-export async function getCityById(id) {
+export async function getById(id) {
     const response = await fetch(
         `${config.API_URL}/cities/${id}`,
         {
@@ -15,7 +15,7 @@ export async function getCityById(id) {
     return createRequestResult(response, RequestTypes.ContentExpected);
 }
 
-export async function addCity(city) {
+export async function add(city) {
     const response = await fetch(
         `${config.API_URL}/cities`,
         {
@@ -29,7 +29,7 @@ export async function addCity(city) {
     return await createRequestResult(response, RequestTypes.NoContentExpected);
 }
 
-export async function updateCity(city) {
+export async function update(city) {
     const response = await fetch(
         `${config.API_URL}/cities`,
         {
@@ -43,7 +43,7 @@ export async function updateCity(city) {
     return createRequestResult(response, RequestTypes.ContentNonExpected);
 }
 
-export async function searchCitiesByName(nameFilter) {
+export async function searchByName(nameFilter) {
     const response = await fetch(
         `${config.API_URL}/cities?nameFilter=${nameFilter}`,
         {

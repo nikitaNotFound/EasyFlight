@@ -30,11 +30,11 @@ export default function Edit(props) {
                 changeId(airport.id);
                 changeName(airport.name);
 
-                const city = await CityService.getCityById(airport.cityId);
+                const city = await CityService.getById(airport.cityId);
 
                 changeCity(city);
 
-                const countryResult = await CountryService.getCountryById(city.countryId);
+                const countryResult = await CountryService.getById(city.countryId);
 
                 changeCountry(countryResult);
 
@@ -72,7 +72,7 @@ export default function Edit(props) {
     }
 
     async function getCityName(city) {
-        const country = await CountryService.getCountryById(city.countryId);
+        const country = await CountryService.getById(city.countryId);
 
         const finalName = `${city.name} (${country.name})`;
 
@@ -110,7 +110,7 @@ export default function Edit(props) {
                                         />
                                     </div>
                                     <SearchList
-                                        searchFunc={CityService.searchCitiesByName}
+                                        searchFunc={CityService.searchByName}
                                         searchArgs={[country.id]}
                                         placeholder="City"
                                         currentItem={city}

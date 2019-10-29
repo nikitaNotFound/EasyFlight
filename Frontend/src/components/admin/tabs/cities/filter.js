@@ -58,7 +58,7 @@ export default function Filter(props) {
             <div className="filter-row">
                 <div className="filter-arg">
                     <SearchList
-                        searchFunc={CountryService.searchCountriesByName}
+                        searchFunc={CountryService.searchByName}
                         placeholder="Country"
                         getItemName={getCountryName}
                         onValueChange={changeCountry}
