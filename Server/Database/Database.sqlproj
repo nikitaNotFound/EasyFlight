@@ -66,8 +66,6 @@
     <Build Include="dbo\Tables\SeatTypes.sql" />
     <Build Include="dbo\Tables\Seats.sql" />
     <Build Include="dbo\Tables\Countries.sql" />
-    <Build Include="dbo\Tables\Cities.sql" />
-    <Build Include="dbo\Tables\Airports.sql" />
     <Build Include="dbo\Tables\Accounts.sql" />
     <Build Include="dbo\Stored Procedures\UpdateCountry.sql" />
     <Build Include="dbo\Stored Procedures\UpdateCity.sql" />
@@ -103,5 +101,11 @@
     <Build Include="dbo\Stored Procedures\AddAirplaneSeatType.sql" />
     <Build Include="dbo\Stored Procedures\AddAirplaneSeat.sql" />
     <Build Include="dbo\Stored Procedures\AddAirplane.sql" />
+    <Build Include="dbo\Tables\Airplanes.sql" />
+    <Build Include="dbo\Stored Procedures\GetAirplaneSeatTypeByName.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="dbo\Tables\Airports.sql" />
+    <Content Include="dbo\Tables\Cities.sql" />
   </ItemGroup>
 </Project>

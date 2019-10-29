@@ -11,7 +11,7 @@ import MessageBox from '../../../common/message-box';
 
 export default function AirplaneList() {
     const [filterOptions, changeFilterOptions] = useState(new SearchOptions());
-    const [airplanes, changeAirplanes] = useState([]);
+    const [airplanes, changeAirplanes] = useState(null);
     const [messageBoxValue, changeMessageBoxValue] = useState();
 
     async function onFilterApply(newFilterOptions) {

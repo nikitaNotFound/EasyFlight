@@ -9,12 +9,6 @@ function SeatRow(props) {
         }
     }
 
-    function seatChange(seat, index) {
-        const storage = props.seats;
-        storage[index] = seat;
-        props.rowChange(storage, props.key);
-    }
-
     return (
         <div className="airplane-string">
             {props.seats.map(
@@ -27,7 +21,6 @@ function SeatRow(props) {
                             key={index}
                             seat={seats}
                             seatTypes={props.seatTypes}
-                            seatChange={seatChange}
                             onSeatAdded={props.onSeatAdded}
                             onSeatChanged={props.onSeatChanged}
                             onSeatDeleted={props.onSeatDeleted}

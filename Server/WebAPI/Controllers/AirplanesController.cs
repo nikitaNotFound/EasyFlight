@@ -81,7 +81,12 @@ namespace WebAPI.Controllers
             BlAirplane airplaneBl = await _airplaneService.GetByIdAsync(id);
 
             Airplane airplane = _mapper.Map<Airplane>(airplaneBl);
-            
+
+            if (airplane == null)
+            {
+                return NotFound();
+            }
+
             return Ok(airplane);
         }
 
@@ -90,6 +95,13 @@ namespace WebAPI.Controllers
         [Route("{airplaneId}/seats")]
         public async Task<ActionResult> GetAirplaneSeatsAsync(int airplaneId)
         {
+            BlAirplane airplane = await _airplaneService.GetByIdAsync(airplaneId);
+
+            if (airplane == null)
+            {
+                return NotFound();
+            }
+
             IReadOnlyCollection<BlAirplaneSeat> seatsBl = await _airplaneService.GetAirplaneSeatsAsync(airplaneId);
 
             IReadOnlyCollection<AirplaneSeat> seats = seatsBl.Select(_mapper.Map<AirplaneSeat>).ToList();
@@ -102,14 +114,40 @@ namespace WebAPI.Controllers
         [Route("{airplaneId}/seat-types")]
         public async Task<ActionResult> GetAirplaneSeatTypesAsync(int airplaneId)
         {
+            BlAirplane airplane = await _airplaneService.GetByIdAsync(airplaneId);
+
+            if (airplane == null)
+            {
+                return NotFound();
+            }
+            
             IReadOnlyCollection<BlAirplaneSeatType> seatTypesBl =
                 await _airplaneService.GetAirplaneSeatTypesAsync(airplaneId);
 
             IEnumerable<AirplaneSeatType> seatTypes = seatTypesBl.Select(_mapper.Map<AirplaneSeatType>);
             
-            return Ok();
+            return Ok(seatTypes);
         }
+        
+        // GET api/airplanes/{airplaneId}/seat-types/{name}
+        [HttpGet]
+        [Route("{airplaneId}/seat-types/{name}")]
+        public async Task<ActionResult> GetAirplaneSeatTypeAsync(int airplaneId, string name)
+        {
+            BlAirplane airplane = await _airplaneService.GetByIdAsync(airplaneId);
 
+            if (airplane == null)
+            {
+                return NotFound();
+            }
+
+            BlAirplaneSeatType seatTypeBl = await _airplaneService.GetAirplaneSeatTypeByName(airplaneId, name);
+
+            AirplaneSeatType seatType = _mapper.Map<AirplaneSeatType>(seatTypeBl);
+            
+            return Ok(seatType);
+        }
+        
         // POST api/airplanes
         [HttpPost]
         public async Task<ActionResult> AddAirplaneAsync([FromBody] Airplane airplane)

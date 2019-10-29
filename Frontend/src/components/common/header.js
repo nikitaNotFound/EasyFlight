@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 function Header() {
     return (
-        <header className="rounded-bottom">
+        <header className="rounded-bottom non-selectable">
             <div className="row">
                 <div className="col-sm-12 col-lg-8">
                     <Link to="/" className="non-dec-link">

@@ -40,17 +40,8 @@ function initializeSeatArray(props) {
     return seatsArray;
 }
 
-function getSeatTypes(props) {
-    if (props.seatTypes) {
-        return props.seatTypes;
-    }
-
-    return [];
-}
-
 export default function SeatEditor(props) {
     const [seatArray, changeSeatArray] = useState(initializeSeatArray(props));
-    const [seatTypes, changeSeatTypes] = useState(getSeatTypes(props));
 
     // calls when user press add zone
     function onAddZone(floor, section) {
@@ -68,7 +59,7 @@ export default function SeatEditor(props) {
         const newZone = storage[floor - 1][section - 1].length + 1;
         // row, number  setted as 1, because 1 is start value
         // typeId setted as first element id of seatTypes
-        const newSeat = new Seat(floor, section, newZone, 1, 1, seatTypes[0]);
+        const newSeat = new Seat(floor, section, newZone, 1, 1, props.seatTypes[0]);
 
         storage[floor - 1][section - 1][newZone - 1] = [];
         storage[floor - 1][section - 1][newZone - 1][0] = [];
@@ -78,45 +69,38 @@ export default function SeatEditor(props) {
         props.onSeatsChange(storage);
     }
 
-    // calls when user press add type
-    function onAddType(newType) {
+    function onZoneChange(floor, section, zone, zoneArray) {
         let storage = [];
-        Object.assign(storage, seatTypes);
+        Object.assign(storage, seatArray);
 
-        storage.push(newType);
-        changeSeatTypes(storage);
-        props.onSeatTypesChange(storage);
-    }
+        storage[floor - 1][section - 1][zone - 1] = zoneArray;
 
-    // calls when user press delete type
-    function onTypeDelete(id) {
-        let storage = [];
-        Object.assign(storage, seatTypes);
-
-        storage.splice(id, 1);
-
-        if (storage.length == 0) {
-            storage = [];
-        }
-
-        changeSeatTypes(storage);
-        props.onSeatTypesChange(storage);
+        changeSeatArray(storage);
+        props.onSeatsChange(storage);
     }
 
     function showSeatTypesInstruments() {
-        if (seatTypes.length > 0) {
+        if (props.seatTypes.length > 0) {
             return <Instruments onAddZone={onAddZone} />;
         }
     }
 
     function showSeatsScheme() {
-        if (seatArray && seatTypes.length > 0) {
+        if (seatArray && props.seatTypes.length > 0) {
             return (
                 <div className="seat-editor-layout">
                     {seatArray.map((seats, index) => {
                         let placeInfo = {};
                         placeInfo.floor = index + 1;
-                        return <SeatFloor placeInfo={placeInfo} seats={seats} seatTypes={seatTypes} key={index + 1} />;
+                        return (
+                            <SeatFloor
+                                placeInfo={placeInfo}
+                                seats={seats}
+                                seatTypes={props.seatTypes}
+                                onZoneChange={onZoneChange}
+                                key={index + 1}
+                            />
+                        );
                     })}
                 </div>
             );
@@ -125,7 +109,7 @@ export default function SeatEditor(props) {
 
     return (
         <div className="seat-editor">
-            <SeatTypesEditor seatTypes={seatTypes} onAddType={onAddType} onTypeDelete={onTypeDelete} />
+            <SeatTypesEditor seatTypes={props.seatTypes} onAddType={props.onTypeAdded} onTypeDelete={props.onTypeDeleted} />
             {showSeatTypesInstruments()}
             {showSeatsScheme()}
         </div>
@@ -136,5 +120,7 @@ SeatEditor.propsTypes = {
     seatInfo: PropsTypes.array,
     seatTypes: PropsTypes.array,
     onSeatsChange: PropsTypes.func,
-    onSeatTypesChange: PropsTypes.func
+    onSeatTypesChange: PropsTypes.func,
+    onTypeAdded: PropsTypes.func,
+    onTypeDeleted: PropsTypes.func
 };

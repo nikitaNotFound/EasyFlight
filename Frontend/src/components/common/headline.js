@@ -3,7 +3,7 @@ import React from 'react';
 
 function Headline(props) {
     return (
-        <h1 className="non-selectable">{props.name}</h1>
+        <h2 className="non-selectable editing-headline">{props.name}</h2>
     );
 }
 

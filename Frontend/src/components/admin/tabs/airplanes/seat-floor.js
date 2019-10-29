@@ -19,6 +19,7 @@ function SeatFloor(props) {
                             seats={seats}
                             placeInfo={placeInfo}
                             seatTypes={props.seatTypes}
+                            onZoneChange={props.onZoneChange}
                             key={index + 1}
                         />
                     );
@@ -31,7 +32,8 @@ function SeatFloor(props) {
 SeatFloor.propsTypes = {
     placeInfo: PropsTypes.object,
     seats: PropsTypes.array,
-    seatTypes: PropsTypes.array
+    seatTypes: PropsTypes.array,
+    onZoneChange: PropsTypes.func
 }
 
 export default SeatFloor;

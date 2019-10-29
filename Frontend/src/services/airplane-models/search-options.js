@@ -5,10 +5,10 @@ class SearchOptions {
     seatCountMax;
     seatCountMin;
 
-    constructor(name, carryingMax, carryingMin, seatCountMax, seatCountMin) {
+    constructor(name, carryingMaxKg, carryingMinKg, seatCountMax, seatCountMin) {
         this.name = name;
-        this.carryingMax = carryingMax;
-        this.carryingMin = carryingMin;
+        this.carryingMaxKg = carryingMaxKg;
+        this.carryingMinKg = carryingMinKg;
         this.seatCountMax = seatCountMax;
         this.seatCountMin = seatCountMin;
     }
