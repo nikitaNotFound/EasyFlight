@@ -72,19 +72,14 @@
     <Build Include="dbo\Stored Procedures\UpdateAirport.sql" />
     <Build Include="dbo\Stored Procedures\SearchCountryCitiesByName.sql" />
     <Build Include="dbo\Stored Procedures\SearchCountriesByName.sql" />
-    <Build Include="dbo\Stored Procedures\SearchCityAirportsByName.sql" />
     <Build Include="dbo\Stored Procedures\SearchCitiesByName.sql" />
-    <Build Include="dbo\Stored Procedures\SearchAirportsByName.sql" />
     <Build Include="dbo\Stored Procedures\RegisterAccount.sql" />
     <Build Include="dbo\Stored Procedures\LoginAccount.sql" />
     <Build Include="dbo\Stored Procedures\GetCountryCities.sql" />
     <Build Include="dbo\Stored Procedures\GetCountryById.sql" />
     <Build Include="dbo\Stored Procedures\GetCityById.sql" />
-    <Build Include="dbo\Stored Procedures\GetCityAirports.sql" />
     <Build Include="dbo\Stored Procedures\GetAllCountries.sql" />
     <Build Include="dbo\Stored Procedures\GetAllCities.sql" />
-    <Build Include="dbo\Stored Procedures\GetAllAirports.sql" />
-    <Build Include="dbo\Stored Procedures\GetAirportById.sql" />
     <Build Include="dbo\Stored Procedures\GetAccountByEmail.sql" />
     <Build Include="dbo\Stored Procedures\CheckCountryDuplicate.sql" />
     <Build Include="dbo\Stored Procedures\CheckCityDuplicate.sql" />
@@ -93,5 +88,12 @@
     <Build Include="dbo\Stored Procedures\AddCountry.sql" />
     <Build Include="dbo\Stored Procedures\AddCity.sql" />
     <Build Include="dbo\Stored Procedures\AddAirport.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="dbo\Stored Procedures\GetAirportById.sql" />
+    <Content Include="dbo\Stored Procedures\GetAllAirports.sql" />
+    <Content Include="dbo\Stored Procedures\GetCityAirports.sql" />
+    <Content Include="dbo\Stored Procedures\SearchAirportsByName.sql" />
+    <Content Include="dbo\Stored Procedures\SearchCityAirportsByName.sql" />
   </ItemGroup>
 </Project>
