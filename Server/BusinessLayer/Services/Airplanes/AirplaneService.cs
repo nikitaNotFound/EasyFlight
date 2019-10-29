@@ -166,6 +166,16 @@ namespace BusinessLayer.Services.Airplanes
             return ResultTypes.Ok;
         }
 
+        public async Task<AirplaneSeatType> GetAirplaneSeatTypeByName(int airplaneId, string name)
+        {
+            AirplaneSeatTypeEntity seatTypeDal =
+                await _airplaneRepository.GetAirplaneSeatTypeByName(airplaneId, name);
+
+            AirplaneSeatType seatType = _mapper.Map<AirplaneSeatType>(seatTypeDal);
+
+            return seatType;
+        }
+
         public async Task<ResultTypes> DeleteAirplaneSeatTypeAsync(int airplaneId, int seatTypeId)
         {
             AirplaneEntity airplaneDal = await _airplaneRepository.GetByIdAsync(airplaneId);

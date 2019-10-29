@@ -4,9 +4,9 @@ namespace WebAPI.Models
 {
     public class AirplaneSeat
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         
-        public int AirplaneId { get; set; }
+        public int? AirplaneId { get; set; }
         
         [Required]
         public int? Floor { get; set; }

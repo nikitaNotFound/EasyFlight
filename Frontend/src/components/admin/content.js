@@ -11,22 +11,36 @@ import CityRouter from './tabs/city-router';
 export default function Content() {
     return (
         <main className="rounded">
-            <div className="tabs">
-                <div className="tabs-item">
-                    <Link className="non-dec-link" to="/admin/airports">Airports</Link>
-                </div>
-                <div className="tabs-item">
-                    <Link className="non-dec-link" to="/admin/flights">Flights</Link>
-                </div>
-                <div className="tabs-item">
-                    <Link className="non-dec-link" to="/admin/airplanes">Airplanes</Link>
-                </div>
-                <div className="tabs-item">
-                    <Link className="non-dec-link" to="/admin/countries">Countries</Link>
-                </div>
-                <div className="tabs-item">
-                    <Link className="non-dec-link" to="/admin/cities">Cities</Link>
-                </div>
+            <div className="tabs non-selectable">
+                <Link className="non-dec-link" to="/admin/airports">
+                    <div className="tabs-item">
+                        Airports
+                    </div>
+                </Link>
+
+                <Link className="non-dec-link" to="/admin/flights">
+                    <div className="tabs-item">
+                        Flights
+                    </div>
+                </Link>
+
+                <Link className="non-dec-link" to="/admin/airplanes">
+                    <div className="tabs-item">
+                        Airplanes
+                    </div>
+                </Link>
+
+                <Link className="non-dec-link" to="/admin/countries">
+                    <div className="tabs-item">
+                    Countries
+                    </div>
+                </Link>
+
+                <Link className="non-dec-link" to="/admin/cities">
+                    <div className="tabs-item">
+                        Cities
+                    </div>
+                </Link>
             </div>
 
             <Switch>

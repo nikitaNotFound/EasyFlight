@@ -32,12 +32,23 @@ function Seat(props) {
 
         if (newTypeIndex > props.seatTypes.length - 1) {
             const seatPosition = {
+                floor: props.placeInfo.floor,
+                section: props.placeInfo.section,
+                zone: props.placeInfo.zone,
                 row: props.placeInfo.row,
                 number: props.placeInfo.number
             };
             changeSeatTypeIndex(UNDEFINED_SEAT_TYPE_INDEX);
             props.onSeatDeleted(seatPosition);
         } else if (oldTypeIndex === UNDEFINED_SEAT_TYPE_INDEX) {
+            // i can be sure that name is unique, so, while seat type doesnt
+            // have his own id (seat type not added in database), i can use 
+            // its name as typeId, later, in save, i will rest typeId as numbers
+            // from database
+            const seatTypeId = props.seatTypes[newTypeIndex].id
+                ? props.seatTypes[newTypeIndex].id
+                : props.seatTypes[newTypeIndex].name
+
             const newSeat = new SeatObject (
                 null,
                 null,
@@ -46,13 +57,21 @@ function Seat(props) {
                 props.placeInfo.zone,
                 props.placeInfo.row,
                 props.placeInfo.number,
-                seatTypeIndex
+                seatTypeId
             );
-
+            
             props.onSeatAdded(newSeat);
             changeSeatTypeIndex(newTypeIndex);
         } else {
-            props.onSeatChanged(newTypeIndex, props.placeInfo);
+            // i can be sure that name is unique, so, while seat type doesnt
+            // have his own id (seat type not added in database), i can use 
+            // its name as typeId, later, in save, i will rest typeId as numbers
+            // from database
+            const seatTypeId = props.seatTypes[newTypeIndex].id
+                ? props.seatTypes[newTypeIndex].id
+                : props.seatTypes[newTypeIndex].name
+                
+            props.onSeatChanged(seatTypeId, props.placeInfo);
             changeSeatTypeIndex(newTypeIndex);
         }
     }

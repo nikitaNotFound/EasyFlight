@@ -20,6 +20,7 @@ function SeatSection(props) {
                                     key={index}
                                     seats={seats}
                                     seatTypes={props.seatTypes}
+                                    onZoneChange={props.onZoneChange}
                                     placeInfo={placeInfo}
                                 />
                             );
@@ -34,7 +35,8 @@ function SeatSection(props) {
 SeatSection.propsTypes = {
     seats: PropsTypes.array,
     placeInfo: PropsTypes.object,
-    seatTypes: PropsTypes.array
+    seatTypes: PropsTypes.array,
+    onZoneChange: PropsTypes.func
 }
 
 export default SeatSection;

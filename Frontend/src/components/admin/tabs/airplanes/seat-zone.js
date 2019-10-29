@@ -34,11 +34,11 @@ function getGlobalRowLength(props) {
 
 function SeatZone(props) {
     const [globalRowLength, changeGlobalRowLength] = useState(getGlobalRowLength(props));
-    const [rowSeats, changeRowSeats] = useState(inizializeRowSeats(props, globalRowLength));
+    const [zoneSeats, changeZoneSeats] = useState(inizializeRowSeats(props, globalRowLength));
 
     function onSeatDeleted(seatPosition) {
         let storage = [];
-        Object.assign(storage, rowSeats);
+        Object.assign(storage, zoneSeats);
 
         storage[seatPosition.row - 1][seatPosition.number - 1] = null;
 
@@ -57,12 +57,13 @@ function SeatZone(props) {
             changeGlobalRowLength(globalRowLength - 1);
         }
 
-        changeRowSeats(storage);
+        changeZoneSeats(storage);
+        props.onZoneChange(seatPosition.floor, seatPosition.section, seatPosition.zone, storage);
     }
     
     function onSeatAdded(seat) {
         let storage = [];
-        Object.assign(storage, rowSeats);
+        Object.assign(storage, zoneSeats);
 
         storage[seat.row - 1][seat.number - 1] = seat;
         
@@ -79,16 +80,18 @@ function SeatZone(props) {
             storage.push(lowerRow);
         }
 
-        changeRowSeats(storage);
+        changeZoneSeats(storage);
+        props.onZoneChange(seat.floor, seat.section, seat.zone, storage);
     }
 
-    function onSeatChanged(seatType, placeInfo) {
+    function onSeatChanged(seatType, seatPosition) {
         let storage = [];
-        Object.assign(storage, rowSeats);
+        Object.assign(storage, zoneSeats);
 
-        storage[placeInfo.row - 1][placeInfo.number - 1].typeId = seatType;
-        
-        changeRowSeats(storage);
+        storage[seatPosition.row - 1][seatPosition.number - 1].typeId = seatType;
+
+        changeZoneSeats(storage);
+        props.onZoneChange(seatPosition.floor, seatPosition.section, seatPosition.zone, storage);
     }
     
     function checkColumnEmpty(array, columnIndex) {
@@ -117,7 +120,7 @@ function SeatZone(props) {
 
     return (
         <div className="airplane-zone">
-            {rowSeats.map(
+            {zoneSeats.map(
                 (seats, index) => {
                     let placeInfo = {};
                     Object.assign(placeInfo, props.placeInfo);
@@ -142,7 +145,8 @@ function SeatZone(props) {
 SeatZone.propsTypes = {
     seats: PropsTypes.array,
     placeInfo: PropsTypes.object,
-    seatTypes: PropsTypes.array
+    seatTypes: PropsTypes.array,
+    onZoneChange: PropsTypes.func
 }
 
 export default SeatZone;

@@ -8,7 +8,7 @@ import SeatType from '../../../../services/airplane-models/seat-type';
 
 import '../../../../styles/seat-types-editor.css';
 
-function SeatTypesEditor(props) {
+export default function SeatTypesEditor(props) {
     const [color, changeColor] = useState();
     const [name, changeName] = useState();
 
@@ -18,13 +18,9 @@ function SeatTypesEditor(props) {
         changeColor(newColor);
     }
 
-    function onNameChange(event) {
-        changeName(event.target.value);
-    }
-
     function onTypeAdd() {
         if (color && name) {
-            let newType = new SeatType(props.seatTypes.length + 1, name, color);
+            let newType = new SeatType(null, name, color);
 
             if (!props.seatTypes || checkTypeAvailable(newType)) {
                 props.onAddType(newType);
@@ -44,31 +40,24 @@ function SeatTypesEditor(props) {
         return true;
     }
 
-    if (!props.seatTypes) {
-        return (
-            <div className="seat-types-editor">
-                <div className="row">
-                    <div className="col-md-3">
-                        <ColorWheel onChange={onColorChange}/>
-                    </div>
-
-                    <div className="col-md-2">
-                        <label>Type name</label><br/>
-                        <input
-                            className="seat-type-name-input"
-                            type="text" value={name}
-                            onChange={onNameChange}
-                        />
-                        <div className="color-demo" style={{background:color}}></div>
-                        <div className="add-type-button" onClick={onTypeAdd}>Add type</div>
-                    </div>
-
-                    <div className="col-md-7">
-                        <div className="seat-types-headline">Current seat types</div>
-                    </div>
+    function showSeatTypesList() {
+        if (props.seatTypes) {
+            return (
+                <div>
+                    {props.seatTypes.map(
+                        (item, index) =>
+                            <SeatTypeItem
+                                name={item.name}
+                                color={item.color}
+                                id={item.id}
+                                onTypeDelete={props.onTypeDelete}
+                                arrayIndex={index}
+                                key={index}
+                            />
+                    )}
                 </div>
-            </div>
-        );
+            );
+        }
     }
 
     return (
@@ -83,24 +72,15 @@ function SeatTypesEditor(props) {
                     <input
                         className="seat-type-name-input"
                         type="text" value={name}
-                        onChange={onNameChange}
+                        onChange={(event) => changeName(event.target.value)}
                     />
                     <div className="color-demo" style={{background:color}}></div>
-                    <div className="add-type-button" onClick={onTypeAdd}>Add type</div>
+                    <button className="add-type-button non-selectable" onClick={onTypeAdd}>Add type</button>
                 </div>
 
                 <div className="col-md-7">
                     <div className="seat-types-headline">Current seat types</div>
-                    {props.seatTypes.map(
-                        (item, index) => 
-                            <SeatTypeItem
-                                name={item.name}
-                                color={item.color}
-                                id={index}
-                                onTypeDelete={props.onTypeDelete}
-                                key={index}
-                            />
-                    )}
+                    {showSeatTypesList()}
                 </div>
             </div>
         </div>
@@ -112,5 +92,3 @@ SeatTypesEditor.propsTypes = {
     onAddType: PropsTypes.func,
     onTypeDelete: PropsTypes.func
 }
-
-export default SeatTypesEditor;

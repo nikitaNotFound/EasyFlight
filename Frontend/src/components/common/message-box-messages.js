@@ -27,3 +27,7 @@ export function saved() {
 export function badLoginData() {
     return 'Incorrect login or password!';
 }
+
+export function seatTypeInUse() {
+    return 'Delete all seats with such type first!';
+}
