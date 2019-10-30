@@ -1,5 +1,5 @@
-﻿CREATE TABLE [dbo].[Countries] (
-    [Id]   INT           IDENTITY (1, 1) NOT NULL,
-    [Name] NVARCHAR (50) NOT NULL,
-    CONSTRAINT [PK_Countries] PRIMARY KEY CLUSTERED ([Id] ASC)
+﻿create table [dbo].[Countries] (
+    [Id]   int           identity (1, 1) not null,
+    [Name] nvarchar (50) not null,
+    constraint [PK_Countries] primary key clustered ([Id] asc)
 );

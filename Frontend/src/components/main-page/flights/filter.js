@@ -50,7 +50,7 @@ function Filter(props) {
         props.onFilterApplied(newOptions);
     }
 
-    async function getCityName(city) {
+    async function buildCityName(city) {
         const countryResult = await CountryService.getById(city.countryId);
 
         const finalName = `${city.name} (${countryResult.name})`;
@@ -89,14 +89,14 @@ function Filter(props) {
                         searchFunc={CityService.searchByName}
                         placeholder="From city"
                         currentItem={fromCity}
-                        getItemName={getCityName}
+                        getItemName={buildCityName}
                         onValueChange={changeFromCity}
                     />
                     <SearchList
                         searchFunc={CityService.searchByName}
                         placeholder="To city"
                         currentItem={toCity}
-                        getItemName={getCityName}
+                        getItemName={buildCityName}
                         onValueChange={changeToCity}
                     />
                 </div>

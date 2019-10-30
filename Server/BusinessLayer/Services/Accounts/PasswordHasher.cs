@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 
 namespace BusinessLayer.Services.Accounts
 {
-    internal static class HashService
+    internal static class PasswordHasher
     {
         internal static byte[] GenerateSalt()
         {

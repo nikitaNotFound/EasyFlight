@@ -5,7 +5,7 @@ import MessageBox from '../common/message-box';
 
 import * as UserService from '../../services/UserSerivce';
 
-import RegistrationUser from '../../services/user-models/registration-user';
+import User from '../../services/user-models/user';
 
 import googleIcon from '../../icons/google-icon.png';
 import facebookIcon from '../../icons/facebook-icon.png';
@@ -37,7 +37,7 @@ function Content(props) {
             return;
         }
 
-        const newUser = new RegistrationUser(
+        const newUser = new User(
             name,
             surname,
             email,

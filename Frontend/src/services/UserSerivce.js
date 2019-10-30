@@ -4,8 +4,8 @@ import User from './user-models/user';
 
 import { createRequestResult, RequestTypes } from './RequestAssistant';
 
-import store from '../store/store';
-import * as types from '../store/ActionTypes';
+import AuthTokenProvider from './AuthTokenProvider';
+import UserInfoProvider from './UserInfoProvider';
 
 import * as config from '../config.json';
 
@@ -43,16 +43,17 @@ export async function login(user) {
     const result = await createRequestResult(response, RequestTypes.ContentExpected);
 
     const token = result.token;
-
-    store.dispatch({ type: types.CHANGE_AUTH_TOKEN, payload: token });
+    AuthTokenProvider.saveToken(token);
 
     const userInfo = new User(
         result.firstName,
         result.secondName,
         result.email,
+        null,
         result.role
     );
-    store.dispatch({ type: types.CHANGE_USER_INFO, payload: userInfo });
+
+    UserInfoProvider.saveUserInfo(userInfo);
     return result;
 }
 
@@ -63,7 +64,7 @@ export async function register(user) {
             method: 'POST',
             mode: 'cors',
             headers: {
-                "Content-Type": "application/json"
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(user)
         }
@@ -71,35 +72,34 @@ export async function register(user) {
         
     const result = await createRequestResult(response, RequestTypes.ContentExpected);
 
-    const token = result.value.token;
+    const token = result.token;
 
-    store.dispatch({ type: types.CHANGE_AUTH_TOKEN, payload: token });
+    AuthTokenProvider.saveToken(token);
 
     const userInfo = new User(
-        result.value.firstName,
-        result.value.secondName,
-        result.value.email,
-        result.value.role
+        result.firstName,
+        result.secondName,
+        result.email,
+        null,
+        result.role
     );
-    store.dispatch({ type: types.CHANGE_USER_INFO, payload: userInfo });
+
+    UserInfoProvider.saveUserInfo(userInfo);
     return result;
 }
 
-export function logout() {
-    return new Promise(resolve => {
-        store.dispatch({ type: types.CHANGE_AUTH_TOKEN, payload: null });
-        store.dispatch({ type: types.CHANGE_USER_INFO, payload: null });
-
-        resolve(true);
-    });
+export async function logout() {
+    AuthTokenProvider.saveToken(null);
+    UserInfoProvider.saveUserInfo(null);
 }
 
 export function checkLogin() {
-    const storeObject = store.getState();
+    const token = AuthTokenProvider.getToken();
+    const userInfo = UserInfoProvider.getUserInfo();
 
-    if (!storeObject.authToken || !storeObject.userInfo) {
+    if (!token || !userInfo) {
         return { authorized: false, admin: false};
     }
 
-    return { authorized: true, admin: storeObject.userInfo.role == 'Admin' ? true : false };
+    return { authorized: true, admin: userInfo.role == 1 ? true : false };
 }

@@ -9,8 +9,8 @@ namespace DataAccessLayer.Repositories.Accounts
     public interface IAccountRepository
     {
         Task<AccountEntity> GetByEmailAsync(string email);
-        Task<AccountEntity> LoginAsync(AccountEntity account);
+        Task<AccountEntity> GetAccountAsync(AccountEntity account);
         Task<bool> CheckDuplicateAsync(AccountEntity account);
-        Task<AccountEntity> RegisterAsync(AccountEntity account);
+        Task<AccountEntity> CreateAccountAsync(AccountEntity account);
     }
 }

@@ -50,7 +50,7 @@ function Filter(props) {
         return airport.name;
     }
 
-    async function getCityName(city) {
+    async function buildCityName(city) {
         const country = await CountryService.getById(city.countryId);
 
         const finalName = `${city.name} (${country.name})`;
@@ -100,7 +100,7 @@ function Filter(props) {
                         searchFunc={CityService.searchByName}
                         placeholder="From city"
                         currentItem={fromCity}
-                        getItemName={getCityName}
+                        getItemName={buildCityName}
                         onValueChange={changeFromCity}
                     />
                 </div>
@@ -109,7 +109,7 @@ function Filter(props) {
                         searchFunc={CityService.searchByName}
                         placeholder="To city"
                         currentItem={toCity}
-                        getItemName={getCityName}
+                        getItemName={buildCityName}
                         onValueChange={changeToCity}
                     />
                 </div>

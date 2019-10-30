@@ -38,7 +38,7 @@ export default function Add() {
         }
     }
 
-    async function getCityName(city) {
+    async function buildCityName(city) {
         const country = await CountryService.getById(city.countryId);
 
         const finalName = `${city.name} (${country.name})`;
@@ -80,7 +80,7 @@ export default function Add() {
                                     searchFunc={CityService.searchByName}
                                     placeholder="City"
                                     currentItem={city}
-                                    getItemName={getCityName}
+                                    getItemName={buildCityName}
                                     onValueChange={changeCity}
                                 />
                                 <br/>

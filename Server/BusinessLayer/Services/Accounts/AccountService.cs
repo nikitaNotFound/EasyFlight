@@ -8,7 +8,7 @@ using AccountEntity = DataAccessLayer.Models.AccountEntity;
 
 namespace BusinessLayer.Services.Accounts
 {
-    class AccountService : IAccountService
+    public class AccountService : IAccountService
     {
         private readonly IMapper _mapper;
         private readonly IAccountRepository _accountRepository;
@@ -30,12 +30,12 @@ namespace BusinessLayer.Services.Accounts
                 return null;
             }
 
-            dalAccount.HashedPassword = HashService.GenerateHash(
+            dalAccount.PasswordHash = PasswordHasher.GenerateHash(
                 account.Password,
                 dalAccount.Salt
             );
 
-            AccountEntity authAccount = await _accountRepository.LoginAsync(dalAccount);
+            AccountEntity authAccount = await _accountRepository.GetAccountAsync(dalAccount);
 
             if (authAccount == null)
             {
@@ -49,18 +49,18 @@ namespace BusinessLayer.Services.Accounts
         {
             AccountEntity dalAccount = _mapper.Map<AccountEntity>(account);
 
-            byte[] saltForNewAccount = HashService.GenerateSalt();
-            dalAccount.Salt = saltForNewAccount;
-            dalAccount.HashedPassword = HashService.GenerateHash(account.Password, saltForNewAccount);
-
             bool duplicate = await _accountRepository.CheckDuplicateAsync(dalAccount);
-
+            
             if (duplicate)
             {
                 return null;
             }
+            
+            byte[] saltForNewAccount = PasswordHasher.GenerateSalt();
+            dalAccount.Salt = saltForNewAccount;
+            dalAccount.PasswordHash = PasswordHasher.GenerateHash(account.Password, saltForNewAccount);
 
-            AccountEntity newAccount = await _accountRepository.RegisterAsync(dalAccount);
+            AccountEntity newAccount = await _accountRepository.CreateAccountAsync(dalAccount);
 
             return _mapper.Map<Account>(newAccount);
         }

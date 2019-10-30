@@ -1,10 +1,10 @@
-﻿CREATE TABLE [dbo].[Accounts] (
-    [Id]             INT             IDENTITY (1, 1) NOT NULL,
-    [FirstName]      NVARCHAR (50)   NOT NULL,
-    [SecondName]     NVARCHAR (50)   NOT NULL,
-    [Email]          NVARCHAR (50)   NOT NULL,
-    [HashedPassword] VARBINARY (255) NOT NULL,
-    [Salt]           BINARY (20)     NOT NULL,
-    [Role]           INT             NOT NULL,
-    CONSTRAINT [PK_Accounts] PRIMARY KEY CLUSTERED ([Id] ASC)
+﻿create table [dbo].[Accounts] (
+    [Id]             int             identity (1, 1) not null,
+    [FirstName]      nvarchar (50)   not null,
+    [SecondName]     nvarchar (50)   not null,
+    [Email]          nvarchar (50)   not null,
+    [HashedPassword] varbinary (255) not null,
+    [Salt]           binary (20)     not null,
+    [Role]           int             not null,
+    constraint [PK_Accounts] primary key clustered ([Id] asc)
 );

@@ -71,7 +71,7 @@ export default function Edit(props) {
         }
     }
 
-    async function getCityName(city) {
+    async function buildCityName(city) {
         const country = await CountryService.getById(city.countryId);
 
         const finalName = `${city.name} (${country.name})`;
@@ -114,7 +114,7 @@ export default function Edit(props) {
                                         searchArgs={[country.id]}
                                         placeholder="City"
                                         currentItem={city}
-                                        getItemName={getCityName}
+                                        getItemName={buildCityName}
                                         onValueChange={changeCity}
                                     />
                                 </div>

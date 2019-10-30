@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace WebAPI.Models
 {
-    public class RequestAccount
+    public class AccountRequest
     {
         public int? Id { get; set; }
         public string FirstName { get; set; }

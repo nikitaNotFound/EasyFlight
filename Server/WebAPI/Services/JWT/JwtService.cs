@@ -27,17 +27,17 @@ namespace WebAPI.Services.JWT
             Claim[] claims = new Claim[]
             {
                 new Claim(ClaimTypes.Email, account.Email),
-                new Claim(ClaimTypes.NameIdentifier, nameof(account.Role)),
+                new Claim(ClaimTypes.NameIdentifier, account.Id.ToString()), 
                 new Claim(ClaimTypes.Role, account.Role.ToString())
             };
 
             JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
-            SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SecurityKey));
+            SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Secret));
 
             SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.Now.AddDays(_jwtSettings.ExpireDays),
+                Expires = DateTime.Now.Add(_jwtSettings.ExpirationTime),
                 SigningCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature)
             };
 

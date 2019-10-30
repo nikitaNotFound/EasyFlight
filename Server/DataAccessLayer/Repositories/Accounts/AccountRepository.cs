@@ -7,7 +7,7 @@ using Common;
 
 namespace DataAccessLayer.Repositories.Accounts
 {
-    class AccountRepository : IAccountRepository
+    public class AccountRepository : IAccountRepository
     {
         private readonly IDalSettings _dalSettings;
 
@@ -38,17 +38,17 @@ namespace DataAccessLayer.Repositories.Accounts
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<AccountEntity> LoginAsync(AccountEntity account)
+        public async Task<AccountEntity> GetAccountAsync(AccountEntity account)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             return await db.QuerySingleOrDefaultAsync<AccountEntity>(
                 "LoginAccount",
-                new { email = account.Email, hashedPassword = account.HashedPassword },
+                new { email = account.Email, passwordHash = account.PasswordHash },
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<AccountEntity> RegisterAsync(AccountEntity account)
+        public async Task<AccountEntity> CreateAccountAsync(AccountEntity account)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
@@ -58,9 +58,9 @@ namespace DataAccessLayer.Repositories.Accounts
                     firstName = account.FirstName,
                     secondName = account.SecondName,
                     email = account.Email,
-                    hashedPassword = account.HashedPassword,
+                    passwordHash = account.PasswordHash,
                     salt = account.Salt,
-                    role = AccountRoles.User
+                    role = AccountRole.User
                 },
                 commandType: CommandType.StoredProcedure);
         }

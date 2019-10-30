@@ -1,6 +1,6 @@
 ﻿namespace Common
 {
-    public enum AccountRoles
+    public enum AccountRole
     {
         User,
         Admin

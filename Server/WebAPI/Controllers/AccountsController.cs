@@ -35,9 +35,9 @@ namespace WebAPI.Controllers
         [HttpPost]
         [AllowAnonymous]
         [Route("login")]
-        public async Task<IActionResult> LoginAsync([FromBody] RequestAccount account)
+        public async Task<IActionResult> LoginAsync([FromBody] AccountRequest accountRequest)
         {
-            AccountBl accountBl = _mapper.Map<AccountBl>(account);
+            AccountBl accountBl = _mapper.Map<AccountBl>(accountRequest);
 
             AccountBl authAccountBl = await _accountService.LoginAsync(accountBl);
 
@@ -50,25 +50,25 @@ namespace WebAPI.Controllers
 
             string token = _jwtService.CreateTokenAsync(authAccount);
 
-            ResponseAccount responseAccount = new ResponseAccount(
+            AccountResponse accountResponse = new AccountResponse(
                 authAccount.Id,
                 authAccount.FirstName,
                 authAccount.SecondName,
                 authAccount.Email,
                 authAccount.Password,
-                authAccount.Role.ToString(),
+                (int)authAccount.Role,
                 token
             );
 
-            return Ok(responseAccount);
+            return Ok(accountResponse);
         }
 
         [HttpPost]
         [AllowAnonymous]
         [Route("register")]
-        public async Task<IActionResult> RegisterAsync([FromBody] RequestAccount account)
+        public async Task<IActionResult> RegisterAsync([FromBody] AccountRequest accountRequest)
         {
-            AccountBl accountBl = _mapper.Map<AccountBl>(account);
+            AccountBl accountBl = _mapper.Map<AccountBl>(accountRequest);
 
             AccountBl registerAccountBl = await _accountService.RegisterAsync(accountBl);
 
@@ -81,17 +81,17 @@ namespace WebAPI.Controllers
 
             string token = _jwtService.CreateTokenAsync(registerAccount);
 
-            ResponseAccount responseAccount = new ResponseAccount(
+            AccountResponse accountResponse = new AccountResponse(
                 registerAccount.Id,
                 registerAccount.FirstName,
                 registerAccount.SecondName,
                 registerAccount.Email,
                 registerAccount.Password,
-                registerAccount.Role.ToString(),
+                (int)registerAccount.Role,
                 token
             );
 
-            return Ok(responseAccount);
+            return Ok(accountResponse);
         }
     }
 }

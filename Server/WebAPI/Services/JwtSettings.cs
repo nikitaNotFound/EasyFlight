@@ -10,13 +10,13 @@ namespace WebAPI.Services
     {
         private readonly IConfiguration _configuration;
 
-        public string SecurityKey => _configuration.GetSection("JwtSettings")["Key"];
-        public int ExpireDays => Convert.ToInt32(_configuration.GetSection("JwtSettings")["ExpireDays"]);
+        public string Secret => _configuration[nameof(Secret)];
+        public TimeSpan ExpirationTime => TimeSpan.Parse(_configuration[nameof(ExpirationTime)]);
 
 
         public JwtSettings(IConfiguration configuration)
         {
-            _configuration = configuration;
+            _configuration = configuration.GetSection(nameof(JwtSettings));
         }
     }
 }

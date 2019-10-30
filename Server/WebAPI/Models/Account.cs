@@ -13,6 +13,6 @@ namespace WebAPI.Models
         public string SecondName { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public AccountRoles Role { get; set; }
+        public AccountRole Role { get; set; }
     }
 }

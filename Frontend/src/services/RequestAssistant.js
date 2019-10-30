@@ -1,7 +1,7 @@
 import { BadRequestError, NotFoundError } from './RequestErrors';
 import HttpStatus from 'http-status-codes';
 
-import  store from '../store/store';
+import AuthTokenProvider from './AuthTokenProvider';
 
 export async function createRequestResult(response, requestType) {
     if (response.ok) {
@@ -30,5 +30,5 @@ export const RequestTypes = {
 
 export const headers = {
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${store.getState().authToken}`
+    'Authorization': `Bearer ${AuthTokenProvider.getToken()}`
 }

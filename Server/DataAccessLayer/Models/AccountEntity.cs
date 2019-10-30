@@ -11,8 +11,8 @@ namespace DataAccessLayer.Models
         public string FirstName { get; set; }
         public string SecondName { get; set; }
         public string Email { get; set; }
-        public byte[] HashedPassword { get; set; }
+        public byte[] PasswordHash { get; set; }
         public byte[] Salt { get; set; }
-        public AccountRoles Role { get; set; }
+        public AccountRole Role { get; set; }
     }
 }

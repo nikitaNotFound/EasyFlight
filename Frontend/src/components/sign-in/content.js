@@ -77,7 +77,7 @@ function Content(props) {
                 
                 <div className="sign-up-option">
                     <Link to="/signup">
-                        sign up
+                        Sign up
                     </Link>
                 </div>
             </div>

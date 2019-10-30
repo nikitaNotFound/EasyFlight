@@ -9,6 +9,7 @@ using BusinessLayer;
 using AutoMapper;
 using System.Collections.Generic;
 using System.Linq;
+using Common;
 using Microsoft.AspNetCore.Authorization;
 
 namespace WebAPI.Controllers
@@ -90,7 +91,7 @@ namespace WebAPI.Controllers
 
         // POST api/cities
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(nameof(AccountRole.Admin))]
         public async Task<ActionResult> AddAsync([FromBody] City city)
         {
             BlCity cityBl = _mapper.Map<BlCity>(city);
@@ -107,7 +108,7 @@ namespace WebAPI.Controllers
 
         // PUT api/cities
         [HttpPut]
-        [Authorize(Roles = "Admin")]
+        [Authorize(nameof(AccountRole.Admin))]
         public async Task<ActionResult> UpdateAsync([FromBody] City city)
         {
             BlCity cityBl = _mapper.Map<City, BlCity>(city);

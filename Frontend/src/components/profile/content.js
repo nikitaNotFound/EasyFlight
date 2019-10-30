@@ -66,9 +66,9 @@ function Content(props) {
                     <div className="col-10">
                         <input type="text" className="name-input" value={user.firstName} />
 
-                        <div className="logout rounded non-selectable" onClick={onLogout}>
+                        <button className="logout rounded non-selectable" onClick={onLogout}>
                             log out
-                        </div>
+                        </button>
                     </div>
                 </div>
             </div>

@@ -5,8 +5,8 @@
     @hashedPassword as varbinary(255),
     @role as int,
     @salt as binary(20)
-AS
-    insert INTO Accounts (FirstName, SecondName, Email, HashedPassword, Salt, Role)
+as
+    insert into Accounts (FirstName, SecondName, Email, HashedPassword, Salt, Role)
     values
     (
         @firstName,

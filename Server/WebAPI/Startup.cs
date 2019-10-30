@@ -69,7 +69,7 @@ namespace WebAPI
 
             services.AddSingleton<IJwtSettings>(jwtSettings);
 
-            byte[] key = Encoding.ASCII.GetBytes(jwtSettings.SecurityKey);
+            byte[] key = Encoding.ASCII.GetBytes(jwtSettings.Secret);
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
