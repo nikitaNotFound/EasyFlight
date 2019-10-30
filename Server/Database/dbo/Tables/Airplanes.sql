@@ -1,7 +1,6 @@
-﻿CREATE TABLE [dbo].[Airplanes] (
-    [Id]         INT           IDENTITY (1, 1) NOT NULL,
-    [Name]       NVARCHAR (50) NOT NULL,
-    [CarryingKg] INT           NOT NULL,
-    CONSTRAINT [PK_Airplanes] PRIMARY KEY CLUSTERED ([Id] ASC)
+﻿create table [dbo].[Airplanes] (
+    [Id]         int           identity (1, 1) not null,
+    [Name]       nvarchar (50) not null,
+    [CarryingKg] int           not null,
+    constraint [PK_Airplanes] primary key clustered ([Id] asc)
 );
-

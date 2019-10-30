@@ -133,6 +133,16 @@ namespace DataAccessLayer.Repositories.Airplanes
                 commandType: CommandType.StoredProcedure);
         }
 
+        public async Task<AirplaneEntity> GetByNameAsync(string name)
+        {
+            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
+
+            return await db.QuerySingleOrDefaultAsync<AirplaneEntity>(
+                "GetAirplaneByName",
+                new {name = name},
+                commandType: CommandType.StoredProcedure);
+        }
+
         public async Task<IReadOnlyCollection<AirplaneSeatEntity>> GetAirplaneSeatsAsync(int airplaneId)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);

@@ -43,7 +43,7 @@ namespace DataAccessLayer.Repositories.Accounts
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             return await db.QuerySingleOrDefaultAsync<AccountEntity>(
-                "LoginAccount",
+                "GetAccount",
                 new { email = account.Email, passwordHash = account.PasswordHash },
                 commandType: CommandType.StoredProcedure);
         }

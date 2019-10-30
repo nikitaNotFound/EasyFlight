@@ -1,12 +1,12 @@
-﻿CREATE TABLE [dbo].[Seats] (
-    [Id]         INT IDENTITY (1, 1) NOT NULL,
-    [AirplaneId] INT NOT NULL,
-    [Floor]      INT NOT NULL,
-    [Section]    INT NOT NULL,
-    [Zone]       INT NOT NULL,
-    [Row]        INT NOT NULL,
-    [Number]     INT NOT NULL,
-    [TypeId]     INT NOT NULL,
-    CONSTRAINT [PK_Seats] PRIMARY KEY CLUSTERED ([Id] ASC)
+﻿create table [dbo].[Seats] (
+    [Id]         int IDENTITY (1, 1) not null,
+    [AirplaneId] int not null,
+    [Floor]      int not null,
+    [Section]    int not null,
+    [Zone]       int not null,
+    [Row]        int not null,
+    [Number]     int not null,
+    [TypeId]     int not null,
+    constraint [PK_Seats] primary key clustered ([Id] asc)
 );
 
