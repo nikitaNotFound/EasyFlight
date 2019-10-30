@@ -41,6 +41,15 @@ namespace BusinessLayer.Services.Airplanes
             return airplane;
         }
 
+        public async Task<Airplane> GetByNameAsync(string name)
+        {
+            AirplaneEntity airplaneDal = await _airplaneRepository.GetByNameAsync(name);
+
+            Airplane airplane = _mapper.Map<Airplane>(airplaneDal);
+
+            return airplane;
+        }
+
         public async Task<IReadOnlyCollection<AirplaneSeat>> GetAirplaneSeatsAsync(int airplaneId)
         {
             IReadOnlyCollection<AirplaneSeatEntity> seatsDal =

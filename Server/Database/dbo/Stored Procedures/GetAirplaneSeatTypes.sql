@@ -1,6 +1,6 @@
 ﻿create procedure GetAirplaneSeatTypes
-	@airplaneId as int
+    @airplaneId as int
 as
-	select *
-	from SeatTypes
-	where AirplaneId = @airplaneId
+    select *
+    from SeatTypes
+    where AirplaneId = @airplaneId

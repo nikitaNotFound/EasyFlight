@@ -1,5 +1,5 @@
 ﻿create procedure DeleteAirplaneSeats
-	@airplaneId as int
+    @airplaneId as int
 as
-	delete Seats
-	where AirplaneId = @airplaneId
+    delete Seats
+    where AirplaneId = @airplaneId

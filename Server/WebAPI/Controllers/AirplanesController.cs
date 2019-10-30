@@ -89,6 +89,23 @@ namespace WebAPI.Controllers
 
             return Ok(airplane);
         }
+        
+        // GET api/airplanes/{name}
+        [HttpGet]
+        [Route("{name}")]
+        public async Task<ActionResult> GetByNameAsync(string name)
+        {
+            BlAirplane airplaneBl = await _airplaneService.GetByNameAsync(name);
+
+            Airplane airplane = _mapper.Map<Airplane>(airplaneBl);
+
+            if (airplane == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(airplane);
+        }
 
         // GET api/airplanes/{airplaneId}/seats
         [HttpGet]
