@@ -1,8 +1,8 @@
-﻿create procedure [dbo].[LoginAccount] 
+﻿CREATE procedure [dbo].[GetAccount] 
     @email as nvarchar(50),
     @hashedPassword as varbinary(255)
 as
     select *
     from Accounts
     where Email = @email
-        and HashedPassword = @hashedPassword;
+        and PasswordHash = @hashedPassword;

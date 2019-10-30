@@ -73,8 +73,6 @@
     <Build Include="dbo\Stored Procedures\SearchCountryCitiesByName.sql" />
     <Build Include="dbo\Stored Procedures\SearchCountriesByName.sql" />
     <Build Include="dbo\Stored Procedures\SearchCitiesByName.sql" />
-    <Build Include="dbo\Stored Procedures\RegisterAccount.sql" />
-    <Build Include="dbo\Stored Procedures\LoginAccount.sql" />
     <Build Include="dbo\Stored Procedures\GetCountryCities.sql" />
     <Build Include="dbo\Stored Procedures\GetCountryById.sql" />
     <Build Include="dbo\Stored Procedures\GetCityById.sql" />
@@ -88,6 +86,8 @@
     <Build Include="dbo\Stored Procedures\AddCountry.sql" />
     <Build Include="dbo\Stored Procedures\AddCity.sql" />
     <Build Include="dbo\Stored Procedures\AddAirport.sql" />
+    <Build Include="dbo\Stored Procedures\GetAccount.sql" />
+    <Build Include="dbo\Stored Procedures\CreateAccount.sql" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="dbo\Stored Procedures\GetAirportById.sql" />
