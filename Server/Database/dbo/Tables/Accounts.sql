@@ -6,6 +6,6 @@
     [PasswordHash] varbinary (255) not null,
     [Salt]         binaty (20)     not null,
     [Role]         int             not null,
-    constraint [PK_accounts] primary key clustered ([Id] asc)
+    constraint [PK_Accounts] primary key clustered ([Id] asc)
 );
 
