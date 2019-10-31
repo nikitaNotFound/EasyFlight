@@ -94,6 +94,7 @@ export async function logout() {
 export function checkLogin(userInfo) {
     const token = AuthTokenProvider.getToken();
 
+
     if (!token || !userInfo) {
         return { authorized: false, admin: false};
     }
