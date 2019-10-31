@@ -1,7 +1,7 @@
-import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import React from 'react';
+import { Route, Redirect } from 'react-router-dom';
 
-import * as UserService from "../services/UserSerivce";
+import * as UserService from '../services/UserSerivce';
 
 import { connect } from 'react-redux';
 

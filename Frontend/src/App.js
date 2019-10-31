@@ -5,7 +5,7 @@ import AdminRoute from './routes/AdminRoute';
 import AuthorizedRoute from './routes/AuthorizedRoute';
 import UnauthorizedRoute from './routes/UnauthorizedRoute';
 
-import MainPage from "./components/main-page";
+import MainPage from './components/main-page';
 import Admin from './components/admin';
 import SignUp from './components/sign-up';
 import SignIn from './components/sign-in';
