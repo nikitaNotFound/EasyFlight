@@ -11,6 +11,7 @@ namespace WebAPI.Services
         private readonly IConfiguration _configuration;
 
         public string Secret => _configuration[nameof(Secret)];
+        public string Issuer => _configuration[nameof(Issuer)];
         public TimeSpan ExpirationTime => TimeSpan.Parse(_configuration[nameof(ExpirationTime)]);
 
 

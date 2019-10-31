@@ -69,7 +69,7 @@ namespace WebAPI
 
             services.AddSingleton<IJwtSettings>(jwtSettings);
 
-            byte[] key = Encoding.ASCII.GetBytes(jwtSettings.Secret);
+            byte[] key = Encoding.UTF8.GetBytes(jwtSettings.Secret);
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -78,13 +78,15 @@ namespace WebAPI
             .AddJwtBearer(x =>
             {
                 x.RequireHttpsMetadata = false;
-                x.SaveToken = true;
+                x.SaveToken = false;
                 x.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = false,
-                    ValidateAudience = false
+                    ValidateIssuer = true,
+                    ValidIssuer = jwtSettings.Issuer,
+                    ValidateAudience = true,
+                    ValidAudiences = settings.AllowedOrigins
                 };
             });
         }

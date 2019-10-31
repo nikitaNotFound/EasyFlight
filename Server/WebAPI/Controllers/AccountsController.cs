@@ -11,6 +11,7 @@ using WebAPI.Models;
 using WebAPI.Services.JWT;
 using AccountBl = BusinessLayer.Models.Account;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Extensions;
 
 namespace WebAPI.Controllers
 {
@@ -48,7 +49,8 @@ namespace WebAPI.Controllers
 
             Account authAccount = _mapper.Map<Account>(authAccountBl);
 
-            string token = _jwtService.CreateTokenAsync(authAccount);
+            string audience = Request.Headers["Origin"];
+            string token = _jwtService.CreateTokenAsync(authAccount, audience);
 
             AccountResponse accountResponse = new AccountResponse(
                 authAccount.Id,
@@ -79,7 +81,8 @@ namespace WebAPI.Controllers
 
             Account registerAccount = _mapper.Map<Account>(registerAccountBl);
 
-            string token = _jwtService.CreateTokenAsync(registerAccount);
+            string audience = Request.Headers["Origin"];
+            string token = _jwtService.CreateTokenAsync(registerAccount, audience);
 
             AccountResponse accountResponse = new AccountResponse(
                 registerAccount.Id,

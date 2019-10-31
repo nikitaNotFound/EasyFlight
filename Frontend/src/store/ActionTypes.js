@@ -1,2 +1,1 @@
-export const CHANGE_AUTH_TOKEN = 'CHANGE_AUTH_TOKEN';
 export const CHANGE_USER_INFO = 'CHANGE_USER_INFO';

@@ -1,11 +1,12 @@
-import { users, userFlights } from './DataBase';
+import { userFlights } from './DataBase';
 import { isArray } from 'util';
 import User from './user-models/user';
 
 import { createRequestResult, RequestTypes } from './RequestAssistant';
 
 import AuthTokenProvider from './AuthTokenProvider';
-import UserInfoProvider from './UserInfoProvider';
+
+import AccountRole from './AccountRole';
 
 import * as config from '../config.json';
 
@@ -34,12 +35,12 @@ export async function login(user) {
             method: 'POST',
             mode: 'cors',
             headers: {
-                "Content-Type": "application/json"
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(user)
         }
     );
-        
+
     const result = await createRequestResult(response, RequestTypes.ContentExpected);
 
     const token = result.token;
@@ -53,8 +54,7 @@ export async function login(user) {
         result.role
     );
 
-    UserInfoProvider.saveUserInfo(userInfo);
-    return result;
+    return userInfo;
 }
 
 export async function register(user) {
@@ -84,22 +84,19 @@ export async function register(user) {
         result.role
     );
 
-    UserInfoProvider.saveUserInfo(userInfo);
-    return result;
+    return userInfo;
 }
 
 export async function logout() {
     AuthTokenProvider.saveToken(null);
-    UserInfoProvider.saveUserInfo(null);
 }
 
-export function checkLogin() {
+export function checkLogin(userInfo) {
     const token = AuthTokenProvider.getToken();
-    const userInfo = UserInfoProvider.getUserInfo();
 
     if (!token || !userInfo) {
         return { authorized: false, admin: false};
     }
 
-    return { authorized: true, admin: userInfo.role == 1 ? true : false };
+    return { authorized: true, admin: userInfo.role == AccountRole.Admin ? true : false };
 }

@@ -1,12 +1,12 @@
-﻿CREATE procedure [dbo].[CreateAccount]
+﻿create procedure [dbo].[CreateAccount]
     @firstName as nvarchar(50),
     @secondName as nvarchar(50),
     @email as nvarchar(50),
     @hashedPassword as varbinary(255),
     @role as int,
     @salt as binary(20)
-AS
-    insert INTO Accounts (FirstName, SecondName, Email, PasswordHash, Salt, Role)
+as
+    insert into Accounts (FirstName, SecondName, Email, PasswordHash, Salt, Role)
     values
     (
         @firstName,

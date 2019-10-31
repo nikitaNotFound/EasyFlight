@@ -8,6 +8,6 @@ namespace WebAPI.Services.JWT
 {
     public interface IJwtService
     {
-        string CreateTokenAsync(Account account);
+        string CreateTokenAsync(Account account, string audience);
     }
 }

@@ -3,13 +3,17 @@ import { Route, Redirect } from "react-router-dom";
 
 import * as UserService from "../services/UserSerivce";
 
-export default function AuthorizedRoute({ component: Component, ...rest }) {
+import { connect } from 'react-redux';
+
+function AuthorizedRoute({ component: Component, userInfo: userInfo, ...rest }) {
     return (
         <Route
             {...rest}
             render={() =>
-                UserService.checkLogin().authorized === true ? <Component props={{ ...rest }} /> : <Redirect to="/signin" />
+                UserService.checkLogin(userInfo).authorized === true ? <Component props={{ ...rest }} /> : <Redirect to="/signin" />
             }
         />
     );
 }
+
+export default connect(state => state)(AuthorizedRoute);

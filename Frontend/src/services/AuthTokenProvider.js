@@ -1,12 +1,11 @@
-import store from '../store/store';
-import * as types from '../store/ActionTypes';
+const AUTH_TOKEN_KEY = 'authToken';
 
 const authTokenProvider = {
     getToken: () => {
-        return store.getState().authToken;
+        return localStorage.getItem(AUTH_TOKEN_KEY);
     },
     saveToken: (token) => {
-        store.dispatch({ type: types.CHANGE_AUTH_TOKEN, payload: token });
+        localStorage.setItem(AUTH_TOKEN_KEY, token);
     }
 }
 

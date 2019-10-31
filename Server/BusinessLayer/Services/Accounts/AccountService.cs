@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BusinessLayer.Models;
@@ -30,19 +32,17 @@ namespace BusinessLayer.Services.Accounts
                 return null;
             }
 
-            dalAccount.PasswordHash = PasswordHasher.GenerateHash(
+            byte[] loginPasswordHash = PasswordHasher.GenerateHash(
                 account.Password,
                 dalAccount.Salt
             );
-
-            AccountEntity authAccount = await _accountRepository.GetAccountAsync(dalAccount);
-
-            if (authAccount == null)
+            
+            if (!dalAccount.PasswordHash.SequenceEqual(loginPasswordHash))
             {
                 return null;
             }
 
-            return _mapper.Map<Account>(authAccount);
+            return _mapper.Map<Account>(dalAccount);
         }
 
         public async Task<Account> RegisterAsync(Account account)
