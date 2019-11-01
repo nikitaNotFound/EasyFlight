@@ -10,8 +10,7 @@ import * as FlightService from '../../services/FlightService';
 import Spinner from '../common/spinner';
 import Flights from './flights';
 
-import store from '../../store/store';
-import * as types from '../../store/ActionTypes';
+import { changeUserInfo } from '../../store/actions/UserInfoActions';
 
 import { connect } from 'react-redux';
 
@@ -47,7 +46,7 @@ function Content(props) {
 
     async function onLogout() {
         await UserService.logout();
-        store.dispatch({ type: types.CHANGE_USER_INFO, payload: null });
+        changeUserInfo(null);
         props.history.push("/");
     }
 

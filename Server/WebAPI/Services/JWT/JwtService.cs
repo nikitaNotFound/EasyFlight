@@ -8,21 +8,24 @@ using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Common;
+using Microsoft.AspNetCore.Http;
 
 namespace WebAPI.Services.JWT
 {
     public class JwtService : IJwtService
     {
         private readonly IJwtSettings _jwtSettings;
+        private readonly IHttpContextAccessor _httpContext;
 
 
-        public JwtService(IJwtSettings settings)
+        public JwtService(IJwtSettings settings, IHttpContextAccessor httpContext)
         {
             _jwtSettings = settings;
+            _httpContext = httpContext;
         }
 
 
-        public string CreateTokenAsync(Account account, string audience)
+        public string CreateTokenAsync(Account account)
         {
             Claim[] claims = new Claim[]
             {
@@ -34,6 +37,8 @@ namespace WebAPI.Services.JWT
             SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Secret));
 
             DateTime expires = DateTime.Now.Add(_jwtSettings.ExpirationTime);
+
+            string audience = _httpContext.HttpContext.Request.Headers["Origin"];
 
             SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
             {

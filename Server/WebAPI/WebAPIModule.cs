@@ -11,7 +11,7 @@ namespace WebAPI
     {
         public static void Register(IServiceCollection services)
         {
-            services.AddSingleton<IJwtService, JwtService>();
+            services.AddTransient<IJwtService, JwtService>();
         }
     }
 }

@@ -12,8 +12,7 @@ import '../../styles/registration.css';
 import { BadRequestError } from '../../services/RequestErrors';
 import { invalidInput, defaultErrorMessage, badLoginData } from '../common/message-box-messages';
 
-import store from '../../store/store';
-import * as types from '../../store/ActionTypes';
+import { changeUserInfo } from '../../store/actions/UserInfoActions';
 
 function Content(props) {
     const [email, changeEmail] = useState(null);
@@ -29,7 +28,7 @@ function Content(props) {
 
         try {
             const userInfo = await UserService.login({email: email, password: password});
-            store.dispatch({ type: types.CHANGE_USER_INFO, payload: userInfo });
+            changeUserInfo(userInfo);
             props.history.push('/');
         } catch (ex) {
             if (ex instanceof BadRequestError) {

@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using WebAPI.Services;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using WebAPI.Services.JWT;
 
 namespace WebAPI
 {
@@ -89,6 +90,8 @@ namespace WebAPI
                     ValidAudiences = settings.AllowedOrigins
                 };
             });
+
+            services.AddHttpContextAccessor();
         }
 
         public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)

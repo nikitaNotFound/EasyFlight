@@ -48,9 +48,8 @@ namespace WebAPI.Controllers
             }
 
             Account authAccount = _mapper.Map<Account>(authAccountBl);
-
-            string audience = Request.Headers["Origin"];
-            string token = _jwtService.CreateTokenAsync(authAccount, audience);
+            
+            string token = _jwtService.CreateTokenAsync(authAccount);
 
             AccountResponse accountResponse = new AccountResponse(
                 authAccount.Id,
@@ -80,9 +79,8 @@ namespace WebAPI.Controllers
             }
 
             Account registerAccount = _mapper.Map<Account>(registerAccountBl);
-
-            string audience = Request.Headers["Origin"];
-            string token = _jwtService.CreateTokenAsync(registerAccount, audience);
+            
+            string token = _jwtService.CreateTokenAsync(registerAccount);
 
             AccountResponse accountResponse = new AccountResponse(
                 registerAccount.Id,
