@@ -9,11 +9,14 @@ using BusinessLayer.Services.Airports;
 using BlAirport = BusinessLayer.Models.Airport;
 using BusinessLayer;
 using AutoMapper;
+using Common;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebAPI.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
+    [Route("api/[controller]")]
     [EnableCors("CorsPolicy")]
     public class AirportsController : ControllerBase
     {
@@ -67,6 +70,7 @@ namespace WebAPI.Controllers
 
         // POST api/airports
         [HttpPost]
+        [Authorize(nameof(AccountRole.Admin))]
         public async Task<ActionResult> AddAsync([FromBody]Airport airport)
         {
             BlAirport airportBl = _mapper.Map<BlAirport>(airport);
@@ -83,6 +87,7 @@ namespace WebAPI.Controllers
 
         // PUT api/airports
         [HttpPut]
+        [Authorize(nameof(AccountRole.Admin))]
         public async Task<ActionResult> UpdateAsync([FromBody] Airport airport)
         {
             BlAirport airportBl = _mapper.Map<BlAirport>(airport);

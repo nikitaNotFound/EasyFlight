@@ -1,14 +1,16 @@
 import React from 'react'
-import PropsTypes from 'prop-types';
-import UserInfo from '../../services/user-models/user-info';
-import '../../styles/profile-bar.css';
 import { Link } from 'react-router-dom';
+import PropsTypes from 'prop-types';
+
+import '../../styles/profile-bar.css';
+
+import User from '../../services/user-models/user';
 
 function ProfileBar(props) {
     return (
         <div className="profile-bar-body">
             <div className="name rounded-left">
-                {props.userInfo.name}
+                {props.userInfo.firstName}
             </div>
             <Link to="/profile" className="non-dec-link">
                 <div className="settings rounded-right">
@@ -20,7 +22,7 @@ function ProfileBar(props) {
 }
 
 ProfileBar.propsTypes = {
-    userInfo: PropsTypes.instanceOf(UserInfo)
+    userInfo: PropsTypes.instanceOf(User)
 }
 
 export default ProfileBar;

@@ -7,7 +7,8 @@ import MessageBox from '../../../common/message-box';
 import Airport from '../../../../services/airport-models/airport';
 import { invalidInput, duplicate, defaultErrorMessage, added } from '../../../common/message-box-messages';
 
-import * as PlaceService from '../../../../services/PlaceService';
+import * as CityService from '../../../../services/CityService';
+import * as CountryService from '../../../../services/CountryService';
 import * as AirportService from '../../../../services/AirportService';
 import { BadRequestError } from '../../../../services/RequestErrors';
 import ConfirmActionButton from '../../../common/confirm-action-button';
@@ -37,8 +38,8 @@ export default function Add() {
         }
     }
 
-    async function getCityName(city) {
-        const country = await PlaceService.getCountryById(city.countryId);
+    async function buildCityName(city) {
+        const country = await CountryService.getById(city.countryId);
 
         const finalName = `${city.name} (${country.name})`;
 
@@ -76,10 +77,10 @@ export default function Add() {
                                     />
                                 </div>
                                 <SearchList
-                                    searchFunc={PlaceService.searchCitiesByName}
+                                    searchFunc={CityService.searchByName}
                                     placeholder="City"
                                     currentItem={city}
-                                    getItemName={getCityName}
+                                    getItemName={buildCityName}
                                     onValueChange={changeCity}
                                 />
                                 <br/>

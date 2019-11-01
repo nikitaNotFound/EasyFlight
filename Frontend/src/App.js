@@ -5,7 +5,7 @@ import AdminRoute from './routes/AdminRoute';
 import AuthorizedRoute from './routes/AuthorizedRoute';
 import UnauthorizedRoute from './routes/UnauthorizedRoute';
 
-import MainPage from "./components/main-page";
+import MainPage from './components/main-page';
 import Admin from './components/admin';
 import SignUp from './components/sign-up';
 import SignIn from './components/sign-in';
@@ -27,7 +27,7 @@ export default function App() {
                     <AuthorizedRoute path="/profile" component={Profile} />
                     <AuthorizedRoute path="/booking/:id" component={Booking} />
                     <Route path="/not-found" component={NotFoundPage} />
-                    <Route path="/" component={MainPage} />
+                    <AuthorizedRoute path="/" component={MainPage} />
                 </Switch>
             </BrowserRouter>
         </Provider>

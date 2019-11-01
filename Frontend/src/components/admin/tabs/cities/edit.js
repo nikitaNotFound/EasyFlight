@@ -8,7 +8,8 @@ import SearchList from '../../../common/search-list';
 import City from '../../../../services/place-models/city';
 import {  duplicate, defaultErrorMessage, invalidInput, saved } from '../../../common/message-box-messages';
 
-import * as PlaceService from '../../../../services/PlaceService';
+import * as CityService from '../../../../services/CityService';
+import * as CountryService from '../../../../services/CountryService';
 import { NotFoundError, BadRequestError } from '../../../../services/RequestErrors';
 import ConfirmActionButton from '../../../common/confirm-action-button';
 
@@ -22,11 +23,11 @@ export default function Edit(props) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const cityRequest = await PlaceService.getCityById(props.match.params.id);
+                const cityRequest = await CityService.getById(props.match.params.id);
                 changeName(cityRequest.name);
                 changeId(cityRequest.id);
 
-                const countryRequest = await PlaceService.getCountryById(cityRequest.countryId);
+                const countryRequest = await CountryService.getById(cityRequest.countryId);
                 changeCountry(countryRequest);
 
                 changeLoadingMode(false);
@@ -50,7 +51,7 @@ export default function Edit(props) {
         let newCity = new City(id, country.id, name);
 
         try {
-            await PlaceService.updateCity(newCity);
+            await CityService.update(newCity);
             changeMessageBoxValue(saved());
         } catch (ex) {
             if (ex instanceof BadRequestError) {
@@ -95,7 +96,7 @@ export default function Edit(props) {
                         <div className="editing-params-form">
                             <div className="row">
                                 <SearchList
-                                    searchFunc={PlaceService.searchCountriesByName}
+                                    searchFunc={CountryService.searchByName}
                                     placeholder="Country"
                                     currentItem={country}
                                     onValueChange={changeCountry}

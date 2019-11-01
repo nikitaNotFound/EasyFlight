@@ -6,7 +6,7 @@ import ComponentHeadline from '../../../common/component-headline';
 import MessageBox from '../../../common/message-box';
 import SearchList from '../../../common/search-list';
 
-import * as PlaceService from '../../../../services/PlaceService';
+import * as CountryService from '../../../../services/CountryService';
 
 
 export default function Filter(props) {
@@ -58,7 +58,7 @@ export default function Filter(props) {
             <div className="filter-row">
                 <div className="filter-arg">
                     <SearchList
-                        searchFunc={PlaceService.searchCountriesByName}
+                        searchFunc={CountryService.searchByName}
                         placeholder="Country"
                         getItemName={getCountryName}
                         onValueChange={changeCountry}

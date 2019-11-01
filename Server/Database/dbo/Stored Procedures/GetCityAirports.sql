@@ -1,4 +1,4 @@
-﻿create procedure [dbo].[GetCityAirports]
+create procedure [dbo].[GetCityAirports]
     @cityId as int
 as
     select *

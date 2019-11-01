@@ -1,10 +1,18 @@
-import React, {useState} from 'react';
-import {withRouter} from 'react-router-dom';
+import React, { useState } from 'react';
+import { withRouter, Link } from 'react-router-dom';
+
+import MessageBox from '../common/message-box';
+
+import * as UserService from '../../services/UserSerivce';
+
 import googleIcon from '../../icons/google-icon.png';
 import facebookIcon from '../../icons/facebook-icon.png';
-import MessageBox from '../common/message-box';
-import * as UserService from '../../services/UserSerivce';
+
 import '../../styles/registration.css';
+import { BadRequestError } from '../../services/RequestErrors';
+import { invalidInput, defaultErrorMessage, badLoginData } from '../common/message-box-messages';
+
+import { changeUserInfo } from '../../store/actions/UserInfoActions';
 
 function Content(props) {
     const [email, changeEmail] = useState(null);
@@ -13,12 +21,21 @@ function Content(props) {
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
     async function onLogin() {
-        const loginTry = await UserService.login({email: email, password: password});
+        if (!email || !password) {
+            changeMessageBoxValue(invalidInput());
+            return;
+        }
 
-        if (loginTry) {
+        try {
+            const userInfo = await UserService.login({email: email, password: password});
+            changeUserInfo(userInfo);
             props.history.push('/');
-        } else {
-            changeMessageBoxValue('Login failed!');
+        } catch (ex) {
+            if (ex instanceof BadRequestError) {
+                changeMessageBoxValue(badLoginData());
+            } else {
+                changeMessageBoxValue(defaultErrorMessage());
+            }
         }
     }
 
@@ -51,6 +68,7 @@ function Content(props) {
                 <button className="btn btn-primary button-dark main-button" onClick={onLogin}>
                     Sign in
                 </button>
+
                 <div className="input-group-btn">
                     <button className="btn btn-primary button-dark sec-button">
                         <img src={googleIcon} className="login-item-img" alt="google-icon"/>
@@ -58,6 +76,12 @@ function Content(props) {
                     <button className="btn btn-primary button-dark sec-button">
                         <img src={facebookIcon} className="login-item-img" alt="facebook-icon"/>
                     </button>
+                </div>
+                
+                <div className="sign-up-option">
+                    <Link to="/signup">
+                        Sign up
+                    </Link>
                 </div>
             </div>
         </main>

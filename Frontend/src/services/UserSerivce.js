@@ -1,29 +1,14 @@
-import { users, userFlights } from './DataBase';
+import { userFlights } from './DataBase';
 import { isArray } from 'util';
-import UserInfo from './user-models/user-info';
+import User from './user-models/user';
 
-import store from '../store/store';
-import * as types from '../store/ActionTypes';
+import { createRequestResult, RequestTypes } from './RequestAssistant';
 
-export function getCurrentUser(id) {
-    return new Promise((resolve, reject) => {
-        const data = users;
+import AuthTokenProvider from './AuthTokenProvider';
 
-        let user = {};
-        for (let i = 0, len = data.length; i < len; i++) {
-            const element = data[i];
+import AccountRole from './AccountRole';
 
-            if (element.id == id) {
-                user = element;
-            }
-        }
-
-        if (!user) {
-            reject("Error");
-        }
-        resolve(user);
-    });
-}
+import * as config from '../config.json';
 
 export function getUserFlights(userId) {
     return new Promise((resolve, reject) => {
@@ -43,49 +28,75 @@ export function getUserFlights(userId) {
     });
 }
 
-const REFRESH_TOKEN_KEY = "refreshToken";
-const AUTH_TOKEN_KEY = "authToken";
-
-export function login(user) {
-    return new Promise(resolve => {
-        let foundUser = null;
-
-        for (let i = 0, len = users.length; i < len; i++) {
-            if (users[i].email == user.email && users[i].password == user.password) {
-                foundUser = users[i];
-            }
+export async function login(user) {
+    const response = await fetch(
+        `${config.API_URL}/accounts/login`,
+        {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(user)
         }
+    );
 
-        if (!foundUser) {
-            resolve(false);
-        }
+    const result = await createRequestResult(response, RequestTypes.ContentExpected);
 
-        const foundUserInfo = new UserInfo(foundUser.id, foundUser.name, foundUser.role);
+    const token = result.token;
+    AuthTokenProvider.saveToken(token);
 
-        store.dispatch({ type: types.CHANGE_AUTH_TOKEN, payload: AUTH_TOKEN_KEY });
-        store.dispatch({ type: types.CHANGE_REFRESH_TOKEN, payload: REFRESH_TOKEN_KEY });
-        store.dispatch({ type: types.CHANGE_USER_INFO, payload: foundUserInfo });
+    const userInfo = new User(
+        result.firstName,
+        result.secondName,
+        result.email,
+        null,
+        result.role
+    );
 
-        resolve(true);
-    });
+    return userInfo;
 }
 
-export function logout() {
-    return new Promise(resolve => {
-        store.dispatch({ type: types.CHANGE_AUTH_TOKEN, payload: null });
-        store.dispatch({ type: types.CHANGE_REFRESH_TOKEN, payload: null });
-        store.dispatch({ type: types.CHANGE_USER_INFO, payload: null });
+export async function register(user) {
+    const response = await fetch(
+        `${config.API_URL}/accounts/register`,
+        {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        }
+    );
+        
+    const result = await createRequestResult(response, RequestTypes.ContentExpected);
 
-        resolve(true);
-    });
+    const token = result.token;
+
+    AuthTokenProvider.saveToken(token);
+
+    const userInfo = new User(
+        result.firstName,
+        result.secondName,
+        result.email,
+        null,
+        result.role
+    );
+
+    return userInfo;
 }
 
-export function checkLogin() {
-    const storeObject = store.getState();
+export async function logout() {
+    AuthTokenProvider.saveToken(null);
+}
 
-    if (!storeObject.authToken || !storeObject.userInfo) {
+export function checkLogin(userInfo) {
+    const token = AuthTokenProvider.getToken();
+
+    if (!token || !userInfo) {
         return { authorized: false, admin: false};
     }
 
-    return { authorized: true, admin: storeObject.userInfo.role == 'Admin' ? true : false };
+    return { authorized: true, admin: userInfo.role == AccountRole.Admin ? true : false };
 }

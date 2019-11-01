@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import ComponentHeadline from '../../common/component-headline';
-import * as PlaceService from '../../../services/PlaceService';
+import * as CountryService from '../../../services/CountryService';
+import * as CityService from '../../../services/CityService';
 import * as AirportService from '../../../services/AirportService';
 import SearchOptions from '../../../services/flight-models/search-options';
 import MessageBox from '../../common/message-box';
@@ -49,8 +50,8 @@ function Filter(props) {
         props.onFilterApplied(newOptions);
     }
 
-    async function getCityName(city) {
-        const countryResult = await PlaceService.getCountryById(city.countryId);
+    async function buildCityName(city) {
+        const countryResult = await CountryService.getById(city.countryId);
 
         const finalName = `${city.name} (${countryResult.name})`;
 
@@ -58,8 +59,8 @@ function Filter(props) {
     }
 
     async function getAirportName(airport) {
-        const city = await PlaceService.getCityById(airport.cityId);
-        const country = await PlaceService.getCountryById(city.value.countryId);
+        const city = await CityService.getById(airport.cityId);
+        const country = await CountryService.getById(city.countryId);
 
         const finalName = `${airport.name} (${city.name}, ${country.name})`;
 
@@ -85,17 +86,17 @@ function Filter(props) {
             <div className="filter-area">
                 <div className="row filter-item">
                     <SearchList
-                        searchFunc={PlaceService.searchCitiesByName}
+                        searchFunc={CityService.searchByName}
                         placeholder="From city"
                         currentItem={fromCity}
-                        getItemName={getCityName}
+                        getItemName={buildCityName}
                         onValueChange={changeFromCity}
                     />
                     <SearchList
-                        searchFunc={PlaceService.searchCitiesByName}
+                        searchFunc={CityService.searchByName}
                         placeholder="To city"
                         currentItem={toCity}
-                        getItemName={getCityName}
+                        getItemName={buildCityName}
                         onValueChange={changeToCity}
                     />
                 </div>

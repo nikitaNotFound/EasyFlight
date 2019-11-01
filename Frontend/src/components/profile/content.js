@@ -10,13 +10,15 @@ import * as FlightService from '../../services/FlightService';
 import Spinner from '../common/spinner';
 import Flights from './flights';
 
+import { changeUserInfo } from '../../store/actions/UserInfoActions';
+
 import { connect } from 'react-redux';
 
 function Content(props) {
     const [isLoading, changeLoadingMode] = useState(true);
     const [flights, changeFlights] = useState([]);
     const [userFlights, changeUserFlights] = useState();
-    const [user, changeUser] = useState(props.userInfo);
+    const [user, changeUser] = useState(props);
 
     useEffect(() => {
         const userFlightsLoading = UserService.getUserFlights(user.id);
@@ -44,6 +46,7 @@ function Content(props) {
 
     async function onLogout() {
         await UserService.logout();
+        changeUserInfo(null);
         props.history.push("/");
     }
 
@@ -64,11 +67,11 @@ function Content(props) {
                         </div>
                     </div>
                     <div className="col-10">
-                        <input type="text" className="name-input" value={user.name} />
+                        <input type="text" className="name-input" value={user.firstName} />
 
-                        <div className="logout rounded non-selectable" onClick={onLogout}>
+                        <button className="logout rounded non-selectable" onClick={onLogout}>
                             log out
-                        </div>
+                        </button>
                     </div>
                 </div>
             </div>

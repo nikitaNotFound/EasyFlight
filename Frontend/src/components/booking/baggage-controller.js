@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import PropsTypes from "prop-types";
+import React, { useState } from 'react';
+import PropsTypes from 'prop-types';
 
-import LayoutHeadline from "./layout-headline";
+import LayoutHeadline from './layout-headline';
 
 export default function BaggageController(props) {
     const [count, changeCount] = useState(0);

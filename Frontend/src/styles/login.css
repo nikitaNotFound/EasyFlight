@@ -34,6 +34,12 @@
   height: 22px;
 }
 
+.sign-up-option {
+  text-align: right;
+  margin-top: 1%;
+  font-size: 20px;
+}
+
 @media screen and (max-width: 1660px) {
   .login-item {
       font-size: 11px;

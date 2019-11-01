@@ -5,7 +5,8 @@ import Spinner from '../common/spinner';
 
 import FlightObject from '../../services/flight-models/flight';
 
-import * as PlaceService from '../../services/PlaceService';
+import * as CityService from '../../services/CityService';
+import * as CountryService from '../../services/CountryService';
 import * as AirportService from '../../services/AirportService';
 
 import Icon from '../../icons/test-company-2.jpg';
@@ -26,13 +27,13 @@ export default function Flight(props) {
             ]);
 
             const [fromCity, toCity] = await Promise.all([
-                PlaceService.getCityById(fromAirport.cityId),
-                PlaceService.getCityById(toAirport.cityId)
+                CityService.getById(fromAirport.cityId),
+                CityService.getById(toAirport.cityId)
             ]);
 
             const [fromCountry, toCountry] = await Promise.all([
-                PlaceService.getCountryById(fromCity.countryId),
-                PlaceService.getCountryById(toCity.countryId)
+                CountryService.getById(fromCity.countryId),
+                CountryService.getById(toCity.countryId)
             ]);
 
             changeFrom(`${fromAirport.name} (${fromCity.name}, ${fromCountry.name})`);

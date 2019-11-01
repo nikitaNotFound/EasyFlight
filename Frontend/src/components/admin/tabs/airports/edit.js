@@ -8,7 +8,8 @@ import MessageBox from '../../../common/message-box';
 import Airport from '../../../../services/airport-models/airport';
 
 import * as AirportService from '../../../../services/AirportService';
-import * as PlaceService from '../../../../services/PlaceService';
+import * as CityService from '../../../../services/CityService';
+import * as CountryService from '../../../../services/CountryService';
 import { invalidInput, duplicate, saved, defaultErrorMessage } from '../../../common/message-box-messages';
 import { NotFoundError, BadRequestError } from '../../../../services/RequestErrors';
 import ConfirmActionButton from '../../../common/confirm-action-button';
@@ -29,11 +30,11 @@ export default function Edit(props) {
                 changeId(airport.id);
                 changeName(airport.name);
 
-                const city = await PlaceService.getCityById(airport.cityId);
+                const city = await CityService.getById(airport.cityId);
 
                 changeCity(city);
 
-                const countryResult = await PlaceService.getCountryById(city.countryId);
+                const countryResult = await CountryService.getById(city.countryId);
 
                 changeCountry(countryResult);
 
@@ -70,8 +71,8 @@ export default function Edit(props) {
         }
     }
 
-    async function getCityName(city) {
-        const country = await PlaceService.getCountryById(city.countryId);
+    async function buildCityName(city) {
+        const country = await CountryService.getById(city.countryId);
 
         const finalName = `${city.name} (${country.name})`;
 
@@ -109,11 +110,11 @@ export default function Edit(props) {
                                         />
                                     </div>
                                     <SearchList
-                                        searchFunc={PlaceService.searchCitiesByName}
+                                        searchFunc={CityService.searchByName}
                                         searchArgs={[country.id]}
                                         placeholder="City"
                                         currentItem={city}
-                                        getItemName={getCityName}
+                                        getItemName={buildCityName}
                                         onValueChange={changeCity}
                                     />
                                 </div>

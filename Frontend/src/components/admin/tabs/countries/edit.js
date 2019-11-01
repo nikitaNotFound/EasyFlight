@@ -7,7 +7,7 @@ import MessageBox from '../../../common/message-box';
 import Country from '../../../../services/place-models/country';
 import {  duplicate, defaultErrorMessage, invalidInput, saved } from '../../../common/message-box-messages';
 
-import * as PlaceService from '../../../../services/PlaceService';
+import * as CountryService from '../../../../services/CountryService';
 import { NotFoundError, BadRequestError } from '../../../../services/RequestErrors';
 import ConfirmActionButton from '../../../common/confirm-action-button';
 
@@ -20,7 +20,7 @@ export default function Edit(props) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const countryRequest = await PlaceService.getCountryById(props.match.params.id);
+                const countryRequest = await CountryService.getById(props.match.params.id);
 
                 changeName(countryRequest.name);
                 changeId(countryRequest.id);
@@ -45,7 +45,7 @@ export default function Edit(props) {
         let finalCountry = new Country(id, name);
         
         try {
-            await PlaceService.updateCountry(finalCountry);
+            await CountryService.update(finalCountry);
             changeMessageBoxValue(saved());
         } catch (ex) {
             if (ex instanceof BadRequestError) {

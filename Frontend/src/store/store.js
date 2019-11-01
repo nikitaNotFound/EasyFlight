@@ -1,7 +1,6 @@
 import {createStore} from 'redux';
 import reducer from './reducers/index';
 
-
 const STORAGE_KEY = 'storage'
 
 function saveState(state) {
@@ -13,7 +12,9 @@ function loadState() {
     const serialisedState = localStorage.getItem(STORAGE_KEY);
 
     if (!serialisedState) {
-        return null;
+        // it means that there no serilised state in localStorage, so
+        // i return empty array, like it said in redux documentation
+        return [];
     }
 
     return JSON.parse(serialisedState);

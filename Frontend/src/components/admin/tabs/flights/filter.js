@@ -5,7 +5,8 @@ import SearchOptions from '../../../../services/flight-models/search-options';
 import ComponentHeadline from '../../../common/component-headline';
 import MessageBox from '../../../common/message-box';
 import * as AirportService from '../../../../services/AirportService';
-import * as PlaceService from '../../../../services/PlaceService';
+import * as CountryService from '../../../../services/CountryService';
+import * as CityService from '../../../../services/CityService';
 
 function Filter(props) {
     const [fromAirport, changeFromAirport] = useState(props.filterOptions.fromAirport);
@@ -49,8 +50,8 @@ function Filter(props) {
         return airport.name;
     }
 
-    async function getCityName(city) {
-        const country = await PlaceService.getCountryById(city.countryId);
+    async function buildCityName(city) {
+        const country = await CountryService.getById(city.countryId);
 
         const finalName = `${city.name} (${country.name})`;
 
@@ -96,19 +97,19 @@ function Filter(props) {
             <div className="filter-row">
                 <div className="filter-arg">
                     <SearchList
-                        searchFunc={PlaceService.searchCitiesByName}
+                        searchFunc={CityService.searchByName}
                         placeholder="From city"
                         currentItem={fromCity}
-                        getItemName={getCityName}
+                        getItemName={buildCityName}
                         onValueChange={changeFromCity}
                     />
                 </div>
                 <div className="filter-arg">
                     <SearchList
-                        searchFunc={PlaceService.searchCitiesByName}
+                        searchFunc={CityService.searchByName}
                         placeholder="To city"
                         currentItem={toCity}
-                        getItemName={getCityName}
+                        getItemName={buildCityName}
                         onValueChange={changeToCity}
                     />
                 </div>

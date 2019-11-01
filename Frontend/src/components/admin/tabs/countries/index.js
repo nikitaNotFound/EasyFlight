@@ -5,7 +5,7 @@ import Countries from './countries';
 import Filter from './filter';
 import MessageBox from '../../../common/message-box';
 
-import * as PlaceService from '../../../../services/PlaceService';
+import * as CountryService from '../../../../services/CountryService';
 
 import SearchOptions from '../../../../services/airport-models/search-options';
 
@@ -18,7 +18,7 @@ export default function CountryList() {
         changeFilterOptions(newFilterOptions);
 
         try {
-            const countriesRequest = await PlaceService.searchCountriesByName(newFilterOptions);
+            const countriesRequest = await CountryService.searchByName(newFilterOptions);
             changeCountries(countriesRequest);
         } catch {
             changeMessageBoxValue('Something went wrong...');

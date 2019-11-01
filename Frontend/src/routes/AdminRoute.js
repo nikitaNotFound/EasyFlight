@@ -1,13 +1,19 @@
-import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import React from 'react';
+import { Route, Redirect } from 'react-router-dom';
 
-import * as UserService from "../services/UserSerivce";
+import * as UserService from '../services/UserSerivce';
 
-export default function AdminRoute({ component: Component, ...rest }) {
+import { connect } from 'react-redux';
+
+function AdminRoute({ component: Component, userInfo: userInfo, ...rest }) {
     return (
         <Route
             {...rest}
-            render={() => (UserService.checkLogin().admin === true ? <Component /> : <Redirect to="/" />)}
+            render={() => 
+                (UserService.checkLogin(userInfo).admin === true ? <Component /> : <Redirect to="/" />)
+            }
         />
     );
 }
+
+export default connect(state => state)(AdminRoute);

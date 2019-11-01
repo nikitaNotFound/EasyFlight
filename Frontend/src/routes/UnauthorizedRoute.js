@@ -1,7 +1,7 @@
-import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import React from 'react';
+import { Route, Redirect } from 'react-router-dom';
 
-import * as UserService from "../services/UserSerivce";
+import * as UserService from '../services/UserSerivce';
 
 export default function UnauthorizedRoute({ component: Component, ...rest }) {
     return (

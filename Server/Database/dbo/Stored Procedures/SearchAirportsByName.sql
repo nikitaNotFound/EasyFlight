@@ -1,4 +1,4 @@
-﻿create procedure [dbo].[SearchAirportsByName]
+create procedure [dbo].[SearchAirportsByName]
     @name as nvarchar(50)
 as
     select *
