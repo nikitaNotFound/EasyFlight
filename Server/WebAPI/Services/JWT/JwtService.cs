@@ -18,10 +18,10 @@ namespace WebAPI.Services.JWT
         private readonly IHttpContextAccessor _httpContext;
 
 
-        public JwtService(IJwtSettings settings, IHttpContextAccessor httpContext)
+        public JwtService(IJwtSettings settings, IHttpContextAccessor httpContextAccessor)
         {
             _jwtSettings = settings;
-            _httpContext = httpContext;
+            _httpContext = httpContextAccessor;
         }
 
 
