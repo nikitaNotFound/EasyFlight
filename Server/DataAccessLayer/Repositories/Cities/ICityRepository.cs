@@ -13,7 +13,7 @@ namespace DataAccessLayer.Repositories.Cities
         Task<CityEntity> GetAsync(int id);
         Task<IReadOnlyCollection<AirportEntity>> GetCityAirportsAsync(int id);
         Task<IReadOnlyCollection<AirportEntity>> SearchCityAirportsByNameAsync(int cityId, string nameFilter);
-        Task AddAsync(CityEntity city);
+        Task<CityEntity> AddAsync(CityEntity city);
         Task UpdateAsync(CityEntity city);
         Task<bool> CheckDuplicateAsync(CityEntity city);
     }

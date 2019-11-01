@@ -31,7 +31,7 @@ namespace DataAccessLayer.Repositories.Airplanes
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task AddAirplaneSeatsAsync(int airplaneId, AirplaneSeatEntity[] seats)
+        public async Task UpdateAirplaneSeatsAsync(int airplaneId, AirplaneSeatEntity[] seats)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
@@ -53,11 +53,11 @@ namespace DataAccessLayer.Repositories.Airplanes
             }
         }
 
-        public async Task AddAirplaneSeatTypeAsync(AirplaneSeatTypeEntity seatType)
+        public async Task<AirplaneSeatTypeEntity> AddAirplaneSeatTypeAsync(AirplaneSeatTypeEntity seatType)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
-            await db.ExecuteAsync(
+            return await db.QuerySingleOrDefaultAsync<AirplaneSeatTypeEntity>(
                 "AddAirplaneSeatType",
                 new
                 {
@@ -65,16 +65,6 @@ namespace DataAccessLayer.Repositories.Airplanes
                     name = seatType.Name,
                     color = seatType.Color
                 },
-                commandType: CommandType.StoredProcedure);
-        }
-
-        public async Task<AirplaneSeatTypeEntity> GetAirplaneSeatTypeByName(int airplaneId, string name)
-        {
-            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
-
-            return await db.QuerySingleOrDefaultAsync<AirplaneSeatTypeEntity>(
-                "GetAirplaneSeatTypeByName",
-                new {airplaneId = airplaneId, name = name},
                 commandType: CommandType.StoredProcedure);
         }
 
@@ -123,11 +113,11 @@ namespace DataAccessLayer.Repositories.Airplanes
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task AddAsync(AirplaneEntity airplane)
+        public async Task<AirplaneEntity> AddAsync(AirplaneEntity airplane)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
-            await db.ExecuteAsync(
+            return await db.QuerySingleOrDefaultAsync<AirplaneEntity>(
                 "AddAirplane",
                 new {name = airplane.Name, carryingKg = airplane.CarryingKg},
                 commandType: CommandType.StoredProcedure);

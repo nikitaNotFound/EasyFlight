@@ -75,14 +75,16 @@ namespace WebAPI.Controllers
         {
             BlAirport airportBl = _mapper.Map<BlAirport>(airport);
 
-            ResultTypes addResult = await _airportService.AddAsync(airportBl);
+            ServiceResult<BlAirport> addResult = await _airportService.AddAsync(airportBl);
 
-            if (addResult == ResultTypes.Duplicate)
+            if (addResult.ResultType == ResultTypes.Duplicate)
             {
                 return BadRequest();
             }
 
-            return Ok();
+            Airport addedAirport = _mapper.Map<Airport>(addResult.Payload);
+
+            return Ok(addedAirport);
         }
 
         // PUT api/airports/{id}

@@ -13,7 +13,7 @@ namespace BusinessLayer.Services.Countries
         Task<IReadOnlyCollection<Country>> SearchByNameAsync(string name);
         Task<IReadOnlyCollection<City>> GetCountryCitiesAsync(int countryId);
         Task<IReadOnlyCollection<City>> SearchCountryCitiesByNameAsync(int countryId, string name);
-        Task<ResultTypes> AddAsync(Country country);
+        Task<ServiceResult<Country>> AddAsync(Country country);
         Task<ResultTypes> UpdateAsync(Country country);
     }
 }
