@@ -40,7 +40,7 @@ export async function add(airplane) {
         }
     );
 
-    return await createRequestResult(response, RequestTypes.NoContentExpected);
+    return await createRequestResult(response, RequestTypes.ContentExpected);
 }
 
 export async function getByName(airplaneName) {
@@ -83,7 +83,7 @@ export async function addAirplaneSeatType(airplaneId, seatType) {
         }
     );
 
-    return await createRequestResult(response, RequestTypes.NoContentExpected);
+    return await createRequestResult(response, RequestTypes.ContentExpected);
 }
 
 export async function getAirplaneSeatTypeByName(airplaneId, name) {

@@ -3,10 +3,10 @@ class Airplane {
     name;
     carryingKg;
 
-    constructor (id, name, carrying) {
+    constructor (id, name, carryingKg) {
         this.id = id;
         this.name = name;
-        this.carrying = carrying;
+        this.carryingKg = carryingKg;
     }
 }
 

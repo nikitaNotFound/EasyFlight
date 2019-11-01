@@ -66,13 +66,8 @@ export default function Edit(props) {
             : seatTypesToAdd.map(seatType => AirplaneService.addAirplaneSeatType(id, seatType));
 
         Promise.all([...seatTypesToAddPromises])
-            .then(() => {
-                const getAddedSeatTypesPromises = seatTypesToAdd.map(
-                    seatType => AirplaneService.getAirplaneSeatTypeByName(id, seatType.name)
-                );
-                return Promise.all([...getAddedSeatTypesPromises]);
-            })
             .then(seatTypes => {
+                console.log(seatTypes);
                 let newSeats;
                 for (let i = 0, len = seatTypes.length; i < len; i++) {
                     const seatType = seatTypes[i];
@@ -155,7 +150,6 @@ export default function Edit(props) {
         Object.assign(seatTypesStorage, seatTypes);
 
         seatTypesStorage.push(seatType);
-        console.log(seatTypesStorage);
         changeSeatTypes(seatTypesStorage);
 
         let seatTypesToAddStorage = [];

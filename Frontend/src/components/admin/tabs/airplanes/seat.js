@@ -59,6 +59,8 @@ function Seat(props) {
                 props.placeInfo.number,
                 seatTypeId
             );
+
+            console.log(newSeat);
             
             props.onSeatAdded(newSeat);
             changeSeatTypeIndex(newTypeIndex);

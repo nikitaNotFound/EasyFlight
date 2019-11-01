@@ -6,6 +6,7 @@
 }
 
 .add-type-button {
+    font-size: 24px;
     width: 100%;
     margin-top: 3%;
     padding: 2%;
@@ -26,20 +27,21 @@
 
 .seat-types-headline {
     width: 100%;
-    font-size: 25px;
+    font-size: 30px;
     text-align: center;
     color: black;
 }
 
 .seat-type-item {
-    padding: 1%;
+    font-size: 24px;
+    padding: 2%;
     margin-left: 2%;
     margin-right: 2%;
 }
 
 .seat-type-color-demo {
-    width: 15px;
-    height: 15px;
+    width: 20px;
+    height: 20px;
     display: inline-block;
     margin-right: 3%;
 }
@@ -54,9 +56,11 @@
     display: inline-block;
     float: right;
     margin-right: 2%;
+    min-width: 100px;
     background: red;
     color: black;
-    padding: 0.1%;
+    padding: 0.3%;
+    border: 0;
 }
 
 .seat-type-remove-button:hover {
