@@ -8,12 +8,12 @@ function MessageBox(props) {
             <div className="message-body">
                 {props.message}
             </div>
-            <div
+            <button
                 className="close-button non-selectable"
                 onClick={() => props.hideFunc(null)}
             >
                 Close
-            </div>
+            </button>
         </div>
     );
 }

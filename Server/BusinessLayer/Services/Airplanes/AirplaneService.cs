@@ -83,7 +83,7 @@ namespace BusinessLayer.Services.Airplanes
             return airplanes;
         }
 
-        public async Task<ServiceResult<Airplane>> AddAsync(Airplane airplane)
+        public async Task<ServiceResult> AddAsync(Airplane airplane)
         {
             AirplaneEntity airplaneDal = _mapper.Map<AirplaneEntity>(airplane);
 
@@ -91,14 +91,12 @@ namespace BusinessLayer.Services.Airplanes
 
             if (duplicate)
             {
-                return new ServiceResult<Airplane>(ResultTypes.Duplicate, null);
+                return new ServiceResult(ResultTypes.Duplicate, null);
             }
 
-            AirplaneEntity addedAirplaneDal = await _airplaneRepository.AddAsync(airplaneDal);
+            int addedAirplaneId = await _airplaneRepository.AddAsync(airplaneDal);
 
-            Airplane addedAirplane = _mapper.Map<Airplane>(addedAirplaneDal);
-            
-            return new ServiceResult<Airplane>(ResultTypes.Ok, addedAirplane);
+            return new ServiceResult(ResultTypes.Ok, addedAirplaneId);
         }
 
         public async Task<ResultTypes> UpdateAsync(Airplane airplane)
@@ -154,13 +152,13 @@ namespace BusinessLayer.Services.Airplanes
             return ResultTypes.Ok;
         }
 
-        public async Task<ServiceResult<AirplaneSeatType>> AddAirplaneSeatTypeAsync(AirplaneSeatType seatType)
+        public async Task<ServiceResult> AddAirplaneSeatTypeAsync(AirplaneSeatType seatType)
         {
             AirplaneEntity airplane = await _airplaneRepository.GetByIdAsync(seatType.AirplaneId);
 
             if (airplane == null)
             {
-                return new ServiceResult<AirplaneSeatType>(ResultTypes.NotFound, null);
+                return new ServiceResult(ResultTypes.NotFound, null);
             }
 
             AirplaneSeatTypeEntity seatTypeDal = _mapper.Map<AirplaneSeatTypeEntity>(seatType);
@@ -169,15 +167,12 @@ namespace BusinessLayer.Services.Airplanes
 
             if (duplicate)
             {
-                return new ServiceResult<AirplaneSeatType>(ResultTypes.Duplicate, null);
+                return new ServiceResult(ResultTypes.Duplicate, null);
             }
 
-            AirplaneSeatTypeEntity addedAirplaneSeatTypeDal =
-                await _airplaneRepository.AddAirplaneSeatTypeAsync(seatTypeDal);
+            int addedAirplaneSeatTypeId = await _airplaneRepository.AddAirplaneSeatTypeAsync(seatTypeDal);
 
-            AirplaneSeatType addedAirplaneSeatType = _mapper.Map<AirplaneSeatType>(addedAirplaneSeatTypeDal);
-
-            return new ServiceResult<AirplaneSeatType>(ResultTypes.Ok, addedAirplaneSeatType);
+            return new ServiceResult(ResultTypes.Ok, addedAirplaneSeatTypeId);
         }
 
         public async Task<ResultTypes> DeleteAirplaneSeatTypeAsync(int airplaneId, int seatTypeId)

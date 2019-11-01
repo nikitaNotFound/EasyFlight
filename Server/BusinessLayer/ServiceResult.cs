@@ -1,14 +1,14 @@
 namespace BusinessLayer
 {
-    public class ServiceResult<T>
+    public class ServiceResult
     {
         public ResultTypes ResultType { get; }
-        public T Payload { get; }
+        public int? ItemId { get; }
 
-        public ServiceResult(ResultTypes resultType, T payload)
+        public ServiceResult(ResultTypes resultType, int? itemId)
         {
             ResultType = resultType;
-            Payload = payload;
+            ItemId = itemId;
         }
     }
 }

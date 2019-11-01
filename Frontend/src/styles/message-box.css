@@ -21,6 +21,8 @@
   padding: 0% 2%;
   text-align: center;
   background: red;
+  min-width: 100px;
+  border: 0;
 }
 
 .message-box .message-body {

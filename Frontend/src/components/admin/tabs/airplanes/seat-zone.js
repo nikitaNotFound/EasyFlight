@@ -64,7 +64,7 @@ function SeatZone(props) {
     function onSeatAdded(seat) {
         let storage = [];
         Object.assign(storage, zoneSeats);
-
+        
         storage[seat.row - 1][seat.number - 1] = seat;
         
         if (!checkColumnEmpty(storage, globalRowLength - 1)) {
@@ -79,7 +79,7 @@ function SeatZone(props) {
             lowerRow.length = storage[storage.length - 1].length;
             storage.push(lowerRow);
         }
-
+        
         changeZoneSeats(storage);
         props.onZoneChange(seat.floor, seat.section, seat.zone, storage);
     }

@@ -96,16 +96,14 @@ namespace WebAPI.Controllers
         {
             BlCountry countryBl = _mapper.Map<BlCountry>(country);
 
-            ServiceResult<BlCountry> addResult = await _countryService.AddAsync(countryBl);
+            ServiceResult addResult = await _countryService.AddAsync(countryBl);
 
             if (addResult.ResultType == ResultTypes.Duplicate)
             {
                 return BadRequest();
             }
-
-            Country addedCountry = _mapper.Map<Country>(addResult.Payload);
-
-            return Ok(addedCountry);
+            
+            return Ok(new { Id = addResult.ItemId });
         }
 
         // PUT api/countries

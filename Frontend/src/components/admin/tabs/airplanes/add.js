@@ -14,11 +14,10 @@ export default function Add() {
     const [name, changeName] = useState('');
     const [carryingKg, changeCarryingKg] = useState(0);
     const [seats, changeSeats] = useState();
-    const [airplaneId, changeAirplaneId] = useState();
     const [seatTypes, changeSeatTypes] = useState([]);
     const [messageBoxValue, changeMessageBoxValue] = useState();
 
-    function onDataSave() {
+    async function onDataSave() {
         if (!name
             || !carryingKg
             || !seats
@@ -31,57 +30,41 @@ export default function Add() {
 
         const airplane = new Airplane(null, name, carryingKg);
 
-        const airplaneAdding = AirplaneService.add(airplane);
+        try {
+            const addedAirplane = await AirplaneService.add(airplane);
+            const addedAirplaneId = addedAirplane.id;
 
-        airplaneAdding
-            .then(() => {
-                return AirplaneService.getByName(airplane.name);
-            })
-            .then((airplane) => {
-                const airplaneId = airplane.id;
-                changeAirplaneId(airplaneId);
+            const seatTypesToAddPromises = seatTypes.map(
+                seatType => AirplaneService.addAirplaneSeatType(addedAirplaneId, seatType)
+            );
 
-                const seatTypesToAddPromises = seats.map(
-                    seatType => AirplaneService.addAirplaneSeatType(airplaneId, seatType)
-                );
+            const seatTypesIds = await Promise.all([...seatTypesToAddPromises]);
 
-                return Promise.all([...seatTypesToAddPromises]);
-            })
-            .then(() => {
-                const getAddedSeatTypesPromises = seatTypes.map(
-                    seatType => AirplaneService.getAirplaneSeatTypeByName(airplaneId, seatType.name)
-                );
-                return Promise.all([...getAddedSeatTypesPromises]);
-            })
-            .then(seatTypes => {
-                let newSeats;
-                for (let i = 0, len = seatTypes.length; i < len; i++) {
-                    const seatType = seatTypes[i];
+            console.log(seatTypesIds)
 
-                    newSeats = seats.map(seat => {
-                        if (seat.typeId == seatType.name) {
-                            seat.typeId = seatType.id;
-                            return seat;
-                        } else {
-                            return seat;
-                        }
-                    });
-                }
+            console.log(seats);
+            let newSeats;
+            for (let i = 0, len = seatTypes.length; i < len; i++) {
+                const seatType = seatTypes[i];
 
-                changeSeats(newSeats);
-                return newSeats;
-            })
-            .then(newSeats => {
-                const seatsUpdatingPromise = [AirplaneService.updateAirplaneSeats(airplaneId, newSeats)];
+                newSeats = seats.map(seat => {
+                    if (seat.typeId == seatType.name) {
+                        seat.typeId = seatType.id;
+                        seat.airplaneId = addedAirplaneId;
+                        return seat;
+                    } else {
+                        return seat;
+                    }
+                });
+            }
 
-                return Promise.all([...seatsUpdatingPromise]);
-            })
-            .then(() => {
-                changeMessageBoxValue(added());
-            })
-            .catch(() => {
-                changeMessageBoxValue(defaultErrorMessage());
-            })
+
+            console.log(newSeats);
+            await AirplaneService.updateAirplaneSeats(addedAirplaneId, newSeats);
+        }
+        catch (ex) {
+            changeMessageBoxValue(defaultErrorMessage());
+        }
     }
 
     function getSeatListFromSeatScheme(scheme) {
@@ -104,7 +87,6 @@ export default function Add() {
                             const rowItem = rowArray[number];
 
                             if (rowItem != null) {
-                                rowItem.airplaneId = airplaneId;
                                 finalSeats.push(rowItem);
                             }
                         }

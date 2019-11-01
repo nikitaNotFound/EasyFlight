@@ -8,7 +8,7 @@ namespace WebAPI.Models
         
         [Required]
         public string Name { get; set; }
-        
+
         public int AirplaneId { get; set; }
 
         [Required]

@@ -96,15 +96,14 @@ namespace WebAPI.Controllers
         {
             BlCity cityBl = _mapper.Map<BlCity>(city);
 
-            ServiceResult<BlCity> addingResult = await _cityService.AddAsync(cityBl);
+            ServiceResult addingResult = await _cityService.AddAsync(cityBl);
 
             if (addingResult.ResultType == ResultTypes.Duplicate)
             {
                 return BadRequest();
             }
 
-            City addedCity = _mapper.Map<City>(addingResult.Payload);
-            return Ok(addedCity);
+            return Ok(new { Id = addingResult.ItemId });
         }
 
         // PUT api/cities
