@@ -90,23 +90,6 @@ namespace WebAPI.Controllers
             return Ok(airplane);
         }
         
-        // GET api/airplanes/{name}
-        [HttpGet]
-        [Route("{name}")]
-        public async Task<ActionResult> GetByNameAsync(string name)
-        {
-            BlAirplane airplaneBl = await _airplaneService.GetByNameAsync(name);
-
-            Airplane airplane = _mapper.Map<Airplane>(airplaneBl);
-
-            if (airplane == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(airplane);
-        }
-
         // GET api/airplanes/{airplaneId}/seats
         [HttpGet]
         [Route("{airplaneId}/seats")]
@@ -145,40 +128,23 @@ namespace WebAPI.Controllers
             
             return Ok(seatTypes);
         }
-        
-        // GET api/airplanes/{airplaneId}/seat-types/{name}
-        [HttpGet]
-        [Route("{airplaneId}/seat-types/{name}")]
-        public async Task<ActionResult> GetAirplaneSeatTypeAsync(int airplaneId, string name)
-        {
-            BlAirplane airplane = await _airplaneService.GetByIdAsync(airplaneId);
 
-            if (airplane == null)
-            {
-                return NotFound();
-            }
-
-            BlAirplaneSeatType seatTypeBl = await _airplaneService.GetAirplaneSeatTypeByName(airplaneId, name);
-
-            AirplaneSeatType seatType = _mapper.Map<AirplaneSeatType>(seatTypeBl);
-            
-            return Ok(seatType);
-        }
-        
         // POST api/airplanes
         [HttpPost]
         public async Task<ActionResult> AddAirplaneAsync([FromBody] Airplane airplane)
         {
             BlAirplane airplaneBl = _mapper.Map<BlAirplane>(airplane);
             
-            ResultTypes addResult = await _airplaneService.AddAsync(airplaneBl);
+            ServiceResult<BlAirplane> addResult = await _airplaneService.AddAsync(airplaneBl);
 
-            if (addResult == ResultTypes.Duplicate)
+            if (addResult.ResultType == ResultTypes.Duplicate)
             {
                 return BadRequest();
             }
 
-            return Ok();
+            Airplane addedAirplane = _mapper.Map<Airplane>(addResult.Payload);
+
+            return Ok(addedAirplane);
         }
         
         // PUT api/airplanes
@@ -209,17 +175,19 @@ namespace WebAPI.Controllers
             
             BlAirplaneSeatType seatTypeBl = _mapper.Map<BlAirplaneSeatType>(seatType);
 
-            ResultTypes addResult = await _airplaneService.AddAirplaneSeatTypeAsync(seatTypeBl);
+            ServiceResult<BlAirplaneSeatType> addResult = await _airplaneService.AddAirplaneSeatTypeAsync(seatTypeBl);
 
-            switch (addResult)
+            switch (addResult.ResultType)
             {
                 case ResultTypes.Duplicate:
                     return BadRequest();
                 case ResultTypes.NotFound:
                     return NotFound();
             }
+
+            AirplaneSeatType addedAirplaneSeatType = _mapper.Map<AirplaneSeatType>(addResult.Payload);
             
-            return Ok();
+            return Ok(addedAirplaneSeatType);
         }
         
         // DELETE api/airplanes/{airplaneId}/seat-types/{seatTypeId}

@@ -80,11 +80,11 @@ namespace DataAccessLayer.Repositories.Cities
             return airports.ToList();
         }
 
-        public async Task AddAsync(CityEntity city)
+        public async Task<CityEntity> AddAsync(CityEntity city)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
-            await db.ExecuteAsync(
+            return await db.QuerySingleOrDefaultAsync<CityEntity>(
                 "AddCity",
                 new { name = city.Name, countryId = city.CountryId },
                 commandType: CommandType.StoredProcedure);

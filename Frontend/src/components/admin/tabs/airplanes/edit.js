@@ -65,8 +65,6 @@ export default function Edit(props) {
             ? []
             : seatTypesToAdd.map(seatType => AirplaneService.addAirplaneSeatType(id, seatType));
 
-        console.log(seatTypesToAdd);
-
         Promise.all([...seatTypesToAddPromises])
             .then(() => {
                 const getAddedSeatTypesPromises = seatTypesToAdd.map(

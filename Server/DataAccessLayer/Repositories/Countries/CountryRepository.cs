@@ -80,11 +80,11 @@ namespace DataAccessLayer.Repositories.Countries
             return countries.ToList();
         }
 
-        public async Task AddAsync(CountryEntity country)
+        public async Task<CountryEntity> AddAsync(CountryEntity country)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
-            await db.ExecuteAsync(
+            return await db.QuerySingleOrDefaultAsync<CountryEntity>(
                 "AddCountry",
                 new { name = country.Name },
                 commandType: CommandType.StoredProcedure);

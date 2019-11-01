@@ -11,7 +11,7 @@ namespace BusinessLayer.Services.Cities
         Task<City> GetByIdAsync(int id);
         Task<IReadOnlyCollection<Airport>> GetCityAirportsAsync(int id);
         Task<IReadOnlyCollection<Airport>> SearchCityAirportsByName(int cityId, string nameFilter);
-        Task<ResultTypes> AddAsync(City country);
+        Task<ServiceResult<City>> AddAsync(City country);
         Task<ResultTypes> UpdateAsync(City city);
     }
 }
