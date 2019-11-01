@@ -15,13 +15,13 @@ namespace WebAPI.Services.JWT
     public class JwtService : IJwtService
     {
         private readonly IJwtSettings _jwtSettings;
-        private readonly IHttpContextAccessor _httpContext;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
 
-        public JwtService(IJwtSettings settings, IHttpContextAccessor httpContext)
+        public JwtService(IJwtSettings settings, IHttpContextAccessor httpContextAccessor)
         {
             _jwtSettings = settings;
-            _httpContext = httpContext;
+            _httpContextAccessor = httpContextAccessor;
         }
 
 
@@ -38,7 +38,7 @@ namespace WebAPI.Services.JWT
 
             DateTime expires = DateTime.Now.Add(_jwtSettings.ExpirationTime);
 
-            string audience = _httpContext.HttpContext.Request.Headers["Origin"];
+            string audience = _httpContextAccessor.HttpContext.Request.Headers["Origin"];
 
             SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
             {
