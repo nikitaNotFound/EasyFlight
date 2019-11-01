@@ -53,7 +53,7 @@ namespace DataAccessLayer.Repositories.Accounts
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             return await db.QuerySingleOrDefaultAsync<AccountEntity>(
-                "RegisterAccount",
+                "CreateAccount",
                 new {
                     firstName = account.FirstName,
                     secondName = account.SecondName,
