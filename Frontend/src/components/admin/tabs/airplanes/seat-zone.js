@@ -37,28 +37,35 @@ function SeatZone(props) {
     const [zoneSeats, changeZoneSeats] = useState(inizializeRowSeats(props, globalRowLength));
 
     function onSeatDeleted(seatPosition) {
-        let storage = [];
-        Object.assign(storage, zoneSeats);
+        let zoneArray = [];
+        Object.assign(zoneArray, zoneSeats);
 
-        storage[seatPosition.row - 1][seatPosition.number - 1] = null;
+        zoneArray[seatPosition.row - 1][seatPosition.number - 1] = null;
 
-        if (checkRowEmpty(storage[storage.length - 1])
-            && checkRowEmpty(storage[storage.length - 2])
+        while (checkRowEmpty(zoneArray[zoneArray.length - 1])
+            && checkRowEmpty(zoneArray[zoneArray.length - 2])
         ) {
-            storage = storage.slice(0, storage.length - 1);
+            zoneArray = zoneArray.slice(0, zoneArray.length - 1);
         }
 
-        if (checkColumnEmpty(storage, globalRowLength - 1)
-            && checkColumnEmpty(storage, globalRowLength - 2)
+        if (checkColumnEmpty(zoneArray, globalRowLength - 1)
+        && checkColumnEmpty(zoneArray, globalRowLength - 2)
         ) {
-            for (let i = 0, len = storage.length; i < len; i++) {
-                storage[i] = storage[i].slice(0, storage[i].length - 1);
+            // i need this because change hook cant update value at time
+            let localGlobalRowLength = globalRowLength;
+            while (checkColumnEmpty(zoneArray, localGlobalRowLength - 1)
+                && checkColumnEmpty(zoneArray, localGlobalRowLength - 2)
+            ) {
+                for (let i = 0, len = zoneArray.length; i < len; i++) {
+                    zoneArray[i] = zoneArray[i].slice(0, zoneArray[i].length - 1);
+                }
+                localGlobalRowLength--;
             }
-            changeGlobalRowLength(globalRowLength - 1);
+            changeGlobalRowLength(localGlobalRowLength);
         }
 
-        changeZoneSeats(storage);
-        props.onZoneChange(seatPosition.floor, seatPosition.section, seatPosition.zone, storage);
+        changeZoneSeats(zoneArray);
+        props.onZoneChange(seatPosition.floor, seatPosition.section, seatPosition.zone, zoneArray);
     }
     
     function onSeatAdded(seat) {

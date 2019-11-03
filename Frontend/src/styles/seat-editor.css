@@ -105,10 +105,11 @@
 
 .seat {
     display: inline-block;
-    width: 15px;
-    height: 15px;
+    width: 18px;
+    height: 18px;
     margin: 2px;
     background: none;
+    border-radius: 4px;
 }
 
 .seat-type-0 {

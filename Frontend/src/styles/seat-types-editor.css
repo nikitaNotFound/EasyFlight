@@ -59,6 +59,7 @@
     display: inline-block;
     margin-right: 3%;
     vertical-align: middle;
+    border-radius: 4px;
 }
 
 .color-demo {
