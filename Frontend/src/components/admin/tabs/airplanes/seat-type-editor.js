@@ -3,6 +3,9 @@ import PropsTypes from 'prop-types';
 
 import { CirclePicker } from 'react-color'
 import SeatTypeItem from './seat-type';
+import MessageBox from '../../../common/message-box';
+
+import { seatTypeDuplicate, seatTypeInvalidInput } from '../../../common/message-box-messages';
 
 import SeatType from '../../../../services/airplane-models/seat-type';
 
@@ -12,6 +15,7 @@ import AddSeatType from '../../../../icons/add-icon.png';
 export default function SeatTypesEditor(props) {
     const [color, changeColor] = useState();
     const [name, changeName] = useState();
+    const [messageBoxValue, changeMessageBoxValue] = useState();
 
     function onTypeAdd() {
         if (color && name) {
@@ -19,7 +23,11 @@ export default function SeatTypesEditor(props) {
 
             if (!props.seatTypes || checkTypeAvailable(newType)) {
                 props.onAddType(newType);
+            } else {
+                changeMessageBoxValue(seatTypeDuplicate());
             }
+        } else {
+            changeMessageBoxValue(seatTypeInvalidInput());
         }
     }
 
@@ -55,8 +63,20 @@ export default function SeatTypesEditor(props) {
         }
     }
 
+    function showMessageBox() {
+        if (messageBoxValue) {
+            return (
+                <MessageBox
+                    message={messageBoxValue}
+                    hideFunc={changeMessageBoxValue}
+                />
+            );
+        }
+    }
+
     return (
         <div className="seat-types-editor">
+            {showMessageBox()}
             <div className="row">
                 <div className="col-md-3">
                     <CirclePicker onChange={({hex}) => changeColor(hex)}/>
