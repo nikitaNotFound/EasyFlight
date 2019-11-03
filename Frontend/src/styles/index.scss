@@ -4,6 +4,10 @@ body {
   font-family: monospace;
 }
 
+:focus, :active {
+  outline: none;
+}
+
 header, main, footer {
   background: rgb(223, 224, 230);
   margin-bottom: 0.4%;

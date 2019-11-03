@@ -12,11 +12,6 @@
 .seat-editor-instruments input {
     width: 100%;
 }
-.seat-editor-instruments .custom-button {
-    width: 60%;
-    display: inline-block;
-    font-size: 26px;
-}
 
 .seat-editor-layout {
     background: rgb(212, 212, 212);
@@ -63,6 +58,21 @@
     text-align: center;
     background: rgb(201, 201, 201);
     color: black;
+}
+
+.add-row-button {
+    padding: 0;
+    width: 100%;
+    border-radius: 10px;
+    height: 40px;
+    width: calc(100% - 194px * 2 - 5%);
+    display: inline-block;
+    font-size: 28px;
+    height: 69.72px;
+}
+
+.add-row-button:focus {
+    outline: none;
 }
 
 .big {

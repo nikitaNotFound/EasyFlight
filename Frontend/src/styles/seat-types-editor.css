@@ -6,35 +6,45 @@
 }
 
 .add-type-button {
-    font-size: 24px;
-    width: 100%;
-    margin-top: 3%;
-    padding: 2%;
-    text-align: center;
-    border: 1px solid black;
-    color: black;
-    background: rgb(201, 201, 201);
+    display: inline-block;
+    padding: 0;
+    width: 20%;
+    border: none;
+    background: none;
+    border-radius: 20px;
+}
+
+.seat-type-name-label {
+    font-size: 20px;
+    padding: 0;
 }
 
 .add-type-button:hover{
     background: rgb(223, 223, 223);
 }
 
+.add-type-button img {
+    width: 35px;
+}
+
 .seat-type-name-input {
-    width: 100%;
+    width: 80%;
+    border-radius: 10px;
+    border: 1px solid black;
+    height: 35px;
     margin-bottom: 2%;
 }
 
 .seat-types-headline {
     width: 100%;
-    font-size: 30px;
+    font-size: 20px;
     text-align: center;
     color: black;
 }
 
 .seat-type-item {
-    font-size: 24px;
-    padding: 2%;
+    font-size: 18px;
+    padding: 1%;
     margin-left: 2%;
     margin-right: 2%;
 }
@@ -44,22 +54,30 @@
     height: 20px;
     display: inline-block;
     margin-right: 3%;
+    vertical-align: middle;
 }
 
 .color-demo {
-    margin-top: 2%;
+    border: 1px solid black;
+    border-radius: 4px;
+    display: inline-block;
+    margin-top: 3%;
     width: 100%;
-    height: 200px;
+    height: 40px;
+    text-align: center;
+    font-size: 22px;
+    color: black;
 }
 
 .seat-type-remove-button {
+    border-radius: 5px;
     display: inline-block;
     float: right;
     margin-right: 2%;
     min-width: 100px;
     background: red;
     color: black;
-    padding: 0.3%;
+    padding: 0%;
     border: 0;
 }
 

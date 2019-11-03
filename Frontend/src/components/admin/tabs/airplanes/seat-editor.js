@@ -75,8 +75,6 @@ export default function SeatEditor(props) {
 
         storage[floor - 1][section - 1][zone - 1] = zoneArray;
 
-        console.log(storage)
-
         changeSeatArray(storage);
         props.onSeatsChange(storage);
     }
