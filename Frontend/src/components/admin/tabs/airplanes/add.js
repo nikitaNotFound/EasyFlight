@@ -40,16 +40,14 @@ export default function Add() {
 
             const seatTypesIds = await Promise.all([...seatTypesToAddPromises]);
 
-            console.log(seatTypesIds)
-
-            console.log(seats);
             let newSeats;
-            for (let i = 0, len = seatTypes.length; i < len; i++) {
-                const seatType = seatTypes[i];
+            for (let i = 0, len = seatTypesIds.length; i < len; i++) {
+                const seatTypeId = seatTypesIds[i].id;
+                const seatTypeName = seatTypes[i].name;
 
                 newSeats = seats.map(seat => {
-                    if (seat.typeId == seatType.name) {
-                        seat.typeId = seatType.id;
+                    if (seat.typeId == seatTypeName) {
+                        seat.typeId = seatTypeId;
                         seat.airplaneId = addedAirplaneId;
                         return seat;
                     } else {
@@ -58,9 +56,9 @@ export default function Add() {
                 });
             }
 
-
-            console.log(newSeats);
             await AirplaneService.updateAirplaneSeats(addedAirplaneId, newSeats);
+
+            changeMessageBoxValue(added());
         }
         catch (ex) {
             changeMessageBoxValue(defaultErrorMessage());

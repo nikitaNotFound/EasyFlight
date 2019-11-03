@@ -5,3 +5,5 @@
 as
     insert into SeatTypes (AirplaneId, Name, Color)
     values (@airplaneId, @name, @color)
+    
+    select SCOPE_IDENTITY()
