@@ -10,7 +10,6 @@ namespace DataAccessLayer.Repositories.Airplanes
     {
         Task<IReadOnlyCollection<AirplaneEntity>> GetAllAsync();
         Task<AirplaneEntity> GetByIdAsync(int id);
-        Task<AirplaneEntity> GetByNameAsync(string name);
         Task<IReadOnlyCollection<AirplaneSeatEntity>> GetAirplaneSeatsAsync(int airplaneId);
         Task DeleteAirplaneSeatsAsync(int airplaneId);
         Task<IReadOnlyCollection<AirplaneSeatTypeEntity>> GetAirplaneSeatTypesAsync(int airplaneId);
@@ -22,6 +21,5 @@ namespace DataAccessLayer.Repositories.Airplanes
         Task DeleteAirplaneSeatTypeAsync(int airplaneId, int seatTypeId);
         Task<bool> CheckAirplaneDuplicate(AirplaneEntity airplane);
         Task<bool> CheckSeatTypeDuplicate(AirplaneSeatTypeEntity seatType);
-        Task<bool> CheckSeatTypeExistence(int seatTypeId);
     }
 }

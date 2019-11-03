@@ -26,7 +26,7 @@ namespace BusinessLayer.Services.Airports
             IReadOnlyCollection<AirportEntity> airportsDal = await _airportRepository.GetAllAsync();
 
             IReadOnlyCollection<Airport> airports = airportsDal.Select(_mapper.Map<Airport>).ToList();
-            
+
             return airports;
         }
 

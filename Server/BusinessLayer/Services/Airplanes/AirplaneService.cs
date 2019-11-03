@@ -10,7 +10,7 @@ using DataAccessLayer.Repositories.Airplanes;
 
 namespace BusinessLayer.Services.Airplanes
 {
-    class AirplaneService : IAirplaneService
+    public class AirplaneService : IAirplaneService
     {
         private readonly IMapper _mapper;
         private readonly IAirplaneRepository _airplaneRepository;
@@ -35,15 +35,6 @@ namespace BusinessLayer.Services.Airplanes
         public async Task<Airplane> GetByIdAsync(int id)
         {
             AirplaneEntity airplaneDal = await _airplaneRepository.GetByIdAsync(id);
-
-            Airplane airplane = _mapper.Map<Airplane>(airplaneDal);
-
-            return airplane;
-        }
-
-        public async Task<Airplane> GetByNameAsync(string name)
-        {
-            AirplaneEntity airplaneDal = await _airplaneRepository.GetByNameAsync(name);
 
             Airplane airplane = _mapper.Map<Airplane>(airplaneDal);
 

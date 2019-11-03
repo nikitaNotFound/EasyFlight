@@ -85,7 +85,7 @@ namespace WebAPI.Controllers
             return Ok(new { Id = addResult.ItemId });
         }
 
-        // PUT api/airports/{id}
+        // PUT api/airports
         [HttpPut]
         [Authorize(nameof(AccountRole.Admin))]
         public async Task<ActionResult> UpdateAsync([FromBody] Airport airport)

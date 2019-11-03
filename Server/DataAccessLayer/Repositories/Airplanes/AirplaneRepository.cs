@@ -10,7 +10,7 @@ using DataAccessLayer.Models;
 
 namespace DataAccessLayer.Repositories.Airplanes
 {
-    class AirplaneRepository : IAirplaneRepository
+    public class AirplaneRepository : IAirplaneRepository
     {
         private readonly IDalSettings _dalSettings;
 
@@ -103,16 +103,6 @@ namespace DataAccessLayer.Repositories.Airplanes
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<bool> CheckSeatTypeExistence(int seatTypeId)
-        {
-            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
-
-            return await db.ExecuteScalarAsync<bool>(
-                "CheckSeatTypeDuplicate",
-                new { seatTypeId = seatTypeId },
-                commandType: CommandType.StoredProcedure);
-        }
-
         public async Task<int> AddAsync(AirplaneEntity airplane)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
@@ -120,16 +110,6 @@ namespace DataAccessLayer.Repositories.Airplanes
             return await db.QuerySingleOrDefaultAsync<int>(
                 "AddAirplane",
                 new {name = airplane.Name, carryingKg = airplane.CarryingKg},
-                commandType: CommandType.StoredProcedure);
-        }
-
-        public async Task<AirplaneEntity> GetByNameAsync(string name)
-        {
-            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
-
-            return await db.QuerySingleOrDefaultAsync<AirplaneEntity>(
-                "GetAirplaneByName",
-                new {name = name},
                 commandType: CommandType.StoredProcedure);
         }
 

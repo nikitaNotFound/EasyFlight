@@ -73,7 +73,7 @@ export default function SeatTypesEditor(props) {
                     <button className="add-type-button" onClick={onTypeAdd}>
                         <img src={AddSeatType}/>
                     </button>
-                    <div className="color-demo" style={{background:color}}>Color</div>
+                    <div className="color-demo non-selectable" style={{background:color}}>Color</div>
                 </div>
 
                 <div className="col-md-7">
