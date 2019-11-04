@@ -53,13 +53,18 @@
 }
 
 .form-item label {
+    font-size: 18px;
     margin-bottom: 0.3%;
     width: 194px;
     display: inherit;
 }
 
 .form-item input {
+    font-size: 16px;
     margin-bottom: 4%;
+    border-radius: 10px;
+    border: 1px solid black;
+    height: 35px;
 }
 
 .tabulation {

@@ -1,22 +1,21 @@
 import React, { useState } from 'react';
 import PropsTypes from 'prop-types';
 
-import ColorWheel from 'color-wheel';
+import { CirclePicker } from 'react-color'
 import SeatTypeItem from './seat-type';
+import MessageBox from '../../../common/message-box';
+
+import { seatTypeDuplicate, seatTypeInvalidInput } from '../../../common/message-box-messages';
 
 import SeatType from '../../../../services/airplane-models/seat-type';
 
 import '../../../../styles/seat-types-editor.css';
+import AddSeatType from '../../../../icons/add-icon.png';
 
 export default function SeatTypesEditor(props) {
     const [color, changeColor] = useState();
     const [name, changeName] = useState();
-
-    function onColorChange(color) {
-        const [h, s, l] = color;
-        const newColor = `hsla(${Math.round(h * 360)},${Math.round(s * 100)}%,${Math.round(l * 100)}%,1)`;
-        changeColor(newColor);
-    }
+    const [messageBoxValue, changeMessageBoxValue] = useState();
 
     function onTypeAdd() {
         if (color && name) {
@@ -24,7 +23,11 @@ export default function SeatTypesEditor(props) {
 
             if (!props.seatTypes || checkTypeAvailable(newType)) {
                 props.onAddType(newType);
+            } else {
+                changeMessageBoxValue(seatTypeDuplicate());
             }
+        } else {
+            changeMessageBoxValue(seatTypeInvalidInput());
         }
     }
 
@@ -60,22 +63,37 @@ export default function SeatTypesEditor(props) {
         }
     }
 
+    function showMessageBox() {
+        if (messageBoxValue) {
+            return (
+                <MessageBox
+                    message={messageBoxValue}
+                    hideFunc={changeMessageBoxValue}
+                />
+            );
+        }
+    }
+
     return (
         <div className="seat-types-editor">
+            {showMessageBox()}
             <div className="row">
                 <div className="col-md-3">
-                    <ColorWheel onChange={onColorChange}/>
+                    <CirclePicker onChange={({hex}) => changeColor(hex)}/>
                 </div>
 
                 <div className="col-md-2">
-                    <label>Type name</label><br/>
+                    <label htmlFor="seat-type-name" className="seat-type-name-label">Type name</label><br/>
                     <input
                         className="seat-type-name-input"
                         type="text" value={name}
                         onChange={(event) => changeName(event.target.value)}
+                        id="seat-type-name"
                     />
-                    <div className="color-demo" style={{background:color}}></div>
-                    <button className="add-type-button non-selectable" onClick={onTypeAdd}>Add type</button>
+                    <button className="add-type-button" onClick={onTypeAdd}>
+                        <img src={AddSeatType}/>
+                    </button>
+                    <div className="color-demo non-selectable" style={{background:color}}>Color</div>
                 </div>
 
                 <div className="col-md-7">

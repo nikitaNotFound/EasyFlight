@@ -1,6 +1,7 @@
 .message-box {
   outline: solid rgba(0, 0, 0, .25) 10000px;
   position: fixed;
+  z-index: 1000;
   background: rgb(212, 212, 212);
   width: 50%;
   top: 0;

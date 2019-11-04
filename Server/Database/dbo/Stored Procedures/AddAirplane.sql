@@ -4,3 +4,5 @@
 as
     insert into Airplanes (Name, CarryingKg)
     values (@name, @carryingKg)
+    
+    select SCOPE_IDENTITY()

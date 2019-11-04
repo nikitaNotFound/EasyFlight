@@ -57,9 +57,9 @@ export default function SeatEditor(props) {
             storage[floor - 1][section - 1] = [];
         }
         const newZone = storage[floor - 1][section - 1].length + 1;
-        // row, number  setted as 1, because 1 is start value
-        // typeId setted as first element id of seatTypes
-        const newSeat = new Seat(floor, section, newZone, 1, 1, props.seatTypes[0]);
+        // row, number setted as 1, because 1 is start value
+        // typeId setted as first element of seatTypes
+        const newSeat = new Seat(null, null,  floor, section, newZone, 1, 1, props.seatTypes[0].name);
 
         storage[floor - 1][section - 1][newZone - 1] = [];
         storage[floor - 1][section - 1][newZone - 1][0] = [];
@@ -74,8 +74,6 @@ export default function SeatEditor(props) {
         Object.assign(storage, seatArray);
 
         storage[floor - 1][section - 1][zone - 1] = zoneArray;
-
-        console.log(storage)
 
         changeSeatArray(storage);
         props.onSeatsChange(storage);

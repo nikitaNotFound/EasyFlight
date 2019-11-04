@@ -7,8 +7,9 @@ import MessageBox from '../../../common/message-box';
 import Airplane from '../../../../services/airplane-models/airplane';
 
 import * as AirplaneService from '../../../../services/AirplaneService';
-import { invalidInput, added, defaultErrorMessage, seatTypeInUse } from '../../../common/message-box-messages';
+import { invalidInput, added, defaultErrorMessage, seatTypeInUse, duplicate } from '../../../common/message-box-messages';
 import ConfirmActionButton from '../../../common/confirm-action-button';
+import { BadRequestError } from '../../../../services/RequestErrors';
 
 export default function Add() {
     const [name, changeName] = useState('');
@@ -36,20 +37,18 @@ export default function Add() {
 
             const seatTypesToAddPromises = seatTypes.map(
                 seatType => AirplaneService.addAirplaneSeatType(addedAirplaneId, seatType)
-            );
-
+                );
+                
             const seatTypesIds = await Promise.all([...seatTypesToAddPromises]);
 
-            console.log(seatTypesIds)
-
-            console.log(seats);
             let newSeats;
-            for (let i = 0, len = seatTypes.length; i < len; i++) {
-                const seatType = seatTypes[i];
+            for (let i = 0, len = seatTypesIds.length; i < len; i++) {
+                const seatTypeId = seatTypesIds[i].id;
+                const seatTypeName = seatTypes[i].name;
 
                 newSeats = seats.map(seat => {
-                    if (seat.typeId == seatType.name) {
-                        seat.typeId = seatType.id;
+                    if (seat.typeId == seatTypeName) {
+                        seat.typeId = seatTypeId;
                         seat.airplaneId = addedAirplaneId;
                         return seat;
                     } else {
@@ -59,11 +58,16 @@ export default function Add() {
             }
 
 
-            console.log(newSeats);
             await AirplaneService.updateAirplaneSeats(addedAirplaneId, newSeats);
+
+            changeMessageBoxValue(added());
         }
         catch (ex) {
-            changeMessageBoxValue(defaultErrorMessage());
+            if (ex instanceof BadRequestError) {
+                changeMessageBoxValue(duplicate(name));
+            } else {
+                changeMessageBoxValue(defaultErrorMessage());
+            }
         }
     }
 

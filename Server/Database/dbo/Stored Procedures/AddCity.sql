@@ -4,3 +4,5 @@
 as
     insert into Cities (Name, CountryId)
     values (@name, @countryId)
+    
+    select SCOPE_IDENTITY()

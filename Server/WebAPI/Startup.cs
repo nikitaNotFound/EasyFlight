@@ -9,6 +9,7 @@ using Serilog;
 using Microsoft.Extensions.Logging;
 using WebAPI.Services;
 using System.Text;
+using Common;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using WebAPI.Services.JWT;
 
@@ -91,6 +92,16 @@ namespace WebAPI
                 };
             });
 
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(
+                    AccountRole.Admin.ToString(),
+                    authBuilder =>
+                    {
+                        authBuilder.RequireRole(AccountRole.Admin.ToString());
+                    });
+            });
+            
             services.AddHttpContextAccessor();
         }
 

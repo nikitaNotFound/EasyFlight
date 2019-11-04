@@ -2,7 +2,7 @@ create procedure [dbo].[CreateAccount]
     @firstName as nvarchar(50),
     @secondName as nvarchar(50),
     @email as nvarchar(50),
-    @hashedPassword as varbinary(255),
+    @passwordHash as varbinary(255),
     @role as int,
     @salt as binary(20)
 as
@@ -12,7 +12,7 @@ as
         @firstName,
         @secondName,
         @email,
-        @hashedPassword,
+        @passwordHash,
         @salt,
         @role
     );

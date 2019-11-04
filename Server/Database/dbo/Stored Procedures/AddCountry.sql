@@ -3,4 +3,5 @@
 as
     insert into Countries (Name)
     values (@name)
+    
     select SCOPE_IDENTITY();

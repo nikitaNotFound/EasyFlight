@@ -8,9 +8,9 @@ import Spinner from '../../../common/spinner';
 import Airplane from '../../../../services/airplane-models/airplane';
 
 import * as AirplaneService from '../../../../services/AirplaneService';
-import { invalidInput, defaultErrorMessage, saved, seatTypeInUse } from '../../../common/message-box-messages';
+import { invalidInput, defaultErrorMessage, saved, seatTypeInUse, duplicate } from '../../../common/message-box-messages';
 import ConfirmActionButton from '../../../common/confirm-action-button';
-import { NotFoundError } from '../../../../services/RequestErrors';
+import { NotFoundError, BadRequestError } from '../../../../services/RequestErrors';
 
 export default function Edit(props) {
     const [loading, changeLoading] = useState(true);
@@ -67,7 +67,6 @@ export default function Edit(props) {
 
         Promise.all([...seatTypesToAddPromises])
             .then(seatTypes => {
-                console.log(seatTypes);
                 let newSeats;
                 for (let i = 0, len = seatTypes.length; i < len; i++) {
                     const seatType = seatTypes[i];
@@ -108,8 +107,12 @@ export default function Edit(props) {
                     changeMessageBoxValue(saved());
                 })
             })
-            .catch(() => {
-                changeMessageBoxValue(defaultErrorMessage());
+            .catch((ex) => {
+                if (ex instanceof BadRequestError) {
+                    changeMessageBoxValue(duplicate(name));
+                } else {
+                    changeMessageBoxValue(defaultErrorMessage());
+                }
             })
     }
 

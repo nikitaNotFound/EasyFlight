@@ -17,4 +17,6 @@ as
         @row,
         @number,
         @typeId
-	)
+    )
+    
+    select SCOPE_IDENTITY()
