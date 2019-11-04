@@ -65,9 +65,9 @@ export default function Add() {
         catch (ex) {
             if (ex instanceof BadRequestError) {
                 changeMessageBoxValue(duplicate(name));
+            } else {
+                changeMessageBoxValue(defaultErrorMessage());
             }
-
-            changeMessageBoxValue(defaultErrorMessage());
         }
     }
 
