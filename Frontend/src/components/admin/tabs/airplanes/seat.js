@@ -12,6 +12,14 @@ function getSeatTypeIndex(props) {
         let index = UNDEFINED_SEAT_TYPE_INDEX;
         for (let i = 0, len = props.seatTypes.length; i < len; i++) {
             const element = props.seatTypes[i];
+
+            if (!element.id) {
+                if (element.name === props.seat.typeId) {
+                    index = i;
+                    break;
+                }
+            }
+
             if (element.id === props.seat.typeId) {
                 index = i;
                 break;

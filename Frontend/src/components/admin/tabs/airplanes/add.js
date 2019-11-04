@@ -7,8 +7,9 @@ import MessageBox from '../../../common/message-box';
 import Airplane from '../../../../services/airplane-models/airplane';
 
 import * as AirplaneService from '../../../../services/AirplaneService';
-import { invalidInput, added, defaultErrorMessage, seatTypeInUse } from '../../../common/message-box-messages';
+import { invalidInput, added, defaultErrorMessage, seatTypeInUse, duplicate } from '../../../common/message-box-messages';
 import ConfirmActionButton from '../../../common/confirm-action-button';
+import { BadRequestError } from '../../../../services/RequestErrors';
 
 export default function Add() {
     const [name, changeName] = useState('');
@@ -36,8 +37,8 @@ export default function Add() {
 
             const seatTypesToAddPromises = seatTypes.map(
                 seatType => AirplaneService.addAirplaneSeatType(addedAirplaneId, seatType)
-            );
-
+                );
+                
             const seatTypesIds = await Promise.all([...seatTypesToAddPromises]);
 
             let newSeats;
@@ -56,11 +57,16 @@ export default function Add() {
                 });
             }
 
+
             await AirplaneService.updateAirplaneSeats(addedAirplaneId, newSeats);
 
             changeMessageBoxValue(added());
         }
         catch (ex) {
+            if (ex instanceof BadRequestError) {
+                changeMessageBoxValue(duplicate(name));
+            }
+
             changeMessageBoxValue(defaultErrorMessage());
         }
     }
