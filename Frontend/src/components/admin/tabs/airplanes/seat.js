@@ -93,7 +93,9 @@ function Seat(props) {
             className={`seat non-selectable`}
             style={{ background: props.seatTypes[seatTypeIndex].color }}
             onClick={onClickHandler}
-        />
+        >
+            {props.placeInfo.number}
+        </div>
     );
 }
 

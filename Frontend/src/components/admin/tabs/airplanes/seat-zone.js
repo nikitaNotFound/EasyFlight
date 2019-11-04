@@ -132,6 +132,12 @@ function SeatZone(props) {
 
     return (
         <div className="airplane-zone">
+            <div className="zone-headline">
+                {props.placeInfo.zone}
+                <div className="zone-name">
+                    zone
+                </div>
+            </div>
             {zoneSeats.map(
                 (seats, index) => {
                     let placeInfo = {};

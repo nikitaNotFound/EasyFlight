@@ -62,10 +62,8 @@
 
 .add-row-button {
     padding: 0;
-    width: 100%;
     border-radius: 10px;
-    height: 40px;
-    width: calc(100% - 194px * 2 - 5%);
+    width: calc(100% - 194px * 2 - 5.5%);
     display: inline-block;
     font-size: 28px;
     height: 69.72px;
@@ -99,8 +97,41 @@
     margin-right: 9px;
 }
 
-.airplane-string {
+.airplane-zone .zone-headline {
+    text-align: center;
+    font-size: 24px;
+    background: darkblue;
+    color: white;
+    margin-bottom: 20%;
+}
+
+.airplane-zone .zone-headline .zone-name {
+    font-size: 12px;
+    margin-top: -10px;
+}
+
+.airplane-row {
+    background: rgb(212, 212, 212);
     display: block;
+    padding: 3px;
+}
+
+.airplane-row .row-body {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.airplane-row .row-headline {
+    background: orange;
+    vertical-align: top;
+    display: inline-block;
+    font-size: 13px;
+    padding: 1px;
+}
+
+.airplane-row .row-headline .row-name {
+    display: inline-block;
+    margin-left: 5px;
 }
 
 .seat {
@@ -110,6 +141,10 @@
     margin: 2px;
     background: none;
     border-radius: 4px;
+    font-size: 10px;
+    color: white;;
+    vertical-align: top;
+    text-align: center;
 }
 
 .seat-type-0 {

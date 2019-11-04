@@ -129,6 +129,11 @@ export default function Edit(props) {
 
                     for (let row = 0, len = zoneArray.length; row < len; row++) {
                         const rowArray = zoneArray[row];
+                        
+                        // checks if row empty
+                        if (!rowArray) {
+                            break;
+                        }
                     
                         for (let number = 0, len = rowArray.length; number < len; number++) {
                             const rowItem = rowArray[number];
