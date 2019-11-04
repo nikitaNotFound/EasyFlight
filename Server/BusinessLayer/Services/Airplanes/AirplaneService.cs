@@ -78,7 +78,7 @@ namespace BusinessLayer.Services.Airplanes
         {
             AirplaneEntity airplaneDal = _mapper.Map<AirplaneEntity>(airplane);
 
-            bool duplicate = await _airplaneRepository.CheckAirplaneDuplicate(airplaneDal);
+            bool duplicate = await _airplaneRepository.CheckAirplaneDuplicateAsync(airplaneDal);
 
             if (duplicate)
             {
@@ -95,7 +95,7 @@ namespace BusinessLayer.Services.Airplanes
             AirplaneEntity airplaneDal = _mapper.Map<AirplaneEntity>(airplane);
 
             // checks if user tries to update airplane to already existent airplane
-            bool duplicate = await _airplaneRepository.CheckAirplaneDuplicate(airplaneDal);
+            bool duplicate = await _airplaneRepository.CheckAirplaneDuplicateAsync(airplaneDal);
 
             if (duplicate)
             {
@@ -154,7 +154,7 @@ namespace BusinessLayer.Services.Airplanes
 
             AirplaneSeatTypeEntity seatTypeDal = _mapper.Map<AirplaneSeatTypeEntity>(seatType);
             
-            bool duplicate = await _airplaneRepository.CheckSeatTypeDuplicate(seatTypeDal);
+            bool duplicate = await _airplaneRepository.CheckSeatTypeDuplicateAsync(seatTypeDal);
 
             if (duplicate)
             {

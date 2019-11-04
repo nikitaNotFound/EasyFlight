@@ -8,6 +8,7 @@ import Airplanes from './airplanes';
 import Filter from './filter';
 import AddButton from '../../../common/add-button';
 import MessageBox from '../../../common/message-box';
+import { defaultErrorMessage } from '../../../common/message-box-messages';
 
 export default function AirplaneList() {
     const [filterOptions, changeFilterOptions] = useState(new SearchOptions());
@@ -20,8 +21,8 @@ export default function AirplaneList() {
         try {
             const airplanes = await AirplaneService.searchWithParams(newFilterOptions);
             changeAirplanes(airplanes);
-        } catch (ex) {
-            changeMessageBoxValue(ex.message);
+        } catch {
+            changeMessageBoxValue(defaultErrorMessage());
         }
     }
 

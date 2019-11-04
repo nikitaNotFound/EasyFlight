@@ -43,20 +43,6 @@ export async function add(airplane) {
     return await createRequestResult(response, RequestTypes.ContentExpected);
 }
 
-export async function getByName(airplaneName) {
-    const response = await fetch(
-        `${config.API_URL}/airplanes/${airplaneName}`,
-        {
-            method: 'GET',
-            mode: 'cors',
-            headers: headers
-        }
-    );
-
-    return await createRequestResult(response, RequestTypes.ContentExpected);
-}
-
-
 export async function updateAirplaneSeats(airplaneId, seats) {
     const response = await fetch(
         `${config.API_URL}/airplanes/${airplaneId}/seats`,
@@ -80,19 +66,6 @@ export async function addAirplaneSeatType(airplaneId, seatType) {
             mode: 'cors',
             headers: headers,
             body: JSON.stringify(seatType)
-        }
-    );
-
-    return await createRequestResult(response, RequestTypes.ContentExpected);
-}
-
-export async function getAirplaneSeatTypeByName(airplaneId, name) {
-    const response = await fetch(
-        `${config.API_URL}/airplanes/${airplaneId}/seat-types/${name}`,
-        {
-            method: 'GET',
-            mode: 'cors',
-            headers: headers
         }
     );
 

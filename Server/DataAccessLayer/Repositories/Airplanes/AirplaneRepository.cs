@@ -78,22 +78,22 @@ namespace DataAccessLayer.Repositories.Airplanes
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<bool> CheckAirplaneDuplicate(AirplaneEntity airplane)
+        public async Task<bool> CheckAirplaneDuplicateAsync(AirplaneEntity airplane)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             return await db.ExecuteScalarAsync<bool>(
-                "CheckAirplaneDuplicate",
+                "CheckAirplaneDuplicateAsync",
                 new { Name = airplane.Name },
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<bool> CheckSeatTypeDuplicate(AirplaneSeatTypeEntity seatType)
+        public async Task<bool> CheckSeatTypeDuplicateAsync(AirplaneSeatTypeEntity seatType)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             return await db.ExecuteScalarAsync<bool>(
-                "CheckSeatTypeDuplicate",
+                "CheckSeatTypeDuplicateAsync",
                 new
                 {
                     airplaneId = seatType.AirplaneId,
