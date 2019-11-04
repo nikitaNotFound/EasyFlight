@@ -7,6 +7,11 @@ function inizializeRowSeats(props, maxLength) {
     Object.assign(storage, props.seats)
 
     for (let i = 0, len = storage.length; i < len; i++) {
+        // checks empty rows
+        if (!storage[i]) {
+            storage[i] = [];
+        }
+
         storage[i].length = maxLength;
     }
 

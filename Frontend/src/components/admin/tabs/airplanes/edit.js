@@ -51,7 +51,7 @@ export default function Edit(props) {
         fetchData();
     }, [props.match.params.id]);
 
-    function onDataSave() {
+    async function onDataSave() {
         if (!name
             || !carryingKg
             || !seats
@@ -61,59 +61,57 @@ export default function Edit(props) {
             return;
         }
 
-        const seatTypesToAddPromises = seatTypesToAdd.length == 0
-            ? []
-            : seatTypesToAdd.map(seatType => AirplaneService.addAirplaneSeatType(id, seatType));
+        try {
+            const seatTypesToAddPromises = seatTypesToAdd.length == 0
+                ? []
+                : seatTypesToAdd.map(seatType => AirplaneService.addAirplaneSeatType(id, seatType));
 
-        Promise.all([...seatTypesToAddPromises])
-            .then(seatTypes => {
-                let newSeats;
-                for (let i = 0, len = seatTypes.length; i < len; i++) {
-                    const seatType = seatTypes[i];
+            const addedSeatTypes = await Promise.all([...seatTypesToAddPromises])
 
-                    newSeats = seats.map(seat => {
-                        if (seat.typeId == seatType.name) {
-                            seat.typeId = seatType.id;
-                            return seat;
-                        } else {
-                            return seat;
-                        }
-                    });
-                }
+            let newSeats = [];
+            Object.assign(newSeats, seats);
 
-                changeSeats(newSeats);
-                return newSeats;
-            })
-            .then(newSeats => {
-                const finalAirplane = new Airplane(id, name, carryingKg);
+            for (let i = 0, len = addedSeatTypes.length; i < len; i++) {
+                const seatType = addedSeatTypes[i];
 
-                const seatTypesToDeletePromises = seatTypesIdToDelete.length == 0
-                    ? []
-                    : seatTypesIdToDelete.map(seatTypeId => AirplaneService.deleteAirplaneSeatType(id, seatTypeId));
+                newSeats = newSeats.map(seat => {
+                    if (seat.typeId == seatType.name) {
+                        seat.typeId = seatType.id;
+                        return seat;
+                    } else {
+                        return seat;
+                    }
+                });
+            }
 
-                const airpaneUpdatingPromise = airplaneChangedMode == false
-                    ? []
-                    : [AirplaneService.update(finalAirplane)];
+            const finalAirplane = new Airplane(id, name, carryingKg);
 
-                const seatsUpdatingPromise = seatsChangedMode == false
-                    ? []
-                    : [AirplaneService.updateAirplaneSeats(id, newSeats)]
+            const seatTypesToDeletePromises = seatTypesIdToDelete.length == 0
+                ? []
+                : seatTypesIdToDelete.map(seatTypeId => AirplaneService.deleteAirplaneSeatType(id, seatTypeId));
 
-                Promise.all([
-                    ...airpaneUpdatingPromise,
-                    ...seatsUpdatingPromise,
-                    ...seatTypesToDeletePromises
-                ]).then(() => {
-                    changeMessageBoxValue(saved());
-                })
-            })
-            .catch((ex) => {
-                if (ex instanceof BadRequestError) {
-                    changeMessageBoxValue(duplicate(name));
-                } else {
-                    changeMessageBoxValue(defaultErrorMessage());
-                }
-            })
+            const airpaneUpdatingPromise = airplaneChangedMode === false
+                ? []
+                : [AirplaneService.update(finalAirplane)];
+
+            const seatsUpdatingPromise = seatsChangedMode === false
+                ? []
+                : [AirplaneService.updateAirplaneSeats(id, newSeats)]
+
+            await Promise.all([
+                ...airpaneUpdatingPromise,
+                ...seatsUpdatingPromise,
+                ...seatTypesToDeletePromises
+            ]);
+
+            changeMessageBoxValue(saved());
+        } catch (ex) {
+            if (ex instanceof BadRequestError) {
+                changeMessageBoxValue(duplicate(name));
+            } else {
+                changeMessageBoxValue(defaultErrorMessage());
+            }
+        }
     }
 
     function getSeatListFromSeatScheme(scheme) {
