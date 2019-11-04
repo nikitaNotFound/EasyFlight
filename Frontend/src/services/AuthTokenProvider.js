@@ -5,7 +5,6 @@ const authTokenProvider = {
         const storageToken = JSON.parse(localStorage.getItem(AUTH_TOKEN_KEY))
 
         if (storageToken) {
-            console.log(storageToken);
             return storageToken.authToken;
         }
 

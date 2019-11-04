@@ -67,7 +67,6 @@ export default function Edit(props) {
 
         Promise.all([...seatTypesToAddPromises])
             .then(seatTypes => {
-                console.log(seatTypes);
                 let newSeats;
                 for (let i = 0, len = seatTypes.length; i < len; i++) {
                     const seatType = seatTypes[i];
