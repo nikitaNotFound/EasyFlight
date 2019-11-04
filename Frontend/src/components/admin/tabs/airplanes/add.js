@@ -37,8 +37,8 @@ export default function Add() {
 
             const seatTypesToAddPromises = seatTypes.map(
                 seatType => AirplaneService.addAirplaneSeatType(addedAirplaneId, seatType)
-                );
-                
+            );
+
             const seatTypesIds = await Promise.all([...seatTypesToAddPromises]);
 
             let newSeats;
@@ -46,15 +46,14 @@ export default function Add() {
                 const seatTypeId = seatTypesIds[i].id;
                 const seatTypeName = seatTypes[i].name;
 
-                newSeats = seats.map(seat => {
+                for (let seatIndex = 0, len = seats.length; i < len; i++) {
+                    const seat = seats[seatIndex];
+
                     if (seat.typeId == seatTypeName) {
                         seat.typeId = seatTypeId;
                         seat.airplaneId = addedAirplaneId;
-                        return seat;
-                    } else {
-                        return seat;
                     }
-                });
+                }
             }
 
 
@@ -103,8 +102,7 @@ export default function Add() {
     }
 
     async function onTypeAdded(seatType) {
-        let seatTypesStorage = [];
-        Object.assign(seatTypesStorage, seatTypes);
+        let seatTypesStorage = seatTypes.slice();
 
         seatTypesStorage.push(seatType);
 
@@ -112,8 +110,7 @@ export default function Add() {
     }
 
     async function onTypeDeleted(index) {
-        let seatTypesStorage = [];
-        Object.assign(seatTypesStorage, seatTypes);
+        let seatTypesStorage = seatTypes.slice();
 
         const seatTypeId = seatTypesStorage[index].id;
 

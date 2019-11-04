@@ -14,8 +14,7 @@ function initializeSeatArray(props) {
         return null;
     }
 
-    const storage = [];
-    Object.assign(storage, props.seatInfo);
+    const storage = props.seatInfo.slice();
 
     let seatsArray = [];
 
@@ -45,8 +44,7 @@ export default function SeatEditor(props) {
 
     // calls when user press add zone
     function onAddZone(floor, section) {
-        let storage = [];
-        Object.assign(storage, seatArray);
+        let storage = seatArray.slice();
 
         // if there no floor with getted number, programm will add it
         if (!storage[floor - 1]) {
@@ -71,8 +69,7 @@ export default function SeatEditor(props) {
     }
 
     function onZoneChange(floor, section, zone, zoneArray) {
-        let storage = [];
-        Object.assign(storage, seatArray);
+        let storage = seatArray.slice();
 
         storage[floor - 1][section - 1][zone - 1] = zoneArray;
 

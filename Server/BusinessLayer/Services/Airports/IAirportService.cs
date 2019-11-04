@@ -9,7 +9,7 @@ namespace BusinessLayer.Services.Airports
         Task<IReadOnlyCollection<Airport>> GetAllAsync();
         Task<IReadOnlyCollection<Airport>> GetByNameAsync(string nameFilter);
         Task<Airport> GetByIdAsync(int id);
-        Task<ServiceResult> AddAsync(Airport country);
+        Task<ServiceAddResult> AddAsync(Airport country);
         Task<ResultTypes> UpdateAsync(Airport city);
     }
 }

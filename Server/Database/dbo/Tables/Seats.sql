@@ -1,5 +1,5 @@
 ﻿create table [dbo].[Seats] (
-    [Id]         int IDENTITY (1, 1) not null,
+    [Id]         int identity (1, 1) not null,
     [AirplaneId] int not null,
     [Floor]      int not null,
     [Section]    int not null,

@@ -39,8 +39,7 @@ function TicketsCostEditor(props) {
     }
 
     function onCostInfoChange(typeId, newCost) {
-        let newCostInfo = [];
-        Object.assign(newCostInfo, costInfo);
+        let newCostInfo = costInfo.slice();
 
         for (let i = 0, len = newCostInfo.length; i < len; i++) {
             if (newCostInfo[i].seatTypeId == typeId) {

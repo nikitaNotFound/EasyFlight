@@ -3,8 +3,7 @@ import PropsTypes from 'prop-types';
 import SeatRow from './seat-row';
 
 function inizializeRowSeats(props, maxLength) {
-    let storage = [];
-    Object.assign(storage, props.seats)
+    let storage = props.seats.slice();
 
     for (let i = 0, len = storage.length; i < len; i++) {
         storage[i].length = maxLength;
@@ -18,8 +17,7 @@ function inizializeRowSeats(props, maxLength) {
 }
 
 function getGlobalRowLength(props) {
-    let storage = [];
-    Object.assign(storage, props.seats)
+    let storage = props.seats.slice();
 
     let maxLength = storage.reduce(
         (length, seatRow) =>
@@ -37,8 +35,7 @@ function SeatZone(props) {
     const [rowSeats, changeRowSeats] = useState(inizializeRowSeats(props, globalRowLength));
 
     function onSeatDeleted(seatPosition) {
-        let storage = [];
-        Object.assign(storage, rowSeats);
+        let storage = rowSeats.slice();
 
         storage[seatPosition.row - 1][seatPosition.number - 1] = null;
 
@@ -61,8 +58,7 @@ function SeatZone(props) {
     }
     
     function onSeatAdded(seat) {
-        let storage = [];
-        Object.assign(storage, rowSeats);
+        let storage = rowSeats.slice();
 
         storage[seat.row - 1][seat.number - 1] = seat;
         
@@ -83,8 +79,7 @@ function SeatZone(props) {
     }
 
     function onSeatChanged(seatType, placeInfo) {
-        let storage = [];
-        Object.assign(storage, rowSeats);
+        let storage = rowSeats.slice();
 
         storage[placeInfo.row - 1][placeInfo.number - 1].typeId = seatType;
         

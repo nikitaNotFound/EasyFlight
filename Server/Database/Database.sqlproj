@@ -106,7 +106,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="dbo\Stored Procedures\CreateAccount.sql" />
+    <Content Include="dbo\Stored Procedures\GetCityAirports.sql" />
     <Content Include="dbo\Stored Procedures\SearchAirplanes.sql" />
+    <Content Include="dbo\Stored Procedures\SearchAirportsByName.sql" />
+    <Content Include="dbo\Stored Procedures\SearchCityAirportsByName.sql" />
     <Content Include="dbo\Tables\Airports.sql" />
     <Content Include="dbo\Tables\Cities.sql" />
   </ItemGroup>

@@ -74,7 +74,7 @@ namespace BusinessLayer.Services.Airplanes
             return airplanes;
         }
 
-        public async Task<ServiceResult> AddAsync(Airplane airplane)
+        public async Task<ServiceAddResult> AddAsync(Airplane airplane)
         {
             AirplaneEntity airplaneDal = _mapper.Map<AirplaneEntity>(airplane);
 
@@ -82,12 +82,12 @@ namespace BusinessLayer.Services.Airplanes
 
             if (duplicate)
             {
-                return new ServiceResult(ResultTypes.Duplicate, null);
+                return new ServiceAddResult(ResultTypes.Duplicate, null);
             }
 
             int addedAirplaneId = await _airplaneRepository.AddAsync(airplaneDal);
 
-            return new ServiceResult(ResultTypes.Ok, addedAirplaneId);
+            return new ServiceAddResult(ResultTypes.Ok, addedAirplaneId);
         }
 
         public async Task<ResultTypes> UpdateAsync(Airplane airplane)
@@ -143,13 +143,13 @@ namespace BusinessLayer.Services.Airplanes
             return ResultTypes.Ok;
         }
 
-        public async Task<ServiceResult> AddAirplaneSeatTypeAsync(AirplaneSeatType seatType)
+        public async Task<ServiceAddResult> AddAirplaneSeatTypeAsync(AirplaneSeatType seatType)
         {
             AirplaneEntity airplane = await _airplaneRepository.GetByIdAsync(seatType.AirplaneId);
 
             if (airplane == null)
             {
-                return new ServiceResult(ResultTypes.NotFound, null);
+                return new ServiceAddResult(ResultTypes.NotFound, null);
             }
 
             AirplaneSeatTypeEntity seatTypeDal = _mapper.Map<AirplaneSeatTypeEntity>(seatType);
@@ -158,12 +158,12 @@ namespace BusinessLayer.Services.Airplanes
 
             if (duplicate)
             {
-                return new ServiceResult(ResultTypes.Duplicate, null);
+                return new ServiceAddResult(ResultTypes.Duplicate, null);
             }
 
             int addedAirplaneSeatTypeId = await _airplaneRepository.AddAirplaneSeatTypeAsync(seatTypeDal);
 
-            return new ServiceResult(ResultTypes.Ok, addedAirplaneSeatTypeId);
+            return new ServiceAddResult(ResultTypes.Ok, addedAirplaneSeatTypeId);
         }
 
         public async Task<ResultTypes> DeleteAirplaneSeatTypeAsync(int airplaneId, int seatTypeId)

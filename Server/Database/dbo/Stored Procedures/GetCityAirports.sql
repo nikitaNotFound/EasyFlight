@@ -1,6 +1,6 @@
 ﻿create procedure [dbo].[GetCityAirports]
-	@cityId as int
+    @cityId as int
 as
-	select *
-	from Airports
-	where CityId = @cityId;
+    select *
+    from Airports
+    where CityId = @cityId;

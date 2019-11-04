@@ -4,5 +4,6 @@
     @carryingKg as int
 as
     update Airplanes
-    set Name = @name, CarryingKg = @carryingKg
+    set Name = @name,
+        CarryingKg = @carryingKg
     where Id = @id

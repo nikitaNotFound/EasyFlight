@@ -47,8 +47,7 @@ function Content(props) {
     }, [props.flightId]);
 
     function onSeatChoosen(seat) {
-        let storage = [];
-        Object.assign(storage, choosenSeats);
+        let storage = choosenSeats.slice();
 
         storage.push(seat);
 

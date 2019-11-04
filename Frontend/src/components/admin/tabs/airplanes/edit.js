@@ -26,29 +26,28 @@ export default function Edit(props) {
     const [messageBoxValue, changeMessageBoxValue] = useState();
 
     useEffect(() => {
-        const fetchData = async () => {
-            Promise.all([
-                AirplaneService.getById(props.match.params.id),
-                AirplaneService.getAirplaneSeats(props.match.params.id),
-                AirplaneService.getAirplaneSeatTypes(props.match.params.id)
-            ]).then (values => {
-                const [airplane, seats, seatTypes] = values;
+        Promise.all([
+            AirplaneService.getById(props.match.params.id),
+            AirplaneService.getAirplaneSeats(props.match.params.id),
+            AirplaneService.getAirplaneSeatTypes(props.match.params.id)
+        ])
+        .then (values => {
+            const [airplane, seats, seatTypes] = values;
 
-                changeId(airplane.id);
-                changeName(airplane.name);
-                changeCarryingKg(airplane.carryingKg);
+            changeId(airplane.id);
+            changeName(airplane.name);
+            changeCarryingKg(airplane.carryingKg);
 
-                changeSeats(seats);
-                changeSeatTypes(seatTypes);
+            changeSeats(seats);
+            changeSeatTypes(seatTypes);
 
-                changeLoading(false);
-            }).catch(error => {
-                if (error instanceof NotFoundError) {
-                    props.history.push('/not-found');
-                }
-            })
-        }
-        fetchData();
+            changeLoading(false);
+        })
+        .catch(error => {
+            if (error instanceof NotFoundError) {
+                props.history.push('/not-found');
+            }
+        })
     }, [props.match.params.id]);
 
     async function onDataSave() {
@@ -68,20 +67,18 @@ export default function Edit(props) {
 
             const addedSeatTypes = await Promise.all([...seatTypesToAddPromises])
 
-            let newSeats = [];
-            Object.assign(newSeats, seats);
+            let newSeats = seats.slice();
 
             for (let i = 0, len = addedSeatTypes.length; i < len; i++) {
                 const seatType = addedSeatTypes[i];
 
-                newSeats = newSeats.map(seat => {
+                for (let seatIndex = 0, len = seats.length; i < len; i++) {
+                    const seat = seats[seatIndex];
+
                     if (seat.typeId == seatType.name) {
                         seat.typeId = seatType.id;
-                        return seat;
-                    } else {
-                        return seat;
                     }
-                });
+                }
             }
 
             const finalAirplane = new Airplane(id, name, carryingKg);
@@ -152,14 +149,12 @@ export default function Edit(props) {
     }
 
     async function onTypeAdded(seatType) {
-        let seatTypesStorage = [];
-        Object.assign(seatTypesStorage, seatTypes);
+        let seatTypesStorage = seatTypes.slice();
 
         seatTypesStorage.push(seatType);
         changeSeatTypes(seatTypesStorage);
 
-        let seatTypesToAddStorage = [];
-        Object.assign(seatTypesToAddStorage, seatTypesToAdd);
+        let seatTypesToAddStorage = seatTypesToAdd.slice();
 
         seatTypesToAddStorage.push(seatType);
 
@@ -167,8 +162,7 @@ export default function Edit(props) {
     }
 
     async function onTypeDeleted(index) {
-        let seatTypesStorage = [];
-        Object.assign(seatTypesStorage, seatTypes);
+        let seatTypesStorage = seatTypes.slice();
 
         const seatTypeId = seatTypesStorage[index].id;
 
@@ -185,8 +179,7 @@ export default function Edit(props) {
 
         changeSeatTypes(seatTypesStorage);
 
-        let storage = [];
-        Object.assign(storage, seatTypesIdToDelete);
+        let storage = seatTypesIdToDelete.slice();
 
         storage.push(seatTypeId);
 
