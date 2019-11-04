@@ -134,6 +134,24 @@ namespace BusinessLayer.Services.Airplanes
                 return ResultTypes.Duplicate;
             }
 
+            bool existingSeatTypes = true;
+            foreach (AirplaneSeat seat in seats)
+            {
+                AirplaneSeatTypeEntity seatType =
+                    await _airplaneRepository.GetAirplaneSeatTypeById(seat.TypeId);
+
+                if (seatType == null)
+                {
+                    existingSeatTypes = false;
+                    break;
+                }
+            }
+
+            if (!existingSeatTypes)
+            {
+                return ResultTypes.NotFound;
+            }
+
             await _airplaneRepository.DeleteAirplaneSeatsAsync(airplaneId);
 
             AirplaneSeatEntity[] seatsDal = seats.Select(_mapper.Map<AirplaneSeatEntity>).ToArray();

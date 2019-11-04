@@ -83,7 +83,7 @@ namespace DataAccessLayer.Repositories.Airplanes
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             return await db.ExecuteScalarAsync<bool>(
-                "CheckAirplaneDuplicateAsync",
+                "CheckAirplaneDuplicate",
                 new { Name = airplane.Name },
                 commandType: CommandType.StoredProcedure);
         }
@@ -93,7 +93,7 @@ namespace DataAccessLayer.Repositories.Airplanes
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             return await db.ExecuteScalarAsync<bool>(
-                "CheckSeatTypeDuplicateAsync",
+                "CheckSeatTypeDuplicate",
                 new
                 {
                     airplaneId = seatType.AirplaneId,
@@ -123,6 +123,16 @@ namespace DataAccessLayer.Repositories.Airplanes
                 commandType: CommandType.StoredProcedure);
 
             return seats.ToList();
+        }
+
+        public async Task<AirplaneSeatTypeEntity> GetAirplaneSeatTypeById(int seatTypeId)
+        {
+            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
+
+            return await db.QuerySingleOrDefaultAsync<AirplaneSeatTypeEntity>(
+                "GetAirplaneSeatTypeById",
+                new {Id = seatTypeId},
+                commandType: CommandType.StoredProcedure);
         }
 
         public async Task DeleteAirplaneSeatsAsync(int airplaneId)

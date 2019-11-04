@@ -41,13 +41,14 @@ export default function Add() {
 
             const seatTypesIds = await Promise.all([...seatTypesToAddPromises]);
 
-            let newSeats;
+            let newSeats = seats.slice();
+            console.log(newSeats);
             for (let i = 0, len = seatTypesIds.length; i < len; i++) {
                 const seatTypeId = seatTypesIds[i].id;
                 const seatTypeName = seatTypes[i].name;
 
-                for (let seatIndex = 0, len = seats.length; i < len; i++) {
-                    const seat = seats[seatIndex];
+                for (let seatIndex = 0, len = newSeats.length; seatIndex < len; seatIndex++) {
+                    const seat = newSeats[seatIndex];
 
                     if (seat.typeId == seatTypeName) {
                         seat.typeId = seatTypeId;

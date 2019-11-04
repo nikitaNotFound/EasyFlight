@@ -11,7 +11,7 @@ import '../../../../styles/seat-editor.css';
 
 function initializeSeatArray(props) {
     if (!props.seatInfo) {
-        return null;
+        return [];
     }
 
     const storage = props.seatInfo.slice();
