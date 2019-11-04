@@ -4,9 +4,9 @@ using System.Security.Cryptography;
 
 namespace BusinessLayer.Services.Accounts
 {
-    internal static class PasswordHasher
+    public static class PasswordHasher
     {
-        internal static byte[] GenerateSalt()
+        public static byte[] GenerateSalt()
         {
             using RNGCryptoServiceProvider crypto = new RNGCryptoServiceProvider();
 
@@ -17,7 +17,7 @@ namespace BusinessLayer.Services.Accounts
             return salt;
         }
 
-        internal static byte[] GenerateHash(string strToHash, byte[] salt = null)
+        public static byte[] GenerateHash(string strToHash, byte[] salt = null)
         {
             using SHA512 sha512 = new SHA512Managed();
 
