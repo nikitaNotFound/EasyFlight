@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using AutoMapper;
 using BusinessLayer;
 using BusinessLayer.Services.Airplanes;
+using Common;
 using DataAccessLayer.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -89,7 +91,7 @@ namespace WebAPI.Controllers
 
             return Ok(airplane);
         }
-        
+
         // GET api/airplanes/{airplaneId}/seats
         [HttpGet]
         [Route("{airplaneId}/seats")]
@@ -105,7 +107,7 @@ namespace WebAPI.Controllers
             IReadOnlyCollection<BlAirplaneSeat> seatsBl = await _airplaneService.GetAirplaneSeatsAsync(airplaneId);
 
             IReadOnlyCollection<AirplaneSeat> seats = seatsBl.Select(_mapper.Map<AirplaneSeat>).ToList();
-            
+
             return Ok(seats);
         }
 
@@ -120,17 +122,18 @@ namespace WebAPI.Controllers
             {
                 return NotFound();
             }
-            
+
             IReadOnlyCollection<BlAirplaneSeatType> seatTypesBl =
                 await _airplaneService.GetAirplaneSeatTypesAsync(airplaneId);
 
             IEnumerable<AirplaneSeatType> seatTypes = seatTypesBl.Select(_mapper.Map<AirplaneSeatType>);
-            
+
             return Ok(seatTypes);
         }
 
         // POST api/airplanes
         [HttpPost]
+        [Authorize(nameof(AccountRole.Admin))]
         public async Task<ActionResult> AddAirplaneAsync([FromBody] Airplane airplane)
         {
             BlAirplane airplaneBl = _mapper.Map<BlAirplane>(airplane);
@@ -144,13 +147,14 @@ namespace WebAPI.Controllers
 
             return Ok(new { Id = addAddResult.ItemId });
         }
-        
+
         // PUT api/airplanes
         [HttpPut]
+        [Authorize(nameof(AccountRole.Admin))]
         public async Task<ActionResult> UpdateAirplaneAsync([FromBody] Airplane airplane)
         {
             BlAirplane airplaneBl = _mapper.Map<BlAirplane>(airplane);
-            
+
             ResultTypes addResult = await _airplaneService.UpdateAsync(airplaneBl);
 
             switch (addResult)
@@ -166,11 +170,12 @@ namespace WebAPI.Controllers
 
         // POST api/airplanes/{airplaneId}/seat-types
         [HttpPost]
+        [Authorize(nameof(AccountRole.Admin))]
         [Route("{airplaneId}/seat-types")]
         public async Task<ActionResult> AddAirplaneSeatTypeAsync(int airplaneId, [FromBody] AirplaneSeatType seatType)
         {
             seatType.AirplaneId = airplaneId;
-            
+
             BlAirplaneSeatType seatTypeBl = _mapper.Map<BlAirplaneSeatType>(seatType);
 
             ServiceAddResult addAddResult = await _airplaneService.AddAirplaneSeatTypeAsync(seatTypeBl);
@@ -185,9 +190,10 @@ namespace WebAPI.Controllers
 
             return Ok(new { Id = addAddResult.ItemId });
         }
-        
+
         // DELETE api/airplanes/{airplaneId}/seat-types/{seatTypeId}
         [HttpDelete]
+        [Authorize(nameof(AccountRole.Admin))]
         [Route("{airplaneId}/seat-types/{seatTypeId}")]
         public async Task<ActionResult> DeleteAirplaneSeatTypeAsync(int airplaneId, int seatTypeId)
         {
@@ -203,11 +209,12 @@ namespace WebAPI.Controllers
 
         // PUT api/airplanes/{airplaneId}/seats
         [HttpPut]
+        [Authorize(nameof(AccountRole.Admin))]
         [Route("{airplaneId}/seats")]
         public async Task<ActionResult> UpdateAirplaneSeatsAsync(int airplaneId, [FromBody] AirplaneSeat[] seats)
         {
             BlAirplaneSeat[] seatsBl = seats.Select(_mapper.Map<BlAirplaneSeat>).ToArray();
-            
+
             ResultTypes updateResult = await _airplaneService.UpdateAirplaneSeatsAsync(airplaneId, seatsBl);
 
             switch (updateResult)

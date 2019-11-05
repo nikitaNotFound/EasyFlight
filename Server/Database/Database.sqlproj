@@ -102,7 +102,6 @@
     <Build Include="dbo\Stored Procedures\AddAirplaneSeat.sql" />
     <Build Include="dbo\Stored Procedures\AddAirplane.sql" />
     <Build Include="dbo\Tables\Airplanes.sql" />
-    <Build Include="dbo\Stored Procedures\GetAirplaneSeatTypeByName.sql" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="dbo\Stored Procedures\CreateAccount.sql" />
