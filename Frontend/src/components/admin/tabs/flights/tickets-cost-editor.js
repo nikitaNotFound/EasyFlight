@@ -4,39 +4,33 @@ import SeatTypeCost from './seat-type-cost';
 import Spinner from '../../../common/spinner';
 import TicketCost from '../../../../services/flight-models/ticket-cost';
 import * as FlightService from '../../../../services/FlightService';
+import * as AirplaneService from '../../../../services/AirplaneService';
 
-function TicketsCostEditor(props) {
+export default function TicketsCostEditor(props) {
     const [loading, changeLoading] = useState(true);
     const [costInfo, changeCostInfo] = useState();
+    const [seatTypes, changeSeatTypes] = useState();
 
     useEffect(() => {
-        if (!props.flightId) {
-            let newCostInfo = props.seatTypes.map(
-                (seatType, index) =>
-                    //cost setted as 0, because 0 is start value of each seat type' ticket
-                    new TicketCost(index + 1, seatType.id, 0)
-            );
-            changeCostInfo(newCostInfo);
+        const fetchData = async () => {
+            const types = await AirplaneService.getAirplaneSeatTypes(props.airplaneId);
+
+            changeSeatTypes(types);
+
+            if (!props.flightId) {
+                let newCostInfo = types.map(
+                    (seatType, index) =>
+                        //cost setted as 0, because 0 is start value of each seat type' ticket
+                        new TicketCost(index + 1, seatType.id, 0)
+                );
+                changeCostInfo(newCostInfo);
+            }
+
             changeLoading(false);
-            return;
         }
 
-        const newCostInfoLoading = FlightService.getTicketsCost(props.flightId);
-
-        newCostInfoLoading
-            .then(
-                (ticketsCostInfo) => {
-                    changeCostInfo(ticketsCostInfo);
-                    changeLoading(false);
-                    setStartCostInfo(ticketsCostInfo);
-                }
-            )
-            .catch();
-    }, [props.flightId, props.seatTypes]);
-
-    function setStartCostInfo(ticketsCostInfo) {
-        props.onTypeCostChange(ticketsCostInfo);
-    }
+        fetchData();
+    }, [props.flightId, props.airplaneId]);
 
     function onCostInfoChange(typeId, newCost) {
         let newCostInfo = costInfo.slice();
@@ -59,7 +53,7 @@ function TicketsCostEditor(props) {
     return (
         <div className="adding-form-section">
             <div className="row">
-                {props.seatTypes.map(
+                {seatTypes.map(
                     (seatType, index) =>
                         <SeatTypeCost
                             name={seatType.name}
@@ -75,9 +69,7 @@ function TicketsCostEditor(props) {
 }
 
 TicketsCostEditor.propsTypes = {
-    seatTypes: PropsTypes.array,
+    airplaneId: PropsTypes.number,
     flightId: PropsTypes.number,
     onTypeCostChange: PropsTypes.func
 }
-
-export default TicketsCostEditor;

@@ -111,8 +111,12 @@ export async function getAirplaneSeatTypes(airplaneId) {
     return await createRequestResult(response, RequestTypes.ContentExpected);
 }
 
-export async function searchWithParams(filter) {
-    const {name, carryingMaxKg, carryingMinKg, seatCountMax, seatCountMin} = filter;
+export async function searchWithParams(filter, nameSearchOnly) {
+    if (nameSearchOnly === true) {
+        var name = filter;
+    } else {
+        var {name, carryingMaxKg, carryingMinKg, seatCountMax, seatCountMin} = filter;
+    }
 
     let parameteres = '?';
 
