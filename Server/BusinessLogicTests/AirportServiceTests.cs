@@ -37,12 +37,12 @@ namespace BusinessLogicTests
             AirportService airportService = new AirportService(new AirportRepositoryMock(), _mapper);
 
             // Act
-            ServiceAddResult addResult = await airportService.AddAsync(airport);
+            AddResult addResult = await airportService.AddAsync(airport);
 
             //Assert
             Assert.AreEqual(ResultTypes.Duplicate, addResult.ResultType);
         }
-        
+
         [TestMethod]
         public async Task AddingAirportReturnsOkResult()
         {
@@ -52,12 +52,12 @@ namespace BusinessLogicTests
             AirportService airportService = new AirportService(new AirportRepositoryMock(), _mapper);
 
             // Act
-            ServiceAddResult addResult = await airportService.AddAsync(airport);
+            AddResult addResult = await airportService.AddAsync(airport);
 
             //Assert
             Assert.AreEqual(ResultTypes.Ok, addResult.ResultType);
         }
-        
+
         [TestMethod]
         public async Task UpdatingAirportReturnsOkResult()
         {
@@ -72,7 +72,7 @@ namespace BusinessLogicTests
             //Assert
             Assert.AreEqual(ResultTypes.Ok, addResult);
         }
-        
+
         [TestMethod]
         public async Task UpdatingDuplicateAirportReturnsDuplicateResult()
         {

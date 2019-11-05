@@ -26,61 +26,61 @@ namespace BusinessLogicTests
 
             _mapper = mappingConfig.CreateMapper();
         }
-        
-        
+
+
         [TestMethod]
         public async Task AddingDuplicateCityReturnsDuplicateResult()
         {
             // Arrange
             City cityToAdd = new City() { Name = "Minsk", CountryId = 1 };
-            
+
             CityService cityService = new CityService(new CityRepositoryMock(), _mapper);
-            
+
             // Act
-            ServiceAddResult addResult = await cityService.AddAsync(cityToAdd);
+            AddResult addResult = await cityService.AddAsync(cityToAdd);
 
             // Assert
             Assert.AreEqual(ResultTypes.Duplicate, addResult.ResultType);
         }
-        
+
         [TestMethod]
         public async Task AddingCityReturnsOkResult()
         {
             // Arrange
             City cityToAdd = new City() { Name = "Brest", CountryId = 1 };
-            
+
             CityService cityService = new CityService(new CityRepositoryMock(), _mapper);
-            
+
             // Act
-            ServiceAddResult addResult = await cityService.AddAsync(cityToAdd);
+            AddResult addResult = await cityService.AddAsync(cityToAdd);
 
             // Assert
             Assert.AreEqual(ResultTypes.Ok, addResult.ResultType);
         }
-        
+
         [TestMethod]
         public async Task UpdatingDuplicateCityReturnsDuplicateResult()
         {
             // Arrange
             City cityToAdd = new City() { Id = 1, Name = "Minsk", CountryId = 1 };
-            
+
             CityService cityService = new CityService(new CityRepositoryMock(), _mapper);
-            
+
             // Act
             ResultTypes addResult = await cityService.UpdateAsync(cityToAdd);
 
             // Assert
             Assert.AreEqual(ResultTypes.Duplicate, addResult);
         }
-        
+
         [TestMethod]
         public async Task UpdatingCityReturnsOkResult()
         {
             // Arrange
             City cityToAdd = new City() { Id = 1, Name = "Brest", CountryId = 1 };
-            
+
             CityService cityService = new CityService(new CityRepositoryMock(), _mapper);
-            
+
             // Act
             ResultTypes addResult = await cityService.UpdateAsync(cityToAdd);
 

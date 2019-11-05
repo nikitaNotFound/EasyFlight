@@ -34,14 +34,14 @@ namespace BusinessLogicTests
             Country countryToAdd = new Country() { Name = "Belarus" };
 
             CountryService countryService = new CountryService(new CountryRepositoryMock(), _mapper);
-            
+
             // Act
-            ServiceAddResult addResult = await countryService.AddAsync(countryToAdd);
-            
+            AddResult addResult = await countryService.AddAsync(countryToAdd);
+
             // Assert
             Assert.AreEqual(ResultTypes.Duplicate, addResult.ResultType);
         }
-        
+
         [TestMethod]
         public async Task AddingCountryReturnsOkResult()
         {
@@ -49,14 +49,14 @@ namespace BusinessLogicTests
             Country countryToAdd = new Country() { Name = "Lithuania" };
 
             CountryService countryService = new CountryService(new CountryRepositoryMock(), _mapper);
-            
+
             // Act
-            ServiceAddResult addResult = await countryService.AddAsync(countryToAdd);
-            
+            AddResult addResult = await countryService.AddAsync(countryToAdd);
+
             // Assert
             Assert.AreEqual(ResultTypes.Ok, addResult.ResultType);
         }
-        
+
         [TestMethod]
         public async Task UpdatingDuplicateCountryReturnsDuplicateResult()
         {
@@ -64,14 +64,14 @@ namespace BusinessLogicTests
             Country countryToAdd = new Country() { Id = 1, Name = "Lithuania" };
 
             CountryService countryService = new CountryService(new CountryRepositoryMock(), _mapper);
-            
+
             // Act
             ResultTypes addResult = await countryService.UpdateAsync(countryToAdd);
-            
+
             // Assert
             Assert.AreEqual(ResultTypes.Ok, addResult);
         }
-        
+
         [TestMethod]
         public async Task UpdatingCountryReturnsOkResult()
         {
@@ -79,10 +79,10 @@ namespace BusinessLogicTests
             Country countryToAdd = new Country() { Id = 1, Name = "Tokyo" };
 
             CountryService countryService = new CountryService(new CountryRepositoryMock(), _mapper);
-            
+
             // Act
             ResultTypes addResult = await countryService.UpdateAsync(countryToAdd);
-            
+
             // Assert
             Assert.AreEqual(ResultTypes.Ok, addResult);
         }
