@@ -40,7 +40,7 @@ namespace BusinessLogicTests
             AirplaneService airplaneService = new AirplaneService(_mapper, new AirplanesRepositoryMock());
 
             // Act
-            ServiceResult addResult = await airplaneService.AddAsync(airplane);
+            ServiceAddResult addResult = await airplaneService.AddAsync(airplane);
 
             // Assert
             Assert.AreEqual(ResultTypes.Duplicate, addResult.ResultType);
@@ -54,7 +54,7 @@ namespace BusinessLogicTests
             AirplaneService airplaneService = new AirplaneService(_mapper, new AirplanesRepositoryMock());
 
             // Act
-            ServiceResult addResult = await airplaneService.AddAsync(airplane);
+            ServiceAddResult addResult = await airplaneService.AddAsync(airplane);
 
             // Assert
             Assert.AreEqual(ResultTypes.Ok, addResult.ResultType);
@@ -96,7 +96,7 @@ namespace BusinessLogicTests
             AirplaneService airplaneService = new AirplaneService(_mapper, new AirplanesRepositoryMock());
 
             // Act
-            ServiceResult addResult = await airplaneService.AddAirplaneSeatTypeAsync(airplane);
+            ServiceAddResult addResult = await airplaneService.AddAirplaneSeatTypeAsync(airplane);
 
             // Assert
             Assert.AreEqual(ResultTypes.Duplicate, addResult.ResultType);
@@ -110,7 +110,7 @@ namespace BusinessLogicTests
             AirplaneService airplaneService = new AirplaneService(_mapper, new AirplanesRepositoryMock());
 
             // Act
-            ServiceResult addResult = await airplaneService.AddAirplaneSeatTypeAsync(airplane);
+            ServiceAddResult addResult = await airplaneService.AddAirplaneSeatTypeAsync(airplane);
 
             // Assert
             Assert.AreEqual(ResultTypes.Ok, addResult.ResultType);
@@ -151,17 +151,35 @@ namespace BusinessLogicTests
             // Assert
             Assert.AreEqual(ResultTypes.Ok, addResult);
         }
+        
+        [TestMethod]
+        public async Task UpdatingAirplaneSeatsWithNonexistentSeatTypeReturnsOkResult()
+        {
+            // Arrange
+            AirplaneSeat[] seats = new AirplaneSeat[]
+            {
+                new AirplaneSeat() { Floor = 1, Section = 1, Zone = 1, Row = 1, Number = 1, TypeId = 200},
+                new AirplaneSeat() { Floor = 1, Section = 1, Zone = 1, Row = 1, Number = 2, TypeId = 200}
+            };
+            AirplaneService airplaneService = new AirplaneService(_mapper, new AirplanesRepositoryMock());
+
+            // Act
+            ResultTypes addResult = await airplaneService.UpdateAirplaneSeatsAsync(1, seats);
+
+            // Assert
+            Assert.AreEqual(ResultTypes.NotFound, addResult);
+        }
 
         [TestMethod]
         public async Task DeletingNonexistentAirplaneSeatTypeReturnsNotFoundResult()
         {
             // Arrange
-            const int airplaneId = 200;
-            const int seatTypeId = 200;
+            const int AIRPLANE_ID = 200;
+            const int SEAT_TYPE_ID = 200;
             AirplaneService airplaneService = new AirplaneService(_mapper, new AirplanesRepositoryMock());
             
             // Act
-            ResultTypes deleteResult = await airplaneService.DeleteAirplaneSeatTypeAsync(airplaneId, seatTypeId);
+            ResultTypes deleteResult = await airplaneService.DeleteAirplaneSeatTypeAsync(AIRPLANE_ID, SEAT_TYPE_ID);
 
             // Assert
             Assert.AreEqual(ResultTypes.NotFound, deleteResult);
@@ -171,12 +189,12 @@ namespace BusinessLogicTests
         public async Task DeletingAirplaneSeatTypeReturnsOkResult()
         {
             // Arrange
-            const int airplaneId = 1;
-            const int seatTypeId = 1;
+            const int AIRPLANE_ID = 1;
+            const int SEAT_TYPE_ID = 1;
             AirplaneService airplaneService = new AirplaneService(_mapper, new AirplanesRepositoryMock());
             
             // Act
-            ResultTypes deleteResult = await airplaneService.DeleteAirplaneSeatTypeAsync(airplaneId, seatTypeId);
+            ResultTypes deleteResult = await airplaneService.DeleteAirplaneSeatTypeAsync(AIRPLANE_ID, SEAT_TYPE_ID);
 
             // Assert
             Assert.AreEqual(ResultTypes.Ok, deleteResult);

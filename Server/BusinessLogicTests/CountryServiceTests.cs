@@ -36,7 +36,7 @@ namespace BusinessLogicTests
             CountryService countryService = new CountryService(new CountryRepositoryMock(), _mapper);
             
             // Act
-            ServiceResult addResult = await countryService.AddAsync(countryToAdd);
+            ServiceAddResult addResult = await countryService.AddAsync(countryToAdd);
             
             // Assert
             Assert.AreEqual(ResultTypes.Duplicate, addResult.ResultType);
@@ -51,7 +51,7 @@ namespace BusinessLogicTests
             CountryService countryService = new CountryService(new CountryRepositoryMock(), _mapper);
             
             // Act
-            ServiceResult addResult = await countryService.AddAsync(countryToAdd);
+            ServiceAddResult addResult = await countryService.AddAsync(countryToAdd);
             
             // Assert
             Assert.AreEqual(ResultTypes.Ok, addResult.ResultType);

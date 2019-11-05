@@ -37,7 +37,7 @@ namespace BusinessLogicTests
             CityService cityService = new CityService(new CityRepositoryMock(), _mapper);
             
             // Act
-            ServiceResult addResult = await cityService.AddAsync(cityToAdd);
+            ServiceAddResult addResult = await cityService.AddAsync(cityToAdd);
 
             // Assert
             Assert.AreEqual(ResultTypes.Duplicate, addResult.ResultType);
@@ -52,7 +52,7 @@ namespace BusinessLogicTests
             CityService cityService = new CityService(new CityRepositoryMock(), _mapper);
             
             // Act
-            ServiceResult addResult = await cityService.AddAsync(cityToAdd);
+            ServiceAddResult addResult = await cityService.AddAsync(cityToAdd);
 
             // Assert
             Assert.AreEqual(ResultTypes.Ok, addResult.ResultType);

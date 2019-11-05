@@ -37,6 +37,11 @@ namespace BusinessLogicTests.Mocks
             return _airplaneSeatData.Select(x => x).Where(x => x.AirplaneId == airplaneId).ToList();
         }
 
+        public async Task<AirplaneSeatTypeEntity> GetAirplaneSeatTypeById(int seatTypeId)
+        {
+            return _airplaneSeatTypeData.FirstOrDefault(x => x.Id == seatTypeId);
+        }
+
         public async Task DeleteAirplaneSeatsAsync(int airplaneId)
         {
             // implementation

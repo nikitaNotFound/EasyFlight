@@ -37,7 +37,7 @@ namespace BusinessLogicTests
             AirportService airportService = new AirportService(new AirportRepositoryMock(), _mapper);
 
             // Act
-            ServiceResult addResult = await airportService.AddAsync(airport);
+            ServiceAddResult addResult = await airportService.AddAsync(airport);
 
             //Assert
             Assert.AreEqual(ResultTypes.Duplicate, addResult.ResultType);
@@ -52,7 +52,7 @@ namespace BusinessLogicTests
             AirportService airportService = new AirportService(new AirportRepositoryMock(), _mapper);
 
             // Act
-            ServiceResult addResult = await airportService.AddAsync(airport);
+            ServiceAddResult addResult = await airportService.AddAsync(airport);
 
             //Assert
             Assert.AreEqual(ResultTypes.Ok, addResult.ResultType);
