@@ -6,7 +6,6 @@ function inizializeRowSeats(props, maxLength) {
     let storage = props.seats.slice();
 
     for (let i = 0, len = storage.length; i < len; i++) {
-        // checks empty rows
         if (!storage[i]) {
             storage[i] = [];
         }

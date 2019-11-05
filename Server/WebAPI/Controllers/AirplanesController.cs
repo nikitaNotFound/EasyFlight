@@ -138,7 +138,7 @@ namespace WebAPI.Controllers
         {
             BlAirplane airplaneBl = _mapper.Map<BlAirplane>(airplane);
 
-            ServiceAddResult addAddResult = await _airplaneService.AddAsync(airplaneBl);
+            AddResult addAddResult = await _airplaneService.AddAsync(airplaneBl);
 
             if (addAddResult.ResultType == ResultTypes.Duplicate)
             {
@@ -178,7 +178,7 @@ namespace WebAPI.Controllers
 
             BlAirplaneSeatType seatTypeBl = _mapper.Map<BlAirplaneSeatType>(seatType);
 
-            ServiceAddResult addAddResult = await _airplaneService.AddAirplaneSeatTypeAsync(seatTypeBl);
+            AddResult addAddResult = await _airplaneService.AddAirplaneSeatTypeAsync(seatTypeBl);
 
             switch (addAddResult.ResultType)
             {

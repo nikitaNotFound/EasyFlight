@@ -96,7 +96,7 @@ namespace WebAPI.Controllers
         {
             BlCity cityBl = _mapper.Map<BlCity>(city);
 
-            ServiceAddResult addingAddResult = await _cityService.AddAsync(cityBl);
+            AddResult addingAddResult = await _cityService.AddAsync(cityBl);
 
             if (addingAddResult.ResultType == ResultTypes.Duplicate)
             {

@@ -13,10 +13,10 @@ namespace BusinessLayer.Services.Airplanes
         Task<IReadOnlyCollection<AirplaneSeat>> GetAirplaneSeatsAsync(int airplaneId);
         Task<IReadOnlyCollection<AirplaneSeatType>> GetAirplaneSeatTypesAsync (int airplaneId);
         Task<IReadOnlyCollection<Airplane>> SearchAirplanesAsync(AirplaneFilter filter);
-        Task<ServiceAddResult> AddAsync(Airplane airplane);
+        Task<AddResult> AddAsync(Airplane airplane);
         Task<ResultTypes> UpdateAsync(Airplane airplane);
         Task<ResultTypes> UpdateAirplaneSeatsAsync(int airplaneId, AirplaneSeat[] seatScheme);
-        Task<ServiceAddResult> AddAirplaneSeatTypeAsync(AirplaneSeatType seatType);
+        Task<AddResult> AddAirplaneSeatTypeAsync(AirplaneSeatType seatType);
         Task<ResultTypes> DeleteAirplaneSeatTypeAsync(int airplaneId, int seatTypeId);
     }
 }

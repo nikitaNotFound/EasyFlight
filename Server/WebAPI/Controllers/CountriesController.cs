@@ -64,7 +64,7 @@ namespace WebAPI.Controllers
             {
                 return NotFound();
             }
-            
+
             return Ok(foundCountry);
         }
 
@@ -96,7 +96,7 @@ namespace WebAPI.Controllers
         {
             BlCountry countryBl = _mapper.Map<BlCountry>(country);
 
-            ServiceAddResult addAddResult = await _countryService.AddAsync(countryBl);
+            AddResult addAddResult = await _countryService.AddAsync(countryBl);
 
             if (addAddResult.ResultType == ResultTypes.Duplicate)
             {

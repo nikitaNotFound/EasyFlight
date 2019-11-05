@@ -39,7 +39,7 @@ namespace BusinessLayer.Services.Airports
             return airports;
         }
 
-        public async Task<ServiceAddResult> AddAsync(Airport airport)
+        public async Task<AddResult> AddAsync(Airport airport)
         {
             AirportEntity airportDal = _mapper.Map<AirportEntity>(airport);
 
@@ -47,12 +47,12 @@ namespace BusinessLayer.Services.Airports
 
             if (duplicate)
             {
-                return new ServiceAddResult(ResultTypes.Duplicate, null);
+                return new AddResult(ResultTypes.Duplicate, null);
             }
 
             int addedAirportId = await _airportRepository.AddAsync(airportDal);
 
-            return new ServiceAddResult(ResultTypes.Ok, addedAirportId);
+            return new AddResult(ResultTypes.Ok, addedAirportId);
         }
 
         public async Task<Airport> GetByIdAsync(int id)

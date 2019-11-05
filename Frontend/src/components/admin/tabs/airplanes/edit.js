@@ -187,18 +187,18 @@ export default function Edit(props) {
     }
 
     function canDeleteSeatType(seats, seatTypeId) {
-        let inUsed = false;
+        let inUse = false;
 
         for (let i = 0, len = seats.length; i < len; i++) {
             const el = seats[i];
 
             if (el.typeId === seatTypeId) {
-                inUsed = true;
+                inUse = true;
                 break;
             }
         }
 
-        return !inUsed;
+        return !inUse;
     }
 
     function onSeatsChange(seats) {

@@ -75,7 +75,7 @@ namespace WebAPI.Controllers
         {
             BlAirport airportBl = _mapper.Map<BlAirport>(airport);
 
-            ServiceAddResult addAddResult = await _airportService.AddAsync(airportBl);
+            AddResult addAddResult = await _airportService.AddAsync(airportBl);
 
             if (addAddResult.ResultType == ResultTypes.Duplicate)
             {

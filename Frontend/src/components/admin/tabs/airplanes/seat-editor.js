@@ -57,7 +57,7 @@ export default function SeatEditor(props) {
         const newZone = storage[floor - 1][section - 1].length + 1;
         // row, number setted as 1, because 1 is start value
         // typeId setted as first element of seatTypes
-        // i use seatType name beacause i can be sure that it is unique
+        // I use seatType name beacause I can be sure that it is unique
         const newSeat = new Seat(null, null,  floor, section, newZone, 1, 1, props.seatTypes[0].name);
 
         storage[floor - 1][section - 1][newZone - 1] = [];
