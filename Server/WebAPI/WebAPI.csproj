@@ -3,7 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <Company />
+    <Product />
   </PropertyGroup>
 
   <ItemGroup>
