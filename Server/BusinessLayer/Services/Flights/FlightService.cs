@@ -170,5 +170,15 @@ namespace BusinessLayer.Services.Flights
 
             return ResultTypes.Ok;
         }
+
+        public Task<AddResult> AddFlightSeatTypeCostAsync(FlightSeatTypeCost seatTypeCost)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<ResultTypes> UpdateFlightSeatTypeCostAsync(FlightSeatTypeCost newSeatTypeCost)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
