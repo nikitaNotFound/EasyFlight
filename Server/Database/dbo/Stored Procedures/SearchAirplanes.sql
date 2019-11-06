@@ -6,12 +6,16 @@
     @maxSeatCount as int = null
 as
     select *
-    from Airplanes
-        inner join (select COUNT(Seats.Id) as SeatCount, AirplaneId from Seats group by AirplaneId) AirplaneSeatCount
-            on Airplanes.Id = AirplaneSeatCount.AirplaneId
+    from Airplanes A1
+        cross apply (
+            select COUNT(Seats.Id) as SeatCount
+            from Seats
+                join Airplanes A2 on Seats.AirplaneId = A2.Id
+            where Seats.AirplaneId = A1.Id
+        ) AirplanesWithSeatCount
     where
-        (@nameFilter is null or Name like @nameFilter + '%')
-        and (@minCarryingKg is null or CarryingKg >= @minCarryingKg)
-        and (@maxCarryingKg is null or CarryingKg <= @maxCarryingKg)
-        and (@minSeatCount is null or SeatCount >= @minSeatCount)
-        and (@maxSeatCount is null or SeatCount <= @maxSeatCount)
+        (@nameFilter is null or A1.Name like @nameFilter + '%')
+        and (@minCarryingKg is null or A1.CarryingKg >= @minCarryingKg)
+        and (@maxCarryingKg is null or A1.CarryingKg <= @maxCarryingKg)
+        and (@minSeatCount is null or AirplanesWithSeatCount.SeatCount >= @minSeatCount)
+        and (@maxSeatCount is null or AirplanesWithSeatCount.SeatCount <= @maxSeatCount)
