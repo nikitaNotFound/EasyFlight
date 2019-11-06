@@ -138,7 +138,7 @@ namespace DataAccessLayer.Repositories.Airplanes
         public async Task DeleteAirplaneSeatsAsync(int airplaneId)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
-            
+
             IEnumerable<AirplaneSeatTypeEntity> seatTypes = await db.QueryAsync<AirplaneSeatTypeEntity>(
                  "DeleteAirplaneSeats",
                new {AirplaneId = airplaneId},
@@ -183,36 +183,9 @@ namespace DataAccessLayer.Repositories.Airplanes
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
-            DynamicParameters parameters = new DynamicParameters();
-
-            if (!string.IsNullOrEmpty(filter.NameFilter))
-            {
-                parameters.Add("@nameFilter", value: filter.NameFilter);
-            }
-
-            if (filter.MaxCarryingKg != null)
-            {
-                parameters.Add("@maxCarryingKg", value: filter.MaxCarryingKg);
-            }
-
-            if (filter.MinCarryingKg != null)
-            {
-                parameters.Add("@minCarryingKg", value: filter.MinCarryingKg);
-            }
-            
-            if (filter.MaxSeatCount != null)
-            {
-                parameters.Add("@maxSeatCount", value: filter.MaxSeatCount);
-            }
-
-            if (filter.MinSeatCount != null)
-            {
-                parameters.Add("@minSeatCount", value: filter.MinSeatCount);
-            }
-
             IEnumerable<AirplaneEntity> airplanes = await db.QueryAsync<AirplaneEntity>(
                 "SearchAirplanes",
-                parameters,
+                filter,
                 commandType: CommandType.StoredProcedure);
 
             return airplanes.ToList();

@@ -55,9 +55,13 @@ export default function SeatEditor(props) {
             storage[floor - 1][section - 1] = [];
         }
         const newZone = storage[floor - 1][section - 1].length + 1;
+        
         // row, number setted as 1, because 1 is start value
-        // typeId setted as first element of seatTypes
-        // I use seatType name beacause I can be sure that it is unique
+        // last parameter in Seat-constructor is typeId - I use name instead,
+        // because there no id in SeatType, untill it didnt added to database,
+        // I can be sure that name is unique, later, when seat type will be added
+        // to the database, I replace name by Id. props.seatTypes is the global list of
+        // airplane seatTypes, so I set new seat' type as the first elements of this list
         const newSeat = new Seat(null, null,  floor, section, newZone, 1, 1, props.seatTypes[0].name);
 
         storage[floor - 1][section - 1][newZone - 1] = [];

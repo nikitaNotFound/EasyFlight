@@ -7,6 +7,11 @@
 as
     select *
     from Airplanes
-    where Name like @nameFilter + '%'
-        and CarryingKg between @minCarryingKg and @maxCarryingKg
-        and (select COUNT(Id) from Seats where AirplaneId = Id) between @minSeatCount and @maxSeatCount
+        inner join (select COUNT(Seats.Id) as SeatCount, AirplaneId from Seats group by AirplaneId) AirplaneSeatCount
+            on Airplanes.Id = AirplaneSeatCount.AirplaneId
+    where
+        (@nameFilter is null or Name like @nameFilter + '%')
+        and (@minCarryingKg is null or CarryingKg >= @minCarryingKg)
+        and (@maxCarryingKg is null or CarryingKg <= @maxCarryingKg)
+        and (@minSeatCount is null or SeatCount >= @minSeatCount)
+        and (@maxSeatCount is null or SeatCount <= @maxSeatCount)
