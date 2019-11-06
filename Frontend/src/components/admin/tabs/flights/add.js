@@ -111,34 +111,9 @@ export default function Add() {
             <div className="adding-form">
                 <div className="row">
                     <div className="col-12">
-                        <div className="editing-params-form">
+                        <div className="editing-params-form flight-editor">
                             <div className="row">
-                                <SearchList
-                                    searchFunc={AirportService.searchByName}
-                                    getItemName={getAirportName}
-                                    onValueChange={changeFromAirport}
-                                    currentItem={fromAirport}
-                                    placeholder="From"
-                                />
-                                <SearchList
-                                    searchFunc={AirportService.searchByName}
-                                    getItemName={getAirportName}
-                                    onValueChange={changeToAirport}
-                                    currentItem={toAirport}
-                                    placeholder="To"
-                                />
-                                <SearchList
-                                    searchFunc={AirplaneService.searchWithParams}
-                                    searchArgs={[true]}
-                                    getItemName={getAirplaneName}
-                                    onValueChange={changeAirplane}
-                                    currentItem={airplane}
-                                    placeholder="airplane"
-                                />
-
-                                {showTicketsCostEditor()}
-
-                                <div className="adding-form-section">
+                                <div className="adding-form-section date-time">
                                     <div className="row">
                                         <ParamFiled
                                             name="Departure time"
@@ -155,7 +130,7 @@ export default function Add() {
                                     </div>
                                 </div>
 
-                                <div className="adding-form-section">
+                                <div className="adding-form-section date-time arrival">
                                     <div className="row">
                                         <ParamFiled
                                             name="Arrival time"
@@ -171,6 +146,31 @@ export default function Add() {
                                         />
                                     </div>
                                 </div>
+
+                                <SearchList
+                                    searchFunc={AirportService.searchByName}
+                                    getItemName={getAirportName}
+                                    onValueChange={changeFromAirport}
+                                    currentItem={fromAirport}
+                                    placeholder="From"
+                                />
+                                <SearchList
+                                    searchFunc={AirplaneService.searchWithParams}
+                                    searchArgs={[true]}
+                                    getItemName={getAirplaneName}
+                                    onValueChange={changeAirplane}
+                                    currentItem={airplane}
+                                    placeholder="airplane"
+                                />
+                                <SearchList
+                                    searchFunc={AirportService.searchByName}
+                                    getItemName={getAirportName}
+                                    onValueChange={changeToAirport}
+                                    currentItem={toAirport}
+                                    placeholder="To"
+                                />
+
+                                {showTicketsCostEditor()}
 
                                 <div className="adding-form-section">
                                     <div className="row">

@@ -1,0 +1,17 @@
+.date-time {
+    display: inline-block;
+    width: 45%;
+}
+
+.date-time .arrival {
+    justify-content: right;
+}
+
+.date-time .row {
+    width: 100%;
+    justify-content: center;
+}
+
+.flight-editor .row {
+    justify-content: center;
+}

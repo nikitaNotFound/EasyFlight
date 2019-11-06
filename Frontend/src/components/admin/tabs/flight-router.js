@@ -5,6 +5,8 @@ import Main from './flights';
 import Add from './flights/add';
 import Edit from './flights/edit';
 
+import '../../../styles/flight-editor.css';
+
 export default function FlightsRouter() {
     return (
         <Switch>
