@@ -5,28 +5,35 @@ import Spinner from '../../../common/spinner';
 import TicketCost from '../../../../services/flight-models/ticket-cost';
 import * as FlightService from '../../../../services/FlightService';
 import * as AirplaneService from '../../../../services/AirplaneService';
+import MessageBox from '../../../common/message-box';
+import { defaultErrorMessage } from '../../../common/message-box-messages';
 
 export default function TicketsCostEditor(props) {
     const [loading, changeLoading] = useState(true);
     const [costInfo, changeCostInfo] = useState();
     const [seatTypes, changeSeatTypes] = useState();
+    const [messageBoxValue, changeMessageBoxValue] = useState();
 
     useEffect(() => {
         const fetchData = async () => {
-            const types = await AirplaneService.getAirplaneSeatTypes(props.airplaneId);
-
-            changeSeatTypes(types);
-
-            if (!props.flightId) {
-                let newCostInfo = types.map(
-                    (seatType, index) =>
+            changeLoading(true);
+            try {
+                const types = await AirplaneService.getAirplaneSeatTypes(props.airplaneId);
+                changeSeatTypes(types);
+                
+                if (!props.flightId) {
+                    let newCostInfo = types.map(
+                        (seatType, index) =>
                         //cost setted as 0, because 0 is start value of each seat type' ticket
                         new TicketCost(null, seatType.id, 0)
-                );
-                changeCostInfo(newCostInfo);
+                        );
+                        changeCostInfo(newCostInfo);
+                    }
+                    
+                changeLoading(false);
+            } catch {
+                changeMessageBoxValue(defaultErrorMessage());
             }
-
-            changeLoading(false);
         }
 
         fetchData();
@@ -47,11 +54,28 @@ export default function TicketsCostEditor(props) {
     }
 
     if (loading) {
-        return <Spinner headline="Loading..."/>
+        return (
+            <div className="adding-form-section">
+                {showMessageBox()}
+                <Spinner headline="Loading..."/>
+            </div>
+        );
+    }
+
+    function showMessageBox() {
+        if (messageBoxValue) {
+            return (
+                <MessageBox
+                    message={messageBoxValue}
+                    hideFunc={changeMessageBoxValue}
+                />
+            );
+        }
     }
 
     return (
         <div className="adding-form-section">
+            {showMessageBox()}
             <div className="row">
                 {seatTypes.map(
                     (seatType, index) =>
