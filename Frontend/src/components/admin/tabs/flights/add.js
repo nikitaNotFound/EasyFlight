@@ -39,6 +39,8 @@ export default function Add() {
 
     const [overloadKgCost, changeOverloadKgCost] = useState(0);
 
+    const [overloadKgCost, changeOverloadKgCost] = useState(0);
+
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
     async function onDataSave() {
@@ -83,7 +85,6 @@ export default function Add() {
 
             changeMessageBoxValue(added());
         } catch(ex) {
-            console.log(ex)
             changeMessageBoxValue(defaultErrorMessage());
         }
     }
@@ -221,6 +222,16 @@ export default function Add() {
                                 <div className="adding-form-section">
                                     <div className="row">
                                         <ParamField
+                                            name="Overload kg cost"
+                                            value={overloadKgCost}
+                                            onChange={changeOverloadKgCost}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="adding-form-section">
+                                    <div className="row">
+                                        <ParamFiled
                                             name="Overload kg cost"
                                             value={overloadKgCost}
                                             onChange={changeOverloadKgCost}
