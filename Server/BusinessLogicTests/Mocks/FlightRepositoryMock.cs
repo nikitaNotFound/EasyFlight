@@ -54,6 +54,11 @@ namespace BusinessLogicTests.Mocks
             }
         };
 
+        private readonly List<FlightSeatTypeCostEntity> _flightSeatTypeCostData = new List<FlightSeatTypeCostEntity>()
+        {
+            new FlightSeatTypeCostEntity() { FlightId = 2, SeatTypeId = 1, Cost = 400 }
+        };
+
         public async Task<IReadOnlyCollection<FlightEntity>> GetAllAsync()
         {
             return _flightData;

@@ -16,8 +16,8 @@ namespace BusinessLogicTests.Mocks
 
         private readonly List<AirplaneSeatTypeEntity> _airplaneSeatTypeData = new List<AirplaneSeatTypeEntity>()
         {
-            new AirplaneSeatTypeEntity() { Name = "Business class", AirplaneId = 1, Color = "red" },
-            new AirplaneSeatTypeEntity() { Name = "Econom class", AirplaneId = 2, Color = "green" }
+            new AirplaneSeatTypeEntity() { Id = 1, Name = "Business class", AirplaneId = 1, Color = "red" },
+            new AirplaneSeatTypeEntity() { Id = 2, Name = "Econom class", AirplaneId = 2, Color = "green" }
         };
 
         private readonly List<AirplaneSeatEntity> _airplaneSeatData = new List<AirplaneSeatEntity>();

@@ -1,6 +1,6 @@
-namespace BusinessLayer.Models
+namespace DataAccessLayer.Models
 {
-    public class FlightCost
+    public class FlightSeatTypeCostEntity
     {
         public int FlightId { get; set; }
         public int SeatTypeId { get; set; }
