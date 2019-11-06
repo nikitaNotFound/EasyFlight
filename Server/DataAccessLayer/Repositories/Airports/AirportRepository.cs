@@ -13,17 +13,18 @@ namespace DataAccessLayer.Repositories.Airports
         private readonly IDalSettings _dalSettings;
 
 
+
         public AirportRepository(IDalSettings settings)
         {
             _dalSettings = settings;
         }
 
 
-        public async Task AddAsync(AirportEntity airport)
+        public async Task<int> AddAsync(AirportEntity airport)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
-            await db.ExecuteAsync(
+            return await db.QuerySingleOrDefaultAsync<int>(
                 "AddAirport",
                 new { name = airport.Name, cityId = airport.CityId },
                 commandType: CommandType.StoredProcedure);

@@ -3,7 +3,7 @@ import PropsTypes from 'prop-types'
 
 export default function ConfirmActionButton(props) {
     return (
-        <button className="custom-button big" onClick={props.onClick}>
+        <button className="custom-button big non-selectable" onClick={props.onClick}>
             {props.buttonContent}
         </button>
     );

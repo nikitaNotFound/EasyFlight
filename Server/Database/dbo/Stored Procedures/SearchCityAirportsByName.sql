@@ -1,4 +1,4 @@
-create procedure [dbo].[SearchCityAirportsByName]
+﻿create procedure [dbo].[SearchCityAirportsByName]
     @cityId as int,
     @nameFilter as nvarchar(50)
 as

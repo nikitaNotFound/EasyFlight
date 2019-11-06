@@ -63,13 +63,14 @@
     <Folder Include="dbo\Stored Procedures\" />
   </ItemGroup>
   <ItemGroup>
+    <Build Include="dbo\Tables\SeatTypes.sql" />
+    <Build Include="dbo\Tables\Seats.sql" />
     <Build Include="dbo\Tables\Countries.sql" />
-    <Build Include="dbo\Tables\Cities.sql" />
-    <Build Include="dbo\Tables\Airports.sql" />
     <Build Include="dbo\Tables\Accounts.sql" />
     <Build Include="dbo\Stored Procedures\UpdateCountry.sql" />
     <Build Include="dbo\Stored Procedures\UpdateCity.sql" />
     <Build Include="dbo\Stored Procedures\UpdateAirport.sql" />
+    <Build Include="dbo\Stored Procedures\UpdateAirplane.sql" />
     <Build Include="dbo\Stored Procedures\SearchCountryCitiesByName.sql" />
     <Build Include="dbo\Stored Procedures\SearchCountriesByName.sql" />
     <Build Include="dbo\Stored Procedures\SearchCitiesByName.sql" />
@@ -78,22 +79,38 @@
     <Build Include="dbo\Stored Procedures\GetCityById.sql" />
     <Build Include="dbo\Stored Procedures\GetAllCountries.sql" />
     <Build Include="dbo\Stored Procedures\GetAllCities.sql" />
+    <Build Include="dbo\Stored Procedures\GetAllAirports.sql" />
+    <Build Include="dbo\Stored Procedures\GetAllAirplanes.sql" />
+    <Build Include="dbo\Stored Procedures\GetAirportById.sql" />
+    <Build Include="dbo\Stored Procedures\GetAirplaneSeatTypes.sql" />
+    <Build Include="dbo\Stored Procedures\GetAirplaneSeats.sql" />
+    <Build Include="dbo\Stored Procedures\GetAirplaneById.sql" />
     <Build Include="dbo\Stored Procedures\GetAccountByEmail.sql" />
+    <Build Include="dbo\Stored Procedures\DeleteAirplaneSeatType.sql" />
+    <Build Include="dbo\Stored Procedures\DeleteAirplaneSeats.sql" />
+    <Build Include="dbo\Stored Procedures\CheckSeatTypeExistence.sql" />
+    <Build Include="dbo\Stored Procedures\CheckSeatTypeDuplicate.sql" />
     <Build Include="dbo\Stored Procedures\CheckCountryDuplicate.sql" />
     <Build Include="dbo\Stored Procedures\CheckCityDuplicate.sql" />
     <Build Include="dbo\Stored Procedures\CheckAirportDuplicate.sql" />
+    <Build Include="dbo\Stored Procedures\CheckAirplaneDuplicate.sql" />
     <Build Include="dbo\Stored Procedures\CheckAccountDuplicate.sql" />
     <Build Include="dbo\Stored Procedures\AddCountry.sql" />
     <Build Include="dbo\Stored Procedures\AddCity.sql" />
     <Build Include="dbo\Stored Procedures\AddAirport.sql" />
-    <Build Include="dbo\Stored Procedures\GetAccount.sql" />
-    <Build Include="dbo\Stored Procedures\CreateAccount.sql" />
+    <Build Include="dbo\Stored Procedures\AddAirplaneSeatType.sql" />
+    <Build Include="dbo\Stored Procedures\AddAirplaneSeat.sql" />
+    <Build Include="dbo\Stored Procedures\AddAirplane.sql" />
+    <Build Include="dbo\Tables\Airplanes.sql" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="dbo\Stored Procedures\GetAirportById.sql" />
-    <Content Include="dbo\Stored Procedures\GetAllAirports.sql" />
+    <Content Include="dbo\Stored Procedures\CreateAccount.sql" />
+    <Content Include="dbo\Stored Procedures\GetAirplaneSeatTypeById.sql" />
     <Content Include="dbo\Stored Procedures\GetCityAirports.sql" />
+    <Content Include="dbo\Stored Procedures\SearchAirplanes.sql" />
     <Content Include="dbo\Stored Procedures\SearchAirportsByName.sql" />
     <Content Include="dbo\Stored Procedures\SearchCityAirportsByName.sql" />
+    <Content Include="dbo\Tables\Airports.sql" />
+    <Content Include="dbo\Tables\Cities.sql" />
   </ItemGroup>
 </Project>

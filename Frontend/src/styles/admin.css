@@ -8,9 +8,14 @@
 .tabs-item {
     width: 20%;
     display: inline-block;
-    padding: 10px;
-    box-shadow: 0 0 1px rgba(0,0,0,0.5);
+    padding: 15px;
+    box-shadow: 0 0 1px black;
     background: rgb(211, 211, 211);
+    text-align: center;
+}
+
+.tabs-item:hover {
+    background: rgb(226, 217, 217);
 }
 
 .tab-content {
@@ -26,6 +31,6 @@
 }
 
 .editing-params-form {
-    padding: 3.5%;
+    padding: 2%;
     background: rgb(212, 212, 212);
 }

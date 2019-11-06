@@ -26,7 +26,7 @@ export async function add(city) {
         }
     );
 
-    return await createRequestResult(response, RequestTypes.NoContentExpected);
+    return await createRequestResult(response, RequestTypes.ContentExpected);
 }
 
 export async function update(city) {

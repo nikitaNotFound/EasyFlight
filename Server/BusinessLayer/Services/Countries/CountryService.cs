@@ -67,7 +67,7 @@ namespace BusinessLayer.Services.Countries
             return cities;
         } 
 
-        public async Task<ResultTypes> AddAsync(Country country)
+        public async Task<AddResult> AddAsync(Country country)
         {
             CountryEntity countryDal = _mapper.Map<CountryEntity>(country);
 
@@ -75,11 +75,12 @@ namespace BusinessLayer.Services.Countries
 
             if (duplicate)
             {
-                return ResultTypes.Duplicate;
+                return new AddResult(ResultTypes.Duplicate, null);
             }
             
-            await _countryRepository.AddAsync(countryDal);
-            return ResultTypes.Ok;
+            int addedCountryId = await _countryRepository.AddAsync(countryDal);
+
+            return new AddResult(ResultTypes.Ok, addedCountryId);
         }
 
         public async Task<ResultTypes> UpdateAsync(Country country)

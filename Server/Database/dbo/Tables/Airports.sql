@@ -1,4 +1,4 @@
-﻿create table [dbo].[Airports] (
+create table [dbo].[Airports] (
     [Id]     int           identity (1, 1) not null,
     [Name]   nvarchar (50) not null,
     [CityId] int           not null,

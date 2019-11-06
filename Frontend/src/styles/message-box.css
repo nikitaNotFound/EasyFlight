@@ -1,13 +1,16 @@
 .message-box {
   outline: solid rgba(0, 0, 0, .25) 10000px;
-  position: absolute;
+  position: fixed;
   z-index: 1000;
   background: rgb(212, 212, 212);
   width: 50%;
-  top: 100px;
-  left: 25%;
-  min-height: 300px;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 300px;
   padding: 3%;
+  margin: auto;
 }
 
 .message-box .close-button {
@@ -19,6 +22,8 @@
   padding: 0% 2%;
   text-align: center;
   background: red;
+  min-width: 100px;
+  border: 0;
 }
 
 .message-box .message-body {

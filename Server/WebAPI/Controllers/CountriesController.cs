@@ -64,7 +64,7 @@ namespace WebAPI.Controllers
             {
                 return NotFound();
             }
-            
+
             return Ok(foundCountry);
         }
 
@@ -91,24 +91,24 @@ namespace WebAPI.Controllers
 
         // POST api/countries
         [HttpPost]
-        [Authorize(nameof(AccountRole.Admin))]
+        [Authorize(Roles = nameof(AccountRole.Admin))]
         public async Task<ActionResult> AddAsync([FromBody] Country country)
         {
             BlCountry countryBl = _mapper.Map<BlCountry>(country);
 
-            ResultTypes addResult = await _countryService.AddAsync(countryBl);
+            AddResult addAddResult = await _countryService.AddAsync(countryBl);
 
-            if (addResult == ResultTypes.Duplicate)
+            if (addAddResult.ResultType == ResultTypes.Duplicate)
             {
                 return BadRequest();
             }
 
-            return Ok();
+            return Ok(new { Id = addAddResult.ItemId });
         }
 
         // PUT api/countries
         [HttpPut]
-        [Authorize(nameof(AccountRole.Admin))]
+        [Authorize(Roles = nameof(AccountRole.Admin))]
         public async Task<ActionResult> UpdateAsync([FromBody] Country country)
         {
             BlCountry countryBl = _mapper.Map<BlCountry>(country);

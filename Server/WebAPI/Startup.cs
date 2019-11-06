@@ -10,7 +10,6 @@ using Microsoft.Extensions.Logging;
 using WebAPI.Services;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using WebAPI.Services.JWT;
 
 namespace WebAPI
 {

@@ -12,8 +12,7 @@ function initializeSeatArray(props) {
         return null;
     }
 
-    const storage = [];
-    Object.assign(storage, props.seatInfo);
+    const storage = props.seatInfo.slice();
 
     let seatsArray = [];
 

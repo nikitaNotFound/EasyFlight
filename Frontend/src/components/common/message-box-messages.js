@@ -27,3 +27,15 @@ export function saved() {
 export function badLoginData() {
     return 'Incorrect login or password!';
 }
+
+export function seatTypeInUse() {
+    return 'Delete all seats with such type first!';
+}
+
+export function seatTypeInvalidInput() {
+    return 'You need to define color and name both!';
+}
+
+export function seatTypeDuplicate() {
+    return 'Seat type with such color or name already exists!';
+}

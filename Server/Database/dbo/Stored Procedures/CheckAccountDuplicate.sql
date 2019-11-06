@@ -1,4 +1,4 @@
-﻿create procedure [dbo].[CheckAccountDuplicate]
+create procedure [dbo].[CheckAccountDuplicate]
     @email as nvarchar(50)
 as
     select top 1 *

@@ -1,30 +1,45 @@
 import React, { useState } from 'react';
-import AddButton from '../../../common/add-button';
-import Airplanes from './airplanes';
-import * as AirplaneService from '../../../../services/AirplaneService';
-import Filter from './filter';
+
 import SearchOptions from '../../../../services/airplane-models/search-options';
+
+import * as AirplaneService from '../../../../services/AirplaneService';
+
+import Airplanes from './airplanes';
+import Filter from './filter';
+import AddButton from '../../../common/add-button';
+import MessageBox from '../../../common/message-box';
+import { defaultErrorMessage } from '../../../common/message-box-messages';
 
 export default function AirplaneList() {
     const [filterOptions, changeFilterOptions] = useState(new SearchOptions());
-    const [airplanes, changeAirplanes] = useState([]);
+    const [airplanes, changeAirplanes] = useState(null);
+    const [messageBoxValue, changeMessageBoxValue] = useState();
 
-    function onFilterApply(newFilterOptions) {
+    async function onFilterApply(newFilterOptions) {
         changeFilterOptions(newFilterOptions);
 
-        const flightsLoading = AirplaneService.searchWithParams(newFilterOptions);
+        try {
+            const airplanes = await AirplaneService.searchWithParams(newFilterOptions);
+            changeAirplanes(airplanes);
+        } catch {
+            changeMessageBoxValue(defaultErrorMessage());
+        }
+    }
 
-        flightsLoading
-            .then(foundAirplanes => {
-                changeAirplanes(foundAirplanes);
-            })
-            .catch(error => {
-                alert(error);
-            });
+    function showMessageBox() {
+        if (messageBoxValue) {
+            return (
+                <MessageBox
+                    message={messageBoxValue}
+                    hideFunc={changeMessageBoxValue}
+                />
+            );
+        }
     }
 
     return (
         <div className="tab-content">
+            {showMessageBox()}
             <Filter filterOptions={filterOptions} onFilterApply={onFilterApply}/>
             <AddButton catalog="airplanes"/>
             <Airplanes airplanes={airplanes}/>

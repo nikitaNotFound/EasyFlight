@@ -18,6 +18,14 @@
 
 .filter-arg input{
     display: block;
+    height: 35px;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.filter-arg label{
+    font-size: 16px;
+    margin-bottom: -3px;
 }
 
 .filter-apply {
@@ -34,8 +42,4 @@
 
 .filter-apply:hover {
     background: rgb(185, 185, 185);
-}
-
-.filter-apply:focus {
-    outline: 0;
 }

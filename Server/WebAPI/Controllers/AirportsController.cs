@@ -23,7 +23,7 @@ namespace WebAPI.Controllers
         private readonly IAirportService _airportService;
         private readonly IMapper _mapper;
 
-        
+
         public AirportsController(IAirportService airportService, IMapper mapper)
         {
             _airportService = airportService;
@@ -70,24 +70,24 @@ namespace WebAPI.Controllers
 
         // POST api/airports
         [HttpPost]
-        [Authorize(nameof(AccountRole.Admin))]
+        [Authorize(Roles = nameof(AccountRole.Admin))]
         public async Task<ActionResult> AddAsync([FromBody]Airport airport)
         {
             BlAirport airportBl = _mapper.Map<BlAirport>(airport);
 
-            ResultTypes addResult = await _airportService.AddAsync(airportBl);
+            AddResult addAddResult = await _airportService.AddAsync(airportBl);
 
-            if (addResult == ResultTypes.Duplicate)
+            if (addAddResult.ResultType == ResultTypes.Duplicate)
             {
                 return BadRequest();
             }
 
-            return Ok();
+            return Ok(new { Id = addAddResult.ItemId });
         }
 
         // PUT api/airports
         [HttpPut]
-        [Authorize(nameof(AccountRole.Admin))]
+        [Authorize(Roles = nameof(AccountRole.Admin))]
         public async Task<ActionResult> UpdateAsync([FromBody] Airport airport)
         {
             BlAirport airportBl = _mapper.Map<BlAirport>(airport);

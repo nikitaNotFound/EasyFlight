@@ -1,103 +1,149 @@
-import {airplanes} from './DataBase';
+import * as config from '../config.json';
 
+import { headers, createRequestResult, RequestTypes } from './RequestAssistant';
 
-export function getById(id) {
-    return new Promise(
-        (resolve, reject) => {
-            const storage = airplanes;
-            let airplane = {};
-            for (let i = 0, len = storage.length; i < len; i++) {
-                if (storage[i].id == id) {
-                    airplane = storage[i];
-                }
-            }
-
-            if (!airplane) {
-                reject("Error");
-            } else {
-                resolve(airplane);
-            }
+export async function getById(airplaneId) {
+    const response = await fetch(
+        `${config.API_URL}/airplanes/${airplaneId}`,
+        {
+            method: 'GET',
+            mode: 'cors',
+            headers: headers
         }
     );
+
+    return await createRequestResult(response, RequestTypes.ContentExpected);
 }
 
-export function search(searchPhrase) {
-    return new Promise(
-        (resolve, reject) => {
-            const storage = airplanes;
-            let foundAirplanes = [];
-
-            const searchReg = new RegExp('^' + searchPhrase, 'ig');
-
-            for (let i = 0, len = storage.length; i < len; i++) {
-                if (storage[i].name.match(searchReg)) {
-                    foundAirplanes.push(storage[i]);
-                }
-            }
-            //IN FUTURE HERE WILL BE CHECKING OF SUCCESFULL REQUEST TO THE API
-            if (false) {
-                reject("Error");
-            }
-
-            resolve(foundAirplanes);
+export async function update(airplane) {
+    const response = await fetch(
+        `${config.API_URL}/airplanes`,
+        {
+            method: 'PUT',
+            mode: 'cors',
+            headers: headers,
+            body: JSON.stringify(airplane)
         }
     );
+
+    return await createRequestResult(response, RequestTypes.NoContentExpected);
 }
 
-export function searchWithParams(params) {
-    return new Promise(
-        (resolve, reject) => {
-            const data = airplanes;
-
-            const carryingMin = params.carryingMin
-                ? params.carryingMin
-                : 0;
-            const carryingMax = params.carryingMax
-                ? params.carryingMax
-                : Infinity;
-
-            const seatCountMin = params.seatCountMin
-                ? params.seatCountMin
-                : 0;
-            const seatCountMax = params.seatCountMax
-                ? params.seatCountMax
-                : Infinity;
-
-            let foundAirplanes = [];
-
-            for (let i = 0, len = data.length; i < len; i++) {
-                const element = data[i];
-
-                if (params.name) {
-                    const searchReg = new RegExp('^' + params.name, 'ig');
-
-                    if (!element.name.match(searchReg)) {
-                        continue;
-                    }
-                }
-
-                if (carryingMax
-                    && (carryingMin || carryingMin == 0)
-                    && !((element.carrying > carryingMin) && (element.carrying < carryingMax))
-                ) {
-                    continue;
-                }
-                
-
-                if (seatCountMax
-                    && (seatCountMin || seatCountMin == 0)
-                    && !((element.seats.length > seatCountMin) && (element.seats.length < seatCountMax))
-                ) {
-                    continue;
-                }
-
-                foundAirplanes.push(element);
-            }
-
-            if (!foundAirplanes) {
-                reject('Error');
-            }
-            resolve(foundAirplanes);
+export async function add(airplane) {
+    const response = await fetch(
+        `${config.API_URL}/airplanes`,
+        {
+            method: 'POST',
+            mode: 'cors',
+            headers: headers,
+            body: JSON.stringify(airplane)
         }
     );
+
+    return await createRequestResult(response, RequestTypes.ContentExpected);
+}
+
+export async function updateAirplaneSeats(airplaneId, seats) {
+    const response = await fetch(
+        `${config.API_URL}/airplanes/${airplaneId}/seats`,
+        {
+            method: 'PUT',
+            mode: 'cors',
+            headers: headers,
+            body: JSON.stringify(seats)
+        }
+    );
+
+    return await createRequestResult(response, RequestTypes.NoContentExpected);
+}
+
+
+export async function addAirplaneSeatType(airplaneId, seatType) {
+    const response = await fetch(
+        `${config.API_URL}/airplanes/${airplaneId}/seat-types`,
+        {
+            method: 'POST',
+            mode: 'cors',
+            headers: headers,
+            body: JSON.stringify(seatType)
+        }
+    );
+
+    return await createRequestResult(response, RequestTypes.ContentExpected);
+}
+
+export async function deleteAirplaneSeatType(airplaneId, seatTypeId) {
+    const response = await fetch(
+        `${config.API_URL}/airplanes/${airplaneId}/seat-types/${seatTypeId}`,
+        {
+            method: 'DELETE',
+            mode: 'cors',
+            headers: headers
+        }
+    );
+
+    return await createRequestResult(response, RequestTypes.NoContentExpected);
+}
+
+export async function getAirplaneSeats(airplaneId) {
+    const response = await fetch(
+        `${config.API_URL}/airplanes/${airplaneId}/seats`,
+        {
+            method: 'GET',
+            mode: 'cors',
+            headers: headers
+        }
+    );
+
+    return await createRequestResult(response, RequestTypes.ContentExpected);
+}
+
+export async function getAirplaneSeatTypes(airplaneId) {
+    const response = await fetch(
+        `${config.API_URL}/airplanes/${airplaneId}/seat-types`,
+        {
+            method: 'GET',
+            mode: 'cors',
+            headers: headers
+        }
+    );
+
+    return await createRequestResult(response, RequestTypes.ContentExpected);
+}
+
+export async function searchWithParams(filter) {
+    const {name, carryingMaxKg, carryingMinKg, seatCountMax, seatCountMin} = filter;
+
+    let parameteres = '?';
+
+    if (name) {
+        parameteres += `nameFilter=${name}&`;
+    }
+
+    if (carryingMinKg) {
+        parameteres += `minCarryingKg=${carryingMinKg}&`;
+    }
+    
+    if (carryingMaxKg) {
+        parameteres += `maxCarryingKg=${carryingMaxKg}&`;
+    }
+
+    if (seatCountMax) {
+        parameteres += `maxSeatCount=${seatCountMax}&`;
+    }
+
+    if (seatCountMin) {
+        parameteres += `minSeatCount=${seatCountMin}&`;
+    }
+
+    const response = await fetch(
+        `${config.API_URL}/airplanes${parameteres}`,
+        {
+            method: 'GET',
+            mode: 'cors',
+            headers: headers
+        }
+    );
+
+    return await createRequestResult(response, RequestTypes.ContentExpected);
 }

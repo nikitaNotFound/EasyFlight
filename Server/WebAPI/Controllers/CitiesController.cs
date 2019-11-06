@@ -29,7 +29,7 @@ namespace WebAPI.Controllers
             _cityService = cityService;
             _mapper = mapper;
         }
-            
+
 
         // GET api/cities{?nameFilter}
         [HttpGet]
@@ -91,24 +91,24 @@ namespace WebAPI.Controllers
 
         // POST api/cities
         [HttpPost]
-        [Authorize(nameof(AccountRole.Admin))]
+        [Authorize(Roles = nameof(AccountRole.Admin))]
         public async Task<ActionResult> AddAsync([FromBody] City city)
         {
             BlCity cityBl = _mapper.Map<BlCity>(city);
 
-            ResultTypes addingResult = await _cityService.AddAsync(cityBl);
+            AddResult addingAddResult = await _cityService.AddAsync(cityBl);
 
-            if (addingResult == ResultTypes.Duplicate)
+            if (addingAddResult.ResultType == ResultTypes.Duplicate)
             {
                 return BadRequest();
             }
-    
-            return Ok();
+
+            return Ok(new { Id = addingAddResult.ItemId });
         }
 
         // PUT api/cities
         [HttpPut]
-        [Authorize(nameof(AccountRole.Admin))]
+        [Authorize(Roles = nameof(AccountRole.Admin))]
         public async Task<ActionResult> UpdateAsync([FromBody] City city)
         {
             BlCity cityBl = _mapper.Map<City, BlCity>(city);

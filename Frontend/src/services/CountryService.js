@@ -39,7 +39,7 @@ export async function add(country) {
         }
     );
 
-    return createRequestResult(response, RequestTypes.NoContentExpected);
+    return createRequestResult(response, RequestTypes.ContentExpected);
 }
 
 export async function update(country) {

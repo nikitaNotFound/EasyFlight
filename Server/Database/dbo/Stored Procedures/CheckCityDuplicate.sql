@@ -1,4 +1,4 @@
-﻿create procedure [dbo].[CheckCityDuplicate]
+create procedure [dbo].[CheckCityDuplicate]
     @name as nvarchar(70),
     @countryId as int
 as

@@ -37,7 +37,7 @@ function Instruments(props) {
                     <label htmlFor="section-pos">Section</label>
                     <input id="section-pos" type="text" onChange={onSectionChange} value={section}/>
                 </div>
-                <div className="custom-button" onClick={onAddZone}>add row</div>
+                <button className="custom-button add-row-button" onClick={onAddZone}>Add zone</button>
             </div>
         </div>
     );
