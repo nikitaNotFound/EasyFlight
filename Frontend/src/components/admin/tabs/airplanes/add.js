@@ -42,7 +42,7 @@ export default function Add() {
             const seatTypesIds = await Promise.all([...seatTypesToAddPromises]);
 
             let newSeats = seats.slice();
-            console.log(newSeats);
+
             for (let i = 0, len = seatTypesIds.length; i < len; i++) {
                 const seatTypeId = seatTypesIds[i].id;
                 const seatTypeName = seatTypes[i].name;
