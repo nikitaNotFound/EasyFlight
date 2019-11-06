@@ -76,11 +76,7 @@ namespace BusinessLogicTests.Mocks
 
         public async Task<IReadOnlyCollection<FlightEntity>> SearchFlightsAsync(FlightFilterEntity filter)
         {
-            return (IReadOnlyCollection<FlightEntity>) _flightData
-                .Select(x => x)
-                .Where(x => x.FromAirportId == filter.FromAirportId || filter.FromAirportId == null)
-                .Where(x => x.ToAirportId == filter.ToAirportId || filter.ToAirportId == null).ToList();
-            // todo
+            return _flightData;
         }
     }
 }
