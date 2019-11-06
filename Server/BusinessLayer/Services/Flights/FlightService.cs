@@ -44,6 +44,11 @@ namespace BusinessLayer.Services.Flights
             throw new System.NotImplementedException();
         }
 
+        public Task<IReadOnlyCollection<FlightSeatTypeCost>> GetFlightSeatTypesCost(int airplaneId)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public Task<AddResult> AddFlightSeatTypeCostAsync(FlightSeatTypeCost seatTypeCost)
         {
             throw new System.NotImplementedException();

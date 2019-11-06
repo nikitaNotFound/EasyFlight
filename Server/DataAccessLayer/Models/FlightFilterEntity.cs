@@ -4,6 +4,7 @@ namespace DataAccessLayer.Models
 {
     public class FlightFilterEntity
     {
+        public string NameFilter { get; set; }
         public int? FromAirportId { get; set; }
         public int? ToAirportId { get; set; }
         public int? FromCityId { get; set; }
