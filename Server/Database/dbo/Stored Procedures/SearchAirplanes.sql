@@ -1,9 +1,9 @@
 ﻿create procedure [dbo].[SearchAirplanes]
-    @nameFilter as nvarchar(50) = '',
-    @minCarryingKg as int = 0,
-    @maxCarryingKg as int = 2147483647,
-    @minSeatCount as int = 0,
-    @maxSeatCount as int = 2147483647
+    @nameFilter as nvarchar(50) = null,
+    @minCarryingKg as int = null,
+    @maxCarryingKg as int = null,
+    @minSeatCount as int = null,
+    @maxSeatCount as int = null
 as
     select *
     from Airplanes
