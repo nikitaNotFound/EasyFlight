@@ -171,19 +171,74 @@ namespace BusinessLayer.Services.Flights
             return ResultTypes.Ok;
         }
 
-        public Task<IReadOnlyCollection<FlightSeatTypeCost>> GetFlightSeatTypesCost(int airplaneId)
+        public async Task<IReadOnlyCollection<FlightSeatTypeCost>> GetFlightSeatTypesCost(int airplaneId)
         {
-            throw new System.NotImplementedException();
+            IReadOnlyCollection<FlightSeatTypeCostEntity> flightsDal =
+                await _flightRepository.GetFlightSeatTypesCost(airplaneId);
+
+            return flightsDal.Select(_mapper.Map<FlightSeatTypeCost>).ToList();
         }
 
-        public Task<AddResult> AddFlightSeatTypeCostAsync(FlightSeatTypeCost seatTypeCost)
+        public async Task<AddResult> AddFlightSeatTypeCostAsync(FlightSeatTypeCost seatTypeCost)
         {
-            throw new System.NotImplementedException();
+            FlightSeatTypeCostEntity seatTypeCostDal = _mapper.Map<FlightSeatTypeCostEntity>(seatTypeCost);
+
+            FlightEntity flight = await _flightRepository.GetByIdAsync(seatTypeCostDal.FlightId);
+
+            if (flight == null)
+            {
+                return new AddResult(ResultTypes.NotFound, null);
+            }
+
+            AirplaneSeatTypeEntity seatType =
+                await _airplaneRepository.GetAirplaneSeatTypeById(seatTypeCostDal.SeatTypeId);
+
+            if (seatType == null)
+            {
+                return new AddResult(ResultTypes.NotFound, null);
+            }
+
+            bool duplicate = await _flightRepository.CheckFlightSeatTypeCostDuplicateAsync(seatTypeCostDal);
+
+            if (duplicate)
+            {
+                return new AddResult(ResultTypes.Duplicate, null);
+            }
+
+            int addedSeatTypeCostId = await _flightRepository.AddFlightSeatTypeCost(seatTypeCostDal);
+
+            return new AddResult(ResultTypes.Ok, addedSeatTypeCostId);
         }
 
-        public Task<ResultTypes> UpdateFlightSeatTypeCostAsync(FlightSeatTypeCost newSeatTypeCost)
+        public async Task<ResultTypes> UpdateFlightSeatTypeCostAsync(FlightSeatTypeCost newSeatTypeCost)
         {
-            throw new System.NotImplementedException();
+            FlightSeatTypeCostEntity seatTypeCostDal = _mapper.Map<FlightSeatTypeCostEntity>(newSeatTypeCost);
+
+            FlightEntity flight = await _flightRepository.GetByIdAsync(seatTypeCostDal.FlightId);
+
+            if (flight == null)
+            {
+                return ResultTypes.NotFound;
+            }
+
+            AirplaneSeatTypeEntity seatType =
+                await _airplaneRepository.GetAirplaneSeatTypeById(seatTypeCostDal.SeatTypeId);
+
+            if (seatType == null)
+            {
+                return ResultTypes.NotFound;
+            }
+
+            bool duplicate = await _flightRepository.CheckFlightSeatTypeCostDuplicateAsync(seatTypeCostDal);
+
+            if (duplicate)
+            {
+                return ResultTypes.Duplicate;
+            }
+
+            int addedSeatTypeCostId = await _flightRepository.AddFlightSeatTypeCost(seatTypeCostDal);
+
+            return ResultTypes.Ok;
         }
     }
 }
