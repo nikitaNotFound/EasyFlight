@@ -9,9 +9,7 @@ using Serilog;
 using Microsoft.Extensions.Logging;
 using WebAPI.Services;
 using System.Text;
-using Common;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using WebAPI.Services.JWT;
 
 namespace WebAPI
 {
