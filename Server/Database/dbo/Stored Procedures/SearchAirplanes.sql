@@ -10,7 +10,6 @@ as
         cross apply (
             select COUNT(Seats.Id) as SeatCount
             from Seats
-                join Airplanes A2 on Seats.AirplaneId = A2.Id
             where Seats.AirplaneId = A1.Id
         ) AirplanesWithSeatCount
     where

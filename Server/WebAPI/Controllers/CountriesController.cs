@@ -91,7 +91,7 @@ namespace WebAPI.Controllers
 
         // POST api/countries
         [HttpPost]
-        [Authorize(nameof(AccountRole.Admin))]
+        [Authorize(Roles = nameof(AccountRole.Admin))]
         public async Task<ActionResult> AddAsync([FromBody] Country country)
         {
             BlCountry countryBl = _mapper.Map<BlCountry>(country);
@@ -108,7 +108,7 @@ namespace WebAPI.Controllers
 
         // PUT api/countries
         [HttpPut]
-        [Authorize(nameof(AccountRole.Admin))]
+        [Authorize(Roles = nameof(AccountRole.Admin))]
         public async Task<ActionResult> UpdateAsync([FromBody] Country country)
         {
             BlCountry countryBl = _mapper.Map<BlCountry>(country);

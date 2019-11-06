@@ -29,7 +29,7 @@ namespace WebAPI.Controllers
             _cityService = cityService;
             _mapper = mapper;
         }
-            
+
 
         // GET api/cities{?nameFilter}
         [HttpGet]
@@ -91,7 +91,7 @@ namespace WebAPI.Controllers
 
         // POST api/cities
         [HttpPost]
-        [Authorize(nameof(AccountRole.Admin))]
+        [Authorize(Roles = nameof(AccountRole.Admin))]
         public async Task<ActionResult> AddAsync([FromBody] City city)
         {
             BlCity cityBl = _mapper.Map<BlCity>(city);
@@ -108,7 +108,7 @@ namespace WebAPI.Controllers
 
         // PUT api/cities
         [HttpPut]
-        [Authorize(nameof(AccountRole.Admin))]
+        [Authorize(Roles = nameof(AccountRole.Admin))]
         public async Task<ActionResult> UpdateAsync([FromBody] City city)
         {
             BlCity cityBl = _mapper.Map<City, BlCity>(city);

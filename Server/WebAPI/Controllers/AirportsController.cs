@@ -23,7 +23,7 @@ namespace WebAPI.Controllers
         private readonly IAirportService _airportService;
         private readonly IMapper _mapper;
 
-        
+
         public AirportsController(IAirportService airportService, IMapper mapper)
         {
             _airportService = airportService;
@@ -70,7 +70,7 @@ namespace WebAPI.Controllers
 
         // POST api/airports
         [HttpPost]
-        [Authorize(nameof(AccountRole.Admin))]
+        [Authorize(Roles = nameof(AccountRole.Admin))]
         public async Task<ActionResult> AddAsync([FromBody]Airport airport)
         {
             BlAirport airportBl = _mapper.Map<BlAirport>(airport);
@@ -87,7 +87,7 @@ namespace WebAPI.Controllers
 
         // PUT api/airports
         [HttpPut]
-        [Authorize(nameof(AccountRole.Admin))]
+        [Authorize(Roles = nameof(AccountRole.Admin))]
         public async Task<ActionResult> UpdateAsync([FromBody] Airport airport)
         {
             BlAirport airportBl = _mapper.Map<BlAirport>(airport);

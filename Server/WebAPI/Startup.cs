@@ -92,16 +92,6 @@ namespace WebAPI
                 };
             });
 
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy(
-                    AccountRole.Admin.ToString(),
-                    authBuilder =>
-                    {
-                        authBuilder.RequireRole(AccountRole.Admin.ToString());
-                    });
-            });
-            
             services.AddHttpContextAccessor();
         }
 

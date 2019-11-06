@@ -133,7 +133,7 @@ namespace WebAPI.Controllers
 
         // POST api/airplanes
         [HttpPost]
-        [Authorize(nameof(AccountRole.Admin))]
+        [Authorize(Roles = nameof(AccountRole.Admin))]
         public async Task<ActionResult> AddAirplaneAsync([FromBody] Airplane airplane)
         {
             BlAirplane airplaneBl = _mapper.Map<BlAirplane>(airplane);
@@ -150,7 +150,7 @@ namespace WebAPI.Controllers
 
         // PUT api/airplanes
         [HttpPut]
-        [Authorize(nameof(AccountRole.Admin))]
+        [Authorize(Roles = nameof(AccountRole.Admin))]
         public async Task<ActionResult> UpdateAirplaneAsync([FromBody] Airplane airplane)
         {
             BlAirplane airplaneBl = _mapper.Map<BlAirplane>(airplane);
@@ -170,7 +170,7 @@ namespace WebAPI.Controllers
 
         // POST api/airplanes/{airplaneId}/seat-types
         [HttpPost]
-        [Authorize(nameof(AccountRole.Admin))]
+        [Authorize(Roles = nameof(AccountRole.Admin))]
         [Route("{airplaneId}/seat-types")]
         public async Task<ActionResult> AddAirplaneSeatTypeAsync(int airplaneId, [FromBody] AirplaneSeatType seatType)
         {
@@ -193,7 +193,7 @@ namespace WebAPI.Controllers
 
         // DELETE api/airplanes/{airplaneId}/seat-types/{seatTypeId}
         [HttpDelete]
-        [Authorize(nameof(AccountRole.Admin))]
+        [Authorize(Roles = nameof(AccountRole.Admin))]
         [Route("{airplaneId}/seat-types/{seatTypeId}")]
         public async Task<ActionResult> DeleteAirplaneSeatTypeAsync(int airplaneId, int seatTypeId)
         {
@@ -209,7 +209,7 @@ namespace WebAPI.Controllers
 
         // PUT api/airplanes/{airplaneId}/seats
         [HttpPut]
-        [Authorize(nameof(AccountRole.Admin))]
+        [Authorize(Roles = nameof(AccountRole.Admin))]
         [Route("{airplaneId}/seats")]
         public async Task<ActionResult> UpdateAirplaneSeatsAsync(int airplaneId, [FromBody] AirplaneSeat[] seats)
         {
