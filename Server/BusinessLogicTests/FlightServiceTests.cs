@@ -23,6 +23,10 @@ namespace BusinessLogicTests
             {
                 config.CreateMap<Flight, FlightEntity>();
                 config.CreateMap<FlightEntity, Flight>();
+                config.CreateMap<FlightSeatTypeCost, FlightSeatTypeCostEntity>();
+                config.CreateMap<FlightSeatTypeCostEntity, FlightSeatTypeCost>();
+                config.CreateMap<FlightFilter, FlightFilterEntity>();
+                config.CreateMap<FlightFilterEntity, FlightFilter>();
             });
             mappingConfig.CompileMappings();
 
@@ -40,7 +44,12 @@ namespace BusinessLogicTests
                 FlightId = 1,
                 Cost = 300
             };
-            FlightService flightService = new FlightService(_mapper, new FlightRepositoryMock());
+            FlightService flightService = new FlightService(
+                _mapper,
+                new FlightRepositoryMock(),
+                new AirportRepositoryMock(),
+                new AirplanesRepositoryMock()
+            );
 
             // Act
             AddResult addResult = await flightService.AddFlightSeatTypeCostAsync(seatTypeCost);
@@ -59,7 +68,12 @@ namespace BusinessLogicTests
                 FlightId = 200,
                 Cost = 300
             };
-            FlightService flightService = new FlightService(_mapper, new FlightRepositoryMock());
+            FlightService flightService = new FlightService(
+                _mapper,
+                new FlightRepositoryMock(),
+                new AirportRepositoryMock(),
+                new AirplanesRepositoryMock()
+            );
 
             // Act
             AddResult addResult = await flightService.AddFlightSeatTypeCostAsync(seatTypeCost);
@@ -78,7 +92,12 @@ namespace BusinessLogicTests
                 FlightId = 1,
                 Cost = 300
             };
-            FlightService flightService = new FlightService(_mapper, new FlightRepositoryMock());
+            FlightService flightService = new FlightService(
+                _mapper,
+                new FlightRepositoryMock(),
+                new AirportRepositoryMock(),
+                new AirplanesRepositoryMock()
+            );
 
             // Act
             AddResult addResult = await flightService.AddFlightSeatTypeCostAsync(seatTypeCost);
@@ -97,7 +116,12 @@ namespace BusinessLogicTests
                 FlightId = 2,
                 Cost = 300
             };
-            FlightService flightService = new FlightService(_mapper, new FlightRepositoryMock());
+            FlightService flightService = new FlightService(
+                _mapper,
+                new FlightRepositoryMock(),
+                new AirportRepositoryMock(),
+                new AirplanesRepositoryMock()
+            );
 
             // Act
             AddResult addResult = await flightService.AddFlightSeatTypeCostAsync(seatTypeCost);
@@ -116,7 +140,12 @@ namespace BusinessLogicTests
                 FlightId = 1,
                 Cost = 300
             };
-            FlightService flightService = new FlightService(_mapper, new FlightRepositoryMock());
+            FlightService flightService = new FlightService(
+                _mapper,
+                new FlightRepositoryMock(),
+                new AirportRepositoryMock(),
+                new AirplanesRepositoryMock()
+            );
 
             // Act
             ResultTypes addResult = await flightService.UpdateFlightSeatTypeCostAsync(seatTypeCost);
@@ -135,7 +164,12 @@ namespace BusinessLogicTests
                 FlightId = 200,
                 Cost = 300
             };
-            FlightService flightService = new FlightService(_mapper, new FlightRepositoryMock());
+            FlightService flightService = new FlightService(
+                _mapper,
+                new FlightRepositoryMock(),
+                new AirportRepositoryMock(),
+                new AirplanesRepositoryMock()
+            );
 
             // Act
             ResultTypes addResult = await flightService.UpdateFlightSeatTypeCostAsync(seatTypeCost);
@@ -154,7 +188,12 @@ namespace BusinessLogicTests
                 FlightId = 1,
                 Cost = 300
             };
-            FlightService flightService = new FlightService(_mapper, new FlightRepositoryMock());
+            FlightService flightService = new FlightService(
+                _mapper,
+                new FlightRepositoryMock(),
+                new AirportRepositoryMock(),
+                new AirplanesRepositoryMock()
+            );
 
             // Act
             ResultTypes addResult = await flightService.UpdateFlightSeatTypeCostAsync(seatTypeCost);
@@ -173,7 +212,12 @@ namespace BusinessLogicTests
                 FlightId = 2,
                 Cost = 300
             };
-            FlightService flightService = new FlightService(_mapper, new FlightRepositoryMock());
+            FlightService flightService = new FlightService(
+                _mapper,
+                new FlightRepositoryMock(),
+                new AirportRepositoryMock(),
+                new AirplanesRepositoryMock()
+            );
 
             // Act
             ResultTypes addResult = await flightService.UpdateFlightSeatTypeCostAsync(seatTypeCost);
@@ -200,7 +244,12 @@ namespace BusinessLogicTests
                 ),
                 AirplaneId = 200,
             };
-            FlightService flightService = new FlightService(_mapper, new FlightRepositoryMock());
+            FlightService flightService = new FlightService(
+                _mapper,
+                new FlightRepositoryMock(),
+                new AirportRepositoryMock(),
+                new AirplanesRepositoryMock()
+            );
 
             // Act
             AddResult addResult = await flightService.AddAsync(flight);
@@ -227,7 +276,12 @@ namespace BusinessLogicTests
                 ),
                 AirplaneId = 1,
             };
-            FlightService flightService = new FlightService(_mapper, new FlightRepositoryMock());
+            FlightService flightService = new FlightService(
+                _mapper,
+                new FlightRepositoryMock(),
+                new AirportRepositoryMock(),
+                new AirplanesRepositoryMock()
+            );
 
             // Act
             AddResult addResult = await flightService.AddAsync(flight);
@@ -254,7 +308,12 @@ namespace BusinessLogicTests
                 ),
                 AirplaneId = 200,
             };
-            FlightService flightService = new FlightService(_mapper, new FlightRepositoryMock());
+            FlightService flightService = new FlightService(
+                _mapper,
+                new FlightRepositoryMock(),
+                new AirportRepositoryMock(),
+                new AirplanesRepositoryMock()
+            );
 
             // Act
             ResultTypes addResult = await flightService.UpdateAsync(flight);
@@ -281,7 +340,12 @@ namespace BusinessLogicTests
                 ),
                 AirplaneId = 1,
             };
-            FlightService flightService = new FlightService(_mapper, new FlightRepositoryMock());
+            FlightService flightService = new FlightService(
+                _mapper,
+                new FlightRepositoryMock(),
+                new AirportRepositoryMock(),
+                new AirplanesRepositoryMock()
+            );
 
             // Act
             ResultTypes addResult = await flightService.UpdateAsync(flight);

@@ -135,8 +135,8 @@ namespace BusinessLogicTests
             // Arrange
             AirplaneSeat[] seats = new AirplaneSeat[]
             {
-                new AirplaneSeat() { Floor = 1, Section = 1, Zone = 1, Row = 1, Number = 1},
-                new AirplaneSeat() { Floor = 1, Section = 1, Zone = 1, Row = 1, Number = 2}
+                new AirplaneSeat() { Floor = 1, Section = 1, Zone = 1, Row = 1, Number = 1, TypeId = 1 },
+                new AirplaneSeat() { Floor = 1, Section = 1, Zone = 1, Row = 1, Number = 2, TypeId = 1 }
             };
 
             // Act

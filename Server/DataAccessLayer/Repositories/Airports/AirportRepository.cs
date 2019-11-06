@@ -52,7 +52,7 @@ namespace DataAccessLayer.Repositories.Airports
             return airports.ToList();
         }
 
-        public async Task<AirportEntity> GetAsync(int id)
+        public async Task<AirportEntity> GetByIdAsync(int id)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
@@ -62,7 +62,7 @@ namespace DataAccessLayer.Repositories.Airports
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<IReadOnlyCollection<AirportEntity>> GetByNameAsync(string nameFilter)
+        public async Task<IReadOnlyCollection<AirportEntity>> SearchByNameAsync(string nameFilter)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 

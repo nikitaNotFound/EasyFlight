@@ -39,7 +39,7 @@ namespace WebAPI.Controllers
 
             if (!string.IsNullOrEmpty(nameFilter))
             {
-                airportsBl = await _airportService.GetByNameAsync(nameFilter);
+                airportsBl = await _airportService.SearchByNameAsync(nameFilter);
             }
             else
             {

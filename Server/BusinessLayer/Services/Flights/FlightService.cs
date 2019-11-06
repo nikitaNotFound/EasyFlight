@@ -1,7 +1,11 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using BusinessLayer.Models;
+using DataAccessLayer.Models;
+using DataAccessLayer.Repositories.Airplanes;
+using DataAccessLayer.Repositories.Airports;
 using DataAccessLayer.Repositories.Flights;
 
 namespace BusinessLayer.Services.Flights
@@ -10,53 +14,167 @@ namespace BusinessLayer.Services.Flights
     {
         private readonly IMapper _mapper;
         private readonly IFlightRepository _flightRepository;
+        private readonly IAirportRepository _airportRepository;
+        private readonly IAirplaneRepository _airplaneRepository;
 
 
-        public FlightService(IMapper mapper, IFlightRepository flightRepository)
+        public FlightService(
+            IMapper mapper,
+            IFlightRepository flightRepository,
+            IAirportRepository airportRepository,
+            IAirplaneRepository airplaneRepository
+        )
         {
             _mapper = mapper;
             _flightRepository = flightRepository;
+            _airportRepository = airportRepository;
+            _airplaneRepository = airplaneRepository;
         }
 
 
-        public Task<IReadOnlyCollection<Flight>> GetAllAsync()
+        public async Task<IReadOnlyCollection<Flight>> GetAllAsync()
         {
-            throw new System.NotImplementedException();
+            IReadOnlyCollection<FlightEntity> flightsDal = await _flightRepository.GetAllAsync();
+
+            IReadOnlyCollection<Flight> flights = flightsDal.Select(_mapper.Map<Flight>).ToList();
+
+            return flights;
         }
 
-        public Task<Flight> GetByIdAsync(int id)
+        public async Task<Flight> GetByIdAsync(int id)
         {
-            throw new System.NotImplementedException();
+            FlightEntity flightDal = await _flightRepository.GetByIdAsync(id);
+
+            Flight flight = _mapper.Map<Flight>(flightDal);
+
+            return flight;
         }
 
-        public Task<AddResult> AddAsync(Flight flight)
+        public async Task<AddResult> AddAsync(Flight flight)
         {
-            throw new System.NotImplementedException();
+            FlightEntity flightDal = _mapper.Map<FlightEntity>(flight);
+
+            AirportEntity toAirport = await _airportRepository.GetByIdAsync(flightDal.ToAirportId);
+            AirportEntity fromAirport = await _airportRepository.GetByIdAsync(flightDal.FromAirportId);
+
+            if (toAirport == null || fromAirport == null)
+            {
+                return new AddResult(ResultTypes.NotFound, null);
+            }
+
+            AirplaneEntity airplane = await _airplaneRepository.GetByIdAsync(flightDal.AirplaneId);
+
+            if (airplane == null)
+            {
+                return new AddResult(ResultTypes.NotFound, null);
+            }
+
+            int addedFlightId = await _flightRepository.AddAsync(flightDal);
+
+            return new AddResult(ResultTypes.Ok, addedFlightId);
         }
 
-        public Task<ResultTypes> UpdateAsync(Flight newFlight)
+        public async Task<ResultTypes> UpdateAsync(Flight newFlight)
         {
-            throw new System.NotImplementedException();
+            FlightEntity flightDal = _mapper.Map<FlightEntity>(newFlight);
+
+            AirportEntity toAirport = await _airportRepository.GetByIdAsync(flightDal.ToAirportId);
+            AirportEntity fromAirport = await _airportRepository.GetByIdAsync(flightDal.FromAirportId);
+
+            if (toAirport == null || fromAirport == null)
+            {
+                return ResultTypes.NotFound;
+            }
+
+            AirplaneEntity airplane = await _airplaneRepository.GetByIdAsync(flightDal.AirplaneId);
+
+            if (airplane == null)
+            {
+                return ResultTypes.NotFound;
+            }
+
+            int addedFlightId = await _flightRepository.AddAsync(flightDal);
+
+            return ResultTypes.Ok;
         }
 
-        public Task<IReadOnlyCollection<Flight>> SearchFlightsAsync(FlightFilter filter)
+        public async Task<IReadOnlyCollection<Flight>> SearchFlightsAsync(FlightFilter filter)
         {
-            throw new System.NotImplementedException();
+            FlightFilterEntity filterDal = _mapper.Map<FlightFilterEntity>(filter);
+
+            IReadOnlyCollection<FlightEntity> flightsDal = await _flightRepository.SearchFlightsAsync(filterDal);
+
+            return flightsDal.Select(_mapper.Map<Flight>).ToList();
         }
 
-        public Task<IReadOnlyCollection<FlightSeatTypeCost>> GetFlightSeatTypesCost(int airplaneId)
+        public async Task<IReadOnlyCollection<FlightSeatTypeCost>> GetFlightSeatTypesCost(int airplaneId)
         {
-            throw new System.NotImplementedException();
+            IReadOnlyCollection<FlightSeatTypeCostEntity> flightsDal =
+                await _flightRepository.GetFlightSeatTypesCost(airplaneId);
+
+            return flightsDal.Select(_mapper.Map<FlightSeatTypeCost>).ToList();
         }
 
-        public Task<AddResult> AddFlightSeatTypeCostAsync(FlightSeatTypeCost seatTypeCost)
+        public async Task<AddResult> AddFlightSeatTypeCostAsync(FlightSeatTypeCost seatTypeCost)
         {
-            throw new System.NotImplementedException();
+            FlightSeatTypeCostEntity seatTypeCostDal = _mapper.Map<FlightSeatTypeCostEntity>(seatTypeCost);
+
+            FlightEntity flight = await _flightRepository.GetByIdAsync(seatTypeCostDal.FlightId);
+
+            if (flight == null)
+            {
+                return new AddResult(ResultTypes.NotFound, null);
+            }
+
+            AirplaneSeatTypeEntity seatType =
+                await _airplaneRepository.GetAirplaneSeatTypeById(seatTypeCostDal.SeatTypeId);
+
+            if (seatType == null)
+            {
+                return new AddResult(ResultTypes.NotFound, null);
+            }
+
+            bool duplicate = await _flightRepository.CheckFlightSeatTypeCostDuplicateAsync(seatTypeCostDal);
+
+            if (duplicate)
+            {
+                return new AddResult(ResultTypes.Duplicate, null);
+            }
+
+            int addedSeatTypeCostId = await _flightRepository.AddFlightSeatTypeCost(seatTypeCostDal);
+
+            return new AddResult(ResultTypes.Ok, addedSeatTypeCostId);
         }
 
-        public Task<ResultTypes> UpdateFlightSeatTypeCostAsync(FlightSeatTypeCost newSeatTypeCost)
+        public async Task<ResultTypes> UpdateFlightSeatTypeCostAsync(FlightSeatTypeCost newSeatTypeCost)
         {
-            throw new System.NotImplementedException();
+            FlightSeatTypeCostEntity seatTypeCostDal = _mapper.Map<FlightSeatTypeCostEntity>(newSeatTypeCost);
+
+            FlightEntity flight = await _flightRepository.GetByIdAsync(seatTypeCostDal.FlightId);
+
+            if (flight == null)
+            {
+                return ResultTypes.NotFound;
+            }
+
+            AirplaneSeatTypeEntity seatType =
+                await _airplaneRepository.GetAirplaneSeatTypeById(seatTypeCostDal.SeatTypeId);
+
+            if (seatType == null)
+            {
+                return ResultTypes.NotFound;
+            }
+
+            bool duplicate = await _flightRepository.CheckFlightSeatTypeCostDuplicateAsync(seatTypeCostDal);
+
+            if (duplicate)
+            {
+                return ResultTypes.Duplicate;
+            }
+
+            int addedSeatTypeCostId = await _flightRepository.AddFlightSeatTypeCost(seatTypeCostDal);
+
+            return ResultTypes.Ok;
         }
     }
 }

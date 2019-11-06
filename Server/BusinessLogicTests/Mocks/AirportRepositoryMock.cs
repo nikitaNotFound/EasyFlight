@@ -20,12 +20,12 @@ namespace BusinessLogicTests.Mocks
             return _airportsData;
         }
 
-        public async Task<AirportEntity> GetAsync(int id)
+        public async Task<AirportEntity> GetByIdAsync(int id)
         {
             return _airportsData.FirstOrDefault(x => x.Id == id);
         }
 
-        public async Task<IReadOnlyCollection<AirportEntity>> GetByNameAsync(string nameFilter)
+        public async Task<IReadOnlyCollection<AirportEntity>> SearchByNameAsync(string nameFilter)
         {
             return _airportsData;
         }

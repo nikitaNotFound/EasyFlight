@@ -9,8 +9,8 @@ namespace DataAccessLayer.Repositories.Airports
     public interface IAirportRepository
     {
         Task<IReadOnlyCollection<AirportEntity>> GetAllAsync();
-        Task<AirportEntity> GetAsync(int id);
-        Task<IReadOnlyCollection<AirportEntity>> GetByNameAsync(string nameFilter);
+        Task<AirportEntity> GetByIdAsync(int id);
+        Task<IReadOnlyCollection<AirportEntity>> SearchByNameAsync(string nameFilter);
         Task<int> AddAsync(AirportEntity item);
         Task UpdateAsync(AirportEntity item);
         Task<bool> CheckDuplicateAsync(AirportEntity item);
