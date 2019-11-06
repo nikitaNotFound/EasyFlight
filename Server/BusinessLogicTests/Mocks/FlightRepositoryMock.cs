@@ -84,17 +84,17 @@ namespace BusinessLogicTests.Mocks
             return _flightData;
         }
 
-        public async Task<IReadOnlyCollection<FlightSeatTypeCostEntity>> GetFlightSeatTypesCost(int flightId)
+        public async Task<IReadOnlyCollection<FlightSeatTypeCostEntity>> GetFlightSeatTypesCostAsync(int flightId)
         {
             return _flightSeatTypeCostData.Select(x => x).Where(x => x.FlightId == flightId).ToList();
         }
 
-        public async Task<int> AddFlightSeatTypeCost(FlightSeatTypeCostEntity seatTypeCost)
+        public async Task<int> AddFlightSeatTypeCostAsync(FlightSeatTypeCostEntity seatTypeCost)
         {
             return 0;
         }
 
-        public async Task UpdateFlightSeatTypeCost(FlightSeatTypeCostEntity seatTypeCost)
+        public async Task UpdateFlightSeatTypeCostAsync(FlightSeatTypeCostEntity seatTypeCost)
         {
             // implementation
         }

@@ -9,11 +9,13 @@ import TicketsCostEditor from './tickets-cost-editor';
 import Flight from '../../../../services/flight-models/flight';
 import ParamFiled from './param-field';
 
-import { invalidInput, defaultErrorMessage } from '../../../common/message-box-messages';
+import { invalidInput, defaultErrorMessage, added } from '../../../common/message-box-messages';
 import ConfirmActionButton from '../../../common/confirm-action-button';
 
 import * as AirportService from '../../../../services/AirportService';
 import * as AirplaneService from '../../../../services/AirplaneService';
+import * as FlightService from '../../../../services/FlightService';
+import { BadRequestError } from '../../../../services/RequestErrors';
 
 export default function Add() {
     const [airplane, changeAirplane] = useState();
@@ -35,15 +37,18 @@ export default function Add() {
     const [carryonMass, changeCarryonMass] = useState(0);
     const [carryonCount, changeCarryonCount] = useState(0);
 
+    const [overloadKgCost, changeOverloadKgCost] = useState(0);
+
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
-    function onDataSave() {
+    async function onDataSave() {
         if (!departureDate
             || !departureTime
             || !fromAirport
             || !toAirport
             || !airplane
             || !ticketsCost
+            || !overloadKgCost
         ) {
             changeMessageBoxValue(invalidInput());
             return;
@@ -62,14 +67,24 @@ export default function Add() {
             arrivalDateTime,
             departureDateTime,
             airplane.id,
-            null,
             suitcaseMass,
             suitcaseCount,
             carryonMass,
-            carryonCount
+            carryonCount,
+            overloadKgCost
         );
 
-        console.log(newFlight);
+        try {
+            const addedFlightId = await FlightService.add(newFlight)
+
+            const ticketCostAddPromises = ticketsCost.map(ticketCost => FlightService.addTicketCost(addedFlightId.id, ticketCost));
+
+            await Promise.all([...ticketCostAddPromises]);
+
+            changeMessageBoxValue(added());
+        } catch {
+            changeMessageBoxValue(defaultErrorMessage());
+        }
     }
 
     function getAirplaneName(airplane) {
@@ -198,6 +213,16 @@ export default function Add() {
                                             name="Carryon count"
                                             value={carryonCount}
                                             onChange={changeCarryonCount}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="adding-form-section">
+                                    <div className="row">
+                                        <ParamFiled
+                                            name="Overload kg cost"
+                                            value={overloadKgCost}
+                                            onChange={changeOverloadKgCost}
                                         />
                                     </div>
                                 </div>

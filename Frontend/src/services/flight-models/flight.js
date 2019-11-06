@@ -1,27 +1,27 @@
 export default class Flight {
      id;
-     fromId;
-     toId;
-     departureTimeDate;
-     arrivalTimeDate;
+     fromAirportId;
+     toAirportId;
+     departureTime;
+     arrivalTime;
      airplaneId;
-     ticketsLeft;
-     suitcaseMass;
+     suitcaseMassKg;
      suitcaseCount;
-     carryonMass;
+     carryonMassKg;
      carryonCount;
+     massOverloadKgCost;
 
-     constructor (id, fromId, toId, departureTimeDate, arrivalTimeDate, airplaneId, ticketsLeft, suitcaseMass, suitcaseCount, carryonMass, carryonCount) {
+     constructor (id, fromAirportId, toAirportId, departureTime, arrivalTime, airplaneId, suitcaseMassKg, suitcaseCount, carryonMassKg, carryonCount, massOverloadKgCost) {
          this.id = id;
-         this.fromId = fromId;
-         this.toId = toId;
-         this.departureTimeDate = departureTimeDate;
-         this.arrivalTimeDate = arrivalTimeDate;
+         this.fromAirportId = fromAirportId;
+         this.toAirportId = toAirportId;
+         this.departureTime = departureTime;
+         this.arrivalTime = arrivalTime;
          this.airplaneId = airplaneId;
-         this.ticketsLeft = ticketsLeft;
-         this.suitcaseMass = suitcaseMass;
+         this.suitcaseMassKg = suitcaseMassKg;
          this.suitcaseCount = suitcaseCount;
-         this.carryonMass = carryonMass;
+         this.carryonMassKg = carryonMassKg;
          this.carryonCount = carryonCount;
+         this.massOverloadKgCost = massOverloadKgCost;
      }
 }

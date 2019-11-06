@@ -30,7 +30,7 @@ function Content(props) {
                 if (userFlights.length > 0) {
                     let storage = userFlights.map(flight => flight.flightId);
 
-                    return FlightService.getByIds(storage);
+                    return FlightService.getById(1);
                 }
             })
             .then(flights => {

@@ -36,7 +36,7 @@ namespace DataAccessLayer.Repositories.Flights
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             return await db.QuerySingleOrDefaultAsync<FlightEntity>(
-                "GetAllFlights",
+                "GetFlightById",
                 new { Id = id },
                 commandType: CommandType.StoredProcedure);
         }
@@ -97,7 +97,7 @@ namespace DataAccessLayer.Repositories.Flights
             return flights.ToList();
         }
 
-        public async Task<IReadOnlyCollection<FlightSeatTypeCostEntity>> GetFlightSeatTypesCost(int flightId)
+        public async Task<IReadOnlyCollection<FlightSeatTypeCostEntity>> GetFlightSeatTypesCostAsync(int flightId)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
@@ -109,7 +109,7 @@ namespace DataAccessLayer.Repositories.Flights
             return flights.ToList();
         }
 
-        public async Task<int> AddFlightSeatTypeCost(FlightSeatTypeCostEntity seatTypeCost)
+        public async Task<int> AddFlightSeatTypeCostAsync(FlightSeatTypeCostEntity seatTypeCost)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
@@ -124,7 +124,7 @@ namespace DataAccessLayer.Repositories.Flights
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task UpdateFlightSeatTypeCost(FlightSeatTypeCostEntity seatTypeCost)
+        public async Task UpdateFlightSeatTypeCostAsync(FlightSeatTypeCostEntity seatTypeCost)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 

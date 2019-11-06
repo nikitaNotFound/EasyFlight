@@ -11,9 +11,9 @@ namespace DataAccessLayer.Repositories.Flights
         Task<int> AddAsync(FlightEntity flight);
         Task UpdateAsync(FlightEntity newFlight);
         Task<IReadOnlyCollection<FlightEntity>> SearchFlightsAsync(FlightFilterEntity filter);
-        Task<IReadOnlyCollection<FlightSeatTypeCostEntity>> GetFlightSeatTypesCost(int flightId);
-        Task<int> AddFlightSeatTypeCost(FlightSeatTypeCostEntity seatTypeCost);
-        Task UpdateFlightSeatTypeCost(FlightSeatTypeCostEntity seatTypeCost);
+        Task<IReadOnlyCollection<FlightSeatTypeCostEntity>> GetFlightSeatTypesCostAsync(int flightId);
+        Task<int> AddFlightSeatTypeCostAsync(FlightSeatTypeCostEntity seatTypeCost);
+        Task UpdateFlightSeatTypeCostAsync(FlightSeatTypeCostEntity seatTypeCost);
         Task<bool> CheckFlightSeatTypeCostDuplicateAsync(FlightSeatTypeCostEntity seatTypeCost);
     }
 }

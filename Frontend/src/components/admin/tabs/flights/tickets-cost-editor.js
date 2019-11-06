@@ -21,7 +21,7 @@ export default function TicketsCostEditor(props) {
                 let newCostInfo = types.map(
                     (seatType, index) =>
                         //cost setted as 0, because 0 is start value of each seat type' ticket
-                        new TicketCost(index + 1, seatType.id, 0)
+                        new TicketCost(null, seatType.id, 0)
                 );
                 changeCostInfo(newCostInfo);
             }

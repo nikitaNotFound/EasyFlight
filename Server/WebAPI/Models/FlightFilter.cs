@@ -11,6 +11,7 @@ namespace WebAPI.Models
         public int? ToCityId { get; set; }
         public DateTimeOffset? DepartureTime { get; set; }
         public DateTimeOffset? ArrivalTime { get; set; }
+        public int? TicketCount { get; set; }
         public bool SearchFlightsBack { get; set; }
 
 
@@ -22,6 +23,7 @@ namespace WebAPI.Models
             int? toCityId,
             DateTimeOffset? departureTime,
             DateTimeOffset? arrivalTime,
+            int? ticketCount,
             bool searchFlightsBack
         )
         {
@@ -32,6 +34,7 @@ namespace WebAPI.Models
             ToCityId = toCityId;
             DepartureTime = departureTime;
             ArrivalTime = arrivalTime;
+            TicketCount = ticketCount;
             SearchFlightsBack = searchFlightsBack;
         }
     }

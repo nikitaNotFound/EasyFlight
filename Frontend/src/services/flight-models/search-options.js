@@ -1,26 +1,24 @@
 class SearchOptions {
-    fromAirport;
-    toAirport;
-    fromCity;
-    toCity;
-    departureDate;
-    departureBackDate;
+    nameFilter;
+    fromAirportId;
+    toAirportId;
+    fromCityId;
+    toCityId;
+    departureTime;
+    arrivalTime;
     ticketCount;
-    searchToAndBack;
-    fromCountry;
-    toCountry;
+    searchBack;
 
-    constructor(fromAirport, toAirport, fromCity, toCity, departureDate, departureBackDate, ticketCount, searchToAndBack, fromCountry, toCountry) {
-        this.fromAirport = fromAirport;
-        this.toAirport = toAirport;
-        this.fromCity = fromCity;
-        this.toCity = toCity;
-        this.departureDate = departureDate;
-        this.departureBackDate = departureBackDate;
+    constructor(nameFilter, fromAirport, toAirport, fromCity, toCity, departureTime, arrivalTime, ticketCount, searchBack) {
+        this.nameFilter = nameFilter;
+        this.fromAirportId = fromAirport;
+        this.toAirportId = toAirport;
+        this.fromCityId = fromCity;
+        this.toCityId = toCity;
+        this.departureTime = departureTime;
+        this.arrivalTime = arrivalTime;
+        this.searchBack = searchBack;
         this.ticketCount = ticketCount;
-        this.searchToAndBack = searchToAndBack;
-        this.fromCountry = fromCountry;
-        this.toCountry = toCountry;
     }
 }
 

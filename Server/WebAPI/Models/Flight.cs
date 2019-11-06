@@ -4,7 +4,7 @@ namespace WebAPI.Models
 {
     public class Flight
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public int FromAirportId { get; set; }
         public int ToAirportId { get; set; }
         public DateTimeOffset DepartureTime { get; set; }

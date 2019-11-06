@@ -34,7 +34,8 @@ namespace WebAPI.Controllers
 
 
         // GET api/flights
-        // {?nameFilter}{?fromAirportId}{?toAirportId}{?fromCityId}{?toCityId}{?departureTime}{?arrivalTime}{?searchBack}
+        // {?nameFilter}{?fromAirportId}{?toAirportId}{?fromCityId}{?toCityId}
+        // {?departureTime}{?arrivalTime}{?ticketCount}{?searchBack}
         [HttpGet]
         public async Task<IActionResult> GetAsync(
             string nameFilter,
@@ -44,6 +45,7 @@ namespace WebAPI.Controllers
             int? toCityId,
             DateTimeOffset? departureTime,
             DateTimeOffset? arrivalTime,
+            int? ticketCount,
             bool searchBack
         )
         {
@@ -66,6 +68,7 @@ namespace WebAPI.Controllers
                     toCityId,
                     departureTime,
                     arrivalTime,
+                    ticketCount,
                     searchBack
                 );
 
@@ -157,10 +160,14 @@ namespace WebAPI.Controllers
         // POST api/flights/{id}/seat-types-cost
         [HttpPost]
         [Authorize(Roles = nameof(AccountRole.Admin))]
-        [Route("{id}/seat-types-cost")]
-        public async Task<IActionResult> AddFlightSeatTypeCostAsync([FromBody] FlightSeatTypeCost seatTypeCost)
+        [Route("{flightId}/seat-types-cost")]
+        public async Task<IActionResult> AddFlightSeatTypeCostAsync(
+            int flightId,
+            [FromBody] FlightSeatTypeCost seatTypeCost
+        )
         {
             BlFlightSeatTypeCost seatTypeCostBl = _mapper.Map<BlFlightSeatTypeCost>(seatTypeCost);
+            seatTypeCostBl.FlightId = flightId;
 
             AddResult addResult = await _flightService.AddFlightSeatTypeCostAsync(seatTypeCostBl);
 
@@ -179,9 +186,13 @@ namespace WebAPI.Controllers
         [HttpPut]
         [Authorize(Roles = nameof(AccountRole.Admin))]
         [Route("{id}/seat-types-cost")]
-        public async Task<IActionResult> UpdateFlightSeatTypeCostAsync([FromBody] FlightSeatTypeCost seatTypeCost)
+        public async Task<IActionResult> UpdateFlightSeatTypeCostAsync(
+            int flightId,
+            [FromBody] FlightSeatTypeCost seatTypeCost
+        )
         {
             BlFlightSeatTypeCost seatTypeCostBl = _mapper.Map<BlFlightSeatTypeCost>(seatTypeCost);
+            seatTypeCostBl.FlightId = flightId;
 
             ResultTypes addResult = await _flightService.UpdateFlightSeatTypeCostAsync(seatTypeCostBl);
 

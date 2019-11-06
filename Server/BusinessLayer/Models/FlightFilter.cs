@@ -11,6 +11,7 @@ namespace BusinessLayer.Models
         public int? ToCityId { get; set; }
         public DateTimeOffset? DepartureTime { get; set; }
         public DateTimeOffset? ArrivalTime { get; set; }
+        public int? TicketCount { get; set; }
         public bool SearchFlightsBack { get; set; }
     }
 }
