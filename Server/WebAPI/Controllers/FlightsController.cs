@@ -101,7 +101,7 @@ namespace WebAPI.Controllers
         }
 
         // POST api/flights
-        [HttpGet]
+        [HttpPost]
         [Authorize(Roles = nameof(AccountRole.Admin))]
         public async Task<IActionResult> AddAsync([FromBody] Flight flight)
         {
@@ -122,7 +122,7 @@ namespace WebAPI.Controllers
 
         // PUT api/flights
         [Authorize(Roles = nameof(AccountRole.Admin))]
-        [HttpGet]
+        [HttpPut]
         public async Task<IActionResult> UpdateAsync([FromBody] Flight flight)
         {
             BlFlight flightBl = _mapper.Map<BlFlight>(flight);
@@ -155,7 +155,7 @@ namespace WebAPI.Controllers
         }
 
         // POST api/flights/{id}/seat-types-cost
-        [HttpGet]
+        [HttpPost]
         [Authorize(Roles = nameof(AccountRole.Admin))]
         [Route("{id}/seat-types-cost")]
         public async Task<IActionResult> AddFlightSeatTypeCostAsync([FromBody] FlightSeatTypeCost seatTypeCost)
@@ -176,7 +176,7 @@ namespace WebAPI.Controllers
         }
 
         // PUT api/flights/{id}/seat-types-cost
-        [HttpGet]
+        [HttpPut]
         [Authorize(Roles = nameof(AccountRole.Admin))]
         [Route("{id}/seat-types-cost")]
         public async Task<IActionResult> UpdateFlightSeatTypeCostAsync([FromBody] FlightSeatTypeCost seatTypeCost)
