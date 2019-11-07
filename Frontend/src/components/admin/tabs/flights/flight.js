@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropsTypes from 'prop-types';
 
+import moment from 'moment';
+
 import FlightHeadline from './flight-headline';
 import Spinner from '../../../common/spinner';
 import EditButton from '../../../common/edit-button';
@@ -21,8 +23,8 @@ function Flight(props) {
     const [toCountry, changeToCountry] = useState();
 
     useEffect(() => {
-        const fromAirportLoading = AirportService.getById(props.flight.fromId);
-        const toAirportLoading = AirportService.getById(props.flight.toId);
+        const fromAirportLoading = AirportService.getById(props.flight.fromAirportId);
+        const toAirportLoading = AirportService.getById(props.flight.toAirportId);
 
         Promise.all([fromAirportLoading, toAirportLoading])
             .then(airports => {
@@ -55,28 +57,35 @@ function Flight(props) {
                 changeLoading(false);
             })
             .catch();
-    }, [props.flight]);
+    }, [props.flight.fromAirportId, props.flight.toAirportId]);
 
     if (loading) {
         return <Spinner headline="Loading..." />;
     }
 
     return (
-        <div className="row rounded list-item">
-            <div className="col-lg-2 col-sm-3">
-                <img src="" className="list-item-img" alt="airport" />
+        <div className="rounded list-item">
+            <div className="row">
+                <div className="col-lg-11 col-sm-12">
+                    <FlightHeadline
+                        from={`${fromAirport.name} (${fromCity.name}, ${fromCountry.name})`}
+                        to={`${toAirport.name} (${toCity.name}, ${toCountry.name})`}
+                    />
+                    {props.flight.desc}
+                </div>
+
+                <div className="col-lg-1 col-sm-12">
+                    <EditButton categoty="flights" editingItemId={props.flight.id}/>
+                </div>
             </div>
 
-            <div className="col-lg-9 col-sm-9">
-                <FlightHeadline
-                    from={`${fromAirport.name} (${fromCity.name}, ${fromCountry.name})`}
-                    to={`${toAirport.name} (${toCity.name}, ${toCountry.name})`}
-                />
-                {props.flight.desc}
-            </div>
-
-            <div className="col-lg-1 col-sm-12">
-                <EditButton categoty="flights" editingItemId={props.flight.id}/>
+            <div className="row">
+                <div className="col-6">
+                    {moment(props.flight.departureTime).format('LLL')}
+                </div>
+                <div className="col-6">
+                    {moment(props.flight.arrivalTime).format('LLL')}
+                </div>
             </div>
         </div>
     );

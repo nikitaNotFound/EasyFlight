@@ -89,9 +89,9 @@ namespace BusinessLogicTests.Mocks
             return _flightSeatTypeCostData.Select(x => x).Where(x => x.FlightId == flightId).ToList();
         }
 
-        public async Task<int> AddFlightSeatTypeCostAsync(FlightSeatTypeCostEntity seatTypeCost)
+        public async Task AddFlightSeatTypeCostAsync(FlightSeatTypeCostEntity seatTypeCost)
         {
-            return 0;
+            // implementation
         }
 
         public async Task UpdateFlightSeatTypeCostAsync(FlightSeatTypeCostEntity seatTypeCost)

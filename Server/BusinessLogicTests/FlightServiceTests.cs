@@ -52,10 +52,10 @@ namespace BusinessLogicTests
             );
 
             // Act
-            AddResult addResult = await flightService.AddFlightSeatTypeCostAsync(seatTypeCost);
+            ResultTypes addResult = await flightService.AddFlightSeatTypeCostAsync(seatTypeCost);
 
             // Assert
-            Assert.AreEqual(ResultTypes.Ok, addResult.ResultType);
+            Assert.AreEqual(ResultTypes.Ok, addResult);
         }
 
         [TestMethod]
@@ -76,10 +76,10 @@ namespace BusinessLogicTests
             );
 
             // Act
-            AddResult addResult = await flightService.AddFlightSeatTypeCostAsync(seatTypeCost);
+            ResultTypes addResult = await flightService.AddFlightSeatTypeCostAsync(seatTypeCost);
 
             // Assert
-            Assert.AreEqual(ResultTypes.NotFound, addResult.ResultType);
+            Assert.AreEqual(ResultTypes.NotFound, addResult);
         }
 
         [TestMethod]
@@ -100,10 +100,10 @@ namespace BusinessLogicTests
             );
 
             // Act
-            AddResult addResult = await flightService.AddFlightSeatTypeCostAsync(seatTypeCost);
+            ResultTypes addResult = await flightService.AddFlightSeatTypeCostAsync(seatTypeCost);
 
             // Assert
-            Assert.AreEqual(ResultTypes.NotFound, addResult.ResultType);
+            Assert.AreEqual(ResultTypes.NotFound, addResult);
         }
 
         [TestMethod]
@@ -124,10 +124,10 @@ namespace BusinessLogicTests
             );
 
             // Act
-            AddResult addResult = await flightService.AddFlightSeatTypeCostAsync(seatTypeCost);
+            ResultTypes addResult = await flightService.AddFlightSeatTypeCostAsync(seatTypeCost);
 
             // Assert
-            Assert.AreEqual(ResultTypes.Duplicate, addResult.ResultType);
+            Assert.AreEqual(ResultTypes.Duplicate, addResult);
         }
 
         [TestMethod]

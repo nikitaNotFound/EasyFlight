@@ -67,7 +67,7 @@ export async function addTicketCost(flightId, ticketCost) {
         }
     );
 
-    return await createRequestResult(response, RequestTypes.ContentExpected);
+    return await createRequestResult(response, RequestTypes.NoContentExpected);
 }
 
 export async function updateTicketCost(flightId, ticketCost) {
@@ -94,8 +94,8 @@ export async function searchWithParams(filter, searchByName) {
             toAirportId,
             fromCityId,
             toCityId,
-            departureTime,
-            arrivalTime,
+            departureDate,
+            arrivalDate,
             ticketsCount,
             searchBack
         } = filter;
@@ -108,31 +108,31 @@ export async function searchWithParams(filter, searchByName) {
     }
 
     if (fromAirportId) {
-        parameteres += `fromAirportId=${fromAirportId}`;
+        parameteres += `fromAirportId=${fromAirportId}&`;
     }
 
     if (toAirportId) {
-        parameteres += `toAirportId=${toAirportId}`;
+        parameteres += `toAirportId=${toAirportId}&`;
     }
 
     if (fromCityId) {
-        parameteres += `fromCityId=${fromCityId}`;
+        parameteres += `fromCityId=${fromCityId}&`;
     }
 
     if (toCityId) {
-        parameteres += `toAirportId=${toAirportId}`;
+        parameteres += `toCityId=${toCityId}&`;
     }
 
-    if (departureTime) {
-        parameteres += `departureTime=${departureTime}`;
+    if (departureDate) {
+        parameteres += `departureTime=${departureDate}&`;
     }
 
-    if (arrivalTime) {
-        parameteres += `arrivalTime=${arrivalTime}`;
+    if (arrivalDate) {
+        parameteres += `arrivalTime=${arrivalDate}&`;
     }
 
     if (ticketsCount) {
-        parameteres += `ticketsCount=${ticketsCount}`;
+        parameteres += `ticketsCount=${ticketsCount}&`;
     }
 
     if (searchBack === true) {

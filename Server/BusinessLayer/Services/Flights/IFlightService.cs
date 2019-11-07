@@ -12,7 +12,7 @@ namespace BusinessLayer.Services.Flights
         Task<ResultTypes> UpdateAsync(Flight newFlight);
         Task<IReadOnlyCollection<Flight>> SearchFlightsAsync(FlightFilter filter);
         Task<IReadOnlyCollection<FlightSeatTypeCost>> GetFlightSeatTypesCost(int airplaneId);
-        Task<AddResult> AddFlightSeatTypeCostAsync(FlightSeatTypeCost seatTypeCost);
+        Task<ResultTypes> AddFlightSeatTypeCostAsync(FlightSeatTypeCost seatTypeCost);
         Task<ResultTypes> UpdateFlightSeatTypeCostAsync(FlightSeatTypeCost newSeatTypeCost);
     }
 }

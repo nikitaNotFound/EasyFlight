@@ -82,7 +82,8 @@ export default function Add() {
             await Promise.all([...ticketCostAddPromises]);
 
             changeMessageBoxValue(added());
-        } catch {
+        } catch(ex) {
+            console.log(ex)
             changeMessageBoxValue(defaultErrorMessage());
         }
     }

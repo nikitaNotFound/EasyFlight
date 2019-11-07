@@ -34,25 +34,23 @@ namespace WebAPI.Controllers
 
 
         // GET api/flights
-        // {?nameFilter}{?fromAirportId}{?toAirportId}{?fromCityId}{?toCityId}
+        // {?fromAirportId}{?toAirportId}{?fromCityId}{?toCityId}
         // {?departureTime}{?arrivalTime}{?ticketCount}{?searchBack}
         [HttpGet]
         public async Task<IActionResult> GetAsync(
-            string nameFilter,
             int? fromAirportId,
             int? toAirportId,
             int? fromCityId,
             int? toCityId,
-            DateTimeOffset? departureTime,
-            DateTimeOffset? arrivalTime,
+            DateTime? departureTime,
+            DateTime? arrivalTime,
             int? ticketCount,
             bool searchBack
         )
         {
             IReadOnlyCollection<BlFlight> flightsBl;
 
-            if (!string.IsNullOrEmpty(nameFilter)
-                || fromAirportId != null
+            if (fromAirportId != null
                 || toAirportId != null
                 || fromCityId != null
                 || toCityId != null
@@ -61,7 +59,6 @@ namespace WebAPI.Controllers
             )
             {
                 FlightFilter filter = new FlightFilter(
-                    nameFilter,
                     fromAirportId,
                     toAirportId,
                     fromCityId,
@@ -169,9 +166,9 @@ namespace WebAPI.Controllers
             BlFlightSeatTypeCost seatTypeCostBl = _mapper.Map<BlFlightSeatTypeCost>(seatTypeCost);
             seatTypeCostBl.FlightId = flightId;
 
-            AddResult addResult = await _flightService.AddFlightSeatTypeCostAsync(seatTypeCostBl);
+            ResultTypes addResult = await _flightService.AddFlightSeatTypeCostAsync(seatTypeCostBl);
 
-            switch (addResult.ResultType)
+            switch (addResult)
             {
                 case ResultTypes.NotFound:
                     return NotFound();
@@ -179,7 +176,7 @@ namespace WebAPI.Controllers
                     return BadRequest();
             }
 
-            return Ok(new { Id = addResult.ItemId });
+            return Ok();
         }
 
         // PUT api/flights/{id}/seat-types-cost

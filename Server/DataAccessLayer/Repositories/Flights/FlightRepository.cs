@@ -45,7 +45,7 @@ namespace DataAccessLayer.Repositories.Flights
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
-            return await db.ExecuteAsync(
+            return await db.QuerySingleOrDefaultAsync<int>(
                 "AddFlight",
                 new
                 {
@@ -91,7 +91,16 @@ namespace DataAccessLayer.Repositories.Flights
 
             IEnumerable<FlightEntity> flights = await db.QueryAsync<FlightEntity>(
                 "SearchFlights",
-                filter,
+                new
+                {
+                    FromAirportId = filter.FromAirportId,
+                    ToAirportId = filter.ToAirportId,
+                    FromCityId = filter.FromCityId,
+                    ToCityId = filter.ToCityId,
+                    DepartureDate = filter.DepartureDate?.Date,
+                    ArrivalDate = filter.ArrivalDate?.Date,
+                    TicketCount = filter.TicketCount
+                },
                 commandType: CommandType.StoredProcedure);
 
             return flights.ToList();
@@ -109,11 +118,11 @@ namespace DataAccessLayer.Repositories.Flights
             return flights.ToList();
         }
 
-        public async Task<int> AddFlightSeatTypeCostAsync(FlightSeatTypeCostEntity seatTypeCost)
+        public async Task AddFlightSeatTypeCostAsync(FlightSeatTypeCostEntity seatTypeCost)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
-            return await db.ExecuteAsync(
+            await db.QuerySingleOrDefaultAsync(
                 "AddFlightSeatTypeCost",
                 new
                 {
@@ -144,7 +153,7 @@ namespace DataAccessLayer.Repositories.Flights
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             return await db.ExecuteScalarAsync<bool>(
-                "CheckFlightSeatTypeDuplicate",
+                "CheckFlightSeatTypeCostDuplicate",
                 new
                 {
                     FlightId = seatTypeCost.FlightId,
