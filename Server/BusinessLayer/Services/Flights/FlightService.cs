@@ -179,7 +179,7 @@ namespace BusinessLayer.Services.Flights
             return flightsDal.Select(_mapper.Map<FlightSeatTypeCost>).ToList();
         }
 
-        public async Task<AddResult> AddFlightSeatTypeCostAsync(FlightSeatTypeCost seatTypeCost)
+        public async Task<ResultTypes> AddFlightSeatTypeCostAsync(FlightSeatTypeCost seatTypeCost)
         {
             FlightSeatTypeCostEntity seatTypeCostDal = _mapper.Map<FlightSeatTypeCostEntity>(seatTypeCost);
 
@@ -187,7 +187,7 @@ namespace BusinessLayer.Services.Flights
 
             if (flight == null)
             {
-                return new AddResult(ResultTypes.NotFound, null);
+                return ResultTypes.NotFound;
             }
 
             AirplaneSeatTypeEntity seatType =
@@ -195,19 +195,19 @@ namespace BusinessLayer.Services.Flights
 
             if (seatType == null)
             {
-                return new AddResult(ResultTypes.NotFound, null);
+                return ResultTypes.NotFound;
             }
 
             bool duplicate = await _flightRepository.CheckFlightSeatTypeCostDuplicateAsync(seatTypeCostDal);
 
             if (duplicate)
             {
-                return new AddResult(ResultTypes.Duplicate, null);
+                return ResultTypes.Duplicate;
             }
-
-            int addedSeatTypeCostId = await _flightRepository.AddFlightSeatTypeCostAsync(seatTypeCostDal);
-
-            return new AddResult(ResultTypes.Ok, addedSeatTypeCostId);
+            
+            await _flightRepository.AddFlightSeatTypeCostAsync(seatTypeCostDal);
+            
+            return ResultTypes.Ok;
         }
 
         public async Task<ResultTypes> UpdateFlightSeatTypeCostAsync(FlightSeatTypeCost newSeatTypeCost)
@@ -236,7 +236,7 @@ namespace BusinessLayer.Services.Flights
                 return ResultTypes.Duplicate;
             }
 
-            int addedSeatTypeCostId = await _flightRepository.AddFlightSeatTypeCostAsync(seatTypeCostDal);
+            await _flightRepository.AddFlightSeatTypeCostAsync(seatTypeCostDal);
 
             return ResultTypes.Ok;
         }
