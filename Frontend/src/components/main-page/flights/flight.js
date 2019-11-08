@@ -7,6 +7,7 @@ import * as AirportService from '../../../services/AirportService';
 import * as CityService from '../../../services/CityService';
 import * as CountryService from '../../../services/CountryService';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 
 function Flight(props) {
     const [loading, changeLoading] = useState(true);
@@ -20,8 +21,8 @@ function Flight(props) {
     const [toCountry, changeToCountry] = useState();
 
     useEffect(() => {
-        const fromAirportLoading = AirportService.getById(props.flight.fromId);
-        const toAirportLoading = AirportService.getById(props.flight.toId);
+        const fromAirportLoading = AirportService.getById(props.flight.fromAirportId);
+        const toAirportLoading = AirportService.getById(props.flight.toAirportId);
 
         Promise.all([fromAirportLoading, toAirportLoading])
             .then(airports => {
@@ -65,13 +66,7 @@ function Flight(props) {
 
     return (
         <div className="row list-item rounded">
-            <div className="col-sm-2" name="item-image">
-                <img
-                    src="icons/test-company-2.jpg"
-                    className="list-item-img" alt="company-icon"
-                />
-            </div>
-            <div className="col-sm-8" name="item-content">
+            <div className="col-sm-10" name="item-content">
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-6">
@@ -81,8 +76,17 @@ function Flight(props) {
                         </div>
                         <div className="col-6">
                             <h5>
-                                To: {`${toAirport.name}, (${toCity.name}, ${toCountry.name})`}
+                                To: {`${toAirport.name} (${toCity.name}, ${toCountry.name})`}
                             </h5>
+                        </div>
+                    </div>
+
+                    <div className="row">
+                        <div className="col-6">
+                            {moment(props.flight.departureTime).format('LLL')}
+                        </div>
+                        <div className="col-6">
+                            {moment(props.flight.arrivalTime).format('LLL')}
                         </div>
                     </div>
                 </div>
