@@ -231,7 +231,7 @@ export default function Add() {
 
                                 <div className="adding-form-section">
                                     <div className="row">
-                                        <ParamFiled
+                                        <ParamField
                                             name="Overload kg cost"
                                             value={overloadKgCost}
                                             onChange={changeOverloadKgCost}

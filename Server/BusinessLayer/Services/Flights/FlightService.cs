@@ -174,7 +174,7 @@ namespace BusinessLayer.Services.Flights
         public async Task<IReadOnlyCollection<FlightSeatTypeCost>> GetFlightSeatTypesCost(int airplaneId)
         {
             IReadOnlyCollection<FlightSeatTypeCostEntity> flightsDal =
-                await _flightRepository.GetFlightSeatTypesCostAsync(airplaneId);
+                await _flightRepository.GetFlightSeatTypesCostAsync(flightId);
 
             return flightsDal.Select(_mapper.Map<FlightSeatTypeCost>).ToList();
         }
@@ -204,9 +204,9 @@ namespace BusinessLayer.Services.Flights
             {
                 return ResultTypes.Duplicate;
             }
-            
+
             await _flightRepository.AddFlightSeatTypeCostAsync(seatTypeCostDal);
-            
+
             return ResultTypes.Ok;
         }
 
@@ -229,14 +229,7 @@ namespace BusinessLayer.Services.Flights
                 return ResultTypes.NotFound;
             }
 
-            bool duplicate = await _flightRepository.CheckFlightSeatTypeCostDuplicateAsync(seatTypeCostDal);
-
-            if (duplicate)
-            {
-                return ResultTypes.Duplicate;
-            }
-
-            await _flightRepository.AddFlightSeatTypeCostAsync(seatTypeCostDal);
+            await _flightRepository.UpdateFlightSeatTypeCostAsync(seatTypeCostDal);
 
             return ResultTypes.Ok;
         }
