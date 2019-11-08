@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BusinessLayer.Models;
+using Common;
 using DataAccessLayer.Models;
 using DataAccessLayer.Repositories.Flights;
 
@@ -57,6 +58,32 @@ namespace BusinessLogicTests.Mocks
         private readonly List<FlightSeatTypeCostEntity> _flightSeatTypeCostData = new List<FlightSeatTypeCostEntity>()
         {
             new FlightSeatTypeCostEntity() { FlightId = 2, SeatTypeId = 1, Cost = 400 }
+        };
+
+        private readonly List<FlightSeatInfo> _flightSeatInfo = new List<FlightSeatInfo>()
+        {
+            new FlightSeatInfo()
+            {
+                AccountId = 1,
+                BookType = BookType.AwaitingPayment,
+                FlightId = 1,
+                BookTime = new DateTimeOffset(
+                    new DateTime(2019, 11, 8, 20, 30, 0),
+                    new TimeSpan(3, 0, 0)
+                ),
+                SeatId = 23
+            },
+            new FlightSeatInfo()
+            {
+                AccountId = 1,
+                BookType = BookType.Payed,
+                FlightId = 2,
+                BookTime = new DateTimeOffset(
+                    new DateTime(2019, 11, 8, 20, 35, 0),
+                    new TimeSpan(3, 0, 0)
+                ),
+                SeatId = 36
+            },
         };
 
         public async Task<IReadOnlyCollection<FlightEntity>> GetAllAsync()

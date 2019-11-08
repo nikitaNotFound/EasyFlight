@@ -1,4 +1,5 @@
 using System;
+using Common;
 
 namespace BusinessLayer.Models
 {
@@ -7,7 +8,7 @@ namespace BusinessLayer.Models
         public int FlightId { get; set; }
         public int AccountId { get; set; }
         public int SeatId { get; set; }
-        public int AirplaneId { get; set; }
+        public BookType BookType { get; set; }
         public DateTimeOffset BookTime { get; set; }
     }
 }
