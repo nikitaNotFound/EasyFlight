@@ -27,26 +27,6 @@ function Flights(props) {
         );
     }
 
-    if (props.flights == null) {
-        return (
-            <div className="list rounded">
-                <ComponentHeadline content="Flights list"/>
-
-                Setup filter :)
-            </div>
-        );
-    }
-
-    if (props.flights.length == 0) {
-        return (
-            <div className="list rounded">
-                <ComponentHeadline content="Flights list"/>
-
-                No result
-            </div>
-        );
-    }
-
     return (
         <div className="list rounded">
             <ComponentHeadline content="Flights list"/>
