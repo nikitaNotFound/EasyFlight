@@ -214,14 +214,16 @@ export default function Edit(props) {
                                     currentItem={fromAirport}
                                     placeholder="From"
                                 />
-                                <SearchList
-                                    searchFunc={AirplaneService.searchWithParams}
-                                    searchArgs={[true]}
-                                    getItemName={getAirplaneName}
-                                    onValueChange={changeAirplane}
-                                    currentItem={airplane}
-                                    placeholder="airplane"
-                                />
+                                <div className="form-item">
+                                    <label htmlFor={"airplane"}>Airplane</label>
+                                    <input
+                                        id="airplane"
+                                        className="search-list-input"
+                                        type="text"
+                                        value={airplane.name}
+                                        readOnly
+                                    />
+                                </div>
                                 <SearchList
                                     searchFunc={AirportService.searchByName}
                                     getItemName={getAirportName}

@@ -33,7 +33,7 @@ export default function TicketsCostEditor(props) {
                     changeCostInfo(costInfo);
                     props.onTypeCostChange(costInfo);
                 }
-                    
+
                 changeLoading(false);
             } catch {
                 changeMessageBoxValue(defaultErrorMessage());
