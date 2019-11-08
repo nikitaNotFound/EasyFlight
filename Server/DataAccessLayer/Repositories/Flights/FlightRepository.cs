@@ -68,9 +68,10 @@ namespace DataAccessLayer.Repositories.Flights
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             await db.ExecuteAsync(
-                "AddFlight",
+                "UpdateFlight",
                 new
                 {
+                    FlightId = newFlight.Id,
                     FromAirportId = newFlight.FromAirportId,
                     ToAirportId = newFlight.ToAirportId,
                     DepartureTime = newFlight.DepartureTime,

@@ -23,12 +23,16 @@ export default function TicketsCostEditor(props) {
                 
                 if (!props.flightId) {
                     let newCostInfo = types.map(
-                        (seatType, index) =>
-                        //cost setted as 0, because 0 is start value of each seat type' ticket
-                        new TicketCost(null, seatType.id, 0)
-                        );
-                        changeCostInfo(newCostInfo);
-                    }
+                        (seatType) => new TicketCost(null, seatType.id, 0)
+                    );
+                    changeCostInfo(newCostInfo);
+                    props.onTypeCostChange(newCostInfo);
+                } else {
+                    const costInfo = await FlightService.getTicketsCost(props.flightId);
+
+                    changeCostInfo(costInfo);
+                    props.onTypeCostChange(costInfo);
+                }
                     
                 changeLoading(false);
             } catch {

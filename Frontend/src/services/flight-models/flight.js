@@ -20,7 +20,7 @@ export default class Flight {
          this.airplaneId = airplaneId;
          this.suitcaseMassKg = suitcaseMassKg;
          this.suitcaseCount = suitcaseCount;
-         this.carryonMassKg = handLuggageMassKg;
+         this.handLuggageMassKg = handLuggageMassKg;
          this.handLuggageCount = handLuggageCount;
          this.massOverloadKgCost = massOverloadKgCost;
      }

@@ -7,7 +7,7 @@ import SearchList from '../../../common/search-list';
 import MessageBox from '../../../common/message-box';
 import TicketsCostEditor from './tickets-cost-editor';
 import Flight from '../../../../services/flight-models/flight';
-import ParamFiled from './param-field';
+import ParamField from './param-field';
 
 import { invalidInput, defaultErrorMessage, added } from '../../../common/message-box-messages';
 import ConfirmActionButton from '../../../common/confirm-action-button';
@@ -31,11 +31,11 @@ export default function Add() {
 
     const [ticketsCost, changeTicketsCost] = useState();
 
-    const [suitcaseMass, changeSuitcaseMass] = useState(0);
+    const [suitcaseMassKg, changeSuitcaseMassKg] = useState(0);
     const [suitcaseCount, changeSuitcaseCount] = useState(0);
 
-    const [carryonMass, changeCarryonMass] = useState(0);
-    const [carryonCount, changeCarryonCount] = useState(0);
+    const [handLuggageMassKg, changeHandLuggageMassKg] = useState(0);
+    const [handLuggageCount, changeHandLuggageCount] = useState(0);
 
     const [overloadKgCost, changeOverloadKgCost] = useState(0);
 
@@ -67,10 +67,10 @@ export default function Add() {
             arrivalDateTime,
             departureDateTime,
             airplane.id,
-            suitcaseMass,
+            suitcaseMassKg,
             suitcaseCount,
-            carryonMass,
-            carryonCount,
+            handLuggageMassKg,
+            handLuggageCount,
             overloadKgCost
         );
 
@@ -131,13 +131,13 @@ export default function Add() {
                             <div className="row">
                                 <div className="adding-form-section date-time">
                                     <div className="row">
-                                        <ParamFiled
+                                        <ParamField
                                             name="Departure time"
                                             value={departureTime}
                                             onChange={changeDepartureTime}
                                             inputType="time"
                                         />
-                                        <ParamFiled
+                                        <ParamField
                                             name="Departure date"
                                             value={departureDate}
                                             onChange={changeDepartureDate}
@@ -148,13 +148,13 @@ export default function Add() {
 
                                 <div className="adding-form-section date-time arrival">
                                     <div className="row">
-                                        <ParamFiled
+                                        <ParamField
                                             name="Arrival time"
                                             value={arrivalTime}
                                             onChange={changeArrivalTime}
                                             inputType="time"
                                         />
-                                        <ParamFiled
+                                        <ParamField
                                             name="Arrival date"
                                             value={arrivalDate}
                                             onChange={changeArrivalDate}
@@ -190,12 +190,12 @@ export default function Add() {
 
                                 <div className="adding-form-section">
                                     <div className="row">
-                                        <ParamFiled
+                                        <ParamField
                                             name="Suitcase mass"
-                                            value={suitcaseMass}
-                                            onChange={changeSuitcaseMass}
+                                            value={suitcaseMassKg}
+                                            onChange={changeSuitcaseMassKg}
                                         />
-                                        <ParamFiled
+                                        <ParamField
                                             name="Suitcase count"
                                             value={suitcaseCount}
                                             onChange={changeSuitcaseCount}
@@ -205,22 +205,22 @@ export default function Add() {
 
                                 <div className="adding-form-section">
                                     <div className="row">
-                                        <ParamFiled
-                                            name="Carryon mass"
-                                            value={carryonMass}
-                                            onChange={changeCarryonMass}
+                                        <ParamField
+                                            name="Hand luggage mass"
+                                            value={handLuggageMassKg}
+                                            onChange={changeHandLuggageMassKg}
                                         />
-                                        <ParamFiled
-                                            name="Carryon count"
-                                            value={carryonCount}
-                                            onChange={changeCarryonCount}
+                                        <ParamField
+                                            name="Hand luggage count"
+                                            value={handLuggageCount}
+                                            onChange={changeHandLuggageCount}
                                         />
                                     </div>
                                 </div>
 
                                 <div className="adding-form-section">
                                     <div className="row">
-                                        <ParamFiled
+                                        <ParamField
                                             name="Overload kg cost"
                                             value={overloadKgCost}
                                             onChange={changeOverloadKgCost}

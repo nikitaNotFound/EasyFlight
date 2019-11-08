@@ -13,7 +13,7 @@ import ConfirmActionButton from '../../../common/confirm-action-button';
 import BuyIcon from '../../../../icons/add-image.png';
 
 import Flight from '../../../../services/flight-models/flight';
-import { invalidInput } from '../../../common/message-box-messages';
+import { invalidInput, defaultErrorMessage, saved } from '../../../common/message-box-messages';
 
 import * as AirplaneService from '../../../../services/AirplaneService';
 import * as FlightService from '../../../../services/FlightService';
@@ -26,22 +26,25 @@ export default function Edit(props) {
 
     const [airplane, changeAirplane] = useState();
 
-    const [fromPlace, changeFromPlace] = useState();
+    const [fromAirport, changeFromAirport] = useState();
 
-    const [toPlace, changeToPlace] = useState();
-
-    const [desc, changeDesc] = useState();
+    const [toAirport, changeToAirport] = useState();
 
     const [departureTime, changeDepartureTime] = useState();
     const [departureDate, changeDepartureDate] = useState();
 
+    const [arrivalTime, changeArrivalTime] = useState();
+    const [arrivalDate, changeArrivalDate] = useState();
+
     const [ticketsCost, changeTicketsCost] = useState();
 
-    const [suitcaseMass, changeSuitcaseMass] = useState(0);
+    const [suitcaseMassKg, changeSuitcaseMassKg] = useState(0);
     const [suitcaseCount, changeSuitcaseCount] = useState(0);
 
-    const [carryonMass, changeCarryonMass] = useState(0);
-    const [carryonCount, changeCarryonCount] = useState(0);
+    const [handLuggageMassKg, changeHandLuggageMassKg] = useState(0);
+    const [handLuggageCount, changeHandLuggageCount] = useState(0);
+
+    const [overloadKgCost, changeOverloadKgCost] = useState(0);
 
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
@@ -51,64 +54,82 @@ export default function Edit(props) {
 
             changeFlight(flight);
 
-            changeDepartureTime(flight.departureTime);
-            changeDepartureDate(flight.departureDate);
+            changeDepartureDate(moment(flight.departureTime).format('YYYY-M-DD'));
+            changeDepartureTime(moment(flight.departureTime).format('HH:mm'));
 
-            changeSuitcaseMass(flight.suitcaseMass);
+            changeArrivalDate(moment(flight.arrivalTime).format('YYYY-M-DD'));
+            changeArrivalTime(moment(flight.arrivalTime).format('HH:mm'));
+
+            changeSuitcaseMassKg(flight.suitcaseMassKg);
             changeSuitcaseCount(flight.suitcaseCount);
 
-            changeCarryonMass(flight.carryonMass);
-            changeCarryonCount(flight.carryonCount);
+            changeHandLuggageMassKg(flight.handLuggageMassKg);
+            changeHandLuggageCount(flight.handLuggageCount);
 
-            changeDesc(flight.desc);
+            changeOverloadKgCost(flight.massOverloadKgCost
+                );
 
-            const [airplane, airports] = Promise.all([
+            const [airplane, fromAirport, toAirport] = await Promise.all([
                 AirplaneService.getById(flight.airplaneId),
-                Promise.all([
-                    AirportService.getById(flight.fromId),
-                    AirportService.getById(flight.toId)
-                ])
+                AirportService.getById(flight.fromAirportId),
+                AirportService.getById(flight.toAirportId)
             ]);
 
             changeAirplane(airplane);
 
-            const [from, to] = airports;
-
-            changeFromPlace(from);
-            changeToPlace(to);
+            changeFromAirport(fromAirport);
+            changeToAirport(toAirport);
 
             changeLoadingMode(false);
         };
         fetchData();
     }, [props.match.params.id]);
 
-    function onDataSave() {
+    async function onDataSave() {
         if (!departureDate
             || !departureTime
-            || !fromPlace
-            || !toPlace
+            || !fromAirport
+            || !toAirport
             || !airplane
             || !ticketsCost
-            || !desc
         ) {
             changeMessageBoxValue(invalidInput());
             return;
         }
 
+        let departureDateTime = `${departureDate} ${departureTime}`;
+        departureDateTime = moment(departureDateTime).format('YYYY-MM-DD[T]HH:mm:ss.SSSZ');
+
+        let arrivalDateTime = `${arrivalDate} ${arrivalTime}`;
+        arrivalDateTime = moment(arrivalDateTime).format('YYYY-MM-DD[T]HH:mm:ss.SSSZ');
+
         const newFlight = new Flight(
-            null,
-            fromPlace.id,
-            toPlace.id,
-            departureTime,
-            departureDate,
-            desc,
+            flight.id,
+            fromAirport.id,
+            toAirport.id,
+            departureDateTime,
+            arrivalDateTime,
             airplane.id,
-            airplane.seats.length,
-            suitcaseMass,
+            suitcaseMassKg,
             suitcaseCount,
-            carryonMass,
-            carryonCount
+            handLuggageMassKg,
+            handLuggageCount,
+            overloadKgCost
         );
+
+        try {
+            const seatTypesCostUpdatePromises = ticketsCost.map(
+                cost => FlightService.updateTicketCost(flight.id, cost)
+            );
+
+            await Promise.all([
+                FlightService.update(newFlight),
+                ...seatTypesCostUpdatePromises
+            ]);
+            changeMessageBoxValue(saved());
+        } catch {
+            changeMessageBoxValue(defaultErrorMessage());
+        }
     }
 
     function getAirplaneName(airplane) {
@@ -119,14 +140,14 @@ export default function Edit(props) {
         return airport.name;
     }
 
-    function getTicketsCostEditor() {
+    function showTicketsCostEditor() {
         if (!airplane) {
             return;
         }
 
         return (
             <TicketsCostEditor
-                seatTypes={airplane.seatTypes}
+                airplaneId={airplane.id}
                 flightId={flight.id}
                 onTypeCostChange={changeTicketsCost}
             />
@@ -149,44 +170,10 @@ export default function Edit(props) {
 
             <div className="adding-form">
                 <div className="row">
-                    <div className="col-2">
-                        <input type="file" name="image" id="file-input" className="file-upload" />
-                        <label htmlFor="file-input">
-                            <img
-                                src={BuyIcon}
-                                className="adding-form-img"
-                                alt="add"
-                            />
-                        </label>
-                    </div>
-                    <div className="col-10">
-                        <div className="editing-params-form">
+                    <div className="col-12">
+                        <div className="editing-params-form flight-editor">
                             <div className="row">
-                                <SearchList
-                                    searchFunc={AirportService.searchByName}
-                                    getItemName={getAirportName}
-                                    onValueChange={changeFromPlace}
-                                    currentItem={fromPlace}
-                                    placeholder="From"
-                                />
-                                <SearchList
-                                    searchFunc={AirportService.searchByName}
-                                    getItemName={getAirportName}
-                                    onValueChange={changeToPlace}
-                                    currentItem={toPlace}
-                                    placeholder="To"
-                                />
-                                <SearchList
-                                    searchFunc={AirplaneService.searchWithParams}
-                                    getItemName={getAirplaneName}
-                                    onValueChange={changeAirplane}
-                                    currentItem={airplane}
-                                    placeholder="airplane"
-                                />
-
-                                {getTicketsCostEditor()}
-
-                                <div className="adding-form-section">
+                            <div className="adding-form-section date-time">
                                     <div className="row">
                                         <ParamField
                                             name="Departure time"
@@ -203,12 +190,54 @@ export default function Edit(props) {
                                     </div>
                                 </div>
 
+                                <div className="adding-form-section date-time arrival">
+                                    <div className="row">
+                                        <ParamField
+                                            name="Arrival time"
+                                            value={arrivalTime}
+                                            onChange={changeArrivalTime}
+                                            inputType="time"
+                                        />
+                                        <ParamField
+                                            name="Arrival date"
+                                            value={arrivalDate}
+                                            onChange={changeArrivalDate}
+                                            inputType="date"
+                                        />
+                                    </div>
+                                </div>
+
+                                <SearchList
+                                    searchFunc={AirportService.searchByName}
+                                    getItemName={getAirportName}
+                                    onValueChange={changeFromAirport}
+                                    currentItem={fromAirport}
+                                    placeholder="From"
+                                />
+                                <SearchList
+                                    searchFunc={AirplaneService.searchWithParams}
+                                    searchArgs={[true]}
+                                    getItemName={getAirplaneName}
+                                    onValueChange={changeAirplane}
+                                    currentItem={airplane}
+                                    placeholder="airplane"
+                                />
+                                <SearchList
+                                    searchFunc={AirportService.searchByName}
+                                    getItemName={getAirportName}
+                                    onValueChange={changeToAirport}
+                                    currentItem={toAirport}
+                                    placeholder="To"
+                                />
+
+                                {showTicketsCostEditor()}
+
                                 <div className="adding-form-section">
                                     <div className="row">
                                         <ParamField
                                             name="Suitcase mass"
-                                            value={suitcaseMass}
-                                            onChange={changeSuitcaseMass}
+                                            value={suitcaseMassKg}
+                                            onChange={changeSuitcaseMassKg}
                                         />
                                         <ParamField
                                             name="Suitcase count"
@@ -221,20 +250,26 @@ export default function Edit(props) {
                                 <div className="adding-form-section">
                                     <div className="row">
                                         <ParamField
-                                            name="Carryon mass"
-                                            value={carryonMass}
-                                            onChange={changeCarryonMass}
+                                            name="Hand luggage mass"
+                                            value={handLuggageMassKg}
+                                            onChange={changeHandLuggageMassKg}
                                         />
                                         <ParamField
-                                            name="Carryon count"
-                                            value={carryonCount}
-                                            onChange={changeCarryonCount}
+                                            name="Hand luggage count"
+                                            value={handLuggageCount}
+                                            onChange={changeHandLuggageCount}
                                         />
                                     </div>
                                 </div>
 
                                 <div className="adding-form-section">
-                                    <textarea placeholder="description" value={desc} onChange={changeDesc} />
+                                    <div className="row">
+                                        <ParamField
+                                            name="Overload kg cost"
+                                            value={overloadKgCost}
+                                            onChange={changeOverloadKgCost}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>

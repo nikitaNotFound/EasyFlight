@@ -142,7 +142,7 @@ namespace WebAPI.Controllers
 
         // GET api/flights/{id}/seat-types-cost
         [HttpGet]
-        [Route("{id}/seat-types-cost")]
+        [Route("{flightId}/seat-types-cost")]
         public async Task<IActionResult> GetFlightSeatTypesCostAsync(int flightId)
         {
             IReadOnlyCollection<BlFlightSeatTypeCost> seatTypeCostsBl =
@@ -179,10 +179,10 @@ namespace WebAPI.Controllers
             return Ok();
         }
 
-        // PUT api/flights/{id}/seat-types-cost
+        // PUT api/flights/{flightId}/seat-types-cost
         [HttpPut]
         [Authorize(Roles = nameof(AccountRole.Admin))]
-        [Route("{id}/seat-types-cost")]
+        [Route("{flightId}/seat-types-cost")]
         public async Task<IActionResult> UpdateFlightSeatTypeCostAsync(
             int flightId,
             [FromBody] FlightSeatTypeCost seatTypeCost

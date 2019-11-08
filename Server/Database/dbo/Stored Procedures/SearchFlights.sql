@@ -9,10 +9,10 @@
 as
     select *
     from Flights
-        inner join (select CityId as FromCityId, Id from Airports) FromAirports
-            on Flights.FromAirportId = FromAirports.Id
-        inner join (select CityId as ToCityId, Id from Airports) ToAirports
-            on Flights.ToAirportId = ToAirports.Id
+        inner join (select CityId as FromCityId, Id as AirId from Airports) FromAirports
+            on Flights.FromAirportId = FromAirports.AirId
+        inner join (select CityId as ToCityId, Id as AirId from Airports) ToAirports
+            on Flights.ToAirportId = ToAirports.AirId
         cross apply (
             select COUNT(Seats.Id) as SeatCount
             from Seats
