@@ -56,6 +56,7 @@ namespace WebAPI.Controllers
                 || toCityId != null
                 || departureTime != null
                 || arrivalTime != null
+                || ticketCount != null
             )
             {
                 FlightFilter filter = new FlightFilter(
