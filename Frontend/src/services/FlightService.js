@@ -132,7 +132,7 @@ export async function searchWithParams(filter, searchByName) {
     }
 
     if (ticketCount) {
-        parameteres += `ticketsCount=${ticketCount}&`;
+        parameteres += `ticketCount=${ticketCount}&`;
     }
 
     if (searchBack === true) {
