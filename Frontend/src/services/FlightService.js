@@ -96,7 +96,7 @@ export async function searchWithParams(filter, searchByName) {
             toCityId,
             departureDate,
             arrivalDate,
-            ticketsCount,
+            ticketCount,
             searchBack
         } = filter;
     }
@@ -131,7 +131,7 @@ export async function searchWithParams(filter, searchByName) {
         parameteres += `arrivalTime=${arrivalDate}&`;
     }
 
-    if (ticketsCount) {
+    if (ticketCount) {
         parameteres += `ticketsCount=${ticketsCount}&`;
     }
 
