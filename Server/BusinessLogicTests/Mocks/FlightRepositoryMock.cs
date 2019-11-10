@@ -68,10 +68,7 @@ namespace BusinessLogicTests.Mocks
                 AccountId = 1,
                 BookType = BookType.AwaitingPayment,
                 FlightId = 1,
-                BookTime = new DateTimeOffset(
-                    new DateTime(2019, 11, 8, 20, 30, 0),
-                    new TimeSpan(3, 0, 0)
-                ),
+                BookTime = DateTimeOffset.Now,
                 SeatId = 1
             },
             new FlightBookInfoEntity()
@@ -79,10 +76,7 @@ namespace BusinessLogicTests.Mocks
                 AccountId = 1,
                 BookType = BookType.Payed,
                 FlightId = 2,
-                BookTime = new DateTimeOffset(
-                    new DateTime(2019, 11, 8, 20, 35, 0),
-                    new TimeSpan(3, 0, 0)
-                ),
+                BookTime = DateTimeOffset.Now,
                 SeatId = 1
             },
         };
@@ -150,20 +144,38 @@ namespace BusinessLogicTests.Mocks
                 && x.BookType != BookType.Payed
             );
 
-            return seatInfo != null;
+            return seatInfo == null;
         }
 
         public async Task<bool> CheckFinalBookAvailability(FlightBookInfoEntity bookInfo, TimeSpan expirationTime)
         {
             FlightBookInfoEntity seatInfo =  _flightSeatInfo.FirstOrDefault(
                 x => x.FlightId == bookInfo.FlightId
-                     && x.SeatId == bookInfo.SeatId
-                     && DateTimeOffset.Now - x.BookTime < expirationTime
-                     && x.BookType == BookType.AwaitingPayment
-                     && x.AccountId == bookInfo.AccountId
+                && x.SeatId == bookInfo.SeatId
+                && DateTimeOffset.Now - x.BookTime < expirationTime
+                && x.BookType == BookType.AwaitingPayment
+                && x.AccountId == bookInfo.AccountId
             );
 
-            return seatInfo != null;
+            return seatInfo == null;
+        }
+
+        public async Task<IReadOnlyCollection<FlightBookInfoEntity>> GetFlightBookInfo(int flightId, TimeSpan expirationTime)
+        {
+            return _flightSeatInfo.Select(x => x).Where(
+                x => x.FlightId == flightId
+                && (DateTimeOffset.Now - x.BookTime) < expirationTime
+            ).ToList();
+        }
+
+        public async Task<IReadOnlyCollection<FlightBookInfoEntity>> GetFlightBookInfo(int flightId)
+        {
+            return _flightSeatInfo.Select(x => x).Where(x => x.FlightId == flightId).ToList();
+        }
+
+        public async Task<IReadOnlyCollection<FlightEntity>> GetAccountFlights(int accountId)
+        {
+            return _flightData;
         }
     }
 }

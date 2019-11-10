@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using BusinessLayer.Models;
+using DataAccessLayer;
 using DataAccessLayer.Models;
 using DataAccessLayer.Repositories.Airplanes;
 using DataAccessLayer.Repositories.Airports;
@@ -17,19 +18,22 @@ namespace BusinessLayer.Services.Flights
         private readonly IFlightRepository _flightRepository;
         private readonly IAirportRepository _airportRepository;
         private readonly IAirplaneRepository _airplaneRepository;
+        private readonly IBookingSettings _bookingSettings;
 
 
         public FlightService(
             IMapper mapper,
             IFlightRepository flightRepository,
             IAirportRepository airportRepository,
-            IAirplaneRepository airplaneRepository
+            IAirplaneRepository airplaneRepository,
+            IBookingSettings bookingSettings
         )
         {
             _mapper = mapper;
             _flightRepository = flightRepository;
             _airportRepository = airportRepository;
             _airplaneRepository = airplaneRepository;
+            _bookingSettings = bookingSettings;
         }
 
 
@@ -181,19 +185,68 @@ namespace BusinessLayer.Services.Flights
             return ResultTypes.Ok;
         }
 
-        public Task<ResultTypes> BookForTimeAsync(FlightBookInfo bookInfo)
+        public async Task<ResultTypes> BookForTimeAsync(FlightBookInfo bookInfo)
         {
-            throw new NotImplementedException();
+            FlightEntity flight = await _flightRepository.GetByIdAsync(bookInfo.FlightId);
+
+            if (flight == null)
+            {
+                return ResultTypes.NotFound;
+            }
+
+            AirplaneSeatEntity seat = await _airplaneRepository.GetSeatById(bookInfo.SeatId);
+
+            if (seat == null)
+            {
+                return ResultTypes.NotFound;
+            }
+
+            bool canBook = await _flightRepository.CheckBookAvailability(
+                bookInfo.FlightId,
+                bookInfo.SeatId,
+                _bookingSettings.ExpirationTime);
+
+            if (!canBook)
+            {
+                return ResultTypes.Duplicate;
+            }
+
+            return ResultTypes.Ok;
         }
 
-        public Task<ResultTypes> BookAsync(FlightBookInfo bookInfo, string transaction)
+        public async Task<ResultTypes> BookAsync(FlightBookInfo bookInfo, string transaction)
         {
-            throw new NotImplementedException();
+            FlightBookInfoEntity bookInfoDal = _mapper.Map<FlightBookInfoEntity>(bookInfo);
+
+            bool canBook =
+                await _flightRepository.CheckFinalBookAvailability(bookInfoDal, _bookingSettings.ExpirationTime);
+
+            if (!canBook)
+            {
+                return ResultTypes.NotFound;
+            }
+
+            if (!TransactionValidator.CheckTransaction(transaction))
+            {
+                return ResultTypes.NotFound;
+            }
+
+            return ResultTypes.Ok;
         }
 
-        public Task<IReadOnlyCollection<FlightBookInfo>> GetBookInfoAsync(int flightId)
+        public async Task<IReadOnlyCollection<FlightBookInfo>> GetFlightBookInfoAsync(int flightId)
         {
-            throw new NotImplementedException();
+            IReadOnlyCollection<FlightBookInfoEntity> flightBookInfoDal =
+                await _flightRepository.GetFlightBookInfo(flightId, _bookingSettings.ExpirationTime);
+
+            return flightBookInfoDal.Select(_mapper.Map<FlightBookInfo>).ToList();
+        }
+
+        public async Task<IReadOnlyCollection<Flight>> GetAccountFlights(int accountId)
+        {
+            IReadOnlyCollection<FlightEntity> flightsDal = await _flightRepository.GetAccountFlights(accountId);
+
+            return flightsDal.Select(_mapper.Map<Flight>).ToList();
         }
     }
 }

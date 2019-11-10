@@ -120,8 +120,11 @@
     <Content Include="dbo\Stored Procedures\CheckFlightSeatTypeCostDuplicate.sql" />
     <Content Include="dbo\Stored Procedures\CheckBookAvailability.sql" />
     <Content Include="dbo\Stored Procedures\CreateAccount.sql" />
+    <Content Include="dbo\Stored Procedures\GetAccountFlights.sql" />
     <Content Include="dbo\Stored Procedures\GetAirplaneSeatTypeById.sql" />
     <Content Include="dbo\Stored Procedures\GetCityAirports.sql" />
+    <Content Include="dbo\Stored Procedures\GetFlightBookInfo.sql" />
+    <Content Include="dbo\Stored Procedures\GetSeatById.sql" />
     <Content Include="dbo\Stored Procedures\SearchAirplanes.sql" />
     <Content Include="dbo\Stored Procedures\SearchAirportsByName.sql" />
     <Content Include="dbo\Stored Procedures\SearchCityAirportsByName.sql" />

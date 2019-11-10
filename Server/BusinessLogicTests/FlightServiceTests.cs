@@ -28,6 +28,8 @@ namespace BusinessLogicTests
                 config.CreateMap<FlightSeatTypeCostEntity, FlightSeatTypeCost>();
                 config.CreateMap<FlightFilter, FlightFilterEntity>();
                 config.CreateMap<FlightFilterEntity, FlightFilter>();
+                config.CreateMap<FlightBookInfo, FlightBookInfoEntity>();
+                config.CreateMap<FlightBookInfoEntity, FlightBookInfo>();
             });
             mappingConfig.CompileMappings();
 
@@ -39,6 +41,8 @@ namespace BusinessLogicTests
                 new AirportRepositoryMock(),
                 new AirplanesRepositoryMock()
             );
+
+            _bookingSettings = new BookingSettingsMock(new TimeSpan(0, 5, 0));
         }
 
 

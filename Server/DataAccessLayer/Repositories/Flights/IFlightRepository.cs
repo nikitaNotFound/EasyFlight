@@ -20,5 +20,7 @@ namespace DataAccessLayer.Repositories.Flights
         Task BookAsync(FlightBookInfoEntity bookInfo);
         Task<bool> CheckBookAvailability(int flightId, int seatId, TimeSpan expirationTime);
         Task<bool> CheckFinalBookAvailability(FlightBookInfoEntity bookInfo, TimeSpan expirationTime);
+        Task<IReadOnlyCollection<FlightBookInfoEntity>> GetFlightBookInfo(int flightId, TimeSpan expirationTime);
+        Task<IReadOnlyCollection<FlightEntity>> GetAccountFlights(int accountId);
     }
 }

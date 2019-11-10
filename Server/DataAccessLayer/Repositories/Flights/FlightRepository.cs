@@ -213,5 +213,41 @@ namespace DataAccessLayer.Repositories.Flights
                 },
                 commandType: CommandType.StoredProcedure);
         }
+
+        public async Task<IReadOnlyCollection<FlightBookInfoEntity>> GetFlightBookInfo(
+            int flightId,
+            TimeSpan expirationTime
+        )
+        {
+            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
+
+            IEnumerable<FlightBookInfoEntity> flights = await db.QueryAsync<FlightBookInfoEntity>(
+                "GetFlightBookInfo",
+                new
+                {
+                    FlightId = flightId,
+                    BookExpirationTimeInSeconds = expirationTime.TotalSeconds,
+                    FinalBookType = BookType.Payed
+                },
+                commandType: CommandType.StoredProcedure);
+
+            return flights.ToList();
+        }
+
+        public async Task<IReadOnlyCollection<FlightEntity>> GetAccountFlights(int accountId)
+        {
+            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
+
+            IEnumerable<FlightEntity> flights = await db.QueryAsync<FlightEntity>(
+                "GetAccountFlights",
+                new
+                {
+                    AccountId = accountId,
+                    FinalBookType = BookType.Payed
+                },
+                commandType: CommandType.StoredProcedure);
+
+            return flights.ToList();
+        }
     }
 }

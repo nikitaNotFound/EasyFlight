@@ -1,7 +1,7 @@
 ﻿using System;
 using Common;
 
-namespace DataAccessLayer
+namespace DataAccessLayer.Models
 {
     public class FlightBookInfoEntity
     {
