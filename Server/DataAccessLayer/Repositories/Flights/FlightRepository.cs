@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -163,14 +164,36 @@ namespace DataAccessLayer.Repositories.Flights
                 commandType: CommandType.StoredProcedure);
         }
 
-        public Task BookAsync(FlightBookInfoEntity bookInfo)
+        public async Task BookAsync(FlightBookInfoEntity bookInfo)
         {
-            throw new System.NotImplementedException();
+            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
+
+            await db.ExecuteAsync(
+                "BookSeat",
+                new
+                {
+                    FlightId = bookInfo.FlightId,
+                    SeatId = bookInfo.SeatId,
+                    AccountId = bookInfo.AccountId,
+                    BookTime = bookInfo.BookTime,
+                    BookType = bookInfo.BookType
+                },
+                commandType: CommandType.StoredProcedure);
         }
 
-        public Task<bool> CheckSeatAvailability(int flightId, int seatId)
+        public async Task<bool> CheckSeatAvailability(int flightId, int seatId, TimeSpan expirationTime)
         {
-            throw new System.NotImplementedException();
+            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
+
+            return await db.ExecuteScalarAsync<bool>(
+                "CheckBookAvailability",
+                new
+                {
+                    FlightId = flightId,
+                    SeatId = seatId,
+                    BookExpirationTimeInSeconds = expirationTime.TotalSeconds
+                },
+                commandType: CommandType.StoredProcedure);
         }
     }
 }

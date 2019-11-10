@@ -61,9 +61,9 @@ namespace BusinessLogicTests.Mocks
             new FlightSeatTypeCostEntity() { FlightId = 2, SeatTypeId = 1, Cost = 400 }
         };
 
-        private readonly List<FlightBookInfo> _flightSeatInfo = new List<FlightBookInfo>()
+        private readonly List<FlightBookInfoEntity> _flightSeatInfo = new List<FlightBookInfoEntity>()
         {
-            new FlightBookInfo()
+            new FlightBookInfoEntity()
             {
                 AccountId = 1,
                 BookType = BookType.AwaitingPayment,
@@ -74,7 +74,7 @@ namespace BusinessLogicTests.Mocks
                 ),
                 SeatId = 1
             },
-            new FlightBookInfo()
+            new FlightBookInfoEntity()
             {
                 AccountId = 1,
                 BookType = BookType.Payed,
@@ -136,14 +136,21 @@ namespace BusinessLogicTests.Mocks
             return duplicate != null;
         }
 
-        public Task BookAsync(FlightBookInfoEntity bookInfo)
+        public async Task BookAsync(FlightBookInfoEntity bookInfo)
         {
-            throw new NotImplementedException();
+            // implementation
         }
 
-        public Task<bool> CheckSeatAvailability(int flightId, int seatId)
+        public async Task<bool> CheckSeatAvailability(int flightId, int seatId, TimeSpan expirationTime)
         {
-            throw new NotImplementedException();
+            FlightBookInfoEntity seatInfo =  _flightSeatInfo.FirstOrDefault(
+                x => x.FlightId == flightId
+                && x.SeatId == seatId
+                && DateTimeOffset.Now - x.BookTime < expirationTime
+                && x.BookType != BookType.Payed
+            );
+
+            return seatInfo != null;
         }
     }
 }

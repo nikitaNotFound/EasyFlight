@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Common;
@@ -17,6 +18,6 @@ namespace DataAccessLayer.Repositories.Flights
         Task UpdateFlightSeatTypeCostAsync(FlightSeatTypeCostEntity seatTypeCost);
         Task<bool> CheckFlightSeatTypeCostDuplicateAsync(FlightSeatTypeCostEntity seatTypeCost);
         Task BookAsync(FlightBookInfoEntity bookInfo);
-        Task<bool> CheckSeatAvailability(int flightId, int seatId);
+        Task<bool> CheckSeatAvailability(int flightId, int seatId, TimeSpan expirationTime);
     }
 }

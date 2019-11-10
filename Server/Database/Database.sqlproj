@@ -115,7 +115,9 @@
     <Build Include="dbo\Stored Procedures\AddFlight.sql" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="dbo\Stored Procedures\BookSeat.sql" />
     <Content Include="dbo\Stored Procedures\CheckFlightSeatTypeCostDuplicate.sql" />
+    <Content Include="dbo\Stored Procedures\CheckBookAvailability.sql" />
     <Content Include="dbo\Stored Procedures\CreateAccount.sql" />
     <Content Include="dbo\Stored Procedures\GetAirplaneSeatTypeById.sql" />
     <Content Include="dbo\Stored Procedures\GetCityAirports.sql" />
