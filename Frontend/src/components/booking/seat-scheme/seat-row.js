@@ -16,28 +16,36 @@ function SeatRow(props) {
     }
 
     return (
-        <div className="airplane-string">
-            {props.seats.map(
-                (seats, index) => {
-                    let placeInfo = {};
-                    Object.assign(placeInfo, props.placeInfo);
-                    placeInfo.number = index + 1;
-                    return (
-                        <Seat
-                            key={index}
-                            seat={seats}
-                            seatTypes={props.seatTypes}
-                            seatChange={seatChange}
-                            onSeatAdded={props.onSeatAdded}
-                            onSeatChanged={props.onSeatChanged}
-                            onSeatDeleted={props.onSeatDeleted}
-                            placeInfo={placeInfo}
-                            onSeatChoosen={props.onSeatChoosen}
-                            onSeatUnchoosen={props.onSeatUnchoosen}
-                        />
-                    );
-                }
-            )}
+        <div className="airplane-row">
+            <div className="row-body">
+                {props.seats.map(
+                    (seats, index) => {
+                        let placeInfo = {};
+                        Object.assign(placeInfo, props.placeInfo);
+                        placeInfo.number = index + 1;
+                        return (
+                            <Seat
+                                key={index}
+                                seat={seats}
+                                seatTypes={props.seatTypes}
+                                seatChange={seatChange}
+                                onSeatAdded={props.onSeatAdded}
+                                onSeatChanged={props.onSeatChanged}
+                                onSeatDeleted={props.onSeatDeleted}
+                                placeInfo={placeInfo}
+                                onSeatChoosen={props.onSeatChoosen}
+                                onSeatUnchoosen={props.onSeatUnchoosen}
+                            />
+                        );
+                    }
+                )}
+            </div>
+            <div className="row-headline">
+                {props.placeInfo.row}
+                <div className="row-name">
+                    row
+                </div>
+            </div>
         </div>
     );
 }

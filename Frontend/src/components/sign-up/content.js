@@ -50,6 +50,7 @@ function Content(props) {
             const userInfo = await UserService.register(newUser);
             changeUserInfo(userInfo);
             props.history.push('/');
+            window.location.reload();
         } catch (ex) {
             if (ex instanceof BadRequestError) {
                 changeMessageBoxValue(duplicate(email));

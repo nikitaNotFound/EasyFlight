@@ -12,6 +12,7 @@ import FinalButton from './final-button';
 import CostLayout from './cost-layout';
 import FlightInfo from './flight-info';
 import MessageBox from '../common/message-box';
+import { defaultErrorMessage } from '../common/message-box-messages';
 
 import * as AirplaneService from '../../services/AirplaneService';
 import * as FlightService from '../../services/FlightService';
@@ -23,25 +24,33 @@ function Content(props) {
     const [loading, changeLoading] = useState(true);
     const [flight, changeFlight] = useState();
     const [airplane, changeAirplane] = useState();
-    const [seatTypes, changeSeatTypes] = useState();
-    const [seats, changeSeats] = useState();
+    const [seatTypes, changeSeatTypes] = useState([]);
+    const [seats, changeSeats] = useState([]);
     const [choosenSeats, changeChoosenSeats] = useState([]);
-    const [baggageCount, changeBaggageCount] = useState(0);
-    const [carryonCount, changeCarryonCount] = useState(0);
+    const [suitcaseCount, changeSuitcaseCount] = useState(0);
+    const [handLuggageCount, changeHandLuggageCount] = useState(0);
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
     const [calculatePage, changeCalculatePage] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
-            const flight = await FlightService.getById(props.flightId);
-            changeFlight(flight);
+            try {
+                const flight = await FlightService.getById(props.flightId);
+                changeFlight(flight);
 
-            const airplane = await AirplaneService.getById(flight.airplaneId);
-            changeAirplane(airplane);
-            changeSeatTypes(airplane.seatTypes);
-            changeSeats(airplane.seats);
+                const airplane = await AirplaneService.getById(flight.airplaneId);
+                changeAirplane(airplane);
 
-            changeLoading(false);
+                const seatTypes = await AirplaneService.getAirplaneSeatTypes(flight.airplaneId);
+                changeSeatTypes(seatTypes);
+
+                const seats = await AirplaneService.getAirplaneSeats(flight.airplaneId);
+                changeSeats(seats);
+
+                changeLoading(false);
+            } catch {
+                changeMessageBoxValue(defaultErrorMessage());
+            }
         }
         fetchData();
     }, [props.flightId]);
@@ -78,9 +87,21 @@ function Content(props) {
         props.history.push('/profile');
     }
 
+    function showMessageBox() {
+        if (messageBoxValue) {
+            return (
+                <MessageBox
+                    message={messageBoxValue}
+                    hideFunc={changeMessageBoxValue}
+                />
+            );
+        }
+    }
+
     if (loading) {
         return (
             <main className="rounded">
+                {showMessageBox()}
                 <Spinner headline="Loading..."/>
             </main>
         );
@@ -88,6 +109,7 @@ function Content(props) {
 
     return (
         <main className="rounded">
+            {showMessageBox()}
             <div className={`${!calculatePage}-visible`}>
                 <ComponentHeadline content="Booking"/>
                 <FlightInfo
@@ -101,14 +123,14 @@ function Content(props) {
                     onSeatUnchoosen={onSeatUnchoosen}
                 />
                 <div className="seat-types-baggage-container">
-                    <SeatTypes seatTypes={seatTypes}/>
+                    <SeatTypes seatTypes={seatTypes} flightId={flight.id}/>
                     <BaggageController
-                        changeBaggageCount={changeBaggageCount}
-                        suitcaseMass={flight.suitcaseMass}
+                        changeSuitcaseCount={changeSuitcaseCount}
+                        suitcaseMass={flight.suitcaseMassKg}
                         suitcaseCount={flight.suitcaseCount}
-                        changeCarryonCount={changeCarryonCount}
-                        carryonCount={flight.carryonCount}
-                        carryonMass={flight.carryonMass}
+                        changeHandLuggageCount={changeHandLuggageCount}
+                        carryonCount={flight.handLuggageCount}
+                        carryonMass={flight.handLuggageMassKg}
                     />
                 </div>
                 <ChoosenSeats
@@ -124,10 +146,10 @@ function Content(props) {
 
             <div className={`${calculatePage}-visible`}>
                 <CostLayout
-                    flightId={flight.id}
+                    flight={flight}
                     choosenSeats={choosenSeats}
-                    baggageCount={baggageCount}
-                    carryonCount={carryonCount}
+                    suitcaseCount={suitcaseCount}
+                    handLuggageCount={handLuggageCount}
                 />
                 <FinalButton
                     type="confirm-booking"

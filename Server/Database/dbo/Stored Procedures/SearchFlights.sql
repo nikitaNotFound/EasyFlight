@@ -19,9 +19,9 @@ as
             where Seats.AirplaneId = f.AirplaneId
         ) TotalAirplaneSeats
         cross apply (
-            select COUNT(FlightSeatsInfo.AccountId) as BookedSeatCount
+            select COUNT(FlightSeatsInfo.AccountId) as SeatCount
             from FlightSeatsInfo
-            where FlightSeatsInfo.AirplaneId = f.AirplaneId
+            where FlightSeatsInfo.FlightId = Flights.Id
         ) BookedAirplaneSeats
     where
         (@fromAirportId is null or FromAirportId = @fromAirportId)
@@ -30,4 +30,4 @@ as
         and (@toCityId is null or ta.CityId = @toCityId)
         and (@departureDate is null or CAST(DepartureTime as date) = @departureDate)
         and (@arrivalDate is null or CAST(ArrivalTime as date) = @arrivalDate)
-        and (@ticketCount is null or @ticketCount <= TotalAirplaneSeats.SeatCount - BookedAirplaneSeats.BookedSeatCount)
+        and (@ticketCount is null or @ticketCount <= TotalAirplaneSeats.SeatCount - BookedAirplaneSeats.SeatCount)

@@ -6,7 +6,7 @@ function SeatSection(props) {
     return (
         <div className="seat-editor-row">
             <div className="seat-editor-number">
-                {props.placeInfo.section}
+                Section {props.placeInfo.section}
             </div>
             <div className="seat-editor-scheme">
                 <div className="airplane-rows">

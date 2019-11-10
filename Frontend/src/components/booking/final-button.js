@@ -4,12 +4,12 @@ import PropsTypes from 'prop-types'
 
 export default function FinalButton(props) {
     return (
-        <div
+        <button
             className={`final-button ${props.type} rounded non-selectable`}
             onClick={props.onClick}
         >
             {props.content}
-        </div>
+        </button>
     );
 }
 

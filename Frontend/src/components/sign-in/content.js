@@ -30,6 +30,7 @@ function Content(props) {
             const userInfo = await UserService.login({email: email, password: password});
             changeUserInfo(userInfo);
             props.history.push('/');
+            window.location.reload();
         } catch (ex) {
             if (ex instanceof BadRequestError) {
                 changeMessageBoxValue(badLoginData());

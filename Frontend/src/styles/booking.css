@@ -10,6 +10,8 @@
     padding: 1%;
     margin-top: 3%;
     font-size: 22px;
+    border: 0;
+    width: 100%;
 }
 
 .confirm-booking {
@@ -143,6 +145,13 @@
     padding: 1%;
     display: block;
 }
+
+.cost-layout .final-cost {
+    width: 100%;
+    text-align: center;
+    font-size: 75px;
+}
+
 
 .true-visible {
     display: block;

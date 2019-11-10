@@ -27,6 +27,7 @@ namespace WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IDalSettings, DalSettings>();
+            services.AddSingleton<IBookingSettings, BookingSettings>();
 
             CorsSettings settings = new CorsSettings(Configuration);
 

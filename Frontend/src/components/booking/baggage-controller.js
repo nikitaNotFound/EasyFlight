@@ -9,17 +9,17 @@ export default function BaggageController(props) {
 
     function onCountChange(event) {
         const newValue = Number(event.target.value);
-        if (newValue && newValue <= props.suitcaseCount) {
+        if (newValue >= 0) {
             changeCount(newValue);
-            props.changeBaggageCount(newValue);
+            props.changeSuitcaseCount(newValue);
         }
     }
 
     function onCarryonChange(event) {
         const newValue = Number(event.target.value);
-        if (newValue && newValue <= props.carryonCount) {
+        if (newValue >= 0) {
             changeCarryonCount(newValue);
-            props.changeCarryonCount(newValue);
+            props.changeHandLuggageCount(newValue);
         }
     }
 
@@ -27,27 +27,27 @@ export default function BaggageController(props) {
         <div className="baggage-controller rounded">
             <LayoutHeadline content="Baggage" />
             <div className="baggage-info">
-                {`max suitcase mass: ${props.suitcaseMass} kg`} <br />
-                {`max suitcase count: ${props.suitcaseCount}`} <br />
+                {`Max suitcase mass: ${props.suitcaseMass} kg`} <br />
+                {`Max suitcase count: ${props.suitcaseCount}`} <br />
                 <input value={count} onChange={onCountChange} />
                 suitcase count
             </div>
 
             <div className="baggage-info">
-                {`max carryon mass: ${props.carryonMass} kg`} <br />
-                {`max carryon count: ${props.carryonCount}`} <br />
+                {`Max hand luggage mass: ${props.carryonMass} kg`} <br />
+                {`Max hand luggage count: ${props.carryonCount}`} <br />
                 <input value={carryonCount} onChange={onCarryonChange} />
-                carryon count
+                hand luggage count
             </div>
         </div>
     );
 }
 
 BaggageController.propsTypes = {
-    changeBaggageCount: PropsTypes.number,
+    changeSuitcaseCount: PropsTypes.number,
     suitcaseMass: PropsTypes.number,
     suitcaseCount: PropsTypes.number,
-    changeCarryonCount: PropsTypes.func,
+    changeHandLuggageCount: PropsTypes.func,
     carryonMass: PropsTypes.number,
     carryonCount: PropsTypes.number
 };
