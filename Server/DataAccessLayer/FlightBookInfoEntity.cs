@@ -1,9 +1,9 @@
-using System;
+﻿using System;
 using Common;
 
-namespace BusinessLayer.Models
+namespace DataAccessLayer
 {
-    public class FlightSeatInfo
+    public class FlightBookInfoEntity
     {
         public int FlightId { get; set; }
         public int AccountId { get; set; }

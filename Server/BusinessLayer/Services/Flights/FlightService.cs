@@ -181,17 +181,17 @@ namespace BusinessLayer.Services.Flights
             return ResultTypes.Ok;
         }
 
-        public Task<ResultTypes> BookFlightSeatForTimeAsync(int userId, int flightId, int seatId)
+        public Task<ResultTypes> BookForTimeAsync(FlightBookInfo bookInfo)
         {
             throw new NotImplementedException();
         }
 
-        public Task<ResultTypes> BookFlightSeatAsync(int userId, int flightId, int seatId, string transaction)
+        public Task<ResultTypes> BookAsync(FlightBookInfo bookInfo, string transaction)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IReadOnlyCollection<FlightSeatInfo>> GetBookedSeatsAsync(int flightId)
+        public Task<IReadOnlyCollection<FlightBookInfo>> GetBookInfoAsync(int flightId)
         {
             throw new NotImplementedException();
         }

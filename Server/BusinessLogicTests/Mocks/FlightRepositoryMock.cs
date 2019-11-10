@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BusinessLayer.Models;
 using Common;
+using DataAccessLayer;
 using DataAccessLayer.Models;
 using DataAccessLayer.Repositories.Flights;
 
@@ -60,9 +61,9 @@ namespace BusinessLogicTests.Mocks
             new FlightSeatTypeCostEntity() { FlightId = 2, SeatTypeId = 1, Cost = 400 }
         };
 
-        private readonly List<FlightSeatInfo> _flightSeatInfo = new List<FlightSeatInfo>()
+        private readonly List<FlightBookInfo> _flightSeatInfo = new List<FlightBookInfo>()
         {
-            new FlightSeatInfo()
+            new FlightBookInfo()
             {
                 AccountId = 1,
                 BookType = BookType.AwaitingPayment,
@@ -71,9 +72,9 @@ namespace BusinessLogicTests.Mocks
                     new DateTime(2019, 11, 8, 20, 30, 0),
                     new TimeSpan(3, 0, 0)
                 ),
-                SeatId = 23
+                SeatId = 1
             },
-            new FlightSeatInfo()
+            new FlightBookInfo()
             {
                 AccountId = 1,
                 BookType = BookType.Payed,
@@ -82,7 +83,7 @@ namespace BusinessLogicTests.Mocks
                     new DateTime(2019, 11, 8, 20, 35, 0),
                     new TimeSpan(3, 0, 0)
                 ),
-                SeatId = 36
+                SeatId = 1
             },
         };
 
@@ -133,6 +134,16 @@ namespace BusinessLogicTests.Mocks
             );
 
             return duplicate != null;
+        }
+
+        public Task BookAsync(FlightBookInfoEntity bookInfo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> CheckSeatAvailability(int flightId, int seatId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

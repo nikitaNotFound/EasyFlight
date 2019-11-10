@@ -37,7 +37,7 @@ namespace DataAccessLayer.Repositories.Flights
 
             return await db.QuerySingleOrDefaultAsync<FlightEntity>(
                 "GetFlightById",
-                new { Id = id },
+                new {Id = id},
                 commandType: CommandType.StoredProcedure);
         }
 
@@ -113,7 +113,7 @@ namespace DataAccessLayer.Repositories.Flights
 
             IEnumerable<FlightSeatTypeCostEntity> flights = await db.QueryAsync<FlightSeatTypeCostEntity>(
                 "GetFlightSeatTypesCost",
-                new { FlightId = flightId },
+                new {FlightId = flightId},
                 commandType: CommandType.StoredProcedure);
 
             return flights.ToList();
@@ -161,6 +161,16 @@ namespace DataAccessLayer.Repositories.Flights
                     SeatTypeId = seatTypeCost.SeatTypeId,
                 },
                 commandType: CommandType.StoredProcedure);
+        }
+
+        public Task BookAsync(FlightBookInfoEntity bookInfo)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<bool> CheckSeatAvailability(int flightId, int seatId)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

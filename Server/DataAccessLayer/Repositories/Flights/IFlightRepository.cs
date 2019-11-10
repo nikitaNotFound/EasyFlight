@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Common;
 using DataAccessLayer.Models;
 
 namespace DataAccessLayer.Repositories.Flights
@@ -15,5 +16,7 @@ namespace DataAccessLayer.Repositories.Flights
         Task AddFlightSeatTypeCostAsync(FlightSeatTypeCostEntity seatTypeCost);
         Task UpdateFlightSeatTypeCostAsync(FlightSeatTypeCostEntity seatTypeCost);
         Task<bool> CheckFlightSeatTypeCostDuplicateAsync(FlightSeatTypeCostEntity seatTypeCost);
+        Task BookAsync(FlightBookInfoEntity bookInfo);
+        Task<bool> CheckSeatAvailability(int flightId, int seatId);
     }
 }
