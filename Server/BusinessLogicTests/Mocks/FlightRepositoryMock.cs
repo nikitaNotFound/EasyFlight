@@ -141,13 +141,26 @@ namespace BusinessLogicTests.Mocks
             // implementation
         }
 
-        public async Task<bool> CheckSeatAvailability(int flightId, int seatId, TimeSpan expirationTime)
+        public async Task<bool> CheckBookAvailability(int flightId, int seatId, TimeSpan expirationTime)
         {
             FlightBookInfoEntity seatInfo =  _flightSeatInfo.FirstOrDefault(
                 x => x.FlightId == flightId
                 && x.SeatId == seatId
                 && DateTimeOffset.Now - x.BookTime < expirationTime
                 && x.BookType != BookType.Payed
+            );
+
+            return seatInfo != null;
+        }
+
+        public async Task<bool> CheckFinalBookAvailability(FlightBookInfoEntity bookInfo, TimeSpan expirationTime)
+        {
+            FlightBookInfoEntity seatInfo =  _flightSeatInfo.FirstOrDefault(
+                x => x.FlightId == bookInfo.FlightId
+                     && x.SeatId == bookInfo.SeatId
+                     && DateTimeOffset.Now - x.BookTime < expirationTime
+                     && x.BookType == BookType.AwaitingPayment
+                     && x.AccountId == bookInfo.AccountId
             );
 
             return seatInfo != null;

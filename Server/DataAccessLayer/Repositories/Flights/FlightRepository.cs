@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using Common;
 using Dapper;
 using DataAccessLayer.Models;
 
@@ -181,17 +182,34 @@ namespace DataAccessLayer.Repositories.Flights
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<bool> CheckSeatAvailability(int flightId, int seatId, TimeSpan expirationTime)
+        public async Task<bool> CheckBookAvailability(int flightId, int seatId, TimeSpan expirationTime)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
-            return await db.ExecuteScalarAsync<bool>(
+            return !await db.ExecuteScalarAsync<bool>(
                 "CheckBookAvailability",
                 new
                 {
                     FlightId = flightId,
                     SeatId = seatId,
                     BookExpirationTimeInSeconds = expirationTime.TotalSeconds
+                },
+                commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task<bool> CheckFinalBookAvailability(FlightBookInfoEntity bookInfo, TimeSpan expirationTime)
+        {
+            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
+
+            return !await db.ExecuteScalarAsync<bool>(
+                "CheckFinalBookAvailability",
+                new
+                {
+                    FlightId = bookInfo.FlightId,
+                    SeatId = bookInfo.SeatId,
+                    BookExpirationTimeInSeconds = expirationTime.TotalSeconds,
+                    AccountId = bookInfo.AccountId,
+                    ValidBookType = BookType.AwaitingPayment
                 },
                 commandType: CommandType.StoredProcedure);
         }

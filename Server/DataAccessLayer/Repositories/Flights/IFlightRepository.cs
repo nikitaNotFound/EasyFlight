@@ -18,6 +18,7 @@ namespace DataAccessLayer.Repositories.Flights
         Task UpdateFlightSeatTypeCostAsync(FlightSeatTypeCostEntity seatTypeCost);
         Task<bool> CheckFlightSeatTypeCostDuplicateAsync(FlightSeatTypeCostEntity seatTypeCost);
         Task BookAsync(FlightBookInfoEntity bookInfo);
-        Task<bool> CheckSeatAvailability(int flightId, int seatId, TimeSpan expirationTime);
+        Task<bool> CheckBookAvailability(int flightId, int seatId, TimeSpan expirationTime);
+        Task<bool> CheckFinalBookAvailability(FlightBookInfoEntity bookInfo, TimeSpan expirationTime);
     }
 }
