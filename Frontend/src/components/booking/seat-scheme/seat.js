@@ -48,12 +48,23 @@ function Seat(props) {
             <div className={`seat non-selectable`}/>
         );
     }
+
+    if (props.seat.booked === true) {
+        return (
+            <div
+                className={`seat non-selectable booked-seat`}
+                style={{background:props.seatTypes[seatTypeIndex].color}}
+            />
+        );
+    }
     
     return (
         <div className={`seat non-selectable seat-type-${chooseMode}`}
             style={{background:props.seatTypes[seatTypeIndex].color}}
             onClick={onClickHandler}
-        />
+        >
+            {props.placeInfo.number}
+        </div>
     );
 }
 

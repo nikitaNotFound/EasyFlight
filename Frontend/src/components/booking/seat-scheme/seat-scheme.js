@@ -40,6 +40,14 @@ function initializeSeatArray(props) {
                 element.choosen = true;
             }
         }
+
+        for (let i = 0, len = props.bookedSeats.length; i < len; i++) {
+            const bookedSeat = props.bookedSeats[i];
+
+            if (bookedSeat.seatId == element.id) {
+                element.booked = true;
+            }
+        }
     }
 
    return seatsArray;
@@ -77,5 +85,6 @@ SeatScheme.propsTypes = {
     seatTypes: PropsTypes.array,
     onSeatChoosen: PropsTypes.func,
     onSeatUnchoosen: PropsTypes.func,
-    choosenSeats: PropsTypes.array
+    choosenSeats: PropsTypes.array,
+    bookedSeats: PropsTypes.array
 }

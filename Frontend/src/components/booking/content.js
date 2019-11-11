@@ -31,20 +31,25 @@ function Content(props) {
     const [handLuggageCount, changeHandLuggageCount] = useState(0);
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
     const [calculatePage, changeCalculatePage] = useState(false);
+    const [bookedSeats, changeBookedSeats] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const flight = await FlightService.getById(props.flightId);
+                const [flight, bookedSeats] = await Promise.all([
+                    FlightService.getById(props.flightId),
+                    FlightService.getFlightBookInfo(props.flightId)
+                ]);
                 changeFlight(flight);
+                changeBookedSeats(bookedSeats);
 
-                const airplane = await AirplaneService.getById(flight.airplaneId);
+                const [airplane, seatTypes, seats] = await Promise.all([
+                    AirplaneService.getById(flight.airplaneId),
+                    AirplaneService.getAirplaneSeatTypes(flight.airplaneId),
+                    AirplaneService.getAirplaneSeats(flight.airplaneId)
+                ]);
                 changeAirplane(airplane);
-
-                const seatTypes = await AirplaneService.getAirplaneSeatTypes(flight.airplaneId);
                 changeSeatTypes(seatTypes);
-
-                const seats = await AirplaneService.getAirplaneSeats(flight.airplaneId);
                 changeSeats(seats);
 
                 changeLoading(false);
@@ -168,6 +173,7 @@ function Content(props) {
                 onSeatChoosen={onSeatChoosen}
                 onSeatUnchoosen={onSeatUnchoosen}
                 choosenSeats={choosenSeats}
+                bookedSeats={bookedSeats}
             />
             <div className="seat-types-baggage-container">
                 <SeatTypes seatTypes={seatTypes} flightId={flight.id}/>
