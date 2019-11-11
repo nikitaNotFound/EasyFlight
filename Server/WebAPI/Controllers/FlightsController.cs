@@ -9,10 +9,11 @@ using Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using WebAPI.Models;
 using BlFlight = BusinessLayer.Models.Flight;
 using BlFlightFilter = BusinessLayer.Models.FlightFilter;
 using BlFlightSeatTypeCost = BusinessLayer.Models.FlightSeatTypeCost;
+using BlFlightBookInfo = BusinessLayer.Models.FlightBookInfo;
+using WebAPI.Models;
 
 namespace WebAPI.Controllers
 {
@@ -207,6 +208,77 @@ namespace WebAPI.Controllers
             }
 
             return Ok();
+        }
+
+        // POST api/flights/{flightId}/booked-seats/{seatId}
+        [HttpPost]
+        [Route("{flightId}/booked-seats/{seatId}")]
+        public async Task<IActionResult> BookForTimeAsync(int flightId, int seatId)
+        {
+            BlFlightBookInfo bookInfo = new BlFlightBookInfo() { FlightId = flightId, SeatId = seatId };
+
+            ResultTypes bookResult = await _flightService.BookForTimeAsync(bookInfo);
+
+            switch (bookResult)
+            {
+                case ResultTypes.Duplicate:
+                    return BadRequest();
+                case ResultTypes.NotFound:
+                    return NotFound();
+            }
+
+            return Ok();
+        }
+
+        // PUT api/flights/{flightId}/booked-seats/{seatId}{?transaction}
+        [HttpPut]
+        [Route("{flightId}/booked-seats/{seatId}")]
+        public async Task<IActionResult> BookAsync(int flightId, int seatId, string transaction)
+        {
+            if (string.IsNullOrEmpty(transaction))
+            {
+                return BadRequest();
+            }
+
+            BlFlightBookInfo bookInfo = new BlFlightBookInfo() { FlightId = flightId, SeatId = seatId };
+
+            ResultTypes bookResult = await _flightService.BookAsync(bookInfo, transaction);
+
+            switch (bookResult)
+            {
+                case ResultTypes.Duplicate:
+                    return BadRequest();
+                case ResultTypes.NotFound:
+                    return NotFound();
+            }
+
+            return Ok();
+        }
+
+        // GET api/flights/{flightId}/booked-seats
+        [HttpGet]
+        [Route("{flightId}/booked-seats")]
+        public async Task<IActionResult> GetFlightBookInfoAsync(int flightId)
+        {
+            IReadOnlyCollection<BlFlightBookInfo> flightBookInfoBl = await _flightService.GetFlightBookInfoAsync(flightId);
+
+            IEnumerable<FlightBookInfoResponse> flightBookInfo =
+                flightBookInfoBl.Select(_mapper.Map<FlightBookInfoResponse>);
+
+            return Ok(flightBookInfo);
+        }
+
+        // GET api/flights/account-flights
+        [HttpGet]
+        [Route("account-flights")]
+        public async Task<IActionResult> GetAccountFlightsAsync()
+        {
+            IReadOnlyCollection<BlFlight> accountFlightsBl = await _flightService.GetAccountFlights();
+
+            IEnumerable<Flight> accountFlights =
+                accountFlightsBl.Select(_mapper.Map<Flight>);
+
+            return Ok(accountFlights);
         }
     }
 }

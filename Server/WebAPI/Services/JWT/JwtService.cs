@@ -30,7 +30,8 @@ namespace WebAPI.Services.JWT
             Claim[] claims = new Claim[]
             {
                 new Claim(ClaimTypes.Email, account.Email),
-                new Claim(ClaimTypes.Role, account.Role.ToString())
+                new Claim(ClaimTypes.Role, account.Role.ToString()),
+                new Claim(ClaimTypes.NameIdentifier, account.Id.ToString()),
             };
 
             JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();

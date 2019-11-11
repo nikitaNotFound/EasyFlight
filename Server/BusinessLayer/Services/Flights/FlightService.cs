@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using BusinessLayer.Models;
@@ -9,6 +10,7 @@ using DataAccessLayer.Models;
 using DataAccessLayer.Repositories.Airplanes;
 using DataAccessLayer.Repositories.Airports;
 using DataAccessLayer.Repositories.Flights;
+using Microsoft.AspNetCore.Http;
 
 namespace BusinessLayer.Services.Flights
 {
@@ -19,6 +21,7 @@ namespace BusinessLayer.Services.Flights
         private readonly IAirportRepository _airportRepository;
         private readonly IAirplaneRepository _airplaneRepository;
         private readonly IBookingSettings _bookingSettings;
+        private readonly int _accountId;
 
 
         public FlightService(
@@ -26,7 +29,8 @@ namespace BusinessLayer.Services.Flights
             IFlightRepository flightRepository,
             IAirportRepository airportRepository,
             IAirplaneRepository airplaneRepository,
-            IBookingSettings bookingSettings
+            IBookingSettings bookingSettings,
+            IHttpContextAccessor httpContextAccessor
         )
         {
             _mapper = mapper;
@@ -34,6 +38,21 @@ namespace BusinessLayer.Services.Flights
             _airportRepository = airportRepository;
             _airplaneRepository = airplaneRepository;
             _bookingSettings = bookingSettings;
+
+            ClaimsIdentity claimsIdentity = httpContextAccessor?.HttpContext.User.Identity as ClaimsIdentity;
+
+            if (claimsIdentity == null)
+            {
+                return;
+            }
+
+            string nameIdentifier =
+                claimsIdentity?.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            if (!string.IsNullOrEmpty(nameIdentifier))
+            {
+                _accountId = int.Parse(nameIdentifier);
+            }
         }
 
 
@@ -242,9 +261,9 @@ namespace BusinessLayer.Services.Flights
             return flightBookInfoDal.Select(_mapper.Map<FlightBookInfo>).ToList();
         }
 
-        public async Task<IReadOnlyCollection<Flight>> GetAccountFlights(int accountId)
+        public async Task<IReadOnlyCollection<Flight>> GetAccountFlights()
         {
-            IReadOnlyCollection<FlightEntity> flightsDal = await _flightRepository.GetAccountFlights(accountId);
+            IReadOnlyCollection<FlightEntity> flightsDal = await _flightRepository.GetAccountFlights(_accountId);
 
             return flightsDal.Select(_mapper.Map<Flight>).ToList();
         }

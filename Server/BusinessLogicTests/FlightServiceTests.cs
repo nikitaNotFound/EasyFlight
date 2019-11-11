@@ -35,14 +35,18 @@ namespace BusinessLogicTests
 
             IMapper mapper = mappingConfig.CreateMapper();
 
+            IBookingSettings bookingSettings = new BookingSettingsMock(new TimeSpan(0, 5, 0));
+
             _flightService = new FlightService(
                 mapper,
                 new FlightRepositoryMock(),
                 new AirportRepositoryMock(),
-                new AirplanesRepositoryMock()
+                new AirplanesRepositoryMock(),
+                bookingSettings,
+                null
             );
 
-            _bookingSettings = new BookingSettingsMock(new TimeSpan(0, 5, 0));
+
         }
 
 
