@@ -83,28 +83,31 @@ function Content(props) {
     }
 
     async function onBookForTime() {
-        try {
-            const seatsToBookPromises = choosenSeats.map(seat =>
-                FlightService.bookForTime(flight.id, seat.id)
-            );
+        const seatsToBookPromises = choosenSeats.map(seat =>
+            FlightService.bookForTime(flight.id, seat.id)
+        );
 
-            await Promise.all(...seatsToBookPromises);
-            setTimeout(async () => onBookPayed, 30000);
-        } catch {
-            changeMessageBoxValue(defaultErrorMessage());
-        }
+        Promise.all([...seatsToBookPromises])
+            .then(() => {
+                onBookPayed();
+            })
+            .catch(() => {
+                changeMessageBoxValue(defaultErrorMessage());
+            })
     }
 
-    async function onBookPayed() {
-        try {
-            const seatsToBookPromises = choosenSeats.map(seat =>
-                FlightService.finalBook(flight.id, seat.id, 'transaction')
-            );
+    function onBookPayed() {
+        setTimeout(async () => {
+            try {
+                const seatsToBookPromises = choosenSeats.map(seat =>
+                    FlightService.finalBook(flight.id, seat.id, 'transaction')
+                );
 
-            await Promise.all(...seatsToBookPromises);
-        } catch {
-            changeMessageBoxValue(defaultErrorMessage());
-        }
+                await Promise.all([...seatsToBookPromises]);
+            } catch {
+                changeMessageBoxValue(defaultErrorMessage());
+            }
+        }, 5000);
     }
 
     function showMessageBox() {
@@ -130,6 +133,7 @@ function Content(props) {
     if (calculatePage) {
         return (
             <main className="rounded">
+                {showMessageBox()}
                 <CostLayout
                     flight={flight}
                     choosenSeats={choosenSeats}

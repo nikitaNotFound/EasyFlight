@@ -106,6 +106,12 @@ namespace BusinessLayer.Services.Booking
                 return ResultTypes.NotFound;
             }
 
+            bookInfoDal.AccountId = _accountId;
+            bookInfoDal.BookTime = DateTimeOffset.Now;
+            bookInfoDal.BookType = BookType.Payed;
+
+            await _flightRepository.BookAsync(bookInfoDal);
+
             return ResultTypes.Ok;
         }
 

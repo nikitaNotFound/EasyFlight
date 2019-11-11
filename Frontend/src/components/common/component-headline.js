@@ -4,7 +4,7 @@ import '../../styles/component-headline.css';
 
 function ComponentHeadline(props) {
     return (
-        <h4 className="component-headline">{props.content}</h4>
+        <h4 className="component-headline non-selectable">{props.content}</h4>
     );
 }
 
