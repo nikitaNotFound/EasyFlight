@@ -89,14 +89,13 @@ function Content(props) {
             );
 
             await Promise.all(...seatsToBookPromises);
-            setTimeout(() => alert(1), 1000);
+            setTimeout(async () => onBookPayed, 30000);
         } catch {
             changeMessageBoxValue(defaultErrorMessage());
         }
     }
 
     async function onBookPayed() {
-        alert(1)
         try {
             const seatsToBookPromises = choosenSeats.map(seat =>
                 FlightService.finalBook(flight.id, seat.id, 'transaction')
