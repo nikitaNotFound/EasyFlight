@@ -9,6 +9,6 @@ namespace BusinessLayer.Services.Booking
         Task<ResultTypes> BookForTimeAsync(FlightBookInfo bookInfo);
         Task<ResultTypes> BookAsync(FlightBookInfo bookInfo, string transaction);
         Task<IReadOnlyCollection<FlightBookInfo>> GetFlightBookInfoAsync(int flightId);
-        Task<IReadOnlyCollection<Flight>> GetAccountFlights();
+        Task<IReadOnlyCollection<AccountBook>> GetAccountBooks();
     }
 }

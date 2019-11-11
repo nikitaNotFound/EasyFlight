@@ -12,6 +12,7 @@ using BlFlight = BusinessLayer.Models.Flight;
 using BlFlightSeatTypeCost = BusinessLayer.Models.FlightSeatTypeCost;
 using BlFlightFiler = BusinessLayer.Models.FlightFilter;
 using BlFlightBookInfo = BusinessLayer.Models.FlightBookInfo;
+using BlAccountBook = BusinessLayer.Models.AccountBook;
 
 namespace WebAPI
 {
@@ -48,6 +49,8 @@ namespace WebAPI
             config.CreateMap<BlFlightFiler, FlightFilter>();
             config.CreateMap<FlightBookInfoResponse, BlFlightBookInfo>();
             config.CreateMap<BlFlightBookInfo, FlightBookInfoResponse>();
+            config.CreateMap<AccountBook, BlAccountBook>();
+            config.CreateMap<BlAccountBook, AccountBook>();
         }
     }
 }

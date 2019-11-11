@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropsTypes from 'prop-types';
 
 import Spinner from '../common/spinner';
+import Book from './book';
 
 import FlightObject from '../../services/flight-models/flight';
 
@@ -22,8 +23,8 @@ export default function Flight(props) {
     useEffect(() => {
         const fetchData = async () => {
             const [fromAirport, toAirport] = await Promise.all([
-                AirportService.getById(props.flight.fromId),
-                AirportService.getById(props.flight.toId)
+                AirportService.getById(props.flight.fromAirportId),
+                AirportService.getById(props.flight.toAirportId)
             ]);
 
             const [fromCity, toCity] = await Promise.all([
@@ -56,14 +57,10 @@ export default function Flight(props) {
     return (
         <div className="flight-history-item">
             <div className="row">
-                <div className="col-1">
-                    <img src={Icon} alt="company-icon" className="item-image" />
-                </div>
-
-                <div className="col-4">
+                <div className="col-5">
                     <div className="container-fluid">
                         <h5>
-                            From: {from} To: {to}
+                            From: {from} <br/> To: {to}
                         </h5>
                     </div>
 
@@ -71,9 +68,21 @@ export default function Flight(props) {
                 </div>
 
                 <div className="col-7">
-                    Departure time: {getTimeString(props.flight.departureTime)}
-                    <br />
-                    Departure back time: {getTimeString(props.flight.departureBackTime)}
+                    <div className="time-info">
+                        Departure time: {getTimeString(props.flight.departureTime)}
+                    </div>
+                    <div className="time-info">
+                        Arrival time: {getTimeString(props.flight.arrivalTime)}
+                    </div>
+                </div>
+            </div>
+            <div className="row books">
+                <div className="col-12">
+                    {props.books.map(book => 
+                        <Book
+                            book={book}
+                        />
+                    )}
                 </div>
             </div>
         </div>
@@ -81,5 +90,6 @@ export default function Flight(props) {
 }
 
 Flight.propsTypes = {
-    flight: PropsTypes.instanceOf(FlightObject)
+    flight: PropsTypes.instanceOf(FlightObject),
+    books: PropsTypes.array
 };

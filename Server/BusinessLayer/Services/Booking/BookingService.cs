@@ -68,7 +68,7 @@ namespace BusinessLayer.Services.Booking
                 return ResultTypes.NotFound;
             }
 
-            bool canBook = await _flightRepository.CheckBookAvailability(
+            bool canBook = await _flightRepository.CheckBookAvailabilityAsync(
                 bookInfo.FlightId,
                 bookInfo.SeatId,
                 _bookingSettings.ExpirationTime);
@@ -94,7 +94,7 @@ namespace BusinessLayer.Services.Booking
             FlightBookInfoEntity bookInfoDal = _mapper.Map<FlightBookInfoEntity>(bookInfo);
 
             bool canBook =
-                await _flightRepository.CheckFinalBookAvailability(bookInfoDal, _bookingSettings.ExpirationTime);
+                await _flightRepository.CheckFinalBookAvailabilityAsync(bookInfoDal, _bookingSettings.ExpirationTime);
 
             if (!canBook)
             {
@@ -118,16 +118,17 @@ namespace BusinessLayer.Services.Booking
         public async Task<IReadOnlyCollection<FlightBookInfo>> GetFlightBookInfoAsync(int flightId)
         {
             IReadOnlyCollection<FlightBookInfoEntity> flightBookInfoDal =
-                await _flightRepository.GetFlightBookInfo(flightId, _bookingSettings.ExpirationTime);
+                await _flightRepository.GetFlightBookInfoAsync(flightId, _bookingSettings.ExpirationTime);
 
             return flightBookInfoDal.Select(_mapper.Map<FlightBookInfo>).ToList();
         }
 
-        public async Task<IReadOnlyCollection<Flight>> GetAccountFlights()
+        public async Task<IReadOnlyCollection<AccountBook>> GetAccountBooks()
         {
-            IReadOnlyCollection<FlightEntity> flightsDal = await _flightRepository.GetAccountFlights(_accountId);
+            IReadOnlyCollection<AccountBookEntity> flightsDal =
+                await _flightRepository.GetAccountBooksAsync(_accountId);
 
-            return flightsDal.Select(_mapper.Map<Flight>).ToList();
+            return flightsDal.Select(_mapper.Map<AccountBook>).ToList();
         }
     }
 }

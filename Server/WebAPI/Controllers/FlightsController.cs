@@ -14,6 +14,7 @@ using BlFlight = BusinessLayer.Models.Flight;
 using BlFlightFilter = BusinessLayer.Models.FlightFilter;
 using BlFlightSeatTypeCost = BusinessLayer.Models.FlightSeatTypeCost;
 using BlFlightBookInfo = BusinessLayer.Models.FlightBookInfo;
+using BlAccountBook = BusinessLayer.Models.AccountBook;
 using WebAPI.Models;
 
 namespace WebAPI.Controllers
@@ -271,15 +272,14 @@ namespace WebAPI.Controllers
             return Ok(flightBookInfo);
         }
 
-        // GET api/flights/account-flights
+        // GET api/flights/account-books
         [HttpGet]
-        [Route("account-flights")]
-        public async Task<IActionResult> GetAccountFlightsAsync()
+        [Route("account-books")]
+        public async Task<IActionResult> GetAccountBooksAsync()
         {
-            IReadOnlyCollection<BlFlight> accountFlightsBl = await _bookingService.GetAccountFlights();
+            IReadOnlyCollection<BlAccountBook> accountFlightsBl = await _bookingService.GetAccountBooks();
 
-            IEnumerable<Flight> accountFlights =
-                accountFlightsBl.Select(_mapper.Map<Flight>);
+            IEnumerable<AccountBook> accountFlights = accountFlightsBl.Select(_mapper.Map<AccountBook>);
 
             return Ok(accountFlights);
         }

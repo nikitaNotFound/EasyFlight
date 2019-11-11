@@ -159,7 +159,7 @@ namespace BusinessLayer.Services.Flights
             }
 
             AirplaneSeatTypeEntity seatType =
-                await _airplaneRepository.GetAirplaneSeatTypeById(seatTypeCostDal.SeatTypeId);
+                await _airplaneRepository.GetSeatTypeById(seatTypeCostDal.SeatTypeId);
 
             if (seatType == null)
             {
@@ -190,7 +190,7 @@ namespace BusinessLayer.Services.Flights
             }
 
             AirplaneSeatTypeEntity seatType =
-                await _airplaneRepository.GetAirplaneSeatTypeById(seatTypeCostDal.SeatTypeId);
+                await _airplaneRepository.GetSeatTypeById(seatTypeCostDal.SeatTypeId);
 
             if (seatType == null)
             {

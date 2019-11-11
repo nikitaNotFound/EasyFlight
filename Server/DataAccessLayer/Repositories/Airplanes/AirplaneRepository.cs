@@ -135,7 +135,7 @@ namespace DataAccessLayer.Repositories.Airplanes
             return seats.ToList();
         }
 
-        public async Task<AirplaneSeatTypeEntity> GetAirplaneSeatTypeById(int seatTypeId)
+        public async Task<AirplaneSeatTypeEntity> GetSeatTypeById(int seatTypeId)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 

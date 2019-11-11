@@ -36,6 +36,8 @@ namespace BusinessLayer
             config.CreateMap<FlightFilterEntity, FlightFilter>();
             config.CreateMap<FlightBookInfo, FlightBookInfoEntity>();
             config.CreateMap<FlightBookInfoEntity, FlightBookInfo>();
+            config.CreateMap<AccountBook, AccountBookEntity>();
+            config.CreateMap<AccountBookEntity, AccountBook>();
         }
     }
 }

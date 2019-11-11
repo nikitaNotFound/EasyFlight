@@ -98,6 +98,32 @@ export async function getAirplaneSeats(airplaneId) {
     return await createRequestResult(response, RequestTypes.ContentExpected);
 }
 
+export async function getSeatById(seatId) {
+    const response = await fetch(
+        `${config.API_URL}/airplanes/seats/${seatId}`,
+        {
+            method: 'GET',
+            mode: 'cors',
+            headers: headers
+        }
+    );
+
+    return await createRequestResult(response, RequestTypes.ContentExpected);
+}
+
+export async function getSeatTypeById(seatTypeId) {
+    const response = await fetch(
+        `${config.API_URL}/airplanes/seat-types/${seatTypeId}`,
+        {
+            method: 'GET',
+            mode: 'cors',
+            headers: headers
+        }
+    );
+
+    return await createRequestResult(response, RequestTypes.ContentExpected);
+}
+
 export async function getAirplaneSeatTypes(airplaneId) {
     const response = await fetch(
         `${config.API_URL}/airplanes/${airplaneId}/seat-types`,

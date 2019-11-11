@@ -9,6 +9,8 @@ import * as FlightService from '../../services/FlightService';
 
 import Spinner from '../common/spinner';
 import Flights from './flights';
+import MessageBox from '../common/message-box';
+import { defaultErrorMessage } from '../common/message-box-messages';
 
 import { changeUserInfo } from '../../store/actions/UserInfoActions';
 
@@ -16,46 +18,46 @@ import { connect } from 'react-redux';
 
 function Content(props) {
     const [isLoading, changeLoadingMode] = useState(true);
-    const [flights, changeFlights] = useState([]);
-    const [userFlights, changeUserFlights] = useState();
-    const [user, changeUser] = useState(props);
+    const [accountBooks, changeAccountBooks] = useState([]);
+    const [messageBoxValue, changeMessageBoxValue] = useState();
 
     useEffect(() => {
-        const userFlightsLoading = UserService.getUserFlights(user.id);
+        const fetchData = async () => {
+            try {
+                const userFlights = await FlightService.getAccountBooks()
 
-        userFlightsLoading
-            .then(userFlights => {
-                changeUserFlights(userFlights);
-
-                if (userFlights.length > 0) {
-                    let storage = userFlights.map(flight => FlightService.getById(flight.flightId));
-
-                    return Promise.all([...storage]);
-                }
-            })
-            .then(flights => {
-                if (flights) {
-                    changeFlights(flights);
-                }
+                changeAccountBooks(userFlights);
                 changeLoadingMode(false);
-            })
-            .catch(error => {
-                alert(error);
-            });
+            } catch {
+                changeMessageBoxValue(defaultErrorMessage());
+            }
+        }
+        fetchData();
     }, []);
 
-    async function onLogout() {
-        await UserService.logout();
-        changeUserInfo(null);
-        props.history.push("/");
+    function showMessageBoxValue() {
+        if (messageBoxValue) {
+            return (
+                <MessageBox
+                    message={messageBoxValue}
+                    hideFunc={changeMessageBoxValue}
+                />
+            );
+        }
     }
 
     if (isLoading) {
-        return <Spinner headline="Loading..." />;
+        return (
+            <main className="rounded">
+                {showMessageBoxValue()}
+                <Spinner headline="Loading..."/>
+            </main>
+        );
     }
 
     return (
         <main className="rounded">
+            {showMessageBoxValue()}
             <div className="main-info">
                 <div className="row">
                     <div className="col-2">
@@ -67,18 +69,14 @@ function Content(props) {
                         </div>
                     </div>
                     <div className="col-10">
-                        <input type="text" className="name-input" value={user.firstName} />
-
-                        <button className="logout rounded non-selectable" onClick={onLogout}>
-                            log out
-                        </button>
+                        <input type="text" className="name-input" value={props.firstName}/>
                     </div>
                 </div>
             </div>
 
             <div className="flight-history">
                 <div className="flight-history-headline non-selectable">Your flights</div>
-                <Flights flights={flights} />
+                <Flights accountBooks={accountBooks} />
             </div>
         </main>
     );

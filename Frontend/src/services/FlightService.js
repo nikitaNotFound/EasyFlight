@@ -177,9 +177,9 @@ export async function finalBook(flightId, seatId, transaction) {
     return await createRequestResult(response, RequestTypes.NoContentExpected);
 }
 
-export async function getUserFlights() {
+export async function getAccountBooks() {
     const response = await fetch(
-        `${config.API_URL}/flights/account-flights`,
+        `${config.API_URL}/flights/account-books`,
         {
             method: 'get',
             mode: 'cors',

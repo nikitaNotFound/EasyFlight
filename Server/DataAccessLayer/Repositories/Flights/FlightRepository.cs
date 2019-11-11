@@ -182,7 +182,7 @@ namespace DataAccessLayer.Repositories.Flights
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<bool> CheckBookAvailability(int flightId, int seatId, TimeSpan expirationTime)
+        public async Task<bool> CheckBookAvailabilityAsync(int flightId, int seatId, TimeSpan expirationTime)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
@@ -198,7 +198,7 @@ namespace DataAccessLayer.Repositories.Flights
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<bool> CheckFinalBookAvailability(FlightBookInfoEntity bookInfo, TimeSpan expirationTime)
+        public async Task<bool> CheckFinalBookAvailabilityAsync(FlightBookInfoEntity bookInfo, TimeSpan expirationTime)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
@@ -215,7 +215,7 @@ namespace DataAccessLayer.Repositories.Flights
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<IReadOnlyCollection<FlightBookInfoEntity>> GetFlightBookInfo(
+        public async Task<IReadOnlyCollection<FlightBookInfoEntity>> GetFlightBookInfoAsync(
             int flightId,
             TimeSpan expirationTime
         )
@@ -235,12 +235,12 @@ namespace DataAccessLayer.Repositories.Flights
             return flights.ToList();
         }
 
-        public async Task<IReadOnlyCollection<FlightEntity>> GetAccountFlights(int accountId)
+        public async Task<IReadOnlyCollection<AccountBookEntity>> GetAccountBooksAsync(int accountId)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
-            IEnumerable<FlightEntity> flights = await db.QueryAsync<FlightEntity>(
-                "GetAccountFlights",
+            IEnumerable<AccountBookEntity> flights = await db.QueryAsync<AccountBookEntity>(
+                "GetAccountBooks",
                 new
                 {
                     AccountId = accountId,

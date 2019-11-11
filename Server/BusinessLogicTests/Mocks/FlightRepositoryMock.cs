@@ -81,6 +81,11 @@ namespace BusinessLogicTests.Mocks
             },
         };
 
+        private readonly List<AccountBookEntity> _accountBooks = new List<AccountBookEntity>()
+        {
+            new AccountBookEntity()
+        };
+
         public async Task<IReadOnlyCollection<FlightEntity>> GetAllAsync()
         {
             return _flightData;
@@ -135,7 +140,7 @@ namespace BusinessLogicTests.Mocks
             // implementation
         }
 
-        public async Task<bool> CheckBookAvailability(int flightId, int seatId, TimeSpan expirationTime)
+        public async Task<bool> CheckBookAvailabilityAsync(int flightId, int seatId, TimeSpan expirationTime)
         {
             FlightBookInfoEntity seatInfo =  _flightSeatInfo.FirstOrDefault(
                 x => x.FlightId == flightId
@@ -147,7 +152,7 @@ namespace BusinessLogicTests.Mocks
             return seatInfo == null;
         }
 
-        public async Task<bool> CheckFinalBookAvailability(FlightBookInfoEntity bookInfo, TimeSpan expirationTime)
+        public async Task<bool> CheckFinalBookAvailabilityAsync(FlightBookInfoEntity bookInfo, TimeSpan expirationTime)
         {
             FlightBookInfoEntity seatInfo =  _flightSeatInfo.FirstOrDefault(
                 x => x.FlightId == bookInfo.FlightId
@@ -160,7 +165,7 @@ namespace BusinessLogicTests.Mocks
             return seatInfo == null;
         }
 
-        public async Task<IReadOnlyCollection<FlightBookInfoEntity>> GetFlightBookInfo(int flightId, TimeSpan expirationTime)
+        public async Task<IReadOnlyCollection<FlightBookInfoEntity>> GetFlightBookInfoAsync(int flightId, TimeSpan expirationTime)
         {
             return _flightSeatInfo.Select(x => x).Where(
                 x => x.FlightId == flightId
@@ -173,9 +178,9 @@ namespace BusinessLogicTests.Mocks
             return _flightSeatInfo.Select(x => x).Where(x => x.FlightId == flightId).ToList();
         }
 
-        public async Task<IReadOnlyCollection<FlightEntity>> GetAccountFlights(int accountId)
+        public async Task<IReadOnlyCollection<AccountBookEntity>> GetAccountBooksAsync(int accountId)
         {
-            return _flightData;
+            return _accountBooks;
         }
     }
 }

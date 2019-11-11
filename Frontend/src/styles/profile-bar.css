@@ -7,10 +7,26 @@
 
 .profile-bar-body .name {
     display: inline-block;
-    width: 80%;
+    width: 60%;
     padding: 0.5em 0;
     padding-left: 2%;
     background: rgb(211, 211, 211);
+}
+
+.profile-bar-body .logout {
+    display: inline-block;
+    width: 20%;
+    border: 0;
+    background: rgb(184, 88, 88);
+    padding: 0.5em 0;
+}
+
+.profile-bar-body .logout:hover {
+    display: inline-block;
+    width: 20%;
+    border: 0;
+    background: rgb(221, 107, 107);
+    padding: 0.5em 0;
 }
 
 .profile-bar-body .settings {

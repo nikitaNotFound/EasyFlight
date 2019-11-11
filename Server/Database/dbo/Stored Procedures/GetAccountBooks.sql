@@ -1,10 +1,10 @@
-﻿create procedure [dbo].[GetAccountFlights]
+create procedure [dbo].[GetAccountFlights]
     @accountId as int,
     @finalBookType as int
 as
-    select distinct *
+    select FlightId, SeatId
     from FlightSeatsInfo
-        inner join Flights
+        full outer join Flights
             on Flights.Id = FlightId
     where AccountId = @accountId
         and BookType = @finalBookType
