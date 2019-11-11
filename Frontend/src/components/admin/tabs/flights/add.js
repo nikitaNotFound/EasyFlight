@@ -230,16 +230,6 @@ export default function Add() {
                                         />
                                     </div>
                                 </div>
-
-                                <div className="adding-form-section">
-                                    <div className="row">
-                                        <ParamField
-                                            name="Overload kg cost"
-                                            value={overloadKgCost}
-                                            onChange={changeOverloadKgCost}
-                                        />
-                                    </div>
-                                </div>
                             </div>
                         </div>
                         <ConfirmActionButton onClick={onDataSave} buttonContent="Add"/>
