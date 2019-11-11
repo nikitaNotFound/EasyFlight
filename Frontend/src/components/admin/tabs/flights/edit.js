@@ -10,14 +10,14 @@ import TicketsCostEditor from './tickets-cost-editor';
 import ParamField from './param-field';
 import ConfirmActionButton from '../../../common/confirm-action-button';
 
-import BuyIcon from '../../../../icons/add-image.png';
 
 import Flight from '../../../../services/flight-models/flight';
-import { invalidInput, defaultErrorMessage, saved } from '../../../common/message-box-messages';
+import { invalidInput, defaultErrorMessage, flightTimeError, saved } from '../../../common/message-box-messages';
 
 import * as AirplaneService from '../../../../services/AirplaneService';
 import * as FlightService from '../../../../services/FlightService';
 import * as AirportService from '../../../../services/AirportService';
+import { BadRequestError } from '../../../../services/RequestErrors';
 
 export default function Edit(props) {
     const [loading, changeLoadingMode] = useState(true);
@@ -127,13 +127,13 @@ export default function Edit(props) {
                 ...seatTypesCostUpdatePromises
             ]);
             changeMessageBoxValue(saved());
-        } catch {
-            changeMessageBoxValue(defaultErrorMessage());
+        } catch(ex) {
+            if (ex instanceof BadRequestError) {
+                changeMessageBoxValue(flightTimeError());
+            } else {
+                changeMessageBoxValue(defaultErrorMessage());
+            }
         }
-    }
-
-    function getAirplaneName(airplane) {
-        return airplane.name;
     }
 
     function getAirportName(airport) {

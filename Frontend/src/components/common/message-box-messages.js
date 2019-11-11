@@ -39,3 +39,7 @@ export function seatTypeInvalidInput() {
 export function seatTypeDuplicate() {
     return 'Seat type with such color or name already exists!';
 }
+
+export function flightTimeError() {
+    return 'Arrival time can\'t be earlier then departure!';
+}

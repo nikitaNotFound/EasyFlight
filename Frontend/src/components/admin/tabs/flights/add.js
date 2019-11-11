@@ -9,7 +9,7 @@ import TicketsCostEditor from './tickets-cost-editor';
 import Flight from '../../../../services/flight-models/flight';
 import ParamField from './param-field';
 
-import { invalidInput, defaultErrorMessage, added } from '../../../common/message-box-messages';
+import { invalidInput, defaultErrorMessage, added, flightTimeError } from '../../../common/message-box-messages';
 import ConfirmActionButton from '../../../common/confirm-action-button';
 
 import * as AirportService from '../../../../services/AirportService';
@@ -36,8 +36,6 @@ export default function Add() {
 
     const [handLuggageMassKg, changeHandLuggageMassKg] = useState(0);
     const [handLuggageCount, changeHandLuggageCount] = useState(0);
-
-    const [overloadKgCost, changeOverloadKgCost] = useState(0);
 
     const [overloadKgCost, changeOverloadKgCost] = useState(0);
 
@@ -85,7 +83,11 @@ export default function Add() {
 
             changeMessageBoxValue(added());
         } catch(ex) {
-            changeMessageBoxValue(defaultErrorMessage());
+            if (ex instanceof BadRequestError) {
+                changeMessageBoxValue(flightTimeError());
+            } else {
+                changeMessageBoxValue(defaultErrorMessage());
+            }
         }
     }
 
