@@ -14,7 +14,7 @@ namespace BusinessLogicTests
     [TestClass]
     public class FlightServiceTests
     {
-        private readonly IMapper _mapper;
+        private readonly IFlightService _flightService;
 
 
         public FlightServiceTests()
@@ -30,7 +30,14 @@ namespace BusinessLogicTests
             });
             mappingConfig.CompileMappings();
 
-            _mapper = mappingConfig.CreateMapper();
+            IMapper mapper = mappingConfig.CreateMapper();
+
+            _flightService = new FlightService(
+                mapper,
+                new FlightRepositoryMock(),
+                new AirportRepositoryMock(),
+                new AirplanesRepositoryMock()
+            );
         }
 
 
@@ -44,15 +51,9 @@ namespace BusinessLogicTests
                 FlightId = 1,
                 Cost = 300
             };
-            FlightService flightService = new FlightService(
-                _mapper,
-                new FlightRepositoryMock(),
-                new AirportRepositoryMock(),
-                new AirplanesRepositoryMock()
-            );
 
             // Act
-            ResultTypes addResult = await flightService.AddFlightSeatTypeCostAsync(seatTypeCost);
+            ResultTypes addResult = await _flightService.AddFlightSeatTypeCostAsync(seatTypeCost);
 
             // Assert
             Assert.AreEqual(ResultTypes.Ok, addResult);
@@ -68,15 +69,9 @@ namespace BusinessLogicTests
                 FlightId = 200,
                 Cost = 300
             };
-            FlightService flightService = new FlightService(
-                _mapper,
-                new FlightRepositoryMock(),
-                new AirportRepositoryMock(),
-                new AirplanesRepositoryMock()
-            );
 
             // Act
-            ResultTypes addResult = await flightService.AddFlightSeatTypeCostAsync(seatTypeCost);
+            ResultTypes addResult = await _flightService.AddFlightSeatTypeCostAsync(seatTypeCost);
 
             // Assert
             Assert.AreEqual(ResultTypes.NotFound, addResult);
@@ -92,15 +87,9 @@ namespace BusinessLogicTests
                 FlightId = 1,
                 Cost = 300
             };
-            FlightService flightService = new FlightService(
-                _mapper,
-                new FlightRepositoryMock(),
-                new AirportRepositoryMock(),
-                new AirplanesRepositoryMock()
-            );
 
             // Act
-            ResultTypes addResult = await flightService.AddFlightSeatTypeCostAsync(seatTypeCost);
+            ResultTypes addResult = await _flightService.AddFlightSeatTypeCostAsync(seatTypeCost);
 
             // Assert
             Assert.AreEqual(ResultTypes.NotFound, addResult);
@@ -116,15 +105,9 @@ namespace BusinessLogicTests
                 FlightId = 2,
                 Cost = 300
             };
-            FlightService flightService = new FlightService(
-                _mapper,
-                new FlightRepositoryMock(),
-                new AirportRepositoryMock(),
-                new AirplanesRepositoryMock()
-            );
 
             // Act
-            ResultTypes addResult = await flightService.AddFlightSeatTypeCostAsync(seatTypeCost);
+            ResultTypes addResult = await _flightService.AddFlightSeatTypeCostAsync(seatTypeCost);
 
             // Assert
             Assert.AreEqual(ResultTypes.Duplicate, addResult);
@@ -140,15 +123,9 @@ namespace BusinessLogicTests
                 FlightId = 1,
                 Cost = 300
             };
-            FlightService flightService = new FlightService(
-                _mapper,
-                new FlightRepositoryMock(),
-                new AirportRepositoryMock(),
-                new AirplanesRepositoryMock()
-            );
 
             // Act
-            ResultTypes addResult = await flightService.UpdateFlightSeatTypeCostAsync(seatTypeCost);
+            ResultTypes addResult = await _flightService.UpdateFlightSeatTypeCostAsync(seatTypeCost);
 
             // Assert
             Assert.AreEqual(ResultTypes.Ok, addResult);
@@ -164,15 +141,9 @@ namespace BusinessLogicTests
                 FlightId = 200,
                 Cost = 300
             };
-            FlightService flightService = new FlightService(
-                _mapper,
-                new FlightRepositoryMock(),
-                new AirportRepositoryMock(),
-                new AirplanesRepositoryMock()
-            );
 
             // Act
-            ResultTypes addResult = await flightService.UpdateFlightSeatTypeCostAsync(seatTypeCost);
+            ResultTypes addResult = await _flightService.UpdateFlightSeatTypeCostAsync(seatTypeCost);
 
             // Assert
             Assert.AreEqual(ResultTypes.NotFound, addResult);
@@ -188,42 +159,12 @@ namespace BusinessLogicTests
                 FlightId = 1,
                 Cost = 300
             };
-            FlightService flightService = new FlightService(
-                _mapper,
-                new FlightRepositoryMock(),
-                new AirportRepositoryMock(),
-                new AirplanesRepositoryMock()
-            );
 
             // Act
-            ResultTypes addResult = await flightService.UpdateFlightSeatTypeCostAsync(seatTypeCost);
+            ResultTypes addResult = await _flightService.UpdateFlightSeatTypeCostAsync(seatTypeCost);
 
             // Assert
             Assert.AreEqual(ResultTypes.NotFound, addResult);
-        }
-
-        [TestMethod]
-        public async Task UpdatingDuplicateFlightSeatTypeCostReturnsDuplicateResult()
-        {
-            // Arrange
-            FlightSeatTypeCost seatTypeCost = new FlightSeatTypeCost()
-            {
-                SeatTypeId = 1,
-                FlightId = 2,
-                Cost = 300
-            };
-            FlightService flightService = new FlightService(
-                _mapper,
-                new FlightRepositoryMock(),
-                new AirportRepositoryMock(),
-                new AirplanesRepositoryMock()
-            );
-
-            // Act
-            ResultTypes addResult = await flightService.UpdateFlightSeatTypeCostAsync(seatTypeCost);
-
-            // Assert
-            Assert.AreEqual(ResultTypes.Duplicate, addResult);
         }
 
         [TestMethod]
@@ -244,15 +185,9 @@ namespace BusinessLogicTests
                 ),
                 AirplaneId = 200,
             };
-            FlightService flightService = new FlightService(
-                _mapper,
-                new FlightRepositoryMock(),
-                new AirportRepositoryMock(),
-                new AirplanesRepositoryMock()
-            );
 
             // Act
-            AddResult addResult = await flightService.AddAsync(flight);
+            AddResult addResult = await _flightService.AddAsync(flight);
 
             // Assert
             Assert.AreEqual(ResultTypes.NotFound, addResult.ResultType);
@@ -276,15 +211,9 @@ namespace BusinessLogicTests
                 ),
                 AirplaneId = 1,
             };
-            FlightService flightService = new FlightService(
-                _mapper,
-                new FlightRepositoryMock(),
-                new AirportRepositoryMock(),
-                new AirplanesRepositoryMock()
-            );
 
             // Act
-            AddResult addResult = await flightService.AddAsync(flight);
+            AddResult addResult = await _flightService.AddAsync(flight);
 
             // Assert
             Assert.AreEqual(ResultTypes.NotFound, addResult.ResultType);
@@ -308,15 +237,9 @@ namespace BusinessLogicTests
                 ),
                 AirplaneId = 200,
             };
-            FlightService flightService = new FlightService(
-                _mapper,
-                new FlightRepositoryMock(),
-                new AirportRepositoryMock(),
-                new AirplanesRepositoryMock()
-            );
 
             // Act
-            ResultTypes addResult = await flightService.UpdateAsync(flight);
+            ResultTypes addResult = await _flightService.UpdateAsync(flight);
 
             // Assert
             Assert.AreEqual(ResultTypes.NotFound, addResult);
@@ -340,15 +263,9 @@ namespace BusinessLogicTests
                 ),
                 AirplaneId = 1,
             };
-            FlightService flightService = new FlightService(
-                _mapper,
-                new FlightRepositoryMock(),
-                new AirportRepositoryMock(),
-                new AirplanesRepositoryMock()
-            );
 
             // Act
-            ResultTypes addResult = await flightService.UpdateAsync(flight);
+            ResultTypes addResult = await _flightService.UpdateAsync(flight);
 
             // Assert
             Assert.AreEqual(ResultTypes.NotFound, addResult);
