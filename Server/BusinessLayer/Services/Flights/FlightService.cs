@@ -70,6 +70,11 @@ namespace BusinessLayer.Services.Flights
                 return new AddResult(ResultTypes.NotFound, null);
             }
 
+            if (flight.ArrivalTime <= flight.DepartureTime)
+            {
+                return new AddResult(ResultTypes.InvalidData, null);
+            }
+
             int addedFlightId = await _flightRepository.AddAsync(flightDal);
 
             return new AddResult(ResultTypes.Ok, addedFlightId);
@@ -92,6 +97,11 @@ namespace BusinessLayer.Services.Flights
             if (airplane == null)
             {
                 return ResultTypes.NotFound;
+            }
+
+            if (newFlight.ArrivalTime <= newFlight.DepartureTime)
+            {
+                return ResultTypes.InvalidData;
             }
 
             await _flightRepository.UpdateAsync(flightDal);

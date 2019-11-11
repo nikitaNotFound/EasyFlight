@@ -114,6 +114,8 @@ namespace WebAPI.Controllers
             {
                 case ResultTypes.Duplicate:
                     return BadRequest();
+                case ResultTypes.InvalidData:
+                    return BadRequest();
                 case ResultTypes.NotFound:
                     return NotFound();
             }
@@ -133,6 +135,8 @@ namespace WebAPI.Controllers
             switch (addResult)
             {
                 case ResultTypes.Duplicate:
+                    return BadRequest();
+                case ResultTypes.InvalidData:
                     return BadRequest();
                 case ResultTypes.NotFound:
                     return NotFound();

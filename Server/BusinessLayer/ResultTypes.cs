@@ -4,6 +4,7 @@
     {
         Ok,
         NotFound,
-        Duplicate
+        Duplicate,
+        InvalidData
     }
 }

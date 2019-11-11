@@ -168,6 +168,32 @@ namespace BusinessLogicTests
         }
 
         [TestMethod]
+        public async Task AddingFlightReturnsOkResult()
+        {
+            // Arrange
+            Flight flight = new Flight()
+            {
+                FromAirportId = 1,
+                ToAirportId = 2,
+                DepartureTime = new DateTimeOffset(
+                    new DateTime(2019, 5, 20, 16, 0, 0),
+                    new TimeSpan(3, 0, 0)
+                ),
+                ArrivalTime = new DateTimeOffset(
+                    new DateTime(2019, 5, 20, 17, 0, 0),
+                    new TimeSpan(3, 0, 0)
+                ),
+                AirplaneId = 1,
+            };
+
+            // Act
+            AddResult addResult = await _flightService.AddAsync(flight);
+
+            // Assert
+            Assert.AreEqual(ResultTypes.Ok, addResult.ResultType);
+        }
+
+        [TestMethod]
         public async Task AddingFlightWithNonexistentAirplaneReturnsNotFoundResult()
         {
             // Arrange
@@ -220,11 +246,38 @@ namespace BusinessLogicTests
         }
 
         [TestMethod]
+        public async Task AddingFlightWithArrivalTimeEarlierOrEqualThenDepartureTimeReturnsInvalidDataResult()
+        {
+            // Arrange
+            Flight flight = new Flight()
+            {
+                FromAirportId = 1,
+                ToAirportId = 1,
+                DepartureTime = new DateTimeOffset(
+                    new DateTime(2019, 5, 20, 16, 0, 0),
+                    new TimeSpan(3, 0, 0)
+                ),
+                ArrivalTime = new DateTimeOffset(
+                    new DateTime(2018, 5, 20, 17, 0, 0),
+                    new TimeSpan(3, 0, 0)
+                ),
+                AirplaneId = 1,
+            };
+
+            // Act
+            AddResult addResult = await _flightService.AddAsync(flight);
+
+            // Assert
+            Assert.AreEqual(ResultTypes.InvalidData, addResult.ResultType);
+        }
+
+        [TestMethod]
         public async Task UpdatingFlightWithNonexistentAirplaneReturnsNotFoundResult()
         {
             // Arrange
             Flight flight = new Flight()
             {
+                Id = 1,
                 FromAirportId = 1,
                 ToAirportId = 2,
                 DepartureTime = new DateTimeOffset(
@@ -251,6 +304,7 @@ namespace BusinessLogicTests
             // Arrange
             Flight flight = new Flight()
             {
+                Id = 1,
                 FromAirportId = 200,
                 ToAirportId = 200,
                 DepartureTime = new DateTimeOffset(
@@ -270,5 +324,59 @@ namespace BusinessLogicTests
             // Assert
             Assert.AreEqual(ResultTypes.NotFound, addResult);
         }
+
+        [TestMethod]
+        public async Task UpdatingFlightWithArrivalTimeEarlierOrEqualThenDepartureTimeReturnsInvalidDataResult()
+        {
+            // Arrange
+            Flight flight = new Flight()
+            {
+                Id = 1,
+                FromAirportId = 1,
+                ToAirportId = 1,
+                DepartureTime = new DateTimeOffset(
+                    new DateTime(2019, 5, 20, 16, 0, 0),
+                    new TimeSpan(3, 0, 0)
+                ),
+                ArrivalTime = new DateTimeOffset(
+                    new DateTime(2018, 5, 20, 17, 0, 0),
+                    new TimeSpan(3, 0, 0)
+                ),
+                AirplaneId = 1,
+            };
+
+            // Act
+            ResultTypes addResult = await _flightService.UpdateAsync(flight);
+
+            // Assert
+            Assert.AreEqual(ResultTypes.InvalidData, addResult);
+        }
+        [TestMethod]
+        public async Task UpdatingFlightReturnsOkResult()
+        {
+            // Arrange
+            Flight flight = new Flight()
+            {
+                Id = 1,
+                FromAirportId = 1,
+                ToAirportId = 2,
+                DepartureTime = new DateTimeOffset(
+                    new DateTime(2019, 5, 20, 16, 0, 0),
+                    new TimeSpan(3, 0, 0)
+                ),
+                ArrivalTime = new DateTimeOffset(
+                    new DateTime(2019, 5, 20, 17, 0, 0),
+                    new TimeSpan(3, 0, 0)
+                ),
+                AirplaneId = 1,
+            };
+
+            // Act
+            ResultTypes addResult = await _flightService.UpdateAsync(flight);
+
+            // Assert
+            Assert.AreEqual(ResultTypes.Ok, addResult);
+        }
+
     }
 }
