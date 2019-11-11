@@ -16,7 +16,7 @@ function Filter(props) {
     const [toCity, changeToCity] = useState(props.filterOptions.toCity);
 
     const [departureDate, changeDepartureDate] = useState(props.filterOptions.departureTime);
-    const [arrivalDate, changeArrivalkDate] = useState(props.filterOptions.departureBackTime);
+    const [arrivalDate, changeArrivalDate] = useState(props.filterOptions.departureBackTime);
 
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
@@ -130,7 +130,7 @@ function Filter(props) {
                     <input
                         type="date"
                         value={arrivalDate}
-                        onChange={(event) => changeArrivalkDate(event.target.value)}
+                        onChange={(event) => changeArrivalDate(event.target.value)}
                     />
                 </div>
             </div>

@@ -28,9 +28,9 @@ function Content(props) {
                 changeUserFlights(userFlights);
 
                 if (userFlights.length > 0) {
-                    let storage = userFlights.map(flight => flight.flightId);
+                    let storage = userFlights.map(flight => FlightService.getById(flight.flightId));
 
-                    return FlightService.getById(1);
+                    return Promise.all([...storage]);
                 }
             })
             .then(flights => {
