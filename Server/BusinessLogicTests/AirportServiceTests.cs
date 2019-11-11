@@ -12,7 +12,7 @@ namespace BusinessLogicTests
     [TestClass]
     public class AirportServiceTests
     {
-        private readonly IMapper _mapper;
+        private readonly IAirportService _airportService;
 
 
         public AirportServiceTests()
@@ -24,7 +24,9 @@ namespace BusinessLogicTests
             });
             mappingConfig.CompileMappings();
 
-            _mapper = mappingConfig.CreateMapper();
+            IMapper mapper = mappingConfig.CreateMapper();
+
+            _airportService = new AirportService(new AirportRepositoryMock(), mapper);
         }
 
 
@@ -34,10 +36,8 @@ namespace BusinessLogicTests
             // Arrange
             Airport airport = new Airport() { Name = "Minsk airport", CityId = 1 };
 
-            AirportService airportService = new AirportService(new AirportRepositoryMock(), _mapper);
-
             // Act
-            AddResult addResult = await airportService.AddAsync(airport);
+            AddResult addResult = await _airportService.AddAsync(airport);
 
             //Assert
             Assert.AreEqual(ResultTypes.Duplicate, addResult.ResultType);
@@ -49,10 +49,8 @@ namespace BusinessLogicTests
             // Arrange
             Airport airport = new Airport() { Name = "Brest airport", CityId = 4 };
 
-            AirportService airportService = new AirportService(new AirportRepositoryMock(), _mapper);
-
             // Act
-            AddResult addResult = await airportService.AddAsync(airport);
+            AddResult addResult = await _airportService.AddAsync(airport);
 
             //Assert
             Assert.AreEqual(ResultTypes.Ok, addResult.ResultType);
@@ -64,10 +62,8 @@ namespace BusinessLogicTests
             // Arrange
             Airport airport = new Airport() { Id = 1, Name = "Brest airport", CityId = 4 };
 
-            AirportService airportService = new AirportService(new AirportRepositoryMock(), _mapper);
-
             // Act
-            ResultTypes addResult = await airportService.UpdateAsync(airport);
+            ResultTypes addResult = await _airportService.UpdateAsync(airport);
 
             //Assert
             Assert.AreEqual(ResultTypes.Ok, addResult);
@@ -79,10 +75,8 @@ namespace BusinessLogicTests
             // Arrange
             Airport airport = new Airport() { Id = 2, Name = "Minsk airport", CityId = 1 };
 
-            AirportService airportService = new AirportService(new AirportRepositoryMock(), _mapper);
-
             // Act
-            ResultTypes addResult = await airportService.UpdateAsync(airport);
+            ResultTypes addResult = await _airportService.UpdateAsync(airport);
 
             //Assert
             Assert.AreEqual(ResultTypes.Duplicate, addResult);

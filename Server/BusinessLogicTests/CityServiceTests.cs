@@ -12,7 +12,7 @@ namespace BusinessLogicTests
     [TestClass]
     public class CityServiceTests
     {
-        private readonly IMapper _mapper;
+        private readonly ICityService _cityService;
 
 
         public CityServiceTests()
@@ -24,7 +24,9 @@ namespace BusinessLogicTests
             });
             mappingConfig.CompileMappings();
 
-            _mapper = mappingConfig.CreateMapper();
+            IMapper mapper = mappingConfig.CreateMapper();
+
+            _cityService = new CityService(new CityRepositoryMock(), mapper);
         }
 
 
@@ -34,10 +36,8 @@ namespace BusinessLogicTests
             // Arrange
             City cityToAdd = new City() { Name = "Minsk", CountryId = 1 };
 
-            CityService cityService = new CityService(new CityRepositoryMock(), _mapper);
-
             // Act
-            AddResult addResult = await cityService.AddAsync(cityToAdd);
+            AddResult addResult = await _cityService.AddAsync(cityToAdd);
 
             // Assert
             Assert.AreEqual(ResultTypes.Duplicate, addResult.ResultType);
@@ -49,10 +49,8 @@ namespace BusinessLogicTests
             // Arrange
             City cityToAdd = new City() { Name = "Brest", CountryId = 1 };
 
-            CityService cityService = new CityService(new CityRepositoryMock(), _mapper);
-
             // Act
-            AddResult addResult = await cityService.AddAsync(cityToAdd);
+            AddResult addResult = await _cityService.AddAsync(cityToAdd);
 
             // Assert
             Assert.AreEqual(ResultTypes.Ok, addResult.ResultType);
@@ -64,10 +62,8 @@ namespace BusinessLogicTests
             // Arrange
             City cityToAdd = new City() { Id = 1, Name = "Minsk", CountryId = 1 };
 
-            CityService cityService = new CityService(new CityRepositoryMock(), _mapper);
-
             // Act
-            ResultTypes addResult = await cityService.UpdateAsync(cityToAdd);
+            ResultTypes addResult = await _cityService.UpdateAsync(cityToAdd);
 
             // Assert
             Assert.AreEqual(ResultTypes.Duplicate, addResult);
@@ -79,10 +75,8 @@ namespace BusinessLogicTests
             // Arrange
             City cityToAdd = new City() { Id = 1, Name = "Brest", CountryId = 1 };
 
-            CityService cityService = new CityService(new CityRepositoryMock(), _mapper);
-
             // Act
-            ResultTypes addResult = await cityService.UpdateAsync(cityToAdd);
+            ResultTypes addResult = await _cityService.UpdateAsync(cityToAdd);
 
             // Assert
             Assert.AreEqual(ResultTypes.Ok, addResult);

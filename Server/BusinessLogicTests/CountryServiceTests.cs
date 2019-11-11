@@ -12,7 +12,7 @@ namespace BusinessLogicTests
     [TestClass]
     public class CountryServiceTests
     {
-        private readonly IMapper _mapper;
+        private readonly ICountryService _countryService;
 
 
         public CountryServiceTests()
@@ -24,7 +24,9 @@ namespace BusinessLogicTests
             });
             mappingConfig.CompileMappings();
 
-            _mapper = mappingConfig.CreateMapper();
+            IMapper mapper = mappingConfig.CreateMapper();
+
+            _countryService = new CountryService(new CountryRepositoryMock(), mapper);
         }
 
 
@@ -33,10 +35,8 @@ namespace BusinessLogicTests
             // Arrange
             Country countryToAdd = new Country() { Name = "Belarus" };
 
-            CountryService countryService = new CountryService(new CountryRepositoryMock(), _mapper);
-
             // Act
-            AddResult addResult = await countryService.AddAsync(countryToAdd);
+            AddResult addResult = await _countryService.AddAsync(countryToAdd);
 
             // Assert
             Assert.AreEqual(ResultTypes.Duplicate, addResult.ResultType);
@@ -48,10 +48,8 @@ namespace BusinessLogicTests
             // Arrange
             Country countryToAdd = new Country() { Name = "Lithuania" };
 
-            CountryService countryService = new CountryService(new CountryRepositoryMock(), _mapper);
-
             // Act
-            AddResult addResult = await countryService.AddAsync(countryToAdd);
+            AddResult addResult = await _countryService.AddAsync(countryToAdd);
 
             // Assert
             Assert.AreEqual(ResultTypes.Ok, addResult.ResultType);
@@ -63,10 +61,8 @@ namespace BusinessLogicTests
             // Arrange
             Country countryToAdd = new Country() { Id = 1, Name = "Lithuania" };
 
-            CountryService countryService = new CountryService(new CountryRepositoryMock(), _mapper);
-
             // Act
-            ResultTypes addResult = await countryService.UpdateAsync(countryToAdd);
+            ResultTypes addResult = await _countryService.UpdateAsync(countryToAdd);
 
             // Assert
             Assert.AreEqual(ResultTypes.Ok, addResult);
@@ -78,10 +74,8 @@ namespace BusinessLogicTests
             // Arrange
             Country countryToAdd = new Country() { Id = 1, Name = "Tokyo" };
 
-            CountryService countryService = new CountryService(new CountryRepositoryMock(), _mapper);
-
             // Act
-            ResultTypes addResult = await countryService.UpdateAsync(countryToAdd);
+            ResultTypes addResult = await _countryService.UpdateAsync(countryToAdd);
 
             // Assert
             Assert.AreEqual(ResultTypes.Ok, addResult);
