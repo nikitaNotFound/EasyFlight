@@ -150,3 +150,55 @@ export async function searchWithParams(filter, searchByName) {
 
     return await createRequestResult(response, RequestTypes.ContentExpected);
 }
+
+export async function bookForTime(flightId, seatId) {
+    const response = await fetch(
+        `${config.API_URL}/flights/${flightId}/booked-seats/${seatId}`,
+        {
+            method: 'post',
+            mode: 'cors',
+            headers: headers
+        }
+    );
+
+    return await createRequestResult(response, RequestTypes.NoContentExpected);
+}
+
+export async function finalBook(flightId, seatId, transaction) {
+    const response = await fetch(
+        `${config.API_URL}/flights/${flightId}/booked-seats/${seatId}?transaction=${transaction}`,
+        {
+            method: 'put',
+            mode: 'cors',
+            headers: headers
+        }
+    );
+
+    return await createRequestResult(response, RequestTypes.NoContentExpected);
+}
+
+export async function getUserFlights() {
+    const response = await fetch(
+        `${config.API_URL}/flights/account-flights`,
+        {
+            method: 'get',
+            mode: 'cors',
+            headers: headers
+        }
+    );
+
+    return await createRequestResult(response, RequestTypes.ContentExpected);
+}
+
+export async function getFlightBookInfo(flightId) {
+    const response = await fetch(
+        `${config.API_URL}/flights/${flightId}/booked-seats`,
+        {
+            method: 'get',
+            mode: 'cors',
+            headers: headers
+        }
+    );
+
+    return await createRequestResult(response, RequestTypes.ContentExpected);
+}

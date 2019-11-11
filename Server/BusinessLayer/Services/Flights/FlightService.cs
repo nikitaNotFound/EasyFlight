@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using BusinessLayer.Models;
-using DataAccessLayer;
 using DataAccessLayer.Models;
 using DataAccessLayer.Repositories.Airplanes;
 using DataAccessLayer.Repositories.Airports;
@@ -202,70 +200,6 @@ namespace BusinessLayer.Services.Flights
             await _flightRepository.UpdateFlightSeatTypeCostAsync(seatTypeCostDal);
 
             return ResultTypes.Ok;
-        }
-
-        public async Task<ResultTypes> BookForTimeAsync(FlightBookInfo bookInfo)
-        {
-            FlightEntity flight = await _flightRepository.GetByIdAsync(bookInfo.FlightId);
-
-            if (flight == null)
-            {
-                return ResultTypes.NotFound;
-            }
-
-            AirplaneSeatEntity seat = await _airplaneRepository.GetSeatById(bookInfo.SeatId);
-
-            if (seat == null)
-            {
-                return ResultTypes.NotFound;
-            }
-
-            bool canBook = await _flightRepository.CheckBookAvailability(
-                bookInfo.FlightId,
-                bookInfo.SeatId,
-                _bookingSettings.ExpirationTime);
-
-            if (!canBook)
-            {
-                return ResultTypes.Duplicate;
-            }
-
-            return ResultTypes.Ok;
-        }
-
-        public async Task<ResultTypes> BookAsync(FlightBookInfo bookInfo, string transaction)
-        {
-            FlightBookInfoEntity bookInfoDal = _mapper.Map<FlightBookInfoEntity>(bookInfo);
-
-            bool canBook =
-                await _flightRepository.CheckFinalBookAvailability(bookInfoDal, _bookingSettings.ExpirationTime);
-
-            if (!canBook)
-            {
-                return ResultTypes.NotFound;
-            }
-
-            if (!TransactionValidator.CheckTransaction(transaction))
-            {
-                return ResultTypes.NotFound;
-            }
-
-            return ResultTypes.Ok;
-        }
-
-        public async Task<IReadOnlyCollection<FlightBookInfo>> GetFlightBookInfoAsync(int flightId)
-        {
-            IReadOnlyCollection<FlightBookInfoEntity> flightBookInfoDal =
-                await _flightRepository.GetFlightBookInfo(flightId, _bookingSettings.ExpirationTime);
-
-            return flightBookInfoDal.Select(_mapper.Map<FlightBookInfo>).ToList();
-        }
-
-        public async Task<IReadOnlyCollection<Flight>> GetAccountFlights()
-        {
-            IReadOnlyCollection<FlightEntity> flightsDal = await _flightRepository.GetAccountFlights(_accountId);
-
-            return flightsDal.Select(_mapper.Map<Flight>).ToList();
         }
     }
 }

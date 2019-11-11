@@ -82,9 +82,30 @@ function Content(props) {
         }
     }
 
-    function onBookingConfirm() {
-        // HTTP REQUEST
-        props.history.push('/profile');
+    async function onBookForTime() {
+        try {
+            const seatsToBookPromises = choosenSeats.map(seat =>
+                FlightService.bookForTime(flight.id, seat.id)
+            );
+
+            await Promise.all(...seatsToBookPromises);
+            setTimeout(() => alert(1), 1000);
+        } catch {
+            changeMessageBoxValue(defaultErrorMessage());
+        }
+    }
+
+    async function onBookPayed() {
+        alert(1)
+        try {
+            const seatsToBookPromises = choosenSeats.map(seat =>
+                FlightService.finalBook(flight.id, seat.id, 'transaction')
+            );
+
+            await Promise.all(...seatsToBookPromises);
+        } catch {
+            changeMessageBoxValue(defaultErrorMessage());
+        }
     }
 
     function showMessageBox() {
@@ -107,44 +128,9 @@ function Content(props) {
         );
     }
 
-    return (
-        <main className="rounded">
-            {showMessageBox()}
-            <div className={`${!calculatePage}-visible`}>
-                <ComponentHeadline content="Booking"/>
-                <FlightInfo
-                    airplaneName={airplane.name}
-                    flight={flight}
-                />
-                <SeatScheme
-                    seatInfo={seats}
-                    seatTypes={seatTypes}
-                    onSeatChoosen={onSeatChoosen}
-                    onSeatUnchoosen={onSeatUnchoosen}
-                />
-                <div className="seat-types-baggage-container">
-                    <SeatTypes seatTypes={seatTypes} flightId={flight.id}/>
-                    <BaggageController
-                        changeSuitcaseCount={changeSuitcaseCount}
-                        suitcaseMass={flight.suitcaseMassKg}
-                        suitcaseCount={flight.suitcaseCount}
-                        changeHandLuggageCount={changeHandLuggageCount}
-                        carryonCount={flight.handLuggageCount}
-                        carryonMass={flight.handLuggageMassKg}
-                    />
-                </div>
-                <ChoosenSeats
-                    choosenSeats={choosenSeats}
-                    seatTypes={seatTypes}
-                />
-                <FinalButton
-                    type="calculate-cost"
-                    content="Calculate the cost"
-                    onClick={calculateCost}
-                />
-            </div>
-
-            <div className={`${calculatePage}-visible`}>
+    if (calculatePage) {
+        return (
+            <main className="rounded">
                 <CostLayout
                     flight={flight}
                     choosenSeats={choosenSeats}
@@ -153,7 +139,7 @@ function Content(props) {
                 />
                 <FinalButton
                     type="confirm-booking"
-                    onClick={onBookingConfirm}
+                    onClick={onBookForTime}
                     content="Confirm booking"
                 />
                 <FinalButton
@@ -161,7 +147,44 @@ function Content(props) {
                     onClick={() => changeCalculatePage(false)}
                     content="Return back to options"
                 />
+            </main>
+        );
+    }
+
+    return (
+        <main className="rounded">
+            {showMessageBox()}
+            <ComponentHeadline content="Booking"/>
+            <FlightInfo
+                airplaneName={airplane.name}
+                flight={flight}
+            />
+            <SeatScheme
+                seatInfo={seats}
+                seatTypes={seatTypes}
+                onSeatChoosen={onSeatChoosen}
+                onSeatUnchoosen={onSeatUnchoosen}
+            />
+            <div className="seat-types-baggage-container">
+                <SeatTypes seatTypes={seatTypes} flightId={flight.id}/>
+                <BaggageController
+                    changeSuitcaseCount={changeSuitcaseCount}
+                    suitcaseMass={flight.suitcaseMassKg}
+                    suitcaseCount={flight.suitcaseCount}
+                    changeHandLuggageCount={changeHandLuggageCount}
+                    carryonCount={flight.handLuggageCount}
+                    carryonMass={flight.handLuggageMassKg}
+                />
             </div>
+            <ChoosenSeats
+                choosenSeats={choosenSeats}
+                seatTypes={seatTypes}
+            />
+            <FinalButton
+                type="calculate-cost"
+                content="Calculate the cost"
+                onClick={calculateCost}
+            />
         </main>
     );
 }

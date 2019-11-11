@@ -1,4 +1,4 @@
-﻿namespace BusinessLayer.Services.Flights
+﻿namespace BusinessLayer.Services.Booking
 {
     public static class TransactionValidator
     {

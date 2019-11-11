@@ -152,15 +152,6 @@
     font-size: 75px;
 }
 
-
-.true-visible {
-    display: block;
-}
-
-.false-visible {
-    display: none;
-}
-
 .flight-info {
     background: rgb(211, 211, 211);
     padding: 0.5%;

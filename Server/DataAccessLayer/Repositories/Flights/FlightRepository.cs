@@ -192,7 +192,8 @@ namespace DataAccessLayer.Repositories.Flights
                 {
                     FlightId = flightId,
                     SeatId = seatId,
-                    BookExpirationTimeInSeconds = expirationTime.TotalSeconds
+                    BookExpirationTimeInSeconds = expirationTime.TotalSeconds,
+                    FinalBookType = BookType.Payed
                 },
                 commandType: CommandType.StoredProcedure);
         }

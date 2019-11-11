@@ -45,8 +45,6 @@ namespace BusinessLogicTests
                 bookingSettings,
                 null
             );
-
-
         }
 
 

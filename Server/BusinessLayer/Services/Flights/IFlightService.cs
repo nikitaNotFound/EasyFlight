@@ -14,9 +14,5 @@ namespace BusinessLayer.Services.Flights
         Task<IReadOnlyCollection<FlightSeatTypeCost>> GetFlightSeatTypesCost(int flightId);
         Task<ResultTypes> AddFlightSeatTypeCostAsync(FlightSeatTypeCost seatTypeCost);
         Task<ResultTypes> UpdateFlightSeatTypeCostAsync(FlightSeatTypeCost newSeatTypeCost);
-        Task<ResultTypes> BookForTimeAsync(FlightBookInfo bookInfo);
-        Task<ResultTypes> BookAsync(FlightBookInfo bookInfo, string transaction);
-        Task<IReadOnlyCollection<FlightBookInfo>> GetFlightBookInfoAsync(int flightId);
-        Task<IReadOnlyCollection<Flight>> GetAccountFlights();
     }
 }
