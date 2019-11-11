@@ -8,11 +8,11 @@ class SearchOptions {
     ticketCount;
     searchBack;
 
-    constructor(fromAirport, toAirport, fromCity, toCity, departureDate, arrivalDate, ticketCount, searchBack) {
-        this.fromAirportId = fromAirport;
-        this.toAirportId = toAirport;
-        this.fromCityId = fromCity;
-        this.toCityId = toCity;
+    constructor(fromAirportId, toAirportId, fromCityId, toCityId, departureDate, arrivalDate, ticketCount, searchBack) {
+        this.fromAirportId = fromAirportId;
+        this.toAirportId = toAirportId;
+        this.fromCityId = fromCityId;
+        this.toCityId = toCityId;
         this.departureDate = departureDate;
         this.arrivalDate = arrivalDate;
         this.searchBack = searchBack;
