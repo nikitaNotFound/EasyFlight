@@ -164,6 +164,7 @@ function Content(props) {
                 seatTypes={seatTypes}
                 onSeatChoosen={onSeatChoosen}
                 onSeatUnchoosen={onSeatUnchoosen}
+                choosenSeats={choosenSeats}
             />
             <div className="seat-types-baggage-container">
                 <SeatTypes seatTypes={seatTypes} flightId={flight.id}/>
@@ -171,9 +172,11 @@ function Content(props) {
                     changeSuitcaseCount={changeSuitcaseCount}
                     suitcaseMass={flight.suitcaseMassKg}
                     suitcaseCount={flight.suitcaseCount}
+                    suitcaseCountValue={suitcaseCount}
                     changeHandLuggageCount={changeHandLuggageCount}
-                    carryonCount={flight.handLuggageCount}
-                    carryonMass={flight.handLuggageMassKg}
+                    handLuggageCount={flight.handLuggageCount}
+                    handLuggageMass={flight.handLuggageMassKg}
+                    handLuggageCountValue={handLuggageCount}
                 />
             </div>
             <ChoosenSeats

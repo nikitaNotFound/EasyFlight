@@ -4,13 +4,13 @@ import PropsTypes from 'prop-types';
 import LayoutHeadline from './layout-headline';
 
 export default function BaggageController(props) {
-    const [count, changeCount] = useState(0);
-    const [carryonCount, changeCarryonCount] = useState(0);
+    const [suitcaseCount, changeSuitcaseCount] = useState(props.suitcaseCountValue);
+    const [handLuggageCount, changeHandLugggageCount] = useState(props.handLuggageCountValue);
 
     function onCountChange(event) {
         const newValue = Number(event.target.value);
         if (newValue >= 0) {
-            changeCount(newValue);
+            changeSuitcaseCount(newValue);
             props.changeSuitcaseCount(newValue);
         }
     }
@@ -18,7 +18,7 @@ export default function BaggageController(props) {
     function onCarryonChange(event) {
         const newValue = Number(event.target.value);
         if (newValue >= 0) {
-            changeCarryonCount(newValue);
+            changeHandLugggageCount(newValue);
             props.changeHandLuggageCount(newValue);
         }
     }
@@ -29,14 +29,14 @@ export default function BaggageController(props) {
             <div className="baggage-info">
                 {`Max suitcase mass: ${props.suitcaseMass} kg`} <br />
                 {`Max suitcase count: ${props.suitcaseCount}`} <br />
-                <input value={count} onChange={onCountChange} />
+                <input value={suitcaseCount} onChange={onCountChange} />
                 suitcase count
             </div>
 
             <div className="baggage-info">
-                {`Max hand luggage mass: ${props.carryonMass} kg`} <br />
-                {`Max hand luggage count: ${props.carryonCount}`} <br />
-                <input value={carryonCount} onChange={onCarryonChange} />
+                {`Max hand luggage mass: ${props.handLuggageMass} kg`} <br />
+                {`Max hand luggage count: ${props.handLuggageCount}`} <br />
+                <input value={handLuggageCount} onChange={onCarryonChange} />
                 hand luggage count
             </div>
         </div>
@@ -47,7 +47,9 @@ BaggageController.propsTypes = {
     changeSuitcaseCount: PropsTypes.number,
     suitcaseMass: PropsTypes.number,
     suitcaseCount: PropsTypes.number,
+    suitcaseCountValue: PropsTypes.number,
     changeHandLuggageCount: PropsTypes.func,
-    carryonMass: PropsTypes.number,
-    carryonCount: PropsTypes.number
+    handLuggageMass: PropsTypes.number,
+    handLuggageCount: PropsTypes.number,
+    handLuggageCountValue: PropsTypes.number
 };

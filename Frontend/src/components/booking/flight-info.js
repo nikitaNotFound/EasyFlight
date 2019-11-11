@@ -89,8 +89,8 @@ export default function FlightInfo(props) {
             </div>
 
             <div className="params-container">
-                Arrival time: {arrivalTime} <br/>
                 Departure time: {departureTime} <br/>
+                Arrival time: {arrivalTime} <br/>
             </div>
 
             <div className="params-container">

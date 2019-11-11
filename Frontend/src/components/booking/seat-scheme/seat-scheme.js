@@ -32,6 +32,14 @@ function initializeSeatArray(props) {
             seatsArray[element.floor - 1][element.section - 1][element.zone - 1][element.row - 1] = [];
         }
         seatsArray[element.floor - 1][element.section - 1][element.zone - 1][element.row - 1][element.number - 1] = element;
+
+        for (let i = 0, len = props.choosenSeats.length; i < len; i++) {
+            const choosenSeat = props.choosenSeats[i];
+
+            if (choosenSeat.id == element.id) {
+                element.choosen = true;
+            }
+        }
     }
 
    return seatsArray;
@@ -68,5 +76,6 @@ SeatScheme.propsTypes = {
     seatInfo: PropsTypes.array,
     seatTypes: PropsTypes.array,
     onSeatChoosen: PropsTypes.func,
-    onSeatUnchoosen: PropsTypes.func
+    onSeatUnchoosen: PropsTypes.func,
+    choosenSeats: PropsTypes.array
 }
