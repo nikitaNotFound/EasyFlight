@@ -57,7 +57,7 @@ namespace BusinessLogicTests
         }
 
         [TestMethod]
-        public async Task UpdatingDuplicateCityReturnsDuplicateResult()
+        public async Task UpdatingCityToDuplicateReturnsDuplicateResult()
         {
             // Arrange
             City cityToAdd = new City() { Id = 1, Name = "Minsk", CountryId = 1 };

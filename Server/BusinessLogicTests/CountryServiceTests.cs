@@ -56,7 +56,7 @@ namespace BusinessLogicTests
         }
 
         [TestMethod]
-        public async Task UpdatingDuplicateCountryReturnsDuplicateResult()
+        public async Task UpdatingCountryToDuplicateNameReturnsDuplicateResult()
         {
             // Arrange
             Country countryToAdd = new Country() { Id = 1, Name = "Lithuania" };

@@ -53,7 +53,7 @@ namespace BusinessLogicTests
             Account authorizedAccount = await _accountService.LoginAsync(loginAccount);
 
             // Assert
-            Assert.IsNotNull(authorizedAccount);
+            Assert.AreEqual(loginAccount.Email, authorizedAccount.Email);
         }
 
         [TestMethod]
@@ -79,7 +79,7 @@ namespace BusinessLogicTests
             Account registeredAccount = await _accountService.RegisterAsync(registerAccount);
 
             // Assert
-            Assert.IsNotNull(registeredAccount);
+            Assert.AreEqual(registerAccount.Email, registeredAccount.Email);
         }
     }
 }

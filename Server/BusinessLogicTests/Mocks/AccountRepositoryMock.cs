@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,11 +17,11 @@ namespace BusinessLogicTests.Mocks
             {
                 Id = 1,
                 Email = "123@123.com",
-                PasswordHash = PasswordHasher.GenerateHash("123", new byte[0]),
+                PasswordHash = PasswordHasher.GenerateHash("123", Array.Empty<byte>()),
                 Salt = new byte[0]
             }
         };
-        
+
         public async Task<AccountEntity> GetByEmailAsync(string email)
         {
             return _accountData.FirstOrDefault(x => x.Email == email);

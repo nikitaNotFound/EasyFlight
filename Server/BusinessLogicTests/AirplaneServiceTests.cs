@@ -61,7 +61,7 @@ namespace BusinessLogicTests
         }
 
         [TestMethod]
-        public async Task UpdatingDuplicateAirplaneReturnsDuplicateResult()
+        public async Task UpdatingAirplaneToDuplicateNameReturnsDuplicateResult()
         {
             // Arrange
             Airplane airplane = new Airplane() { Id = 1, Name = "F300" };
@@ -113,7 +113,7 @@ namespace BusinessLogicTests
         }
 
         [TestMethod]
-        public async Task UpdatingDuplicateAirplaneSeatsReturnsDuplicateResult()
+        public async Task UpdatingAirplaneSeatsWithDuplicatesReturnsDuplicateResult()
         {
             // Arrange
             AirplaneSeat[] seats = new AirplaneSeat[]

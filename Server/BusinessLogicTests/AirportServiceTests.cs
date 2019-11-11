@@ -70,7 +70,7 @@ namespace BusinessLogicTests
         }
 
         [TestMethod]
-        public async Task UpdatingDuplicateAirportReturnsDuplicateResult()
+        public async Task UpdatingAirportToDuplicateReturnsDuplicateResult()
         {
             // Arrange
             Airport airport = new Airport() { Id = 2, Name = "Minsk airport", CityId = 1 };
