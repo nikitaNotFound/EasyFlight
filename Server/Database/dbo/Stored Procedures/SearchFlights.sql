@@ -26,8 +26,8 @@ as
     where
         (@fromAirportId is null or FromAirportId = @fromAirportId)
         and (@toAirportId is null or ToAirportId = @toAirportId)
-        and (@fromCityId is null or fa.Id = @fromCityId)
-        and (@toCityId is null or ta.Id = @toCityId)
+        and (@fromCityId is null or fa.CityId = @fromCityId)
+        and (@toCityId is null or ta.CityId = @toCityId)
         and (@departureDate is null or CAST(DepartureTime as date) = @departureDate)
         and (@arrivalDate is null or CAST(ArrivalTime as date) = @arrivalDate)
         and (@ticketCount is null or @ticketCount <= TotalAirplaneSeats.SeatCount - BookedAirplaneSeats.SeatCount)
