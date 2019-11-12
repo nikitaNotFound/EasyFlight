@@ -8,6 +8,9 @@ import * as UserService from '../../services/UserSerivce';
 
 import User from '../../services/user-models/user';
 
+import LogoutIcon from '../../icons/logout-icon.png';
+import SettingsIcon from '../../icons/settings-icon.png';
+
 function ProfileBar(props) {
     async function onLogout() {
         await UserService.logout();
@@ -19,14 +22,14 @@ function ProfileBar(props) {
             <div className="name rounded-left">
                 {props.userInfo.firstName}
             </div>
-            <button className="logout non-selectable" onClick={onLogout}>
-                Exit
-            </button>
             <Link to="/profile" className="non-dec-link">
-                <div className="settings rounded-right">
-                    Profile
-                </div>
+                <button className="settings">
+                    <img src={SettingsIcon}/>
+                </button>
             </Link>
+            <button className="logout non-selectable rounded-right" onClick={onLogout}>
+                <img src={LogoutIcon}/>
+            </button>
         </div>
     );
 }

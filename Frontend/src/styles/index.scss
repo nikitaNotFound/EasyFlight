@@ -5,6 +5,10 @@
   letter-spacing: 1px;
 }
 
+:active, :focus {
+  outline: 0 !important;
+}
+
 button {
   transition: 0.2s linear;
 }
@@ -36,10 +40,6 @@ footer {
   font-weight: 450;
   margin-left: 1%;
   font-family: 'Russo One', sans-serif;
-  color: rgb(108, 117, 121);
-}
-
-.company-icon:hover {
   color: rgb(108, 117, 121);
 }
 
