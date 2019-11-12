@@ -8,6 +8,9 @@ using BlAirplane = BusinessLayer.Models.Airplane;
 using BlAirplaneFilter = BusinessLayer.Models.AirplaneFilter;
 using BlAirplaneSeat = BusinessLayer.Models.AirplaneSeat;
 using BlAirplaneSeatType = BusinessLayer.Models.AirplaneSeatType;
+using BlFlight = BusinessLayer.Models.Flight;
+using BlFlightSeatTypeCost = BusinessLayer.Models.FlightSeatTypeCost;
+using BlFlightFiler = BusinessLayer.Models.FlightFilter;
 
 namespace WebAPI
 {
@@ -27,7 +30,7 @@ namespace WebAPI
             config.CreateMap<Account, BlAccount>();
             config.CreateMap<BlAccount, Account>();
             config.CreateMap<AccountRequest, BlAccount>();
-            
+
             config.CreateMap<Airplane, BlAirplane>();
             config.CreateMap<BlAirplane, Airplane>();
             config.CreateMap<AirplaneFilter, BlAirplaneFilter>();
@@ -35,6 +38,13 @@ namespace WebAPI
             config.CreateMap<BlAirplaneSeat, AirplaneSeat>();
             config.CreateMap<AirplaneSeatType, BlAirplaneSeatType>();
             config.CreateMap<BlAirplaneSeatType, AirplaneSeatType>();
+
+            config.CreateMap<Flight, BlFlight>();
+            config.CreateMap<BlFlight, Flight>();
+            config.CreateMap<FlightSeatTypeCost, BlFlightSeatTypeCost>();
+            config.CreateMap<BlFlightSeatTypeCost, FlightSeatTypeCost>();
+            config.CreateMap<FlightFilter, BlFlightFiler>();
+            config.CreateMap<BlFlightFiler, FlightFilter>();
         }
     }
 }

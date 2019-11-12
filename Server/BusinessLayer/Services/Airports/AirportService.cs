@@ -30,9 +30,9 @@ namespace BusinessLayer.Services.Airports
             return airports;
         }
 
-        public async Task<IReadOnlyCollection<Airport>> GetByNameAsync(string nameFilter)
+        public async Task<IReadOnlyCollection<Airport>> SearchByNameAsync(string nameFilter)
         {
-            IReadOnlyCollection<AirportEntity> airportsDal = await _airportRepository.GetByNameAsync(nameFilter);
+            IReadOnlyCollection<AirportEntity> airportsDal = await _airportRepository.SearchByNameAsync(nameFilter);
 
             IReadOnlyCollection<Airport> airports = airportsDal.Select(_mapper.Map<Airport>).ToList();
 
@@ -57,14 +57,14 @@ namespace BusinessLayer.Services.Airports
 
         public async Task<Airport> GetByIdAsync(int id)
         {
-            AirportEntity foundAirport = await _airportRepository.GetAsync(id);
+            AirportEntity foundAirport = await _airportRepository.GetByIdAsync(id);
 
             return _mapper.Map<Airport>(foundAirport);
         }
 
         public async Task<ResultTypes> UpdateAsync(Airport airport)
         {
-            AirportEntity oldAirportDal = await _airportRepository.GetAsync(airport.Id);
+            AirportEntity oldAirportDal = await _airportRepository.GetByIdAsync(airport.Id);
 
             if (oldAirportDal == null)
             {

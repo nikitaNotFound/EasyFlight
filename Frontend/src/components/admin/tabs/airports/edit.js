@@ -95,7 +95,7 @@ export default function Edit(props) {
             <div className="list-item-action rounded editing">
                 <Headline name="Editing airport"/>
 
-                <form method="post" className="adding-form">
+                <div className="adding-form">
                     <div className="row">
                         <div className="col-12">
                             <div className="editing-params-form">
@@ -122,7 +122,7 @@ export default function Edit(props) {
                         </div>
                     </div>
                     <ConfirmActionButton onClick={onDataSave} buttonContent="Save"/>
-                </form>
+                </div>
                 {showMessageBox()}
             </div>
         );

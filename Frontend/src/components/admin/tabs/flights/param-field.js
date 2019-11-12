@@ -1,11 +1,10 @@
 import React from 'react';
 import PropsTypes from 'prop-types';
 
-
 // you need to set start value as 0 in HOC if param field value used to be a number
 export default function ParamField(props) {
     function onValueChange(event) {
-        if (props.value > 0) {
+        if (props.value >= 0) {
             const newValueNumber = Number(event.target.value);
 
             if (newValueNumber && newValueNumber > 0) {

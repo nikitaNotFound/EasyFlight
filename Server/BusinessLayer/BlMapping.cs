@@ -27,6 +27,13 @@ namespace BusinessLayer
             config.CreateMap<AirplaneSeatEntity, AirplaneSeat>();
             config.CreateMap<AirplaneSeatType, AirplaneSeatTypeEntity>();
             config.CreateMap<AirplaneSeatTypeEntity, AirplaneSeatType>();
+
+            config.CreateMap<Flight, FlightEntity>();
+            config.CreateMap<FlightEntity, Flight>();
+            config.CreateMap<FlightSeatTypeCost, FlightSeatTypeCostEntity>();
+            config.CreateMap<FlightSeatTypeCostEntity, FlightSeatTypeCost>();
+            config.CreateMap<FlightFilter, FlightFilterEntity>();
+            config.CreateMap<FlightFilterEntity, FlightFilter>();
         }
     }
 }

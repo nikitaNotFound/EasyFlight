@@ -102,8 +102,20 @@
     <Build Include="dbo\Stored Procedures\AddAirplaneSeat.sql" />
     <Build Include="dbo\Stored Procedures\AddAirplane.sql" />
     <Build Include="dbo\Tables\Airplanes.sql" />
+    <Build Include="dbo\Tables\FlightSeatTypesCost.sql" />
+    <Build Include="dbo\Tables\FlightSeatsInfo.sql" />
+    <Build Include="dbo\Tables\Flights.sql" />
+    <Build Include="dbo\Stored Procedures\UpdateFlightSeatTypeCost.sql" />
+    <Build Include="dbo\Stored Procedures\UpdateFlight.sql" />
+    <Build Include="dbo\Stored Procedures\SearchFlights.sql" />
+    <Build Include="dbo\Stored Procedures\GetFlightSeatTypesCost.sql" />
+    <Build Include="dbo\Stored Procedures\GetFlightById.sql" />
+    <Build Include="dbo\Stored Procedures\GetAllFlights.sql" />
+    <Build Include="dbo\Stored Procedures\AddFlightSeatTypeCost.sql" />
+    <Build Include="dbo\Stored Procedures\AddFlight.sql" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="dbo\Stored Procedures\CheckFlightSeatTypeCostDuplicate.sql" />
     <Content Include="dbo\Stored Procedures\CreateAccount.sql" />
     <Content Include="dbo\Stored Procedures\GetAirplaneSeatTypeById.sql" />
     <Content Include="dbo\Stored Procedures\GetCityAirports.sql" />

@@ -16,7 +16,7 @@ function Filter(props) {
     const [toCity, changeToCity] = useState(props.filterOptions.toCity);
 
     const [departureDate, changeDepartureDate] = useState(props.filterOptions.departureTime);
-    const [departureBackDate, changeDepartureBackDate] = useState(props.filterOptions.departureBackTime);
+    const [arrivalDate, changeArrivalDate] = useState(props.filterOptions.departureBackTime);
 
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
@@ -26,20 +26,20 @@ function Filter(props) {
             && !fromCity
             && !toCity
             && !departureDate
-            && !departureBackDate
+            && !arrivalDate
         ) {
             changeMessageBoxValue('Setup filter!');
             return;
         }
 
         const newFilter = new SearchOptions(
-            fromAirport,
-            toAirport,
-            fromCity,
-            toCity,
-            departureDate,
-            departureBackDate,
-            null,
+            fromAirport ? fromAirport.id : null,
+            toAirport ? toAirport.id : null,
+            fromCity ? fromCity.id : null,
+            toCity ? toCity.id : null,
+            departureDate ? departureDate : null,
+            arrivalDate ? arrivalDate : null,
+            false,
             null,
         );
 
@@ -129,8 +129,8 @@ function Filter(props) {
                     <label htmlFor="">Departure back date</label>
                     <input
                         type="date"
-                        value={departureBackDate}
-                        onChange={(event) => changeDepartureBackDate(event.target.value)}
+                        value={arrivalDate}
+                        onChange={(event) => changeArrivalDate(event.target.value)}
                     />
                 </div>
             </div>

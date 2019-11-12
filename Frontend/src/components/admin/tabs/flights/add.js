@@ -1,69 +1,94 @@
 import React, {useState} from 'react';
 
+import moment from 'moment';
+
 import Headline from '../../../common/headline';
 import SearchList from '../../../common/search-list';
 import MessageBox from '../../../common/message-box';
 import TicketsCostEditor from './tickets-cost-editor';
 import Flight from '../../../../services/flight-models/flight';
-import ParamFiled from './param-field';
+import ParamField from './param-field';
 
-import { invalidInput } from '../../../common/message-box-messages';
+import { invalidInput, defaultErrorMessage, added, flightTimeError } from '../../../common/message-box-messages';
+import ConfirmActionButton from '../../../common/confirm-action-button';
 
 import * as AirportService from '../../../../services/AirportService';
 import * as AirplaneService from '../../../../services/AirplaneService';
-import ConfirmActionButton from '../../../common/confirm-action-button';
+import * as FlightService from '../../../../services/FlightService';
+import { BadRequestError } from '../../../../services/RequestErrors';
 
 export default function Add() {
     const [airplane, changeAirplane] = useState();
 
-    const [fromPlace, changeFromPlace] = useState();
+    const [fromAirport, changeFromAirport] = useState();
+    const [toAirport, changeToAirport] = useState();
 
-    const [toPlace, changeToPlace] = useState();
-
-    const [desc, changeDesc] = useState();
-
-    const [departureTime, changeDepartureTime] = useState();
     const [departureDate, changeDepartureDate] = useState();
+    const [departureTime, changeDepartureTime] = useState();
+
+    const [arrivalDate, changeArrivalDate] = useState();
+    const [arrivalTime, changeArrivalTime] = useState();
 
     const [ticketsCost, changeTicketsCost] = useState();
 
-    const [suitcaseMass, changeSuitcaseMass] = useState(0);
+    const [suitcaseMassKg, changeSuitcaseMassKg] = useState(0);
     const [suitcaseCount, changeSuitcaseCount] = useState(0);
 
-    const [carryonMass, changeCarryonMass] = useState(0);
-    const [carryonCount, changeCarryonCount] = useState(0);
+    const [handLuggageMassKg, changeHandLuggageMassKg] = useState(0);
+    const [handLuggageCount, changeHandLuggageCount] = useState(0);
+
+    const [overloadKgCost, changeOverloadKgCost] = useState(0);
 
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
-    function onDataSave() {
-        if (!departureDate 
-            || !departureTime 
-            || !fromPlace 
-            || !toPlace 
-            || !airplane 
+    async function onDataSave() {
+        if (!departureDate
+            || !departureTime
+            || !fromAirport
+            || !toAirport
+            || !airplane
             || !ticketsCost
-            || !desc
+            || !overloadKgCost
         ) {
             changeMessageBoxValue(invalidInput());
             return;
         }
 
-        const departureTime = `${departureDate} ${departureTime}`;
+        let departureDateTime = `${departureDate} ${departureTime}`;
+        departureDateTime = moment(departureDateTime).format('YYYY-MM-DD[T]HH:mm:ss.SSSZ');
 
-        const newFlight = 
-            new Flight(
-                null,
-                fromPlace.id,
-                toPlace.id,
-                departureTime,
-                desc,
-                airplane.id,
-                airplane.seats.length,
-                suitcaseMass,
-                suitcaseCount,
-                carryonMass,
-                carryonCount
-            );
+        let arrivalDateTime = `${arrivalDate} ${arrivalTime}`;
+        arrivalDateTime = moment(arrivalDateTime).format('YYYY-MM-DD[T]HH:mm:ss.SSSZ');
+
+        const newFlight = new Flight(
+            null,
+            fromAirport.id,
+            toAirport.id,
+            departureDateTime,
+            arrivalDateTime,
+            airplane.id,
+            suitcaseMassKg,
+            suitcaseCount,
+            handLuggageMassKg,
+            handLuggageCount,
+            overloadKgCost
+        );
+
+        try {
+            const addedFlightId = await FlightService.add(newFlight)
+
+            const ticketCostAddPromises = ticketsCost.map(ticketCost => FlightService.addTicketCost(addedFlightId.id, ticketCost));
+
+            await Promise.all([...ticketCostAddPromises]);
+
+            changeMessageBoxValue(added());
+        } catch(ex) {
+            if (ex instanceof BadRequestError) {
+                changeMessageBoxValue(flightTimeError());
+            } else {
+                changeMessageBoxValue(defaultErrorMessage());
+            }
+        }
     }
 
     function getAirplaneName(airplane) {
@@ -81,7 +106,7 @@ export default function Add() {
 
         return (
             <TicketsCostEditor
-                seatTypes={airplane.seatTypes}
+                airplaneId={airplane.id}
                 onTypeCostChange={changeTicketsCost}
             />
         );
@@ -105,41 +130,17 @@ export default function Add() {
             <div className="adding-form">
                 <div className="row">
                     <div className="col-12">
-                        <div className="editing-params-form">
+                        <div className="editing-params-form flight-editor">
                             <div className="row">
-                                <SearchList
-                                    searchFunc={AirportService.searchByName}
-                                    getItemName={getAirportName}
-                                    onValueChange={changeFromPlace}
-                                    currentItem={fromPlace}
-                                    placeholder="From"
-                                />
-                                <SearchList
-                                    searchFunc={AirportService.searchByName}
-                                    getItemName={getAirportName}
-                                    onValueChange={changeToPlace}
-                                    currentItem={toPlace}
-                                    placeholder="To"
-                                />
-                                <SearchList
-                                    searchFunc={AirplaneService.searchWithParams}
-                                    getItemName={getAirplaneName}
-                                    onValueChange={changeAirplane}
-                                    currentItem={airplane}
-                                    placeholder="airplane"
-                                />
-
-                                {showTicketsCostEditor()}
-
-                                <div className="adding-form-section">
+                                <div className="adding-form-section date-time">
                                     <div className="row">
-                                        <ParamFiled
+                                        <ParamField
                                             name="Departure time"
                                             value={departureTime}
                                             onChange={changeDepartureTime}
                                             inputType="time"
                                         />
-                                        <ParamFiled
+                                        <ParamField
                                             name="Departure date"
                                             value={departureDate}
                                             onChange={changeDepartureDate}
@@ -148,14 +149,56 @@ export default function Add() {
                                     </div>
                                 </div>
 
+                                <div className="adding-form-section date-time arrival">
+                                    <div className="row">
+                                        <ParamField
+                                            name="Arrival time"
+                                            value={arrivalTime}
+                                            onChange={changeArrivalTime}
+                                            inputType="time"
+                                        />
+                                        <ParamField
+                                            name="Arrival date"
+                                            value={arrivalDate}
+                                            onChange={changeArrivalDate}
+                                            inputType="date"
+                                        />
+                                    </div>
+                                </div>
+
+                                <SearchList
+                                    searchFunc={AirportService.searchByName}
+                                    getItemName={getAirportName}
+                                    onValueChange={changeFromAirport}
+                                    currentItem={fromAirport}
+                                    placeholder="From"
+                                />
+                                <SearchList
+                                    searchFunc={AirplaneService.searchWithParams}
+                                    searchArgs={[true]}
+                                    getItemName={getAirplaneName}
+                                    onValueChange={changeAirplane}
+                                    currentItem={airplane}
+                                    placeholder="airplane"
+                                />
+                                <SearchList
+                                    searchFunc={AirportService.searchByName}
+                                    getItemName={getAirportName}
+                                    onValueChange={changeToAirport}
+                                    currentItem={toAirport}
+                                    placeholder="To"
+                                />
+
+                                {showTicketsCostEditor()}
+
                                 <div className="adding-form-section">
                                     <div className="row">
-                                        <ParamFiled
+                                        <ParamField
                                             name="Suitcase mass"
-                                            value={suitcaseMass}
-                                            onChange={changeSuitcaseMass}
+                                            value={suitcaseMassKg}
+                                            onChange={changeSuitcaseMassKg}
                                         />
-                                        <ParamFiled
+                                        <ParamField
                                             name="Suitcase count"
                                             value={suitcaseCount}
                                             onChange={changeSuitcaseCount}
@@ -165,25 +208,27 @@ export default function Add() {
 
                                 <div className="adding-form-section">
                                     <div className="row">
-                                        <ParamFiled
-                                            name="Carryon mass"
-                                            value={carryonMass}
-                                            onChange={changeCarryonMass}
+                                        <ParamField
+                                            name="Hand luggage mass"
+                                            value={handLuggageMassKg}
+                                            onChange={changeHandLuggageMassKg}
                                         />
-                                        <ParamFiled
-                                            name="Carryon count"
-                                            value={carryonCount}
-                                            onChange={changeCarryonCount}
+                                        <ParamField
+                                            name="Hand luggage count"
+                                            value={handLuggageCount}
+                                            onChange={changeHandLuggageCount}
                                         />
                                     </div>
                                 </div>
 
                                 <div className="adding-form-section">
-                                    <textarea
-                                        placeholder="description"
-                                        value={desc}
-                                        onChange={(event) => changeDesc(event.target.value)}
-                                    />
+                                    <div className="row">
+                                        <ParamField
+                                            name="Overload kg cost"
+                                            value={overloadKgCost}
+                                            onChange={changeOverloadKgCost}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>

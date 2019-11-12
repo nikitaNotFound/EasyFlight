@@ -1,168 +1,152 @@
-import {flights, ticketsCost} from './DataBase';
-import * as AirportService from '../services/AirportService';
+import { createRequestResult, headers, RequestTypes } from './RequestAssistant';
 
-export function getById(id) {
-    return new Promise (
-        (resolve, reject) => {
-            const storage = flights;
-            let flight = {};
-            for (let i = 0, len = storage.length; i < len; i++) {
-                if (storage[i].id == id) {
-                    flight = storage[i];
-                }
-            }
+import * as config from '../config.json';
 
-            if (!flight) {
-                reject("Error");
-            } else {
-                resolve(flight);
-            }
+export async function getById(id) {
+    const response = await fetch(
+        `${config.API_URL}/flights/${id}`,
+        {
+            method: 'get',
+            mode: 'cors',
+            headers: headers
         }
     );
+
+    return await createRequestResult(response, RequestTypes.ContentExpected);
 }
 
-export function getByIds(idArray) {
-    return new Promise (
-        (resolve, reject) => {
-            const storage = [];
-            
-            //later terrible algoritms like this will be replaced by requests
-            for (let j = 0, len = idArray.length; j < len; j++) {
-                const currentId = idArray[j];
-                for (let i = 0, len = flights.length; i < len; i++) {
-                    const element = flights[i];
-
-                    if (element.id == currentId) {
-                        storage.push(element);
-                        break;
-                    }
-                }
-            }
-
-            if (!storage) {
-                reject('Error');
-            }
-            resolve(storage);
+export async function add(flight) {
+    const response = await fetch(
+        `${config.API_URL}/flights`,
+        {
+            method: 'post',
+            mode: 'cors',
+            headers: headers,
+            body: JSON.stringify(flight)
         }
     );
+
+    return await createRequestResult(response, RequestTypes.ContentExpected);
 }
 
-export function getTicketsCost(id) {
-    return new Promise(
-        (resolve, reject) => {
-            const data = ticketsCost;
-            let ticketsCostInfo = data.reduce(
-                (array, ticketCost) => {
-                    if (ticketCost.flightId == id) {
-                        array.push(ticketCost);
-                    }
-                    return array;
-                },
-                []
-            );
-
-            if (!ticketsCostInfo) {
-                reject("Error");
-            }
-            resolve(ticketsCostInfo);
+export async function update(flight) {
+    const response = await fetch(
+        `${config.API_URL}/flights`,
+        {
+            method: 'put',
+            mode: 'cors',
+            headers: headers,
+            body: JSON.stringify(flight)
         }
     );
+
+    return await createRequestResult(response, RequestTypes.NoContentExpected);
 }
 
-export function searchWithParams(params) {
-    return new Promise(
-        async (resolve, reject) => {
-            const data = flights;
-
-            let foundFlights = [];
-
-            for (let i = 0, len = data.length; i < len; i++) {
-                const element = data[i];
-                const fromAirplane = await AirportService.getById(element.fromId);
-                const toAirplane = await AirportService.getById(element.toId);
-
-                const fromCityId = fromAirplane.cityId;
-                const toCityId = toAirplane.cityId;
-
-                const [departureTime] = element.departureTime.split(' ');
-
-                if (params.searchToAndBack
-                    && ((params.fromCity && toCityId == params.fromCity.id)
-                        || (params.fromAirport && element.toId == params.fromAirport.id))
-                ) {
-                    if (!params.fromAirport
-                        && params.fromCity
-                        && !(toCityId == params.fromCity.id)
-                    ) {
-                        continue;
-                    }
-
-                    if (!params.toAirport
-                        && params.toCity
-                        && !(fromCityId == params.toCity.id)
-                    ) {
-                        continue;
-                    }
-
-                    if (params.toAirport
-                        && !(element.fromId == params.toAirport.id)
-                    ) {
-                        continue;
-                    }
-
-                    if (params.fromAirport
-                        && !(element.toId == params.fromAirport.id)
-                    ) {
-                        continue;
-                    }
-                } else {
-                    if (params.fromAirport
-                        && !(element.fromId == params.fromAirport.id)
-                    ) {
-                        continue;
-                    }
-    
-                    if (params.toAirport
-                        && !(element.toId == params.toAirport.id)
-                    ) {
-                        continue;
-                    }
-
-                    if (!params.fromAirport
-                        && params.fromCity
-                        && !(fromCityId == params.fromCity.id)
-                    ) {
-                        continue;
-                    }
-
-                    if (!params.toAirport
-                        && params.toCity
-                        && !(toCityId == params.toCity.id)
-                    ) {
-                        continue;
-                    }
-                }
-
-                if (params.departureDate
-                    && !(departureTime == params.departureDate)
-                ) {
-                    continue;
-                }
-
-                if (params.ticketCount
-                    && !(element.ticketsLeft > params.ticketCount)
-                ) {
-                    continue;
-                }
-
-                foundFlights.push(element);
-            }
-
-            if (!foundFlights) {
-                reject('Error');
-            }
-
-            resolve(foundFlights);
+export async function getTicketsCost(flightId) {
+    const response = await fetch(
+        `${config.API_URL}/flights/${flightId}/seat-types-cost`,
+        {
+            method: 'get',
+            mode: 'cors',
+            headers: headers
         }
     );
+
+    return await createRequestResult(response, RequestTypes.ContentExpected);
+}
+
+export async function addTicketCost(flightId, ticketCost) {
+    const response = await fetch(
+        `${config.API_URL}/flights/${flightId}/seat-types-cost`,
+        {
+            method: 'post',
+            mode: 'cors',
+            headers: headers,
+            body: JSON.stringify(ticketCost)
+        }
+    );
+
+    return await createRequestResult(response, RequestTypes.NoContentExpected);
+}
+
+export async function updateTicketCost(flightId, ticketCost) {
+    const response = await fetch(
+        `${config.API_URL}/flights/${flightId}/seat-types-cost`,
+        {
+            method: 'put',
+            mode: 'cors',
+            headers: headers,
+            body: JSON.stringify(ticketCost)
+        }
+    );
+
+    return await createRequestResult(response, RequestTypes.NoContentExpected);
+}
+
+export async function searchWithParams(filter, searchByName) {
+    if (searchByName === true) {
+        var nameFilter = filter;
+    } else {
+        var {
+            nameFilter,
+            fromAirportId,
+            toAirportId,
+            fromCityId,
+            toCityId,
+            departureDate,
+            arrivalDate,
+            ticketCount,
+            searchBack
+        } = filter;
+    }
+
+    let parameteres = '?';
+
+    if (nameFilter) {
+        parameteres += `nameFilter=${nameFilter}&`;
+    }
+
+    if (fromAirportId) {
+        parameteres += `fromAirportId=${fromAirportId}&`;
+    }
+
+    if (toAirportId) {
+        parameteres += `toAirportId=${toAirportId}&`;
+    }
+
+    if (fromCityId) {
+        parameteres += `fromCityId=${fromCityId}&`;
+    }
+
+    if (toCityId) {
+        parameteres += `toCityId=${toCityId}&`;
+    }
+
+    if (departureDate) {
+        parameteres += `departureTime=${departureDate}&`;
+    }
+
+    if (arrivalDate) {
+        parameteres += `arrivalTime=${arrivalDate}&`;
+    }
+
+    if (ticketCount) {
+        parameteres += `ticketCount=${ticketCount}&`;
+    }
+
+    if (searchBack === true) {
+        parameteres += `searchBack=${searchBack}`;
+    }
+
+    const response = await fetch(
+        `${config.API_URL}/flights${parameteres}`,
+        {
+            method: 'get',
+            mode: 'cors',
+            headers: headers
+        }
+    );
+
+    return await createRequestResult(response, RequestTypes.ContentExpected);
 }
