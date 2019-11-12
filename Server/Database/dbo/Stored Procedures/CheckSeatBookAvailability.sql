@@ -1,4 +1,4 @@
-﻿create procedure CheckBookAvailability
+﻿create procedure CheckSeatBookAvailability
     @flightId as int,
     @seatId as int,
     @bookExpirationTimeInSeconds as int,

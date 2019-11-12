@@ -6,9 +6,10 @@ namespace BusinessLayer.Services.Booking
 {
     public interface IBookingService
     {
-        Task<ResultTypes> BookForTimeAsync(FlightBookInfo bookInfo);
-        Task<ResultTypes> BookAsync(FlightBookInfo bookInfo, string transaction);
-        Task<IReadOnlyCollection<FlightBookInfo>> GetFlightBookInfoAsync(int flightId);
-        Task<IReadOnlyCollection<AccountBook>> GetAccountBooks();
+        Task<AddResult> BookForTimeAsync(FlightBookInfo bookInfo);
+        Task<ResultTypes> FinalBookAsync(int flightId, int bookId, string transaction);
+        Task<IReadOnlyCollection<SeatBook>> GetFlightBookedSeatsAsync(int flightId);
+        Task<IReadOnlyCollection<FlightBookInfo>> GetAccountFlightsInfoAsync();
+        Task<IReadOnlyCollection<SeatBook>> GetFlightBookedSeatsByBookIdAsync(int bookId);
     }
 }

@@ -57,7 +57,7 @@ export default function FlightInfo(props) {
             }
         };
         fetchData();
-    });
+    }, [props.flight]);
 
     function showMessageBox() {
         if (messageBoxValue) {

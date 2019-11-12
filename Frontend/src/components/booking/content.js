@@ -19,6 +19,9 @@ import * as FlightService from '../../services/FlightService';
 import * as UserService from '../../services/UserSerivce'
 
 import '../../styles/booking.css';
+import FlightBookInfo from '../../services/flight-models/flight-book-info';
+import BookCostInfo from '../../services/flight-models/book-cost-info';
+import SeatBookInfo from '../../services/flight-models/seat-book-info';
 
 function Content(props) {
     const [loading, changeLoading] = useState(true);
@@ -32,13 +35,14 @@ function Content(props) {
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
     const [calculatePage, changeCalculatePage] = useState(false);
     const [bookedSeats, changeBookedSeats] = useState([]);
+    const [bookCost, changeBookCost] = useState(new BookCostInfo());
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const [flight, bookedSeats] = await Promise.all([
                     FlightService.getById(props.flightId),
-                    FlightService.getFlightBookInfo(props.flightId)
+                    FlightService.getFlightBookedSeats(props.flightId)
                 ]);
                 changeFlight(flight);
                 changeBookedSeats(bookedSeats);
@@ -88,27 +92,29 @@ function Content(props) {
     }
 
     async function onBookForTime() {
-        const seatsToBookPromises = choosenSeats.map(seat =>
-            FlightService.bookForTime(flight.id, seat.id)
+        const seatsBookInfo = choosenSeats.map(
+            seat => new SeatBookInfo(seat.id, bookCost.seatsCost[seat.id])
         );
 
-        Promise.all([...seatsToBookPromises])
-            .then(() => {
-                onBookPayed();
-            })
-            .catch(() => {
-                changeMessageBoxValue(defaultErrorMessage());
-            })
+        const bookInfo = new FlightBookInfo(
+            flight.id,
+            bookCost.suitcaseOverloadCost,
+            bookCost.handLuggageOverloadCost,
+            seatsBookInfo
+        );
+
+        try {
+            const book = await FlightService.bookForTime(flight.id, bookInfo);
+            onBookPayed(book.id);
+        } catch {
+            changeMessageBoxValue(defaultErrorMessage());
+        }
     }
 
-    function onBookPayed() {
+    function onBookPayed(bookId) {
         setTimeout(async () => {
             try {
-                const seatsToBookPromises = choosenSeats.map(seat =>
-                    FlightService.finalBook(flight.id, seat.id, 'transaction')
-                );
-
-                await Promise.all([...seatsToBookPromises]);
+                await FlightService.finalBook(flight.id, bookId, 'transaction');
             } catch {
                 changeMessageBoxValue(defaultErrorMessage());
             }
@@ -144,6 +150,7 @@ function Content(props) {
                     choosenSeats={choosenSeats}
                     suitcaseCount={suitcaseCount}
                     handLuggageCount={handLuggageCount}
+                    changeBookCostInfo={changeBookCost}
                 />
                 <FinalButton
                     type="confirm-booking"

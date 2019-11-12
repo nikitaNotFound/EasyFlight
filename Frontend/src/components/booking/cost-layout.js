@@ -5,6 +5,7 @@ import LayoutHeadline from './layout-headline';
 import Spinner from '../common/spinner';
 
 import * as FlightService from '../../services/FlightService';
+import BookCostInfo from '../../services/flight-models/book-cost-info';
 
 
 export default function CostLayout(props) {
@@ -17,6 +18,7 @@ export default function CostLayout(props) {
     useEffect(() => {
         const fetchData = async () => {
             let finalCost = 0;
+            let seatsCost = [];
 
             const ticketsCost = await FlightService.getTicketsCost(props.flight.id);
 
@@ -28,11 +30,13 @@ export default function CostLayout(props) {
 
                     if (currentSeat.typeId == currentType.seatTypeId) {
                         finalCost += Number(currentType.cost);
+                        seatsCost[currentSeat.id] = currentType.cost;
                         break;
                     }
                 }
             }
 
+            const finalTicketsCost = finalCost;
             changeTicketsCost(finalCost);
 
             let suitcaseOverloadMassKg =
@@ -43,7 +47,8 @@ export default function CostLayout(props) {
                 ? suitcaseOverloadMassKg
                 : 0;
 
-            changeOverloadSuitcaseCost(suitcaseOverloadMassKg * props.flight.massOverloadKgCost);
+            const overloadSuitcaseCost = suitcaseOverloadMassKg * props.flight.massOverloadKgCost;
+            changeOverloadSuitcaseCost(overloadSuitcaseCost);
 
             let handLuggageOverloadMassKg =
                 props.handLuggageCount * props.flight.handLuggageMassKg
@@ -53,17 +58,28 @@ export default function CostLayout(props) {
                 ? handLuggageOverloadMassKg
                 : 0;
 
-            changeHandLuggageSuitcaseCost(handLuggageOverloadMassKg * props.flight.massOverloadKgCost);
+            const overloadHandLuggageCost = handLuggageOverloadMassKg * props.flight.massOverloadKgCost
+            changeHandLuggageSuitcaseCost(overloadHandLuggageCost);
 
             const overloadCost = (suitcaseOverloadMassKg + handLuggageOverloadMassKg) * props.flight.massOverloadKgCost;
 
             finalCost += overloadCost;
 
+            const finalBookCostInfo = new BookCostInfo(
+                overloadSuitcaseCost,
+                overloadHandLuggageCost,
+                finalTicketsCost,
+                finalCost,
+                seatsCost
+            );
+
+            props.changeBookCostInfo(finalBookCostInfo);
+
             changeFinalCost(finalCost);
             changeLoading(false);
         }
         fetchData();
-    }, [props]);
+    }, [props.flight.id]);
 
     if (loading) {
         return (
@@ -90,5 +106,6 @@ CostLayout.propsTypes = {
     flight: PropsTypes.object,
     choosenSeats: PropsTypes.array,
     suitcaseCount: PropsTypes.number,
-    handLuggageCount: PropsTypes.number
+    handLuggageCount: PropsTypes.number,
+    changeBookCostInfo: PropsTypes.func
 }

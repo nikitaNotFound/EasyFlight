@@ -61,11 +61,15 @@ namespace BusinessLogicTests
                     new DateTime(2019, 11, 8, 20, 30, 0),
                     new TimeSpan(3, 0, 0)
                 ),
-                SeatId = 1
+                SeatBooks = new SeatBook[]
+                {
+                    new SeatBook(),
+                    new SeatBook()
+                }
             };
 
             // Act
-            ResultTypes bookResult = await _bookingService.BookForTimeAsync(bookInfo);
+            AddResult bookResult = await _bookingService.BookForTimeAsync(bookInfo);
 
             // Assert
             Assert.AreEqual(ResultTypes.Duplicate, bookResult);
@@ -157,7 +161,7 @@ namespace BusinessLogicTests
             };
 
             // Act
-            ResultTypes bookResult = await _bookingService.BookAsync(bookInfo, "transaction");
+            ResultTypes bookResult = await _bookingService.FinalBookAsync(bookInfo, "transaction");
 
             // Assert
             Assert.AreEqual(ResultTypes.NotFound, bookResult);
@@ -180,7 +184,7 @@ namespace BusinessLogicTests
             };
 
             // Act
-            ResultTypes bookResult = await _bookingService.BookAsync(bookInfo, "wrongtransaction");
+            ResultTypes bookResult = await _bookingService.FinalBookAsync(bookInfo, "wrongtransaction");
 
             // Assert
             Assert.AreEqual(ResultTypes.NotFound, bookResult);
@@ -203,7 +207,7 @@ namespace BusinessLogicTests
             };
 
             // Act
-            ResultTypes bookResult = await _bookingService.BookAsync(bookInfo, "transaction");
+            ResultTypes bookResult = await _bookingService.FinalBookAsync(bookInfo, "transaction");
 
             // Assert
             Assert.AreEqual(ResultTypes.Ok, bookResult);

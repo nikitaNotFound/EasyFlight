@@ -1,8 +1,8 @@
 namespace WebAPI.Models
 {
-    public class AccountBook
+    public class SeatBook
     {
-        public int FlightId { get; set; }
         public int SeatId { get; set; }
+        public int Cost { get; set; }
     }
 }

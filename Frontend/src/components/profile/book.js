@@ -15,7 +15,10 @@ export default function Book(props) {
     useState(() => {
         const fetchData = async () => {
             try {
-                const seatType = await AirplaneService.getSeatTypeById(props.book.typeId);
+                console.log(props.book)
+                const seat = await AirplaneService.getSeatById(props.book.seatId);
+
+                const seatType = await AirplaneService.getSeatTypeById(seat.typeId);
 
                 changeSeatTypeName(seatType.name);
                 changeLoading(false);

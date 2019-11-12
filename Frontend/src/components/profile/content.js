@@ -17,15 +17,15 @@ import { connect } from 'react-redux';
 
 function Content(props) {
     const [isLoading, changeLoadingMode] = useState(true);
-    const [accountBooks, changeAccountBooks] = useState([]);
+    const [accountFlights, changeAccountFlights] = useState([]);
     const [messageBoxValue, changeMessageBoxValue] = useState();
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const userFlights = await FlightService.getAccountBooks()
+                const userFlights = await FlightService.getAccountFlights();
 
-                changeAccountBooks(userFlights);
+                changeAccountFlights(userFlights);
                 changeLoadingMode(false);
             } catch {
                 changeMessageBoxValue(defaultErrorMessage());
@@ -75,7 +75,7 @@ function Content(props) {
 
             <div className="flight-history">
                 <ComponentHeadline content="Your flights"/>
-                <Flights accountBooks={accountBooks} />
+                <Flights accountFlights={accountFlights} />
             </div>
         </main>
     );

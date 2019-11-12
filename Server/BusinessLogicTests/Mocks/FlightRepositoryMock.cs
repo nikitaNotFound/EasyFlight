@@ -81,9 +81,9 @@ namespace BusinessLogicTests.Mocks
             },
         };
 
-        private readonly List<AccountBookEntity> _accountBooks = new List<AccountBookEntity>()
+        private readonly List<SeatBookEntity> _accountBooks = new List<SeatBookEntity>()
         {
-            new AccountBookEntity()
+            new SeatBookEntity()
         };
 
         public async Task<IReadOnlyCollection<FlightEntity>> GetAllAsync()
@@ -140,7 +140,7 @@ namespace BusinessLogicTests.Mocks
             // implementation
         }
 
-        public async Task<bool> CheckBookAvailabilityAsync(int flightId, int seatId, TimeSpan expirationTime)
+        public async Task<bool> CheckSeatBookAvailabilityAsync(int flightId, int seatId, TimeSpan expirationTime)
         {
             FlightBookInfoEntity seatInfo =  _flightSeatInfo.FirstOrDefault(
                 x => x.FlightId == flightId
@@ -178,7 +178,7 @@ namespace BusinessLogicTests.Mocks
             return _flightSeatInfo.Select(x => x).Where(x => x.FlightId == flightId).ToList();
         }
 
-        public async Task<IReadOnlyCollection<AccountBookEntity>> GetAccountBooksAsync(int accountId)
+        public async Task<IReadOnlyCollection<SeatBookEntity>> GetAccountFlightsAsync(int accountId)
         {
             return _accountBooks;
         }

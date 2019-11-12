@@ -7,16 +7,6 @@ import * as FlightService from '../../services/FlightService';
 import moment from 'moment';
 import ConfirmActionButton from '../common/confirm-action-button';
 
-function checkIdUnique(array, id) {
-    for(let i = 0, len = array.length; i < len; i++) {
-        if (array[i] == id) {
-            return false;
-        }
-    }
-
-    return true;
-}
-
 function Flights(props) {
     const [loading, changeLoading] = useState(true);
     const [futureFlights, changeFutureFlights] = useState([]);
@@ -26,35 +16,30 @@ function Flights(props) {
 
     useEffect(() => {
         const fetchData = async () => {
-            let flightIds = [];
             let flightBooks = [];
 
-            for (let accountBookIndex = 0, len = props.accountBooks.length; accountBookIndex < len; accountBookIndex++) {
-                const accountBook = props.accountBooks[accountBookIndex];
-
-                if (checkIdUnique(flightIds, accountBook.flightId)) {
-                    flightIds.push(accountBook.flightId);
-                }
-
-                const seatInfo = await AirplaneService.getSeatById(accountBook.seatId);
+            for (let accountFlightIndex = 0, len = props.accountFlights.length; accountFlightIndex < len; accountFlightIndex++) {
+                const accountFlight = props.accountFlights[accountFlightIndex];
                 
-                if (!Array.isArray(flightBooks[accountBook.flightId])) {
-                    flightBooks[accountBook.flightId] = [];
+                const seatsInfo = await FlightService.getFlightBookedSeatsByBookId(accountFlight.id);
+
+                if (!Array.isArray(flightBooks[accountFlight.flightId])) {
+                    flightBooks[accountFlight.flightId] = [];
                 }
 
-                flightBooks[accountBook.flightId].push(seatInfo);
+                flightBooks[accountFlight.flightId].push(seatsInfo);
             }
 
             changeFlightBooks(flightBooks);
 
-            const flightsPromises = flightIds.map(
-                flightId => FlightService.getById(flightId)
+            const flightsPromises = props.accountFlights.map(
+                flight => FlightService.getById(flight.flightId)
             );
+
+            const flights = await Promise.all([...flightsPromises]);
 
             const futureFlights = [];
             const pastFlights = [];
-
-            const flights = await Promise.all([...flightsPromises]);
 
             for (let i = 0, len = flights.length; i < len; i++) {
                 if (moment(flights[i].departureTime).local() < moment()) {
@@ -69,7 +54,7 @@ function Flights(props) {
             changeLoading(false);
         }
         fetchData();
-    }, [props.accountBooks]);
+    }, [props.accountFlights]);
 
     if (loading) {
         return (
@@ -117,7 +102,7 @@ function Flights(props) {
 }
 
 Flights.propsTypes = {
-    accountBooks: PropsTypes.array
+    accountFlights: PropsTypes.array
 }
 
 export default Flights;

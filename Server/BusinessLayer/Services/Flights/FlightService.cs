@@ -134,7 +134,8 @@ namespace BusinessLayer.Services.Flights
         {
             FlightFilterEntity filterDal = _mapper.Map<FlightFilterEntity>(filter);
 
-            IReadOnlyCollection<FlightEntity> flightsDal = await _flightRepository.SearchFlightsAsync(filterDal);
+            IReadOnlyCollection<FlightEntity> flightsDal =
+                await _flightRepository.SearchFlightsAsync(filterDal, _bookingSettings.ExpirationTime);
 
             return flightsDal.Select(_mapper.Map<Flight>).ToList();
         }
