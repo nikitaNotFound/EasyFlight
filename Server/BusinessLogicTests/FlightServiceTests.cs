@@ -351,6 +351,7 @@ namespace BusinessLogicTests
             // Assert
             Assert.AreEqual(ResultTypes.InvalidData, addResult);
         }
+
         [TestMethod]
         public async Task UpdatingFlightReturnsOkResult()
         {
