@@ -4,6 +4,8 @@ import Flight from './flight';
 import Spinner from '../common/spinner';
 import * as AirplaneService from '../../services/AirplaneService';
 import * as FlightService from '../../services/FlightService';
+import moment from 'moment';
+import ConfirmActionButton from '../common/confirm-action-button';
 
 function checkIdUnique(array, id) {
     for(let i = 0, len = array.length; i < len; i++) {
@@ -17,8 +19,10 @@ function checkIdUnique(array, id) {
 
 function Flights(props) {
     const [loading, changeLoading] = useState(true);
-    const [flights, changeFlights] = useState([]);
+    const [futureFlights, changeFutureFlights] = useState([]);
+    const [pastFlights, changePastFlights] = useState([]);
     const [flightBooks, changeFlightBooks] = useState([]);
+    const [showPastFlights, changeShowPastFlights] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -47,9 +51,21 @@ function Flights(props) {
                 flightId => FlightService.getById(flightId)
             );
 
+            const futureFlights = [];
+            const pastFlights = [];
+
             const flights = await Promise.all([...flightsPromises]);
 
-            changeFlights(flights);
+            for (let i = 0, len = flights.length; i < len; i++) {
+                if (moment(flights[i].departureTime).local() < moment()) {
+                    pastFlights.push(flights[i]);
+                } else {
+                    futureFlights.push(flights[i]);
+                }
+            }
+
+            changeFutureFlights(futureFlights);
+            changePastFlights(pastFlights);
             changeLoading(false);
         }
         fetchData();
@@ -63,9 +79,32 @@ function Flights(props) {
         );
     }
 
+    if (showPastFlights === true) {
+        return (
+            <div className="flight-history-list">
+                <ConfirmActionButton
+                    buttonContent="Show future flights"
+                    onClick={() => changeShowPastFlights(false)}
+                />
+                {pastFlights.map(
+                    (flight, index) =>
+                        <Flight
+                            flight={flight}
+                            books={flightBooks[flight.id]}
+                            key={index}
+                        />
+                )}
+            </div>
+        );
+    }
+
     return (
         <div className="flight-history-list">
-            {flights.map(
+            <ConfirmActionButton
+                buttonContent="Show past flights"
+                onClick={() => changeShowPastFlights(true)}
+            />
+            {futureFlights.map(
                 (flight, index) =>
                     <Flight
                         flight={flight}

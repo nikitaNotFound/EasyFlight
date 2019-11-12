@@ -57,32 +57,60 @@ footer {
 
 .content-filter-switcher {
   background: rgb(194, 194, 194);
-  border: solid rgb(255, 255, 255) 1px;
   z-index: 999;
   height: 90px;
-  width: 90px;
-  top: 150px;
-  right: 30px;
+  top: 15%;
+  right: 1.5%;
   position: fixed;
   box-shadow: 0 0 4px rgba(0,0,0,0.5);
   padding: 30px;
-  padding-left: 19px;
-  font-family: 'Russo One', sans-serif;
+  letter-spacing: 0px;
+  text-align: center;
+  text-transform: uppercase;
   user-select: none;
+  border-top-left-radius: 50%;
+  border-bottom-left-radius: 50%;
 }
 
 @media screen and (max-width: 1660px) {
   .content-filter-switcher {
-    top: 100px;
-    right: 130px;
+    right: 1.7%;
+  }
+}
+
+@media screen and (max-width: 1440px) {
+  .content-filter-switcher {
+    right: 1.8%;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .content-filter-switcher {
+    right: 2.1%;
   }
 }
 
 @media screen and (max-width: 991px) {
   .content-filter-switcher {
-    top: 180px;
+    top: 18%;
+    right: 2.4%;
   }
 }
+
+@media screen and (max-width: 760px) {
+  .content-filter-switcher {
+    top: 17.5%;
+    right: 2.5%;
+  }
+}
+
+@media screen and (max-width: 694px) {
+  .content-filter-switcher {
+    top: 25%;
+    right: 2.8%;
+  }
+}
+
 
 .content-filter-switcher:hover {
   background: rgb(206, 206, 206);

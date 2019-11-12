@@ -17,13 +17,25 @@ function Content() {
         List: 'list-only',
         Filter: 'filter-only'
     };
+
+    const switcherValues = {
+        OnFilter: 'Flights',
+        OnList: 'Filter'
+    }
+
     const [mode, changeMode] = useState(layoutMode.Filter);
+    const [switcherValue, changeSwitcherValue] = useState(switcherValues.OnFilter);
 
     function swapFilterList() {
         const newMode = mode === layoutMode.List
             ? layoutMode.Filter
             : layoutMode.List;
 
+        const newSwitcherValue = switcherValue === switcherValues.OnFilter
+            ? switcherValues.OnList
+            : switcherValues.OnFilter
+
+        changeSwitcherValue(newSwitcherValue);
         changeMode(newMode);
     }
 
@@ -53,7 +65,7 @@ function Content() {
     return (
         <main className={`rounded ${mode}`}>
             {showMessageBox()}
-            <Switcher switcher={swapFilterList}/>
+            <Switcher switcher={swapFilterList} value={switcherValue}/>
             <Flights flights={flights}/>
             <Filter
                 onFilterApplied={onFilterApplied}

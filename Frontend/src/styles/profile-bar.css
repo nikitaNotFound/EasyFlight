@@ -6,12 +6,12 @@
 }
 
 .profile-bar-body .name {
+    text-align: center;
     display: inline-block;
     width: 70%;
     padding: 0.5em 0;
     padding-left: 2%;
     font-weight: 600;
-    letter-spacing: 2px;
     background: rgb(202, 202, 202);
 }
 

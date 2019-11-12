@@ -8,8 +8,6 @@ import { defaultErrorMessage } from '../common/message-box-messages';
 import * as AirplaneService from '../../services/AirplaneService';
 
 export default function Book(props) {
-    console.log(props.book);
-
     const [loading, changeLoading] = useState(true);
     const [seatTypeName, changeSeatTypeName] = useState();
     const [messageBoxValue, changeMessageBoxValue] = useState();

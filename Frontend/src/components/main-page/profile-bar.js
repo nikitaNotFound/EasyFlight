@@ -19,8 +19,8 @@ function ProfileBar(props) {
 
     return (
         <div className="profile-bar-body">
-            <div className="name rounded-left">
-                {props.userInfo.firstName}
+            <div className="name rounded-left non-selectable">
+                {`${props.userInfo.firstName} ${props.userInfo.secondName}`}
             </div>
             <Link to="/profile" className="non-dec-link">
                 <button className="settings">

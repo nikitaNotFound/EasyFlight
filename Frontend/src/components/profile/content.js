@@ -4,7 +4,6 @@ import { withRouter } from 'react-router-dom';
 import AddImage from '../../icons/add-image.png';
 import '../../styles/profile.css';
 
-import * as UserService from '../../services/UserSerivce';
 import * as FlightService from '../../services/FlightService';
 
 import Spinner from '../common/spinner';
@@ -12,7 +11,7 @@ import Flights from './flights';
 import MessageBox from '../common/message-box';
 import { defaultErrorMessage } from '../common/message-box-messages';
 
-import { changeUserInfo } from '../../store/actions/UserInfoActions';
+import ComponentHeadline from '../common/component-headline';
 
 import { connect } from 'react-redux';
 
@@ -75,7 +74,7 @@ function Content(props) {
             </div>
 
             <div className="flight-history">
-                <div className="flight-history-headline non-selectable">Your flights</div>
+                <ComponentHeadline content="Your flights"/>
                 <Flights accountBooks={accountBooks} />
             </div>
         </main>
