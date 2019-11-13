@@ -18,12 +18,12 @@ namespace DataAccessLayer.Repositories.Flights
         Task UpdateFlightSeatTypeCostAsync(FlightSeatTypeCostEntity seatTypeCost);
         Task<bool> CheckFlightSeatTypeCostDuplicateAsync(FlightSeatTypeCostEntity seatTypeCost);
         Task BookSeatAsync(SeatBookEntity seatBook);
-        Task FinalBookAsync(int flightId, int accountId, int bookId);
+        Task FinalBookAsync(int bookId, int accountId);
         Task<bool> CheckSeatBookAvailabilityAsync(int flightId, int seatId, TimeSpan expirationTime);
-        Task<bool> CheckFinalBookAvailabilityAsync(int flightId, int accountId, TimeSpan expirationTime);
+        Task<bool> CheckFinalBookAvailabilityAsync(int bookId, int accountId, TimeSpan expirationTime);
         Task<IReadOnlyCollection<SeatBookEntity>> GetFlightBookedSeatsAsync(int flightId, TimeSpan expirationTime);
         Task<IReadOnlyCollection<FlightBookInfoEntity>> GetAccountFlightsInfoAsync(int accountId);
         Task<int> AddAccountFlightInfoAsync(FlightBookInfoEntity bookInfo);
-        Task<IReadOnlyCollection<SeatBookEntity>> GetFlightBookedSeatsByBookIdAsync(int bookId);
+        Task<IReadOnlyCollection<SeatBookEntity>> GetBookSeatsAsync(int bookId);
     }
 }

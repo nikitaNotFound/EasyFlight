@@ -104,7 +104,7 @@ function Content(props) {
         );
 
         try {
-            const book = await FlightService.bookForTime(flight.id, bookInfo);
+            const book = await FlightService.bookForTime(bookInfo);
             onBookPayed(book.id);
         } catch {
             changeMessageBoxValue(defaultErrorMessage());
@@ -114,7 +114,7 @@ function Content(props) {
     function onBookPayed(bookId) {
         setTimeout(async () => {
             try {
-                await FlightService.finalBook(flight.id, bookId, 'transaction');
+                await FlightService.finalBook(bookId, 'transaction');
             } catch {
                 changeMessageBoxValue(defaultErrorMessage());
             }

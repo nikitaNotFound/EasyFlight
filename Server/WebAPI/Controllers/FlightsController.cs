@@ -214,12 +214,11 @@ namespace WebAPI.Controllers
             return Ok();
         }
 
-        // POST api/flights/{flightId}/booked-seats
+        // POST api/flights/books
         [HttpPost]
-        [Route("{flightId}/booked-seats")]
-        public async Task<IActionResult> BookForTimeAsync(int flightId, [FromBody] FlightBookInfo flightBookInfo)
+        [Route("books")]
+        public async Task<IActionResult> BookForTimeAsync([FromBody] FlightBookInfo flightBookInfo)
         {
-            flightBookInfo.FlightId = flightId;
             BlFlightBookInfo flightBookInfoBl = _mapper.Map<BlFlightBookInfo>(flightBookInfo);
 
             AddResult bookResult = await _bookingService.BookForTimeAsync(flightBookInfoBl);
@@ -235,9 +234,9 @@ namespace WebAPI.Controllers
             return Ok(new { Id = bookResult.ItemId });
         }
 
-        // PUT api/flights/{flightId}/booked-seats/{bookId}{?transaction}
+        // PUT api/flights/books/{bookId}{?transaction}
         [HttpPut]
-        [Route("{flightId}/booked-seats/{bookId}")]
+        [Route("books/{bookId}")]
         public async Task<IActionResult> BookAsync(int flightId, int bookId, string transaction)
         {
             if (string.IsNullOrEmpty(transaction))
@@ -245,7 +244,7 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
 
-            ResultTypes bookResult = await _bookingService.FinalBookAsync(flightId, bookId, transaction);
+            ResultTypes bookResult = await _bookingService.FinalBookAsync(bookId, transaction);
 
             switch (bookResult)
             {
@@ -272,13 +271,13 @@ namespace WebAPI.Controllers
             return Ok(flightBookInfo);
         }
 
-        // GET api/flights/flight-books/{bookId}
+        // GET api/flights/books/{bookId}/seats
         [HttpGet]
-        [Route("flight-books/{bookId}")]
-        public async Task<IActionResult> GetFlightBookedSeatsByBookIdAsync(int bookId)
+        [Route("books/{bookId}/seats")]
+        public async Task<IActionResult> GetBookSeatsAsync(int bookId)
         {
             IReadOnlyCollection<BlSeatBook> seatsBl =
-                await _bookingService.GetFlightBookedSeatsByBookIdAsync(bookId);
+                await _bookingService.GetBookSeatsAsync(bookId);
 
             IEnumerable<SeatBook> seats =
                 seatsBl.Select(_mapper.Map<SeatBook>);
@@ -286,10 +285,10 @@ namespace WebAPI.Controllers
             return Ok(seats);
         }
 
-        // GET api/flights/account-flights
+        // GET api/flights/books/me
         [HttpGet]
-        [Route("account-flights")]
-        public async Task<IActionResult> GetAccountFlightsAsync()
+        [Route("books/me")]
+        public async Task<IActionResult> GetAccountFlightsInfoAsync()
         {
             IReadOnlyCollection<BlFlightBookInfo> accountFlightsBl =
                 await _bookingService.GetAccountFlightsInfoAsync();

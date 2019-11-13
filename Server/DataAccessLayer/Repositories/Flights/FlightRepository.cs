@@ -201,7 +201,7 @@ namespace DataAccessLayer.Repositories.Flights
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<bool> CheckFinalBookAvailabilityAsync(int flightId, int accountId, TimeSpan expirationTime)
+        public async Task<bool> CheckFinalBookAvailabilityAsync(int bookId, int accountId, TimeSpan expirationTime)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
@@ -209,7 +209,7 @@ namespace DataAccessLayer.Repositories.Flights
                 "CheckFinalBookAvailability",
                 new
                 {
-                    FlightId = flightId,
+                    FlightId = bookId,
                     BookExpirationTimeInSeconds = expirationTime.TotalSeconds,
                     AccountId = accountId
                 },
@@ -270,7 +270,7 @@ namespace DataAccessLayer.Repositories.Flights
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<IReadOnlyCollection<SeatBookEntity>> GetFlightBookedSeatsByBookIdAsync(int bookId)
+        public async Task<IReadOnlyCollection<SeatBookEntity>> GetBookSeatsAsync(int bookId)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
@@ -285,7 +285,7 @@ namespace DataAccessLayer.Repositories.Flights
             return seats.ToList();
         }
 
-        public async Task FinalBookAsync(int flightId, int accountId, int bookId)
+        public async Task FinalBookAsync(int accountId, int bookId)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
@@ -293,7 +293,6 @@ namespace DataAccessLayer.Repositories.Flights
                 "FinalBook",
                 new
                 {
-                    FlightId = flightId,
                     AccountId = accountId,
                     BookId = bookId,
                     FinalBookType = BookType.Payed

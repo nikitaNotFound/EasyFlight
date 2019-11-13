@@ -61,7 +61,7 @@ namespace BusinessLayer.Services.Booking
                 return new AddResult(ResultTypes.NotFound, null);
             }
 
-            for (int seatBookIndex = 0; seatBookIndex < bookInfo.SeatBooks.Length; seatBookIndex ++)
+            for (int seatBookIndex = 0; seatBookIndex < bookInfo.SeatBooks.Length; seatBookIndex++)
             {
                 SeatBook seatBook = bookInfo.SeatBooks[seatBookIndex];
 
@@ -101,10 +101,10 @@ namespace BusinessLayer.Services.Booking
             return new AddResult(ResultTypes.Ok, accountFlightInfoId);;
         }
 
-        public async Task<ResultTypes> FinalBookAsync(int flightId, int bookId, string transaction)
+        public async Task<ResultTypes> FinalBookAsync(int bookId, string transaction)
         {
             bool canBook = await _flightRepository.CheckFinalBookAvailabilityAsync(
-                flightId,
+                bookId,
                 _accountId,
                 _bookingSettings.ExpirationTime
             );
@@ -119,7 +119,7 @@ namespace BusinessLayer.Services.Booking
                 return ResultTypes.NotFound;
             }
 
-            await _flightRepository.FinalBookAsync(flightId, _accountId, bookId);
+            await _flightRepository.FinalBookAsync(bookId, _accountId);
 
             return ResultTypes.Ok;
         }
@@ -140,10 +140,10 @@ namespace BusinessLayer.Services.Booking
             return flightsDal.Select(_mapper.Map<FlightBookInfo>).ToList();
         }
 
-        public async Task<IReadOnlyCollection<SeatBook>> GetFlightBookedSeatsByBookIdAsync(int bookId)
+        public async Task<IReadOnlyCollection<SeatBook>> GetBookSeatsAsync(int bookId)
         {
             IReadOnlyCollection<SeatBookEntity> seatsDal =
-                await _flightRepository.GetFlightBookedSeatsByBookIdAsync(bookId);
+                await _flightRepository.GetBookSeatsAsync(bookId);
 
             return seatsDal.Select(_mapper.Map<SeatBook>).ToList();
         }

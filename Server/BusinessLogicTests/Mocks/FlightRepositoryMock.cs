@@ -61,29 +61,38 @@ namespace BusinessLogicTests.Mocks
             new FlightSeatTypeCostEntity() { FlightId = 2, SeatTypeId = 1, Cost = 400 }
         };
 
-        private readonly List<FlightBookInfoEntity> _flightSeatInfo = new List<FlightBookInfoEntity>()
+        private readonly List<FlightBookInfoEntity> _flightBooksInfo = new List<FlightBookInfoEntity>()
         {
             new FlightBookInfoEntity()
             {
+                Id = 1,
                 AccountId = 1,
                 BookType = BookType.AwaitingPayment,
                 FlightId = 1,
-                BookTime = DateTimeOffset.Now,
-                SeatId = 1
+                BookTime = DateTimeOffset.Now
             },
             new FlightBookInfoEntity()
             {
+                Id = 2,
                 AccountId = 1,
                 BookType = BookType.Payed,
                 FlightId = 2,
-                BookTime = DateTimeOffset.Now,
-                SeatId = 1
+                BookTime = DateTimeOffset.Now
             },
         };
 
-        private readonly List<SeatBookEntity> _accountBooks = new List<SeatBookEntity>()
+        private readonly List<SeatBookEntity> _flightSeatsInfo = new List<SeatBookEntity>()
         {
             new SeatBookEntity()
+            {
+                SeatId = 1,
+                FlightBookInfoId = 1
+            },
+            new SeatBookEntity()
+            {
+                SeatId = 1,
+                FlightBookInfoId = 2
+            }
         };
 
         public async Task<IReadOnlyCollection<FlightEntity>> GetAllAsync()
@@ -106,7 +115,7 @@ namespace BusinessLogicTests.Mocks
             // implementation
         }
 
-        public async Task<IReadOnlyCollection<FlightEntity>> SearchFlightsAsync(FlightFilterEntity filter)
+        public async Task<IReadOnlyCollection<FlightEntity>> SearchFlightsAsync(FlightFilterEntity filter, TimeSpan expirationTime)
         {
             return _flightData;
         }
@@ -135,52 +144,67 @@ namespace BusinessLogicTests.Mocks
             return duplicate != null;
         }
 
-        public async Task BookAsync(FlightBookInfoEntity bookInfo)
+        public async Task BookSeatAsync(SeatBookEntity seatBook)
+        {
+            // implementation
+        }
+
+        public async Task FinalBookAsync(int bookId, int accountId)
         {
             // implementation
         }
 
         public async Task<bool> CheckSeatBookAvailabilityAsync(int flightId, int seatId, TimeSpan expirationTime)
         {
-            FlightBookInfoEntity seatInfo =  _flightSeatInfo.FirstOrDefault(
+            SeatBookEntity seat = _flightSeatsInfo.FirstOrDefault(x => x.SeatId == seatId);
+
+            if (seat == null)
+            {
+                return true;
+            }
+
+            FlightBookInfoEntity bookInfo = _flightBooksInfo.FirstOrDefault(
                 x => x.FlightId == flightId
-                && x.SeatId == seatId
-                && DateTimeOffset.Now - x.BookTime < expirationTime
-                && x.BookType != BookType.Payed
+                && DateTimeOffset.Now - x.BookTime > expirationTime
+                && x.Id == seat.FlightBookInfoId
             );
 
-            return seatInfo == null;
+            return bookInfo == null;
         }
 
-        public async Task<bool> CheckFinalBookAvailabilityAsync(FlightBookInfoEntity bookInfo, TimeSpan expirationTime)
+        public async Task<bool> CheckFinalBookAvailabilityAsync(int bookId, int accountId, TimeSpan expirationTime)
         {
-            FlightBookInfoEntity seatInfo =  _flightSeatInfo.FirstOrDefault(
-                x => x.FlightId == bookInfo.FlightId
-                && x.SeatId == bookInfo.SeatId
-                && DateTimeOffset.Now - x.BookTime < expirationTime
-                && x.BookType == BookType.AwaitingPayment
-                && x.AccountId == bookInfo.AccountId
+            FlightBookInfoEntity bookInfo = _flightBooksInfo.FirstOrDefault(
+                x => x.Id == bookId
+                // because I have only one user in mock, and BookService cant get real user' id
+                && x.AccountId == 1
+                && DateTimeOffset.Now - x.BookTime <= expirationTime
             );
 
-            return seatInfo == null;
+            return bookInfo != null;
         }
 
-        public async Task<IReadOnlyCollection<FlightBookInfoEntity>> GetFlightBookInfoAsync(int flightId, TimeSpan expirationTime)
+        public async Task<IReadOnlyCollection<SeatBookEntity>> GetFlightBookedSeatsAsync(
+            int flightId,
+            TimeSpan expirationTime
+        )
         {
-            return _flightSeatInfo.Select(x => x).Where(
-                x => x.FlightId == flightId
-                && (DateTimeOffset.Now - x.BookTime) < expirationTime
-            ).ToList();
+            return _flightSeatsInfo;
         }
 
-        public async Task<IReadOnlyCollection<FlightBookInfoEntity>> GetFlightBookInfo(int flightId)
+        public async Task<IReadOnlyCollection<FlightBookInfoEntity>> GetAccountFlightsInfoAsync(int accountId)
         {
-            return _flightSeatInfo.Select(x => x).Where(x => x.FlightId == flightId).ToList();
+            return _flightBooksInfo.Select(x => x).Where(x => x.AccountId == accountId).ToList();
         }
 
-        public async Task<IReadOnlyCollection<SeatBookEntity>> GetAccountFlightsAsync(int accountId)
+        public async Task<int> AddAccountFlightInfoAsync(FlightBookInfoEntity bookInfo)
         {
-            return _accountBooks;
+            return 0;
+        }
+
+        public async Task<IReadOnlyCollection<SeatBookEntity>> GetBookSeatsAsync(int bookId)
+        {
+            return _flightSeatsInfo.Select(x => x).Where(x => x.FlightBookInfoId == bookId).ToList();
         }
     }
 }

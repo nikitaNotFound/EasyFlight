@@ -21,7 +21,7 @@ function Flights(props) {
             for (let accountFlightIndex = 0, len = props.accountFlights.length; accountFlightIndex < len; accountFlightIndex++) {
                 const accountFlight = props.accountFlights[accountFlightIndex];
                 
-                const seatsInfo = await FlightService.getFlightBookedSeatsByBookId(accountFlight.id);
+                const seatsInfo = await FlightService.getBookSeats(accountFlight.id);
 
                 if (!Array.isArray(flightBooks[accountFlight.flightId])) {
                     flightBooks[accountFlight.flightId] = [];

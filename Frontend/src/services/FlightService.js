@@ -151,9 +151,9 @@ export async function searchWithParams(filter, searchByName) {
     return await createRequestResult(response, RequestTypes.ContentExpected);
 }
 
-export async function bookForTime(flightId, bookInfo) {
+export async function bookForTime(bookInfo) {
     const response = await fetch(
-        `${config.API_URL}/flights/${flightId}/booked-seats`,
+        `${config.API_URL}/flights/books`,
         {
             method: 'post',
             mode: 'cors',
@@ -165,9 +165,9 @@ export async function bookForTime(flightId, bookInfo) {
     return await createRequestResult(response, RequestTypes.ContentExpected);
 }
 
-export async function finalBook(flightId, bookId, transaction) {
+export async function finalBook(bookId, transaction) {
     const response = await fetch(
-        `${config.API_URL}/flights/${flightId}/booked-seats/${bookId}?transaction=${transaction}`,
+        `${config.API_URL}/flights/books/${bookId}?transaction=${transaction}`,
         {
             method: 'put',
             mode: 'cors',
@@ -180,7 +180,7 @@ export async function finalBook(flightId, bookId, transaction) {
 
 export async function getAccountFlights() {
     const response = await fetch(
-        `${config.API_URL}/flights/account-flights`,
+        `${config.API_URL}/flights/books/me`,
         {
             method: 'get',
             mode: 'cors',
@@ -204,9 +204,9 @@ export async function getFlightBookedSeats(flightId) {
     return await createRequestResult(response, RequestTypes.ContentExpected);
 }
 
-export async function getFlightBookedSeatsByBookId(bookId) {
+export async function getBookSeats(bookId) {
     const response = await fetch(
-        `${config.API_URL}/flights/flight-books/${bookId}`,
+        `${config.API_URL}/flights/books/${bookId}/seats`,
         {
             method: 'get',
             mode: 'cors',
