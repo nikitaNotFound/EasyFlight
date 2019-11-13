@@ -13,6 +13,14 @@
     margin-left: 15%;
 }
 
+.form-sign-up .social-networks {
+    width: 100%;
+    display: flex;
+    justify-items: center;
+    justify-content: center;
+    display: block;
+}
+
 .main-button {
     width: 100%;
     margin-bottom: 1%;

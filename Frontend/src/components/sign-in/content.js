@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 
 import MessageBox from '../common/message-box';
+import GoogleLogin from 'react-google-login';
 
 import * as UserService from '../../services/UserSerivce';
 
@@ -69,13 +70,10 @@ function Content(props) {
                     Sign in
                 </button>
 
-                <div className="input-group-btn">
-                    <button className="btn btn-primary button-dark sec-button">
-                        <img src={googleIcon} className="login-item-img" alt="google-icon"/>
-                    </button>
-                    <button className="btn btn-primary button-dark sec-button">
-                        <img src={facebookIcon} className="login-item-img" alt="facebook-icon"/>
-                    </button>
+                <div className="social-networks">
+                    <GoogleLogin
+                        clientId="259272355014-gs064l1kpuurf3luc9r3b54ak9lim6sj.apps.googleusercontent.com"
+                    />
                 </div>
                 
                 <div className="sign-up-option">
