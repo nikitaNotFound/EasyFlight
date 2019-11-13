@@ -7,5 +7,5 @@
     [BookTime]                datetimeoffset (7) not null,
     [AccountId]               int                not null,
     constraint [PK_FlightBooksInfo] primary key clustered ([Id] asc),
-    constraint [FK_FlightBooksInfo_BookTypes] foreign key ([Id]) references [dbo].[BookTypes] ([Id])
+    constraint [FK_FlightBooksInfo_BookTypes] foreign key ([BookType]) references [dbo].[BookTypes] ([Id])
 );
