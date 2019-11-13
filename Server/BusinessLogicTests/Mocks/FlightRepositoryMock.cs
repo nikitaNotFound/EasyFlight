@@ -165,7 +165,7 @@ namespace BusinessLogicTests.Mocks
 
             FlightBookInfoEntity bookInfo = _flightBooksInfo.FirstOrDefault(
                 x => x.FlightId == flightId
-                && DateTimeOffset.Now - x.BookTime > expirationTime
+                && DateTimeOffset.Now - x.BookTime <= expirationTime
                 && x.Id == seat.FlightBookInfoId
             );
 
@@ -179,6 +179,7 @@ namespace BusinessLogicTests.Mocks
                 // because I have only one user in mock, and BookService cant get real user' id
                 && x.AccountId == 1
                 && DateTimeOffset.Now - x.BookTime <= expirationTime
+                && x.BookType == BookType.AwaitingPayment
             );
 
             return bookInfo != null;

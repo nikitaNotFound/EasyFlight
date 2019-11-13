@@ -59,15 +59,13 @@ namespace BusinessLogicTests
                 AccountId = 1,
                 BookType = BookType.AwaitingPayment,
                 FlightId = 1,
-                BookTime = new DateTimeOffset(
-                    new DateTime(2019, 11, 8, 20, 30, 0),
-                    new TimeSpan(3, 0, 0)
-                ),
+                BookTime = DateTimeOffset.Now,
                 SeatBooks = new SeatBook[]
                 {
                     new SeatBook()
                     {
-                        SeatId = 1
+                        SeatId = 1,
+                        FlightBookInfoId = 1
                     }
                 }
             };
@@ -88,10 +86,7 @@ namespace BusinessLogicTests
                 AccountId = 1,
                 BookType = BookType.AwaitingPayment,
                 FlightId = 2000,
-                BookTime = new DateTimeOffset(
-                    new DateTime(2019, 11, 8, 20, 30, 0),
-                    new TimeSpan(3, 0, 0)
-                ),
+                BookTime = DateTimeOffset.Now,
                 SeatBooks = new SeatBook[]
                 {
                     new SeatBook()
@@ -118,10 +113,7 @@ namespace BusinessLogicTests
                 AccountId = 1,
                 BookType = BookType.AwaitingPayment,
                 FlightId = 1,
-                BookTime = new DateTimeOffset(
-                    new DateTime(2019, 11, 8, 20, 30, 0),
-                    new TimeSpan(3, 0, 0)
-                ),
+                BookTime = DateTimeOffset.Now,
                 SeatBooks = new SeatBook[]
                 {
                     new SeatBook()
@@ -148,14 +140,12 @@ namespace BusinessLogicTests
                 AccountId = 1,
                 BookType = BookType.AwaitingPayment,
                 FlightId = 1,
-                BookTime = new DateTimeOffset(
-                    new DateTime(2019, 11, 8, 20, 30, 0),
-                    new TimeSpan(3, 0, 0)
-                ),
+                BookTime = DateTimeOffset.Now,
                 SeatBooks = new SeatBook[]
                 {
                     new SeatBook()
                     {
+                        FlightBookInfoId = 1,
                         SeatId = 2
                     }
                 }
@@ -174,24 +164,22 @@ namespace BusinessLogicTests
             // Arrange
             FlightBookInfo bookInfo = new FlightBookInfo()
             {
+                Id = 3,
                 AccountId = 1,
-                BookType = BookType.AwaitingPayment,
                 FlightId = 1,
-                BookTime = new DateTimeOffset(
-                    new DateTime(2019, 11, 8, 20, 30, 0),
-                    new TimeSpan(3, 0, 0)
-                ),
+                BookTime = DateTimeOffset.Now,
                 SeatBooks = new SeatBook[]
                 {
                     new SeatBook()
                     {
-                        SeatId = 1
+                        SeatId = 2,
+                        FlightBookInfoId = 1
                     }
                 }
             };
 
             // Act
-            ResultTypes bookResult = await _bookingService.FinalBookAsync(bookInfo.FlightId, "transaction");
+            ResultTypes bookResult = await _bookingService.FinalBookAsync(bookInfo.Id.Value, "transaction");
 
             // Assert
             Assert.AreEqual(ResultTypes.NotFound, bookResult);
@@ -207,10 +195,7 @@ namespace BusinessLogicTests
                 AccountId = 1,
                 BookType = BookType.AwaitingPayment,
                 FlightId = 1,
-                BookTime = new DateTimeOffset(
-                    new DateTime(2019, 11, 8, 20, 30, 0),
-                    new TimeSpan(3, 0, 0)
-                ),
+                BookTime = DateTimeOffset.Now,
                 SeatBooks = new SeatBook[]
                 {
                     new SeatBook()
@@ -238,10 +223,7 @@ namespace BusinessLogicTests
                 AccountId = 1,
                 BookType = BookType.AwaitingPayment,
                 FlightId = 1,
-                BookTime = new DateTimeOffset(
-                    new DateTime(2019, 11, 8, 20, 30, 0),
-                    new TimeSpan(3, 0, 0)
-                ),
+                BookTime = DateTimeOffset.Now,
                 SeatBooks = new SeatBook[]
                 {
                     new SeatBook()
