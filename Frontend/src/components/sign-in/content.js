@@ -6,14 +6,13 @@ import GoogleLogin from 'react-google-login';
 
 import * as UserService from '../../services/UserSerivce';
 
-import googleIcon from '../../icons/google-icon.png';
-import facebookIcon from '../../icons/facebook-icon.png';
-
 import '../../styles/registration.css';
 import { BadRequestError } from '../../services/RequestErrors';
 import { invalidInput, defaultErrorMessage, badLoginData } from '../common/message-box-messages';
 
 import { changeUserInfo } from '../../store/actions/UserInfoActions';
+
+import * as config from '../../config.json';
 
 function Content(props) {
     const [email, changeEmail] = useState(null);
@@ -21,7 +20,7 @@ function Content(props) {
 
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
-    async function onLogin() {
+    async function login(email, password) {
         if (!email || !password) {
             changeMessageBoxValue(invalidInput());
             return;
@@ -38,6 +37,16 @@ function Content(props) {
                 changeMessageBoxValue(defaultErrorMessage());
             }
         }
+    }
+
+    function onLogin() {
+        login(email, password);
+    }
+
+    function onGoogleSuccess(info) {
+        const profile = info.getBasicProfile();
+
+        login(profile.getEmail(), profile.getId());
     }
 
     function showMessageBox() {
@@ -58,12 +67,14 @@ function Content(props) {
                 <input
                     className="form-control"
                     placeholder="Email"
+                    value={email}
                     onChange={(event) => changeEmail(event.target.value)}
                 />
                 <input
                     className="form-control"
                     placeholder="Password"
                     type="password"
+                    value={password}
                     onChange={(event) => changePassword(event.target.value)}
                 />
                 <button className="btn btn-primary button-dark main-button" onClick={onLogin}>
@@ -72,7 +83,9 @@ function Content(props) {
 
                 <div className="social-networks">
                     <GoogleLogin
-                        clientId="259272355014-gs064l1kpuurf3luc9r3b54ak9lim6sj.apps.googleusercontent.com"
+                        clientId={config.GOOGLE_CLIENT_ID}
+                        onSuccess={onGoogleSuccess}
+                        onFailure={() => changeMessageBoxValue(defaultErrorMessage())}
                     />
                 </div>
                 

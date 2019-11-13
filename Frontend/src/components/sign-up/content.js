@@ -2,19 +2,19 @@ import React, {useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import MessageBox from '../common/message-box';
+import GoogleLogin from 'react-google-login';
 
 import * as UserService from '../../services/UserSerivce';
 
 import User from '../../services/user-models/user';
-
-import googleIcon from '../../icons/google-icon.png';
-import facebookIcon from '../../icons/facebook-icon.png';
 
 import '../../styles/registration.css';
 import { BadRequestError } from '../../services/RequestErrors';
 import { invalidInput, defaultErrorMessage, duplicate } from '../common/message-box-messages';
 
 import { changeUserInfo } from '../../store/actions/UserInfoActions';
+
+import * as config from '../../config.json';
 
 function Content(props) {
     const [name, changeName] = useState();
@@ -24,7 +24,13 @@ function Content(props) {
     const [confirmPassword, changeConfirmPassword] = useState();
     const [messageBoxValue, changeMessageBoxValue] = useState();
 
-    async function onRegister() {
+    async function register(
+        name,
+        surname,
+        email,
+        password,
+        confirmPassword
+    ) {
         if (!name
             || !surname
             || !email
@@ -57,6 +63,20 @@ function Content(props) {
                 changeMessageBoxValue(defaultErrorMessage());
             }
         }
+    }
+
+    function onRegister() {
+        register(name, surname, email, password, confirmPassword);
+    }
+
+    function onGoogleSuccess(info) {
+        const profile = info.getBasicProfile();
+
+        const [name, surname] = profile.getName().split(' ');
+        const email = profile.getEmail();
+        const password = profile.getId();
+
+        register(name, surname, email, password, password);
     }
 
     function showMessageBox() {
@@ -104,13 +124,13 @@ function Content(props) {
                 />
                 <button onClick={onRegister} className="btn btn-primary button-dark main-button">Sign up</button>
 
-                <div className="input-group-btn">
-                    <button className="btn btn-primary button-dark sec-button">
-                        <img src={googleIcon} className="login-item-img" alt="google-icon"/>
-                    </button>
-                    <button className="btn btn-primary button-dark sec-button">
-                        <img src={facebookIcon} className="login-item-img" alt="facebook-icon"/>
-                    </button>
+                <div className="social-networks">
+                    <GoogleLogin
+                        clientId={config.GOOGLE_CLIENT_ID}
+                        onSuccess={onGoogleSuccess}
+                        onFailure={() => changeMessageBoxValue(defaultErrorMessage())}
+                        buttonText="Sign up with Google"
+                    />
                 </div>
             </div>
         </main>
