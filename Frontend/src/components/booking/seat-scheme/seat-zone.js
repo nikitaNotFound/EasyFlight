@@ -1,8 +1,25 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import PropsTypes from 'prop-types';
 import SeatRow from './seat-row';
 
+function initializeScheme(props) {
+    let scheme = props.seats.slice();
+
+    const maxLength = scheme.reduce(
+        (length, row) => row.length > length ? row.length : length,
+        0
+    )
+
+    for (let i = 0, len = scheme.length; i < len; i++) {
+        scheme[i].length = maxLength;
+    }
+
+    return scheme;
+}
+
 function SeatZone(props) {
+    const [zoneScheme, changeZoneScheme] = useState(initializeScheme(props));
+
     return (
         <div className="airplane-zone">
             <div className="zone-headline">
@@ -11,7 +28,7 @@ function SeatZone(props) {
                     zone
                 </div>
             </div>
-            {props.seats.map(
+            {zoneScheme.map(
                 (seats, index) => {
                     let placeInfo = {};
                     Object.assign(placeInfo, props.placeInfo);

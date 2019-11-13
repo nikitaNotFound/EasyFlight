@@ -10,8 +10,6 @@ import * as CityService from '../../services/CityService';
 import * as CountryService from '../../services/CountryService';
 import * as AirportService from '../../services/AirportService';
 
-import Icon from '../../icons/test-company-2.jpg';
-
 import moment from 'moment';
 
 export default function Flight(props) {
@@ -19,6 +17,22 @@ export default function Flight(props) {
 
     const [from, changeFrom] = useState();
     const [to, changeTo] = useState();
+
+    const [totalCost, changeTotalCost] = useState(0);
+    const [suitcaseOverloadCost, changeSuitcaseOverloadCost] = useState(0);
+    const [handLuggageOverloadCost, changeHandLuggagOverloadCost] = useState(0);
+
+    function calculateTotalCost() {
+        let newTotalCost = props.books.reduce(
+            (cost, book) => cost + book.cost,
+            0
+        )
+
+        newTotalCost += props.flight.handLuggageOverloadCost;
+        newTotalCost += props.flight.suitcaseOverloadCost;
+
+        return newTotalCost;
+    }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -36,6 +50,10 @@ export default function Flight(props) {
                 CountryService.getById(fromCity.countryId),
                 CountryService.getById(toCity.countryId)
             ]);
+
+            changeTotalCost(calculateTotalCost());
+            changeSuitcaseOverloadCost(props.flight.suitcaseOverloadCost);
+            changeHandLuggagOverloadCost(props.flight.handLuggageOverloadCost);
 
             changeFrom(`${fromAirport.name} (${fromCity.name}, ${fromCountry.name})`);
             changeTo(`${toAirport.name} (${toCity.name}, ${toCountry.name})`);
@@ -58,13 +76,9 @@ export default function Flight(props) {
         <div className="flight-history-item">
             <div className="row">
                 <div className="col-5">
-                    <div className="container-fluid">
-                        <h5>
-                            From: {from} <br/> To: {to}
-                        </h5>
-                    </div>
-
-                    <div className="container-fluid">{props.flight.desc}</div>
+                    <h5>
+                        From: {from} <br/> To: {to}
+                    </h5>
                 </div>
 
                 <div className="col-7">
@@ -74,6 +88,16 @@ export default function Flight(props) {
                     <div className="time-info">
                         Arrival time: {getTimeString(props.flight.arrivalTime)}
                     </div>
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-6">
+                    Suitcase overload cost: {suitcaseOverloadCost}$ <br/>
+                    Hand luggage overload cost: {handLuggageOverloadCost}$
+                </div>
+
+                <div className="col-6">
+                    Total cost: {totalCost}$
                 </div>
             </div>
             <div className="row books">

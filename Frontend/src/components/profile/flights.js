@@ -23,11 +23,7 @@ function Flights(props) {
                 
                 const seatsInfo = await FlightService.getBookSeats(accountFlight.id);
 
-                if (!Array.isArray(flightBooks[accountFlight.flightId])) {
-                    flightBooks[accountFlight.flightId] = [];
-                }
-
-                flightBooks[accountFlight.flightId].push(seatsInfo);
+                flightBooks[accountFlight.flightId] = seatsInfo;
             }
 
             changeFlightBooks(flightBooks);
@@ -47,6 +43,11 @@ function Flights(props) {
                 } else {
                     futureFlights.push(flights[i]);
                 }
+
+                const [suitcaseCost, handLuggageCost] = getAccountFlightOverloadCosts(flights[i].id);
+
+                flights[i].suitcaseOverloadCost = suitcaseCost;
+                flights[i].handLuggageOverloadCost = handLuggageCost;
             }
 
             changeFutureFlights(futureFlights);
@@ -55,6 +56,18 @@ function Flights(props) {
         }
         fetchData();
     }, [props.accountFlights]);
+
+    function getAccountFlightOverloadCosts(flightId) {
+        for (let i = 0, len = props.accountFlights.length; i < len; i++) {
+            const flight = props.accountFlights[i];
+
+            if (flight.flightId == flightId) {
+                return [flight.suitcaseOverloadCost, flight.handLuggageOverloadCost];
+            }
+        }
+
+        return [0, 0];
+    }
 
     if (loading) {
         return (

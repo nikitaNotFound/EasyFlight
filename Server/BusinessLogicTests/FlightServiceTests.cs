@@ -7,6 +7,7 @@ using BusinessLayer.Services.Accounts;
 using BusinessLayer.Services.Flights;
 using BusinessLogicTests.Mocks;
 using Common;
+using DataAccessLayer;
 using DataAccessLayer.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -39,11 +40,9 @@ namespace BusinessLogicTests
 
             _flightService = new FlightService(
                 mapper,
-                new FlightRepositoryMock(),
+                new FlightRepositoryMock(bookingSettings),
                 new AirportRepositoryMock(),
-                new AirplanesRepositoryMock(),
-                bookingSettings,
-                null
+                new AirplanesRepositoryMock()
             );
         }
 

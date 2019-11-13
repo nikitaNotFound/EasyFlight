@@ -1,7 +1,6 @@
-﻿create table [dbo].[FlightSeatsInfo](
-    [FlightId] [int] NOT NULL,
-    [AccountId] [int] NOT NULL,
-    [SeatId] [int] NOT NULL,
-    [BookTime] [datetimeoffset](7) NOT NULL,
-    [BookType] [int] NOT NULL
-)
+﻿create table [dbo].[FlightSeatsInfo] (
+    [SeatId]           int not null,
+    [Cost]             int not null,
+    [FlightBookInfoId] int not null
+);
+

@@ -7,6 +7,7 @@ using BusinessLayer.Services.Booking;
 using BusinessLayer.Services.Flights;
 using BusinessLogicTests.Mocks;
 using Common;
+using DataAccessLayer;
 using DataAccessLayer.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -41,14 +42,11 @@ namespace BusinessLogicTests
 
             _bookingService = new BookingService(
                 mapper,
-                new FlightRepositoryMock(),
-                new AirportRepositoryMock(),
+                new FlightRepositoryMock(bookingSettings),
                 new AirplanesRepositoryMock(),
-                bookingSettings,
                 null
             );
         }
-
 
         [TestMethod]
         public async Task BookingForTimeBookedSeatReturnsDuplicateResult()

@@ -12,7 +12,7 @@ import FinalButton from './final-button';
 import CostLayout from './cost-layout';
 import FlightInfo from './flight-info';
 import MessageBox from '../common/message-box';
-import { defaultErrorMessage } from '../common/message-box-messages';
+import { defaultErrorMessage, booked, alreadyBooked } from '../common/message-box-messages';
 
 import * as AirplaneService from '../../services/AirplaneService';
 import * as FlightService from '../../services/FlightService';
@@ -22,6 +22,7 @@ import '../../styles/booking.css';
 import FlightBookInfo from '../../services/flight-models/flight-book-info';
 import BookCostInfo from '../../services/flight-models/book-cost-info';
 import SeatBookInfo from '../../services/flight-models/seat-book-info';
+import { BadRequestError } from '../../services/RequestErrors';
 
 function Content(props) {
     const [loading, changeLoading] = useState(true);
@@ -36,6 +37,8 @@ function Content(props) {
     const [calculatePage, changeCalculatePage] = useState(false);
     const [bookedSeats, changeBookedSeats] = useState([]);
     const [bookCost, changeBookCost] = useState(new BookCostInfo());
+
+    const [dataUpdater, changeDataUpdater] = useState(0);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -62,7 +65,7 @@ function Content(props) {
             }
         }
         fetchData();
-    }, [props.flightId]);
+    }, [props.flightId, dataUpdater]);
 
     function onSeatChoosen(seat) {
         let storage = choosenSeats.slice();
@@ -91,6 +94,12 @@ function Content(props) {
         }
     }
 
+    function clearOptions() {
+        changeChoosenSeats([]);
+        changeHandLuggageCount(0);
+        changeSuitcaseCount(0);
+    }
+
     async function onBookForTime() {
         const seatsBookInfo = choosenSeats.map(
             seat => new SeatBookInfo(seat.id, bookCost.seatsCost[seat.id])
@@ -106,8 +115,12 @@ function Content(props) {
         try {
             const book = await FlightService.bookForTime(bookInfo);
             onBookPayed(book.id);
-        } catch {
-            changeMessageBoxValue(defaultErrorMessage());
+        } catch (ex) {
+            if (ex instanceof BadRequestError) {
+                changeMessageBoxValue(alreadyBooked());
+            } else {
+                changeMessageBoxValue(defaultErrorMessage());
+            }
         }
     }
 
@@ -115,10 +128,17 @@ function Content(props) {
         setTimeout(async () => {
             try {
                 await FlightService.finalBook(bookId, 'transaction');
+                clearOptions();
+                changeMessageBoxValue(booked());
             } catch {
                 changeMessageBoxValue(defaultErrorMessage());
             }
         }, 5000);
+    }
+
+    function onBackToOptions() {
+        changeDataUpdater(dataUpdater + 1);
+        changeCalculatePage(false);
     }
 
     function showMessageBox() {
@@ -159,7 +179,7 @@ function Content(props) {
                 />
                 <FinalButton
                     type="change-options"
-                    onClick={() => changeCalculatePage(false)}
+                    onClick={onBackToOptions}
                     content="Return back to options"
                 />
             </main>

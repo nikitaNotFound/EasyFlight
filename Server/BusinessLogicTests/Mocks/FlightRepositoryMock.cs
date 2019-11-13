@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BusinessLayer;
 using BusinessLayer.Models;
 using Common;
 using DataAccessLayer;
@@ -95,6 +96,15 @@ namespace BusinessLogicTests.Mocks
             }
         };
 
+        private readonly IBookingSettings _bookingSettings;
+
+
+        public FlightRepositoryMock(IBookingSettings bookingSettings)
+        {
+            _bookingSettings = bookingSettings;
+        }
+
+
         public async Task<IReadOnlyCollection<FlightEntity>> GetAllAsync()
         {
             return _flightData;
@@ -115,7 +125,7 @@ namespace BusinessLogicTests.Mocks
             // implementation
         }
 
-        public async Task<IReadOnlyCollection<FlightEntity>> SearchFlightsAsync(FlightFilterEntity filter, TimeSpan expirationTime)
+        public async Task<IReadOnlyCollection<FlightEntity>> SearchFlightsAsync(FlightFilterEntity filter)
         {
             return _flightData;
         }
@@ -154,7 +164,7 @@ namespace BusinessLogicTests.Mocks
             // implementation
         }
 
-        public async Task<bool> CheckSeatBookAvailabilityAsync(int flightId, int seatId, TimeSpan expirationTime)
+        public async Task<bool> CheckSeatBookAvailabilityAsync(int flightId, int seatId)
         {
             SeatBookEntity seat = _flightSeatsInfo.FirstOrDefault(x => x.SeatId == seatId);
 
@@ -165,30 +175,27 @@ namespace BusinessLogicTests.Mocks
 
             FlightBookInfoEntity bookInfo = _flightBooksInfo.FirstOrDefault(
                 x => x.FlightId == flightId
-                && DateTimeOffset.Now - x.BookTime <= expirationTime
+                && DateTimeOffset.Now - x.BookTime <= _bookingSettings.ExpirationTime
                 && x.Id == seat.FlightBookInfoId
             );
 
             return bookInfo == null;
         }
 
-        public async Task<bool> CheckFinalBookAvailabilityAsync(int bookId, int accountId, TimeSpan expirationTime)
+        public async Task<bool> CheckFinalBookAvailabilityAsync(int bookId, int accountId)
         {
             FlightBookInfoEntity bookInfo = _flightBooksInfo.FirstOrDefault(
                 x => x.Id == bookId
                 // because I have only one user in mock, and BookService cant get real user' id
                 && x.AccountId == 1
-                && DateTimeOffset.Now - x.BookTime <= expirationTime
+                && DateTimeOffset.Now - x.BookTime <= _bookingSettings.ExpirationTime
                 && x.BookType == BookType.AwaitingPayment
             );
 
             return bookInfo != null;
         }
 
-        public async Task<IReadOnlyCollection<SeatBookEntity>> GetFlightBookedSeatsAsync(
-            int flightId,
-            TimeSpan expirationTime
-        )
+        public async Task<IReadOnlyCollection<SeatBookEntity>> GetFlightBookedSeatsAsync(int flightId)
         {
             return _flightSeatsInfo;
         }

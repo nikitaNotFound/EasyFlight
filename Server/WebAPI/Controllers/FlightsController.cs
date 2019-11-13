@@ -237,7 +237,7 @@ namespace WebAPI.Controllers
         // PUT api/flights/books/{bookId}{?transaction}
         [HttpPut]
         [Route("books/{bookId}")]
-        public async Task<IActionResult> BookAsync(int flightId, int bookId, string transaction)
+        public async Task<IActionResult> BookAsync(int bookId, string transaction)
         {
             if (string.IsNullOrEmpty(transaction))
             {

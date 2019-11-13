@@ -1,13 +1,15 @@
 ﻿using System;
 using Microsoft.Extensions.Configuration;
 
-namespace BusinessLayer
+namespace DataAccessLayer
 {
     public class BookingSettings : IBookingSettings
     {
         private readonly IConfiguration _configuration;
 
         public TimeSpan ExpirationTime => TimeSpan.Parse(_configuration[nameof(ExpirationTime)]);
+        public TimeSpan TimeUntilBookingAvailable
+            => TimeSpan.Parse(_configuration[nameof(TimeUntilBookingAvailable)]);
 
 
         public BookingSettings(IConfiguration configuration)

@@ -1,31 +1,17 @@
-﻿create procedure BookSeat
-    @flightId as int,
+﻿create procedure [dbo].[BookSeat]
     @seatId as int,
-    @accountId as int,
-    @bookTime as datetimeoffset(7),
-    @bookType as int
+    @cost as int,
+    @flightBookInfoId as int
 as
-    update FlightSeatsInfo
-    set BookTime = @bookTime,
-        BookType = @bookType
-    where FlightId = @flightId
-        and SeatId = @seatId
-        and AccountId = @accountId
-
-    if @@ROWCOUNT = 0
     insert into FlightSeatsInfo
     (
-        FlightId,
         SeatId,
-        AccountId,
-        BookTime,
-        BookType
+        Cost,
+        FlightBookInfoId
     )
     values
     (
-        @flightId,
         @seatId,
-        @accountId,
-        @bookTime,
-        @bookType
+        @cost,
+        @flightBookInfoId
     )

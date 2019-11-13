@@ -21,7 +21,7 @@ function getSeatTypeIndex(props) {
 }
 
 function getChoosenMode(props) {
-    if (props.seat.choosen && props.seat.choosen === true) {
+    if (props.seat && props.seat.choosen && props.seat.choosen === true) {
         return true;
     }
     return false;
@@ -45,7 +45,7 @@ function Seat(props) {
 
     if (seatTypeIndex === UNDEFINED_SEAT_TYPE_INDEX) {
         return (
-            <div className={`seat non-selectable`}/>
+            <div className={`seat non-selectable empty`}/>
         );
     }
 

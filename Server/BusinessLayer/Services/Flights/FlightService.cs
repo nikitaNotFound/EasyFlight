@@ -4,6 +4,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using BusinessLayer.Models;
+using DataAccessLayer;
 using DataAccessLayer.Models;
 using DataAccessLayer.Repositories.Airplanes;
 using DataAccessLayer.Repositories.Airports;
@@ -18,39 +19,19 @@ namespace BusinessLayer.Services.Flights
         private readonly IFlightRepository _flightRepository;
         private readonly IAirportRepository _airportRepository;
         private readonly IAirplaneRepository _airplaneRepository;
-        private readonly IBookingSettings _bookingSettings;
-        private readonly int _accountId;
 
 
         public FlightService(
             IMapper mapper,
             IFlightRepository flightRepository,
             IAirportRepository airportRepository,
-            IAirplaneRepository airplaneRepository,
-            IBookingSettings bookingSettings,
-            IHttpContextAccessor httpContextAccessor
+            IAirplaneRepository airplaneRepository
         )
         {
             _mapper = mapper;
             _flightRepository = flightRepository;
             _airportRepository = airportRepository;
             _airplaneRepository = airplaneRepository;
-            _bookingSettings = bookingSettings;
-
-            ClaimsIdentity claimsIdentity = httpContextAccessor?.HttpContext.User.Identity as ClaimsIdentity;
-
-            if (claimsIdentity == null)
-            {
-                return;
-            }
-
-            string nameIdentifier =
-                claimsIdentity?.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
-
-            if (!string.IsNullOrEmpty(nameIdentifier))
-            {
-                _accountId = int.Parse(nameIdentifier);
-            }
         }
 
 
@@ -135,7 +116,23 @@ namespace BusinessLayer.Services.Flights
             FlightFilterEntity filterDal = _mapper.Map<FlightFilterEntity>(filter);
 
             IReadOnlyCollection<FlightEntity> flightsDal =
-                await _flightRepository.SearchFlightsAsync(filterDal, _bookingSettings.ExpirationTime);
+                await _flightRepository.SearchFlightsAsync(filterDal);
+
+            if (filter.SearchFlightsBack)
+            {
+                int? fromCityIdBuff = filterDal.FromCityId;
+                filterDal.FromCityId = filterDal.ToCityId;
+                filterDal.ToCityId = fromCityIdBuff;
+
+                int? fromAirportIdBuff = filterDal.FromAirportId;
+                filterDal.FromAirportId = filterDal.ToAirportId;
+                filterDal.ToAirportId = fromAirportIdBuff;
+
+                IReadOnlyCollection<FlightEntity> flightsBackDal =
+                    await _flightRepository.SearchFlightsAsync(filterDal);
+
+                flightsDal = flightsDal.Concat(flightsBackDal).ToList();
+            }
 
             return flightsDal.Select(_mapper.Map<Flight>).ToList();
         }

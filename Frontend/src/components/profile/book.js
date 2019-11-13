@@ -11,12 +11,14 @@ export default function Book(props) {
     const [loading, changeLoading] = useState(true);
     const [seatTypeName, changeSeatTypeName] = useState();
     const [messageBoxValue, changeMessageBoxValue] = useState();
+    const [seatPos, changeSeatPos] = useState();
 
     useState(() => {
         const fetchData = async () => {
             try {
-                console.log(props.book)
                 const seat = await AirplaneService.getSeatById(props.book.seatId);
+
+                changeSeatPos(seat);
 
                 const seatType = await AirplaneService.getSeatTypeById(seat.typeId);
 
@@ -52,12 +54,13 @@ export default function Book(props) {
     return (
         <div className="account-flight-book">
             {showMessageBox()}
-            Floor: {props.book.floor} <br/>
-            Section: {props.book.section} <br/>
-            Zone: {props.book.zone} <br/>
-            Row: {props.book.row} <br/>
-            Number: {props.book.number} <br/>
-            Seat type: {seatTypeName}
+            Floor: {seatPos.floor} <br/>
+            Section: {seatPos.section} <br/>
+            Zone: {seatPos.zone} <br/>
+            Row: {seatPos.row} <br/>
+            Number: {seatPos.number} <br/>
+            Seat type: {seatTypeName} <br/>
+            Cost: {props.book.cost}$
         </div>
     );
 }

@@ -19,23 +19,19 @@ namespace BusinessLayer.Services.Booking
         private readonly IMapper _mapper;
         private readonly IFlightRepository _flightRepository;
         private readonly IAirplaneRepository _airplaneRepository;
-        private readonly IBookingSettings _bookingSettings;
         private readonly int _accountId;
 
 
         public BookingService(
             IMapper mapper,
             IFlightRepository flightRepository,
-            IAirportRepository airportRepository,
             IAirplaneRepository airplaneRepository,
-            IBookingSettings bookingSettings,
             IHttpContextAccessor httpContextAccessor
         )
         {
             _mapper = mapper;
             _flightRepository = flightRepository;
             _airplaneRepository = airplaneRepository;
-            _bookingSettings = bookingSettings;
 
             ClaimsIdentity claimsIdentity = httpContextAccessor?.HttpContext.User.Identity as ClaimsIdentity;
 
@@ -74,8 +70,8 @@ namespace BusinessLayer.Services.Booking
 
                 bool canBook = await _flightRepository.CheckSeatBookAvailabilityAsync(
                     bookInfo.FlightId,
-                    seatBook.SeatId,
-                    _bookingSettings.ExpirationTime);
+                    seatBook.SeatId
+                );
 
                 if (!canBook)
                 {
@@ -105,8 +101,7 @@ namespace BusinessLayer.Services.Booking
         {
             bool canBook = await _flightRepository.CheckFinalBookAvailabilityAsync(
                 bookId,
-                _accountId,
-                _bookingSettings.ExpirationTime
+                _accountId
             );
 
             if (!canBook)
@@ -127,7 +122,7 @@ namespace BusinessLayer.Services.Booking
         public async Task<IReadOnlyCollection<SeatBook>> GetFlightBookedSeatsAsync(int flightId)
         {
             IReadOnlyCollection<SeatBookEntity> flightBookInfoDal =
-                await _flightRepository.GetFlightBookedSeatsAsync(flightId, _bookingSettings.ExpirationTime);
+                await _flightRepository.GetFlightBookedSeatsAsync(flightId);
 
             return flightBookInfoDal.Select(_mapper.Map<SeatBook>).ToList();
         }

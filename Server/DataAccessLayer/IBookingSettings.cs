@@ -1,9 +1,10 @@
 ﻿using System;
 
-namespace BusinessLayer
+namespace DataAccessLayer
 {
     public interface IBookingSettings
     {
         TimeSpan ExpirationTime { get; }
+        TimeSpan TimeUntilBookingAvailable { get; }
     }
 }
