@@ -2,7 +2,7 @@
     @flightId as int,
     @seatId as int,
     @bookExpirationTimeInSeconds as int,
-	@timeUntilBookingAvailableInSeconds as int,
+    @timeUntilBookingAvailableInSeconds as int,
     @finalBookType as int
 as
     select top 1 1
