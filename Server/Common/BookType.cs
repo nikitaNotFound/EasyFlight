@@ -2,7 +2,7 @@ namespace Common
 {
     public enum BookType
     {
-        AwaitingPayment= 0,
-        Payed = 1
+        AwaitingPayment= 1,
+        Payed = 2
     }
 }
