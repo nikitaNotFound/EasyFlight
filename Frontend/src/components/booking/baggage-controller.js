@@ -7,7 +7,7 @@ export default function BaggageController(props) {
     const [suitcaseCount, changeSuitcaseCount] = useState(props.suitcaseCountValue);
     const [handLuggageCount, changeHandLugggageCount] = useState(props.handLuggageCountValue);
 
-    function onCountChange(event) {
+    function onSuitcaseCountChange(event) {
         const newValue = Number(event.target.value);
         if (newValue >= 0) {
             changeSuitcaseCount(newValue);
@@ -15,7 +15,7 @@ export default function BaggageController(props) {
         }
     }
 
-    function onCarryonChange(event) {
+    function onHandLuggageCountChange(event) {
         const newValue = Number(event.target.value);
         if (newValue >= 0) {
             changeHandLugggageCount(newValue);
@@ -29,14 +29,14 @@ export default function BaggageController(props) {
             <div className="baggage-info">
                 {`Max suitcase mass: ${props.suitcaseMass} kg`} <br />
                 {`Max suitcase count: ${props.suitcaseCount}`} <br />
-                <input value={suitcaseCount} onChange={onCountChange} />
+                <input value={suitcaseCount} onChange={onSuitcaseCountChange} />
                 suitcase count
             </div>
 
             <div className="baggage-info">
                 {`Max hand luggage mass: ${props.handLuggageMass} kg`} <br />
                 {`Max hand luggage count: ${props.handLuggageCount}`} <br />
-                <input value={handLuggageCount} onChange={onCarryonChange} />
+                <input value={handLuggageCount} onChange={onHandLuggageCountChange} />
                 hand luggage count
             </div>
         </div>
