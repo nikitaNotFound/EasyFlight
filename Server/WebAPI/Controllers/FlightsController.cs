@@ -285,9 +285,9 @@ namespace WebAPI.Controllers
             return Ok(seats);
         }
 
-        // GET api/flights/books/me
+        // GET api/flights/books/my
         [HttpGet]
-        [Route("books/me")]
+        [Route("books/my")]
         public async Task<IActionResult> GetAccountFlightsInfoAsync()
         {
             IReadOnlyCollection<BlFlightBookInfo> accountFlightsBl =

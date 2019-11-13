@@ -1,4 +1,4 @@
-﻿CREATE procedure [dbo].[SearchFlights]
+﻿create procedure [dbo].[SearchFlights]
     @fromAirportId as int = null,
     @toAirportId as int = null,
     @fromCityId as int = null,

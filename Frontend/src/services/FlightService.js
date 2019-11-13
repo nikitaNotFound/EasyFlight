@@ -180,7 +180,7 @@ export async function finalBook(bookId, transaction) {
 
 export async function getAccountFlights() {
     const response = await fetch(
-        `${config.API_URL}/flights/books/me`,
+        `${config.API_URL}/flights/books/my`,
         {
             method: 'get',
             mode: 'cors',

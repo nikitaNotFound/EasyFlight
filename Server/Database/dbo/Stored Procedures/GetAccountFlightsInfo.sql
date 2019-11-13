@@ -1,4 +1,4 @@
-﻿CREATE procedure [dbo].[GetAccountFlightsInfo]
+﻿create procedure [dbo].[GetAccountFlightsInfo]
     @accountId as int,
     @finalBookType as int
 as
