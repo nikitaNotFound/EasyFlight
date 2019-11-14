@@ -47,3 +47,7 @@ export function flightTimeError() {
 export function alreadyBooked() {
     return 'Oooops... It seems like the seats you trying to book are already booked!';
 }
+
+export function tooMuchUpdates() {
+    return 'Too much updates! Wait a few minutes'
+}

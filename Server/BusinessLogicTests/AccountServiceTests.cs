@@ -26,7 +26,7 @@ namespace BusinessLogicTests
 
             IMapper mapper = mappingConfig.CreateMapper();
 
-            _accountService = new AccountService(mapper, new AccountRepositoryMock());
+            _accountService = new AccountService(mapper, new AccountRepositoryMock(), new UserInfoMock(1));
         }
 
 

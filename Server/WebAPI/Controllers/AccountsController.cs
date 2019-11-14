@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using BusinessLayer;
 using BusinessLayer.Services.Accounts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Models;
 using WebAPI.Services.JWT;
@@ -46,7 +48,7 @@ namespace WebAPI.Controllers
             }
 
             Account authAccount = _mapper.Map<Account>(authAccountBl);
-            
+
             string token = _jwtService.CreateTokenAsync(authAccount);
 
             AccountResponse accountResponse = new AccountResponse(
@@ -77,7 +79,7 @@ namespace WebAPI.Controllers
             }
 
             Account registerAccount = _mapper.Map<Account>(registerAccountBl);
-            
+
             string token = _jwtService.CreateTokenAsync(registerAccount);
 
             AccountResponse accountResponse = new AccountResponse(
@@ -91,6 +93,38 @@ namespace WebAPI.Controllers
             );
 
             return Ok(accountResponse);
+        }
+
+        // PUT api/accounts/my/name{?firstName}{?secondName}
+        [HttpPut]
+        [AllowAnonymous]
+        [Route("my/name")]
+        public async Task<IActionResult> UpdateNameAsync(string firstName, string secondName)
+        {
+            if (string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(secondName))
+            {
+                return BadRequest();
+            }
+
+            ResultTypes updateResult = await _accountService.UpdateNameAsync(firstName, secondName);
+
+            if (updateResult == ResultTypes.InvalidData)
+            {
+                return BadRequest();
+            }
+
+            return Ok();
+        }
+
+        // PUT api/accounts/my/avatar{?firstName}{?secondName}
+        [HttpPut]
+        [AllowAnonymous]
+        [Route("my/avatar")]
+        public async Task<IActionResult> UpdateAvatarAsync([FromBody] IFormFile file)
+        {
+
+
+            return Ok();
         }
     }
 }

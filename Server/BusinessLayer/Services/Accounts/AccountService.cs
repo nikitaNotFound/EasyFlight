@@ -14,12 +14,14 @@ namespace BusinessLayer.Services.Accounts
     {
         private readonly IMapper _mapper;
         private readonly IAccountRepository _accountRepository;
+        private readonly int _accountId;
 
 
-        public AccountService(IMapper mapper, IAccountRepository repository)
+        public AccountService(IMapper mapper, IAccountRepository repository, IUserInfo userInfo)
         {
             _mapper = mapper;
             _accountRepository = repository;
+            _accountId = userInfo.AccountId;
         }
 
 
@@ -36,7 +38,7 @@ namespace BusinessLayer.Services.Accounts
                 account.Password,
                 dalAccount.Salt
             );
-            
+
             if (!dalAccount.PasswordHash.SequenceEqual(loginPasswordHash))
             {
                 return null;
@@ -50,12 +52,12 @@ namespace BusinessLayer.Services.Accounts
             AccountEntity dalAccount = _mapper.Map<AccountEntity>(account);
 
             bool duplicate = await _accountRepository.CheckDuplicateAsync(dalAccount);
-            
+
             if (duplicate)
             {
                 return null;
             }
-            
+
             byte[] saltForNewAccount = PasswordHasher.GenerateSalt();
             dalAccount.Salt = saltForNewAccount;
             dalAccount.PasswordHash = PasswordHasher.GenerateHash(account.Password, saltForNewAccount);
@@ -63,6 +65,20 @@ namespace BusinessLayer.Services.Accounts
             AccountEntity newAccount = await _accountRepository.CreateAccountAsync(dalAccount);
 
             return _mapper.Map<Account>(newAccount);
+        }
+
+        public async Task<ResultTypes> UpdateNameAsync(string firstName, string secondName)
+        {
+            bool canUpdate = await _accountRepository.CanUpdateName(_accountId);
+
+            if (!canUpdate)
+            {
+                return ResultTypes.InvalidData;
+            }
+
+            await _accountRepository.UpdateNameAsync(_accountId, firstName, secondName);
+
+            return ResultTypes.Ok;
         }
     }
 }

@@ -43,5 +43,15 @@ namespace BusinessLogicTests.Mocks
         {
             return account;
         }
+
+        public Task UpdateNameAsync(int accountId, string firstName, string secondName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> CanUpdateName(int accountId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

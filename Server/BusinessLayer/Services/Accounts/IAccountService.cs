@@ -10,5 +10,6 @@ namespace BusinessLayer.Services.Accounts
     {
         Task<Account> LoginAsync(Account account);
         Task<Account> RegisterAsync(Account account);
+        Task<ResultTypes> UpdateNameAsync(string firstName, string secondName);
     }
 }

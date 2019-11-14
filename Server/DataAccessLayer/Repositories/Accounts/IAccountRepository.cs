@@ -12,5 +12,7 @@ namespace DataAccessLayer.Repositories.Accounts
         Task<AccountEntity> GetAccountAsync(AccountEntity account);
         Task<bool> CheckDuplicateAsync(AccountEntity account);
         Task<AccountEntity> CreateAccountAsync(AccountEntity account);
+        Task UpdateNameAsync(int accountId, string firstName, string secondName);
+        Task<bool> CanUpdateName(int accountId);
     }
 }

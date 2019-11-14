@@ -2,31 +2,13 @@ import { userFlights } from './DataBase';
 import { isArray } from 'util';
 import User from './user-models/user';
 
-import { createRequestResult, RequestTypes } from './RequestAssistant';
+import { createRequestResult, RequestTypes, headers } from './RequestAssistant';
 
 import AuthTokenProvider from './AuthTokenProvider';
 
 import AccountRole from './AccountRole';
 
 import * as config from '../config.json';
-
-export function getUserFlights(userId) {
-    return new Promise((resolve, reject) => {
-        let data = [];
-
-        for (let i = 0, len = userFlights.length; i < len; i++) {
-            const element = userFlights[i];
-            if (element.userId == userId) {
-                data.push(element);
-            }
-        }
-
-        if (!data && !isArray(data)) {
-            reject("Error");
-        }
-        resolve(data);
-    });
-}
 
 export async function login(user) {
     const response = await fetch(
@@ -99,4 +81,17 @@ export function checkLogin(userInfo) {
     }
 
     return { authorized: true, admin: userInfo.role == AccountRole.Admin ? true : false };
+}
+
+export async function updateName(firstName, secondName) {
+    const response = await fetch(
+        `${config.API_URL}/accounts/my/name?firstName=${firstName}&secondName=${secondName}`,
+        {
+            method: 'put',
+            mode: 'cors',
+            headers: headers()
+        }
+    );
+
+    return createRequestResult(response, RequestTypes.NoContentExpected);
 }

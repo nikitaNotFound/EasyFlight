@@ -10,11 +10,13 @@ namespace DataAccessLayer.Repositories.Accounts
     public class AccountRepository : IAccountRepository
     {
         private readonly IDalSettings _dalSettings;
+        private readonly IAccountUpdatingSettings _accountUpdatingSettings;
 
 
-        public AccountRepository(IDalSettings dalSettings)
+        public AccountRepository(IDalSettings dalSettings, IAccountUpdatingSettings accountUpdatingSettings)
         {
             _dalSettings = dalSettings;
+            _accountUpdatingSettings = accountUpdatingSettings;
         }
 
 
@@ -61,6 +63,34 @@ namespace DataAccessLayer.Repositories.Accounts
                     passwordHash = account.PasswordHash,
                     salt = account.Salt,
                     role = AccountRole.User
+                },
+                commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task UpdateNameAsync(int accountId, string firstName, string secondName)
+        {
+            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
+
+            await db.ExecuteAsync(
+                "UpdateAccountName",
+                new
+                {
+                    FirstName = firstName,
+                    SecondName = secondName,
+                    AccountId = accountId
+                },
+                commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task<bool> CanUpdateName(int accountId)
+        {
+            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
+
+            return !await db.ExecuteScalarAsync<bool>(
+                "CanUpdateAccountName",
+                new {
+                    AccountId = accountId,
+                    AccountNameUpdatingIntervalInSeconds = _accountUpdatingSettings.NameUpdatingInterval.TotalSeconds
                 },
                 commandType: CommandType.StoredProcedure);
         }
