@@ -1,16 +1,13 @@
 import React from 'react';
-import PropsTypes from 'prop-types';
 
-function Spinner(props) {
+import LoadingIcon from '../../icons/loading-icon.png';
+
+import '../../styles/spinner.css';
+
+export default function Spinner() {
     return (
-        <div>
-            {props.headline}
+        <div className="spinner">
+            <img src={LoadingIcon}/>
         </div>
     );
 }
-
-Spinner.propsTypes = {
-    headline: PropsTypes.string
-}
-
-export default Spinner;

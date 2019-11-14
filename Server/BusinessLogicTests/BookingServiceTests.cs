@@ -44,7 +44,7 @@ namespace BusinessLogicTests
                 mapper,
                 new FlightRepositoryMock(bookingSettings),
                 new AirplanesRepositoryMock(),
-                null
+                new UserInfoMock(1)
             );
         }
 

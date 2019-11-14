@@ -273,7 +273,7 @@ namespace DataAccessLayer.Repositories.Flights
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
             IEnumerable<SeatBookEntity> seats = await db.QueryAsync<SeatBookEntity>(
-                "GetBookSeatsAsync",
+                "GetBookSeats",
                 new
                 {
                     BookId = bookId
@@ -281,6 +281,19 @@ namespace DataAccessLayer.Repositories.Flights
                 commandType: CommandType.StoredProcedure);
 
             return seats.ToList();
+        }
+
+        public async Task<int?> GetBookStatusAsync(int bookId)
+        {
+            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
+
+            return await db.QuerySingleOrDefaultAsync<int>(
+                "GetBookStatus",
+                new
+                {
+                    BookId = bookId
+                },
+                commandType: CommandType.StoredProcedure);
         }
 
         public async Task FinalBookAsync(int bookId, int accountId)

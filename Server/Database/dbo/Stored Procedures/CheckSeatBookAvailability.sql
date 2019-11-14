@@ -7,16 +7,10 @@
 as
     select top 1 1
     from FlightSeatsInfo fsi
-        cross apply (
-            select BookType, BookTime, FlightId
-            from FlightBooksInfo fbi
-            where fsi.FlightBookInfoId = fbi.Id
-        ) fbi
-        cross apply (
-            select DepartureTime
-            from Flights f
-            where fbi.FlightId = f.Id
-        ) f
+        inner join FlightBooksInfo fbi
+            on fsi.FlightBookInfoId = fbi.Id
+        inner join Flights f
+            on f.Id = fbi.FlightId
     where fbi.FlightId = @flightId
         and fsi.SeatId = @seatId
         and (datediff(second, fbi.BookTime, SYSDATETIMEOFFSET()) <= @bookExpirationTimeInSeconds

@@ -1,0 +1,23 @@
+.spinner img {
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    animation-name: spin;
+    width: 36px;
+}
+
+.spinner {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 3%;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

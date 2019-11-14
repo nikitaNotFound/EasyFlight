@@ -8,7 +8,7 @@ export async function getById(id) {
         {
             method: 'get',
             mode: 'cors',
-            headers: headers
+            headers: headers()
         }
     );
 
@@ -21,7 +21,7 @@ export async function add(flight) {
         {
             method: 'post',
             mode: 'cors',
-            headers: headers,
+            headers: headers(),
             body: JSON.stringify(flight)
         }
     );
@@ -35,7 +35,7 @@ export async function update(flight) {
         {
             method: 'put',
             mode: 'cors',
-            headers: headers,
+            headers: headers(),
             body: JSON.stringify(flight)
         }
     );
@@ -49,7 +49,7 @@ export async function getTicketsCost(flightId) {
         {
             method: 'get',
             mode: 'cors',
-            headers: headers
+            headers: headers()
         }
     );
 
@@ -62,7 +62,7 @@ export async function addTicketCost(flightId, ticketCost) {
         {
             method: 'post',
             mode: 'cors',
-            headers: headers,
+            headers: headers(),
             body: JSON.stringify(ticketCost)
         }
     );
@@ -76,7 +76,7 @@ export async function updateTicketCost(flightId, ticketCost) {
         {
             method: 'put',
             mode: 'cors',
-            headers: headers,
+            headers: headers(),
             body: JSON.stringify(ticketCost)
         }
     );
@@ -144,7 +144,7 @@ export async function searchWithParams(filter, searchByName) {
         {
             method: 'get',
             mode: 'cors',
-            headers: headers
+            headers: headers()
         }
     );
 
@@ -157,7 +157,7 @@ export async function bookForTime(bookInfo) {
         {
             method: 'post',
             mode: 'cors',
-            headers: headers,
+            headers: headers(),
             body: JSON.stringify(bookInfo)
         }
     );
@@ -171,7 +171,7 @@ export async function finalBook(bookId, transaction) {
         {
             method: 'put',
             mode: 'cors',
-            headers: headers
+            headers: headers()
         }
     );
 
@@ -184,7 +184,7 @@ export async function getAccountFlights() {
         {
             method: 'get',
             mode: 'cors',
-            headers: headers
+            headers: headers()
         }
     );
 
@@ -197,7 +197,7 @@ export async function getFlightBookedSeats(flightId) {
         {
             method: 'get',
             mode: 'cors',
-            headers: headers
+            headers: headers()
         }
     );
 
@@ -210,7 +210,20 @@ export async function getBookSeats(bookId) {
         {
             method: 'get',
             mode: 'cors',
-            headers: headers
+            headers: headers()
+        }
+    );
+
+    return await createRequestResult(response, RequestTypes.ContentExpected);
+}
+
+export async function getBookStatus(bookId) {
+    const response = await fetch(
+        `${config.API_URL}/flights/books/${bookId}/status`,
+        {
+            method: 'get',
+            mode: 'cors',
+            headers: headers()
         }
     );
 

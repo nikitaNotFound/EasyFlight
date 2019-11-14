@@ -44,10 +44,6 @@ export function flightTimeError() {
     return 'Arrival time can\'t be earlier then departure!';
 }
 
-export function booked() {
-    return 'Booked!';
-}
-
 export function alreadyBooked() {
     return 'Oooops... It seems like the seats you trying to book are already booked!';
 }

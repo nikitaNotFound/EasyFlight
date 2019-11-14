@@ -186,8 +186,7 @@ namespace BusinessLogicTests.Mocks
         {
             FlightBookInfoEntity bookInfo = _flightBooksInfo.FirstOrDefault(
                 x => x.Id == bookId
-                // because I have only one user in mock, and BookService cant get real user' id
-                && x.AccountId == 1
+                && x.AccountId == accountId
                 && DateTimeOffset.Now - x.BookTime <= _bookingSettings.ExpirationTime
                 && x.BookType == BookType.AwaitingPayment
             );
@@ -213,6 +212,11 @@ namespace BusinessLogicTests.Mocks
         public async Task<IReadOnlyCollection<SeatBookEntity>> GetBookSeatsAsync(int bookId)
         {
             return _flightSeatsInfo.Select(x => x).Where(x => x.FlightBookInfoId == bookId).ToList();
+        }
+
+        public async Task<int?> GetBookStatusAsync(int bookId)
+        {
+            return 0;
         }
     }
 }

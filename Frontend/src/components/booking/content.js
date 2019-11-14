@@ -12,11 +12,11 @@ import FinalButton from './final-button';
 import CostLayout from './cost-layout';
 import FlightInfo from './flight-info';
 import MessageBox from '../common/message-box';
+import WaitingForPayment from './waiting-for-payment';
 import { defaultErrorMessage, booked, alreadyBooked } from '../common/message-box-messages';
 
 import * as AirplaneService from '../../services/AirplaneService';
 import * as FlightService from '../../services/FlightService';
-import * as UserService from '../../services/UserSerivce'
 
 import '../../styles/booking.css';
 import FlightBookInfo from '../../services/flight-models/flight-book-info';
@@ -37,8 +37,10 @@ function Content(props) {
     const [calculatePage, changeCalculatePage] = useState(false);
     const [bookedSeats, changeBookedSeats] = useState([]);
     const [bookCost, changeBookCost] = useState(new BookCostInfo());
+    const [bookId, changeBookId] = useState();
 
     const [dataUpdater, changeDataUpdater] = useState(0);
+    const [waitingForPaymentMode, changeWaitingForPaymentMode] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -114,6 +116,8 @@ function Content(props) {
 
         try {
             const book = await FlightService.bookForTime(bookInfo);
+            changeBookId(book.id);
+            changeWaitingForPaymentMode(true);
             onBookPayed(book.id);
         } catch (ex) {
             if (ex instanceof BadRequestError) {
@@ -124,16 +128,13 @@ function Content(props) {
         }
     }
 
-    function onBookPayed(bookId) {
-        setTimeout(async () => {
-            try {
-                await FlightService.finalBook(bookId, 'transaction');
-                clearOptions();
-                changeMessageBoxValue(booked());
-            } catch {
-                changeMessageBoxValue(defaultErrorMessage());
-            }
-        }, 5000);
+    async function onBookPayed(bookId) {
+        try {
+            await FlightService.finalBook(bookId, 'transaction');
+            clearOptions();
+        } catch {
+            changeMessageBoxValue(defaultErrorMessage());
+        }
     }
 
     function onBackToOptions() {
@@ -152,6 +153,14 @@ function Content(props) {
         }
     }
 
+    function showWaitingForPayment() {
+        if (waitingForPaymentMode && bookId) {
+            return (
+                <WaitingForPayment bookId={bookId}/>
+            );
+        }
+    }
+
     if (loading) {
         return (
             <main className="rounded">
@@ -164,6 +173,7 @@ function Content(props) {
     if (calculatePage) {
         return (
             <main className="rounded">
+                {showWaitingForPayment()}
                 {showMessageBox()}
                 <CostLayout
                     flight={flight}

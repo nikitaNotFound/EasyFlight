@@ -8,7 +8,7 @@ export async function getById(id) {
         {
             method: 'GET',
             mode: 'cors',
-            headers: headers
+            headers: headers()
         }
     );
 
@@ -21,7 +21,7 @@ export async function searchByName(nameFilter) {
         {
             method: 'GET',
             mode: 'cors',
-            headers: headers
+            headers: headers()
         }
     );
 
@@ -34,7 +34,7 @@ export async function add(country) {
         {
             method: 'POST',
             mode: 'cors',
-            headers: headers,
+            headers: headers(),
             body: JSON.stringify(country)
         }
     );
@@ -48,7 +48,7 @@ export async function update(country) {
         {
             method: 'PUT',
             mode: 'cors',
-            headers: headers,
+            headers: headers(),
             body: JSON.stringify(country)
         }
     );
@@ -62,7 +62,7 @@ export async function getCountryCities(countryId) {
         {
             method: 'GET',
             mode: 'cors',
-            headers: headers
+            headers: headers()
         }
     );
 
@@ -75,7 +75,7 @@ export async function searchCountryCitiesByName(countryId, nameFilter) {
         {
             method: 'GET',
             mode: 'cors',
-            headers: headers
+            headers: headers()
         }
     );
 

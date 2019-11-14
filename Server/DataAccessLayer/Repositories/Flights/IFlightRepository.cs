@@ -25,5 +25,6 @@ namespace DataAccessLayer.Repositories.Flights
         Task<IReadOnlyCollection<FlightBookInfoEntity>> GetAccountFlightsInfoAsync(int accountId);
         Task<int> AddAccountFlightInfoAsync(FlightBookInfoEntity bookInfo);
         Task<IReadOnlyCollection<SeatBookEntity>> GetBookSeatsAsync(int bookId);
+        Task<int?> GetBookStatusAsync(int bookId);
     }
 }

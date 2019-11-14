@@ -26,27 +26,14 @@ namespace BusinessLayer.Services.Booking
             IMapper mapper,
             IFlightRepository flightRepository,
             IAirplaneRepository airplaneRepository,
-            IHttpContextAccessor httpContextAccessor
+            IUserInfo userInfo
         )
         {
             _mapper = mapper;
             _flightRepository = flightRepository;
             _airplaneRepository = airplaneRepository;
 
-            ClaimsIdentity claimsIdentity = httpContextAccessor?.HttpContext.User.Identity as ClaimsIdentity;
-
-            if (claimsIdentity == null)
-            {
-                return;
-            }
-
-            string nameIdentifier =
-                claimsIdentity?.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
-
-            if (!string.IsNullOrEmpty(nameIdentifier))
-            {
-                _accountId = int.Parse(nameIdentifier);
-            }
+            _accountId = userInfo.AccountId;
         }
         public async Task<AddResult> BookForTimeAsync(FlightBookInfo bookInfo)
         {
@@ -141,6 +128,11 @@ namespace BusinessLayer.Services.Booking
                 await _flightRepository.GetBookSeatsAsync(bookId);
 
             return seatsDal.Select(_mapper.Map<SeatBook>).ToList();
+        }
+
+        public async Task<int?> GetBookStatusAsync(int bookId)
+        {
+            return await _flightRepository.GetBookStatusAsync(bookId);
         }
     }
 }

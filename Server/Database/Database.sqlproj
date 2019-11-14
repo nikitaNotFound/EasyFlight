@@ -112,7 +112,7 @@
     <Build Include="dbo\Stored Procedures\AddFlight.sql" />
     <Build Include="dbo\Tables\FlightSeatsInfo.sql" />
     <Build Include="dbo\Stored Procedures\SearchFlights.sql" />
-    <Build Include="dbo\Stored Procedures\GetBookSeatsAsync.sql" />
+    <Build Include="dbo\Stored Procedures\GetBookSeats.sql" />
     <Build Include="dbo\Stored Procedures\GetFlightBookedSeats.sql" />
     <Build Include="dbo\Stored Procedures\GetAccountFlightsInfo.sql" />
     <Build Include="dbo\Stored Procedures\FinalBook.sql" />
@@ -126,8 +126,8 @@
   <ItemGroup>
     <Content Include="dbo\Stored Procedures\CheckFlightSeatTypeCostDuplicate.sql" />
     <Content Include="dbo\Stored Procedures\CreateAccount.sql" />
-    <Content Include="dbo\Stored Procedures\GetAccountBooks.sql" />
     <Content Include="dbo\Stored Procedures\GetAirplaneSeatTypeById.sql" />
+    <Content Include="dbo\Stored Procedures\GetBookStatus.sql" />
     <Content Include="dbo\Stored Procedures\GetCityAirports.sql" />
     <Content Include="dbo\Stored Procedures\GetSeatById.sql" />
     <Content Include="dbo\Stored Procedures\SearchAirplanes.sql" />

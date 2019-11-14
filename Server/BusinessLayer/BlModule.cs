@@ -19,7 +19,7 @@ namespace BusinessLayer
             services.AddSingleton<IAccountService, AccountService>();
             services.AddSingleton<IAirplaneService, AirplaneService>();
             services.AddSingleton<IFlightService, FlightService>();
-            services.AddTransient<IBookingService, BookingService>();
+            services.AddSingleton<IBookingService, BookingService>();
         }
     }
 }

@@ -28,7 +28,9 @@ export const RequestTypes = {
     NoContentExpected: 1
 }
 
-export const headers = {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${AuthTokenProvider.getToken()}`
+export const headers = () => {
+    return {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${AuthTokenProvider.getToken()}`
+    }
 }

@@ -11,5 +11,6 @@ namespace BusinessLayer.Services.Booking
         Task<IReadOnlyCollection<SeatBook>> GetFlightBookedSeatsAsync(int flightId);
         Task<IReadOnlyCollection<FlightBookInfo>> GetAccountFlightsInfoAsync();
         Task<IReadOnlyCollection<SeatBook>> GetBookSeatsAsync(int bookId);
+        Task<int?> GetBookStatusAsync(int bookId);
     }
 }

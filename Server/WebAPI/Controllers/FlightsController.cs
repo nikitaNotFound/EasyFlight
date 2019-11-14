@@ -244,6 +244,11 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
 
+            Random random = new Random();
+            double delay = random.Next(2, 10);
+
+            await Task.Delay(TimeSpan.FromSeconds(delay));
+
             ResultTypes bookResult = await _bookingService.FinalBookAsync(bookId, transaction);
 
             switch (bookResult)
@@ -283,6 +288,21 @@ namespace WebAPI.Controllers
                 seatsBl.Select(_mapper.Map<SeatBook>);
 
             return Ok(seats);
+        }
+
+        // GET api/flights/books/{bookId}/status
+        [HttpGet]
+        [Route("books/{bookId}/status")]
+        public async Task<IActionResult> GetBookStatusAsync(int bookId)
+        {
+            int? status = await _bookingService.GetBookStatusAsync(bookId);
+
+            if (status == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(new { Status = status.Value });
         }
 
         // GET api/flights/books/my

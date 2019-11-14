@@ -8,7 +8,7 @@ export async function getById(id) {
         {
             method: 'GET',
             mode: 'cors',
-            headers: headers
+            headers: headers()
         }
     );
 
@@ -21,7 +21,7 @@ export async function add(city) {
         {
             method: 'POST',
             mode: 'cors',
-            headers: headers,
+            headers: headers(),
             body: JSON.stringify(city)
         }
     );
@@ -35,7 +35,7 @@ export async function update(city) {
         {
             method: 'PUT',
             mode: 'cors',
-            headers: headers,
+            headers: headers(),
             body: JSON.stringify(city)
         }
     );
@@ -49,7 +49,7 @@ export async function searchByName(nameFilter) {
         {
             method: 'GET',
             mode: 'cors',
-            headers: headers
+            headers: headers()
         }
     );
     
@@ -62,7 +62,7 @@ export async function getCityAirports(cityId) {
         {
             method: 'GET',
             mode: 'cors',
-            headers: headers
+            headers: headers()
         }
     );
     return await createRequestResult(response, RequestTypes.ContentExpected);
@@ -74,7 +74,7 @@ export async function searchCityAirportsByName(cityId, nameFilter) {
         {
             method: 'GET',
             mode: 'cors',
-            headers: headers
+            headers: headers()
         }
     );
 
