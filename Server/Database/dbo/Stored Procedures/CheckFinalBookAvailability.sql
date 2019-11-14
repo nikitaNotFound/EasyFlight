@@ -7,4 +7,4 @@ as
     from FlightBooksInfo
     where Id = @bookId
         and datediff(second, BookTime, SYSDATETIMEOFFSET()) < @bookExpirationTimeInSeconds
-        and Accountid = @accountId
+        and AccountId = @accountId
