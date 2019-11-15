@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using WebAPI.Services;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace WebAPI
 {
@@ -30,6 +31,7 @@ namespace WebAPI
             services.AddSingleton<IBookingSettings, BookingSettings>();
             services.AddTransient<IUserInfo, UserInfo>();
             services.AddSingleton<IAccountUpdatingSettings, AccountUpdatingSettings>();
+            services.AddSingleton<IFilesUploadingSettings, FilesUploadingSettings>();
 
             CorsSettings settings = new CorsSettings(Configuration);
 
@@ -94,6 +96,11 @@ namespace WebAPI
             });
 
             services.AddHttpContextAccessor();
+
+            services.Configure<FormOptions>(options =>
+            {
+                options.MultipartBodyLengthLimit = int.MaxValue;
+            });
         }
 
         public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)

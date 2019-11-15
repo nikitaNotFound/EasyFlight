@@ -1,8 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using DataAccessLayer.Models;
 using Dapper;
 using System.Data.SqlClient;
 using System.Data;
+using System.IO;
 using Common;
 
 namespace DataAccessLayer.Repositories.Accounts
@@ -11,12 +13,18 @@ namespace DataAccessLayer.Repositories.Accounts
     {
         private readonly IDalSettings _dalSettings;
         private readonly IAccountUpdatingSettings _accountUpdatingSettings;
+        private readonly IFilesUploadingSettings _filesUploadingSettings;
 
 
-        public AccountRepository(IDalSettings dalSettings, IAccountUpdatingSettings accountUpdatingSettings)
+        public AccountRepository(
+            IDalSettings dalSettings,
+            IAccountUpdatingSettings accountUpdatingSettings,
+            IFilesUploadingSettings filesUploadingSettings
+        )
         {
             _dalSettings = dalSettings;
             _accountUpdatingSettings = accountUpdatingSettings;
+            _filesUploadingSettings = filesUploadingSettings;
         }
 
 
@@ -82,7 +90,30 @@ namespace DataAccessLayer.Repositories.Accounts
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<bool> CanUpdateName(int accountId)
+        public async Task UpdateAvatarAsync(int accountId, byte[] avatarByteArray)
+        {
+            await File.WriteAllBytesAsync(
+                _filesUploadingSettings.StoragePath + accountId + ".txt",
+                avatarByteArray
+            );
+        }
+
+        public async Task<string> GetAvatarAsync(int accountId)
+        {
+            string path = _filesUploadingSettings.StoragePath + accountId + ".txt";
+
+            if (!File.Exists(path))
+            {
+                return null;
+            }
+
+            byte[] byteArrayImage =
+                await File.ReadAllBytesAsync(path);
+
+            return Convert.ToBase64String(byteArrayImage);
+        }
+
+        public async Task<bool> CanUpdateNameAsync(int accountId)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
@@ -91,6 +122,20 @@ namespace DataAccessLayer.Repositories.Accounts
                 new {
                     AccountId = accountId,
                     AccountNameUpdatingIntervalInSeconds = _accountUpdatingSettings.NameUpdatingInterval.TotalSeconds
+                },
+                commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task<bool> CanUpdateAvatarAsync(int accountId)
+        {
+            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
+
+            return !await db.ExecuteScalarAsync<bool>(
+                "CanUpdateAccountAvatar",
+                new {
+                    AccountId = accountId,
+                    AccountAvatarUpdatingIntervalInSeconds =
+                        _accountUpdatingSettings.AvatarUpdatingInterval.TotalSeconds
                 },
                 commandType: CommandType.StoredProcedure);
         }

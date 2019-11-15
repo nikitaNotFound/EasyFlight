@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -69,7 +70,7 @@ namespace BusinessLayer.Services.Accounts
 
         public async Task<ResultTypes> UpdateNameAsync(string firstName, string secondName)
         {
-            bool canUpdate = await _accountRepository.CanUpdateName(_accountId);
+            bool canUpdate = await _accountRepository.CanUpdateNameAsync(_accountId);
 
             if (!canUpdate)
             {
@@ -79,6 +80,25 @@ namespace BusinessLayer.Services.Accounts
             await _accountRepository.UpdateNameAsync(_accountId, firstName, secondName);
 
             return ResultTypes.Ok;
+        }
+
+        public async Task<ResultTypes> UpdateAvatarAsync(byte[] avatarByteArray)
+        {
+            bool canUpdate = await _accountRepository.CanUpdateAvatarAsync(_accountId);
+
+            if (!canUpdate)
+            {
+                return ResultTypes.InvalidData;
+            }
+
+            await _accountRepository.UpdateAvatarAsync(_accountId, avatarByteArray);
+
+            return ResultTypes.Ok;
+        }
+
+        public async Task<string> GetAvatarAsync()
+        {
+            return await _accountRepository.GetAvatarAsync(_accountId);
         }
     }
 }

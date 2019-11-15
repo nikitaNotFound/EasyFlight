@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -120,11 +121,34 @@ namespace WebAPI.Controllers
         [HttpPut]
         [AllowAnonymous]
         [Route("my/avatar")]
-        public async Task<IActionResult> UpdateAvatarAsync([FromBody] IFormFile file)
+        public async Task<IActionResult> UpdateAvatarAsync(IFormFile file)
         {
+            Stream fileStream = file.OpenReadStream();
+            MemoryStream fileMemoryStream = new MemoryStream();
 
+            fileStream.CopyTo(fileMemoryStream);
 
-            return Ok();
+            byte[] fileByteArray = fileMemoryStream.ToArray();
+
+            ResultTypes updateResult = await _accountService.UpdateAvatarAsync(fileByteArray);
+
+            if (updateResult == ResultTypes.InvalidData)
+            {
+                return BadRequest();
+            }
+
+            return Ok(new { Image = Convert.ToBase64String(fileByteArray) });
+        }
+
+        // PUT api/accounts/my/avatar{?firstName}{?secondName}
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("my/avatar")]
+        public async Task<IActionResult> GetAvatarAsync()
+        {
+            string base64Image = await _accountService.GetAvatarAsync();
+
+            return Ok(new { Image = base64Image });
         }
     }
 }

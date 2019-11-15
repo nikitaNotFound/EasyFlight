@@ -2,7 +2,7 @@ import { userFlights } from './DataBase';
 import { isArray } from 'util';
 import User from './user-models/user';
 
-import { createRequestResult, RequestTypes, headers } from './RequestAssistant';
+import { createRequestResult, RequestTypes, headers, HeadersTypes } from './RequestAssistant';
 
 import AuthTokenProvider from './AuthTokenProvider';
 
@@ -94,4 +94,31 @@ export async function updateName(firstName, secondName) {
     );
 
     return createRequestResult(response, RequestTypes.NoContentExpected);
+}
+
+export async function updateAvatar(avatarFormData) {
+    const response = await fetch(
+        `${config.API_URL}/accounts/my/avatar`,
+        {
+            method: 'put',
+            mode: 'cors',
+            headers: headers(HeadersTypes.AuthOnly),
+            body: avatarFormData
+        }
+    );
+
+    return createRequestResult(response, RequestTypes.ContentExpected);
+}
+
+export async function getAvatar() {
+    const response = await fetch(
+        `${config.API_URL}/accounts/my/avatar`,
+        {
+            method: 'get',
+            mode: 'cors',
+            headers: headers()
+        }
+    );
+
+    return createRequestResult(response, RequestTypes.ContentExpected);
 }

@@ -7,5 +7,6 @@
         public int? MaxCarryingKg { get; set; }
         public int? MinSeatCount { get; set; }
         public int? MaxSeatCount { get; set; }
+        public int Page { get; set; }
     }
 }

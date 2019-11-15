@@ -49,7 +49,22 @@ namespace BusinessLogicTests.Mocks
             throw new NotImplementedException();
         }
 
-        public Task<bool> CanUpdateName(int accountId)
+        public Task UpdateAvatarAsync(int accountId, byte[] avatarByteArray)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> CanUpdateNameAsync(int accountId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> CanUpdateAvatarAsync(int accountId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<string> GetAvatarAsync(int accountId)
         {
             throw new NotImplementedException();
         }

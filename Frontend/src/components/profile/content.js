@@ -27,10 +27,20 @@ function Content(props) {
     const [firstName, changeFirstName] = useState(props.firstName);
     const [secondName, changeSecondName] = useState(props.secondName);
 
+    const [avatar, changeAvatar] = useState();
+
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const userFlights = await FlightService.getAccountFlights();
+
+                const accountAvatar = await UserService.getAvatar();
+
+                if (!accountAvatar.image) {
+                    changeAvatar(AddImage);
+                } else {
+                    changeAvatar('data:image/png;base64,' + accountAvatar.image);
+                }
 
                 changeAccountFlights(userFlights);
                 changeLoadingMode(false);
@@ -64,10 +74,14 @@ function Content(props) {
     }
 
     async function onAvatarUpdate(event) {
-        console.log(event.target.files)
-
         try {
-            
+            let avatar = new FormData();
+            avatar.append('file', event.target.files[0]);
+
+            const imageResult = await UserService.updateAvatar(avatar);
+
+            changeAvatar('data:image/png;base64,' + imageResult.image);
+
             changeMessageBoxValue(saved());
         } catch (ex) {
             if (ex instanceof BadRequestError) {
@@ -106,7 +120,7 @@ function Content(props) {
                     <div className="col-2">
                         <div className="user-photo">
                             <label htmlFor="photo">
-                                <img src={AddImage} alt="add user avatar" />
+                                <img src={avatar} alt="add user avatar" />
                             </label>
                             <input type="file" onChange={onAvatarUpdate} id="photo" accept=".png,.jpg,.jpeg"/>
                         </div>
