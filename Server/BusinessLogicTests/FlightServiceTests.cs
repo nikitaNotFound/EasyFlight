@@ -36,7 +36,7 @@ namespace BusinessLogicTests
 
             IMapper mapper = mappingConfig.CreateMapper();
 
-            IBookingSettings bookingSettings = new BookingSettingsMock(new TimeSpan(0, 5, 0));
+            IBookingSettings bookingSettings = new BookingSettingsMock(TimeSpan.FromMinutes(5));
 
             _flightService = new FlightService(
                 mapper,

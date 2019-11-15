@@ -35,6 +35,8 @@ namespace BusinessLayer.Services.Booking
 
             _accountId = userInfo.AccountId;
         }
+
+
         public async Task<AddResult> BookForTimeAsync(FlightBookInfo bookInfo)
         {
             FlightEntity flight = await _flightRepository.GetByIdAsync(bookInfo.FlightId);
