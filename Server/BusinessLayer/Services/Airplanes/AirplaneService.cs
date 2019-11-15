@@ -65,7 +65,7 @@ namespace BusinessLayer.Services.Airplanes
         public async Task<IReadOnlyCollection<Airplane>> SearchAirplanesAsync(AirplaneFilter filter)
         {
             AirplaneFilterEntity filterDal = _mapper.Map<AirplaneFilterEntity>(filter);
-            
+
             IReadOnlyCollection<AirplaneEntity> airplanesDal =
                 await _airplaneRepository.SearchAirplanesAsync(filterDal);
 
@@ -138,7 +138,7 @@ namespace BusinessLayer.Services.Airplanes
             foreach (AirplaneSeat seat in seats)
             {
                 AirplaneSeatTypeEntity seatType =
-                    await _airplaneRepository.GetAirplaneSeatTypeById(seat.TypeId);
+                    await _airplaneRepository.GetSeatTypeById(seat.TypeId);
 
                 if (seatType == null)
                 {
@@ -155,7 +155,7 @@ namespace BusinessLayer.Services.Airplanes
             await _airplaneRepository.DeleteAirplaneSeatsAsync(airplaneId);
 
             AirplaneSeatEntity[] seatsDal = seats.Select(_mapper.Map<AirplaneSeatEntity>).ToArray();
-            
+
             await _airplaneRepository.UpdateAirplaneSeatsAsync(airplaneId, seatsDal);
 
             return ResultTypes.Ok;
@@ -171,7 +171,7 @@ namespace BusinessLayer.Services.Airplanes
             }
 
             AirplaneSeatTypeEntity seatTypeDal = _mapper.Map<AirplaneSeatTypeEntity>(seatType);
-            
+
             bool duplicate = await _airplaneRepository.CheckSeatTypeDuplicateAsync(seatTypeDal);
 
             if (duplicate)
@@ -196,6 +196,20 @@ namespace BusinessLayer.Services.Airplanes
             await _airplaneRepository.DeleteAirplaneSeatTypeAsync(airplaneId, seatTypeId);
 
             return ResultTypes.Ok;
+        }
+
+        public async Task<AirplaneSeat> GetSeatByIdAsync(int seatId)
+        {
+            AirplaneSeatEntity seatDal = await _airplaneRepository.GetSeatById(seatId);
+
+            return _mapper.Map<AirplaneSeat>(seatDal);
+        }
+
+        public async Task<AirplaneSeatType> GetSeatTypeByIdAsync(int seatTypeId)
+        {
+            AirplaneSeatTypeEntity seatTypeDal = await _airplaneRepository.GetSeatTypeById(seatTypeId);
+
+            return _mapper.Map<AirplaneSeatType>(seatTypeDal);
         }
     }
 }

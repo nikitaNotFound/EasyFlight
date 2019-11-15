@@ -1,5 +1,6 @@
-﻿create table [dbo].[FlightSeatTypesCost] (
-    [FlightId]   int not null,
-    [SeatTypeId] int not null,
-    [Cost]       int not null
-);
+create table FlightSeatTypesCost
+(
+    FlightId int not null,
+    SeatTypeId int not null,
+    Cost int not null
+)

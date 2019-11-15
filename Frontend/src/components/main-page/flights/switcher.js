@@ -1,18 +1,15 @@
-import React, {Component} from 'react';
+import React from 'react';
 import PropsTypes from 'prop-types';
 
-class Switcher extends Component {
-    static propsTypes = {
-        switcher: PropsTypes.func
-    }
-
-    render () {
-        return (
-            <div className="content-filter-switcher rounded-circle" onClick={this.props.switcher}>
-                filter
-            </div>
-        );
-    }
+export default function Switcher(props) {
+    return (
+        <div className="content-filter-switcher" onClick={props.switcher}>
+            {props.value}
+        </div>
+    );
 }
 
-export default Switcher;
+Switcher.propsTypes = {
+    switcher: PropsTypes.func,
+    value: PropsTypes.string
+}

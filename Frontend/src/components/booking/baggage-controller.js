@@ -4,22 +4,22 @@ import PropsTypes from 'prop-types';
 import LayoutHeadline from './layout-headline';
 
 export default function BaggageController(props) {
-    const [count, changeCount] = useState(0);
-    const [carryonCount, changeCarryonCount] = useState(0);
+    const [suitcaseCount, changeSuitcaseCount] = useState(props.suitcaseCountValue);
+    const [handLuggageCount, changeHandLugggageCount] = useState(props.handLuggageCountValue);
 
-    function onCountChange(event) {
+    function onSuitcaseCountChange(event) {
         const newValue = Number(event.target.value);
-        if (newValue && newValue <= props.suitcaseCount) {
-            changeCount(newValue);
-            props.changeBaggageCount(newValue);
+        if (newValue >= 0) {
+            changeSuitcaseCount(newValue);
+            props.changeSuitcaseCount(newValue);
         }
     }
 
-    function onCarryonChange(event) {
+    function onHandLuggageCountChange(event) {
         const newValue = Number(event.target.value);
-        if (newValue && newValue <= props.carryonCount) {
-            changeCarryonCount(newValue);
-            props.changeCarryonCount(newValue);
+        if (newValue >= 0) {
+            changeHandLugggageCount(newValue);
+            props.changeHandLuggageCount(newValue);
         }
     }
 
@@ -27,27 +27,29 @@ export default function BaggageController(props) {
         <div className="baggage-controller rounded">
             <LayoutHeadline content="Baggage" />
             <div className="baggage-info">
-                {`max suitcase mass: ${props.suitcaseMass} kg`} <br />
-                {`max suitcase count: ${props.suitcaseCount}`} <br />
-                <input value={count} onChange={onCountChange} />
+                {`Max suitcase mass: ${props.suitcaseMass} kg`} <br />
+                {`Max suitcase count: ${props.suitcaseCount}`} <br />
+                <input value={suitcaseCount} onChange={onSuitcaseCountChange} />
                 suitcase count
             </div>
 
             <div className="baggage-info">
-                {`max carryon mass: ${props.carryonMass} kg`} <br />
-                {`max carryon count: ${props.carryonCount}`} <br />
-                <input value={carryonCount} onChange={onCarryonChange} />
-                carryon count
+                {`Max hand luggage mass: ${props.handLuggageMass} kg`} <br />
+                {`Max hand luggage count: ${props.handLuggageCount}`} <br />
+                <input value={handLuggageCount} onChange={onHandLuggageCountChange} />
+                hand luggage count
             </div>
         </div>
     );
 }
 
 BaggageController.propsTypes = {
-    changeBaggageCount: PropsTypes.number,
+    changeSuitcaseCount: PropsTypes.number,
     suitcaseMass: PropsTypes.number,
     suitcaseCount: PropsTypes.number,
-    changeCarryonCount: PropsTypes.func,
-    carryonMass: PropsTypes.number,
-    carryonCount: PropsTypes.number
+    suitcaseCountValue: PropsTypes.number,
+    changeHandLuggageCount: PropsTypes.func,
+    handLuggageMass: PropsTypes.number,
+    handLuggageCount: PropsTypes.number,
+    handLuggageCountValue: PropsTypes.number
 };

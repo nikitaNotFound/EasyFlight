@@ -1,6 +1,13 @@
 .component-headline {
-    margin-top: 1%;
     color: black;
+    width: 100%;
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: 600;
+    font-size: 46px;
+    margin-bottom: 2%;
+    letter-spacing: 3px;
+    color: rgb(95, 95, 95);
 }
 
 .editing-headline {

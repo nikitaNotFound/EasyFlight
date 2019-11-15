@@ -6,6 +6,8 @@ using BusinessLayer.Models;
 using BusinessLayer.Services.Accounts;
 using BusinessLayer.Services.Flights;
 using BusinessLogicTests.Mocks;
+using Common;
+using DataAccessLayer;
 using DataAccessLayer.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -27,14 +29,18 @@ namespace BusinessLogicTests
                 config.CreateMap<FlightSeatTypeCostEntity, FlightSeatTypeCost>();
                 config.CreateMap<FlightFilter, FlightFilterEntity>();
                 config.CreateMap<FlightFilterEntity, FlightFilter>();
+                config.CreateMap<FlightBookInfo, FlightBookInfoEntity>();
+                config.CreateMap<FlightBookInfoEntity, FlightBookInfo>();
             });
             mappingConfig.CompileMappings();
 
             IMapper mapper = mappingConfig.CreateMapper();
 
+            IBookingSettings bookingSettings = new BookingSettingsMock(TimeSpan.FromMinutes(5));
+
             _flightService = new FlightService(
                 mapper,
-                new FlightRepositoryMock(),
+                new FlightRepositoryMock(bookingSettings),
                 new AirportRepositoryMock(),
                 new AirplanesRepositoryMock()
             );

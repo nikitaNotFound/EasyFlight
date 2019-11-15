@@ -15,8 +15,8 @@ function Filter(props) {
     const [fromAirport, changeFromAirport] = useState(props.filterOptions.fromAirport);
     const [toAirport, changeToAirport] = useState(props.filterOptions.toAirport);
 
-    const [departureTime, changeDepartureTime] = useState(props.filterOptions.departureTime);
-    const [departureBackTime, changeDepartureBackTime] = useState(props.filterOptions.departureBackTime);
+    const [departureDate, changeDepartureDate] = useState(props.filterOptions.departureTime);
+    const [arrivalDate, changeArrivalDate] = useState(props.filterOptions.departureBackTime);
 
     const [ticketCount, changeTicketsCount] = useState(props.filterOptions.ticketCount);
     const [searchToAndBack, changeSearchToAndBack] = useState(props.filterOptions.searchToAndBack);
@@ -28,8 +28,8 @@ function Filter(props) {
             && !toCity
             && !fromAirport
             && !toAirport
-            && !departureTime
-            && !departureBackTime
+            && !departureDate
+            && !arrivalDate
             && !ticketCount
         ) {
             changeMessageBoxValue('Setup filter!');
@@ -37,12 +37,12 @@ function Filter(props) {
         }
 
         const newOptions = new SearchOptions(
-            fromAirport,
-            toAirport,
-            fromCity,
-            toCity,
-            departureTime,
-            departureBackTime,
+            fromAirport ? fromAirport.id : null,
+            toAirport ? toAirport.id : null,
+            fromCity ? fromCity.id : null,
+            toCity ? toCity.id : null,
+            departureDate,
+            arrivalDate,
             ticketCount,
             searchToAndBack
         );
@@ -128,8 +128,8 @@ function Filter(props) {
                             type="date"
                             id="departure"
                             placeholder="Date"
-                            value={departureTime}
-                            onChange={(event) => changeDepartureTime(event.target.value)}
+                            value={departureDate}
+                            onChange={(event) => changeDepartureDate(event.target.value)}
                         />
                     </div>
                     <div className="filter-col">
@@ -141,8 +141,8 @@ function Filter(props) {
                             id="departure-back"
                             type="date"
                             placeholder="Date"
-                            value={departureBackTime}
-                            onChange={(event) => changeDepartureBackTime(event.target.value)}
+                            value={arrivalDate}
+                            onChange={(event) => changeArrivalDate(event.target.value)}
                         />
                     </div>
                 </div>

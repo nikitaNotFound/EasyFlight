@@ -8,7 +8,7 @@ export default function SeatType(props) {
         <div className="item">
             <div className="seat-color" style={{background: props.seatType.color}}/>
             <div className="seat-name">
-                {props.seatType.name}
+                {`${props.seatType.name}    ${props.seatType.cost}$`}
             </div>
         </div>
     );

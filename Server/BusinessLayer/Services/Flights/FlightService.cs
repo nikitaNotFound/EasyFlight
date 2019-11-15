@@ -1,13 +1,15 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using BusinessLayer.Models;
+using DataAccessLayer;
 using DataAccessLayer.Models;
 using DataAccessLayer.Repositories.Airplanes;
 using DataAccessLayer.Repositories.Airports;
 using DataAccessLayer.Repositories.Flights;
+using Microsoft.AspNetCore.Http;
 
 namespace BusinessLayer.Services.Flights
 {
@@ -113,7 +115,24 @@ namespace BusinessLayer.Services.Flights
         {
             FlightFilterEntity filterDal = _mapper.Map<FlightFilterEntity>(filter);
 
-            IReadOnlyCollection<FlightEntity> flightsDal = await _flightRepository.SearchFlightsAsync(filterDal);
+            IReadOnlyCollection<FlightEntity> flightsDal =
+                await _flightRepository.SearchFlightsAsync(filterDal);
+
+            if (filter.SearchFlightsBack)
+            {
+                int? fromCityIdBuff = filterDal.FromCityId;
+                filterDal.FromCityId = filterDal.ToCityId;
+                filterDal.ToCityId = fromCityIdBuff;
+
+                int? fromAirportIdBuff = filterDal.FromAirportId;
+                filterDal.FromAirportId = filterDal.ToAirportId;
+                filterDal.ToAirportId = fromAirportIdBuff;
+
+                IReadOnlyCollection<FlightEntity> flightsBackDal =
+                    await _flightRepository.SearchFlightsAsync(filterDal);
+
+                flightsDal = flightsDal.Concat(flightsBackDal).ToList();
+            }
 
             return flightsDal.Select(_mapper.Map<Flight>).ToList();
         }
@@ -138,7 +157,7 @@ namespace BusinessLayer.Services.Flights
             }
 
             AirplaneSeatTypeEntity seatType =
-                await _airplaneRepository.GetAirplaneSeatTypeById(seatTypeCostDal.SeatTypeId);
+                await _airplaneRepository.GetSeatTypeById(seatTypeCostDal.SeatTypeId);
 
             if (seatType == null)
             {
@@ -169,7 +188,7 @@ namespace BusinessLayer.Services.Flights
             }
 
             AirplaneSeatTypeEntity seatType =
-                await _airplaneRepository.GetAirplaneSeatTypeById(seatTypeCostDal.SeatTypeId);
+                await _airplaneRepository.GetSeatTypeById(seatTypeCostDal.SeatTypeId);
 
             if (seatType == null)
             {

@@ -78,7 +78,7 @@
     height: 60px;
     background: rgb(223, 223, 223);
     font-size: 32px;
-    margin-top: 2%;
+    margin: 2% 0;
     width: 100%;
 }
 
@@ -137,8 +137,8 @@
 
 .seat {
     display: inline-block;
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     margin: 2px;
     background: none;
     border-radius: 4px;
@@ -146,6 +146,16 @@
     color: white;;
     vertical-align: top;
     text-align: center;
+    box-shadow: 0px 3px 1px black;
+}
+
+.empty {
+    box-shadow: none;
+}
+
+.booked-seat {
+    border: 6px red double;
+    box-shadow: 0px 2px 1px black;
 }
 
 .seat-type-0 {
@@ -154,6 +164,10 @@
 
 .seat-type-true {
     border: solid 3px black;
+}
+
+.seat-booked {
+    background: gray;
 }
 
 @media screen and (max-width: 1366px) {

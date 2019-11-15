@@ -10,19 +10,24 @@ namespace BusinessLogicTests.Mocks
     {
         private readonly List<AirplaneEntity> _airplaneData = new List<AirplaneEntity>()
         {
-            new AirplaneEntity() { Id = 1, Name = "F300" },
-            new AirplaneEntity() { Id = 2, Name = "Big boss" }
+            new AirplaneEntity() {Id = 1, Name = "F300"},
+            new AirplaneEntity() {Id = 2, Name = "Big boss"}
         };
 
         private readonly List<AirplaneSeatTypeEntity> _airplaneSeatTypeData = new List<AirplaneSeatTypeEntity>()
         {
-            new AirplaneSeatTypeEntity() { Id = 1, Name = "Business class", AirplaneId = 1, Color = "red" },
-            new AirplaneSeatTypeEntity() { Id = 2, Name = "Econom class", AirplaneId = 2, Color = "green" }
+            new AirplaneSeatTypeEntity() {Id = 1, Name = "Business class", AirplaneId = 1, Color = "red"},
+            new AirplaneSeatTypeEntity() {Id = 2, Name = "Econom class", AirplaneId = 2, Color = "green"}
         };
 
-        private readonly List<AirplaneSeatEntity> _airplaneSeatData = new List<AirplaneSeatEntity>();
+        private readonly List<AirplaneSeatEntity> _airplaneSeatData = new List<AirplaneSeatEntity>()
+        {
+            new AirplaneSeatEntity() { Id = 1 },
+            new AirplaneSeatEntity() { Id = 2 },
+            new AirplaneSeatEntity() { Id = 3 }
+        };
 
-        public async Task<IReadOnlyCollection<AirplaneEntity>> GetAllAsync()
+    public async Task<IReadOnlyCollection<AirplaneEntity>> GetAllAsync()
         {
             return _airplaneData;
         }
@@ -37,7 +42,7 @@ namespace BusinessLogicTests.Mocks
             return _airplaneSeatData.Select(x => x).Where(x => x.AirplaneId == airplaneId).ToList();
         }
 
-        public async Task<AirplaneSeatTypeEntity> GetAirplaneSeatTypeById(int seatTypeId)
+        public async Task<AirplaneSeatTypeEntity> GetSeatTypeById(int seatTypeId)
         {
             return _airplaneSeatTypeData.FirstOrDefault(x => x.Id == seatTypeId);
         }
@@ -96,6 +101,11 @@ namespace BusinessLogicTests.Mocks
             );
 
             return duplicate != null;
+        }
+
+        public async Task<AirplaneSeatEntity> GetSeatById(int id)
+        {
+            return _airplaneSeatData.FirstOrDefault(x => x.Id == id);
         }
     }
 }

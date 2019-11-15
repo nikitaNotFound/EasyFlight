@@ -18,5 +18,7 @@ namespace BusinessLayer.Services.Airplanes
         Task<ResultTypes> UpdateAirplaneSeatsAsync(int airplaneId, AirplaneSeat[] seatScheme);
         Task<AddResult> AddAirplaneSeatTypeAsync(AirplaneSeatType seatType);
         Task<ResultTypes> DeleteAirplaneSeatTypeAsync(int airplaneId, int seatTypeId);
+        Task<AirplaneSeat> GetSeatByIdAsync(int seatId);
+        Task<AirplaneSeatType> GetSeatTypeByIdAsync(int seatTypeId);
     }
 }

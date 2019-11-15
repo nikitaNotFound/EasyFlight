@@ -5,16 +5,31 @@ import PropsTypes from 'prop-types';
 
 
 function Flights(props) {
-    function showSearchResult() {
-        if (props.flights.length == 0) {
-            return <div>No items found</div>
-        }
+    // before user press search
+    if (props.flights == null) {
+        return (
+            <div className="list rounded">
+                <ComponentHeadline content="Flights list"/>
+
+                Setup filter :)
+            </div>
+        );
+    }
+
+    // when search doesnt give any result
+    if (props.flights.length == 0) {
+        return (
+            <div className="list rounded">
+                <ComponentHeadline content="Flights list"/>
+
+                No result
+            </div>
+        );
     }
 
     return (
         <div className="list rounded">
             <ComponentHeadline content="Flights list"/>
-            {showSearchResult()}
 
             <div className="container-fluid list-body">
                 {props.flights.map(

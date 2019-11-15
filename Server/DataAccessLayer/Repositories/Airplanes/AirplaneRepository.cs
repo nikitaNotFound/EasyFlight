@@ -103,6 +103,16 @@ namespace DataAccessLayer.Repositories.Airplanes
                 commandType: CommandType.StoredProcedure);
         }
 
+        public async Task<AirplaneSeatEntity> GetSeatById(int id)
+        {
+            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
+
+            return await db.QuerySingleOrDefaultAsync<AirplaneSeatEntity>(
+                "GetSeatById",
+                new { Id = id },
+                commandType: CommandType.StoredProcedure);
+        }
+
         public async Task<int> AddAsync(AirplaneEntity airplane)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
@@ -125,7 +135,7 @@ namespace DataAccessLayer.Repositories.Airplanes
             return seats.ToList();
         }
 
-        public async Task<AirplaneSeatTypeEntity> GetAirplaneSeatTypeById(int seatTypeId)
+        public async Task<AirplaneSeatTypeEntity> GetSeatTypeById(int seatTypeId)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 

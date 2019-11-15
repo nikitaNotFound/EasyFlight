@@ -34,6 +34,10 @@ namespace BusinessLayer
             config.CreateMap<FlightSeatTypeCostEntity, FlightSeatTypeCost>();
             config.CreateMap<FlightFilter, FlightFilterEntity>();
             config.CreateMap<FlightFilterEntity, FlightFilter>();
+            config.CreateMap<FlightBookInfo, FlightBookInfoEntity>();
+            config.CreateMap<FlightBookInfoEntity, FlightBookInfo>();
+            config.CreateMap<SeatBook, SeatBookEntity>();
+            config.CreateMap<SeatBookEntity, SeatBook>();
         }
     }
 }

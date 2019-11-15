@@ -111,6 +111,40 @@ namespace WebAPI.Controllers
             return Ok(seats);
         }
 
+        // GET api/airplanes/seats/{id}
+        [HttpGet]
+        [Route("seats/{id}")]
+        public async Task<ActionResult> GetSeatByIdAsync(int id)
+        {
+            BlAirplaneSeat seatBl = await _airplaneService.GetSeatByIdAsync(id);
+
+            if (seatBl == null)
+            {
+                return NotFound();
+            }
+
+            AirplaneSeat seat = _mapper.Map<AirplaneSeat>(seatBl);
+
+            return Ok(seat);
+        }
+
+        // GET api/airplanes/seat-types/{id}
+        [HttpGet]
+        [Route("seat-types/{id}")]
+        public async Task<ActionResult> GetSeatTypeByIdAsync(int id)
+        {
+            BlAirplaneSeatType seatTypeBl = await _airplaneService.GetSeatTypeByIdAsync(id);
+
+            if (seatTypeBl == null)
+            {
+                return NotFound();
+            }
+
+            AirplaneSeatType seatType = _mapper.Map<AirplaneSeatType>(seatTypeBl);
+
+            return Ok(seatType);
+        }
+
         // GET api/airplanes/{airplaneId}/seat-types
         [HttpGet]
         [Route("{airplaneId}/seat-types")]

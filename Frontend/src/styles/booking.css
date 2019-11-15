@@ -10,6 +10,8 @@
     padding: 1%;
     margin-top: 3%;
     font-size: 22px;
+    border: 0;
+    width: 100%;
 }
 
 .confirm-booking {
@@ -44,7 +46,7 @@
 
 .seat-types-list {
     background: rgb(211, 211, 211);
-    padding: 1%;
+    padding: 3%;
     display: block;
     font-size: 20px;
     clear: both;
@@ -70,7 +72,7 @@
 .baggage-controller {
     background: rgb(211, 211, 211);
     margin-top: 8%;
-    padding: 1%;
+    padding: 3%;
     display: block;
 }
 
@@ -144,12 +146,10 @@
     display: block;
 }
 
-.true-visible {
-    display: block;
-}
-
-.false-visible {
-    display: none;
+.cost-layout .final-cost {
+    width: 100%;
+    text-align: center;
+    font-size: 75px;
 }
 
 .flight-info {

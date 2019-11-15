@@ -3,6 +3,7 @@ using BusinessLayer.Services.Countries;
 using BusinessLayer.Services.Airports;
 using BusinessLayer.Services.Accounts;
 using BusinessLayer.Services.Airplanes;
+using BusinessLayer.Services.Booking;
 using BusinessLayer.Services.Flights;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -18,6 +19,7 @@ namespace BusinessLayer
             services.AddSingleton<IAccountService, AccountService>();
             services.AddSingleton<IAirplaneService, AirplaneService>();
             services.AddSingleton<IFlightService, FlightService>();
+            services.AddSingleton<IBookingService, BookingService>();
         }
     }
 }

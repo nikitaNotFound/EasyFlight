@@ -8,7 +8,7 @@ export async function getById(airplaneId) {
         {
             method: 'GET',
             mode: 'cors',
-            headers: headers
+            headers: headers()
         }
     );
 
@@ -21,7 +21,7 @@ export async function update(airplane) {
         {
             method: 'PUT',
             mode: 'cors',
-            headers: headers,
+            headers: headers(),
             body: JSON.stringify(airplane)
         }
     );
@@ -35,7 +35,7 @@ export async function add(airplane) {
         {
             method: 'POST',
             mode: 'cors',
-            headers: headers,
+            headers: headers(),
             body: JSON.stringify(airplane)
         }
     );
@@ -49,7 +49,7 @@ export async function updateAirplaneSeats(airplaneId, seats) {
         {
             method: 'PUT',
             mode: 'cors',
-            headers: headers,
+            headers: headers(),
             body: JSON.stringify(seats)
         }
     );
@@ -64,7 +64,7 @@ export async function addAirplaneSeatType(airplaneId, seatType) {
         {
             method: 'POST',
             mode: 'cors',
-            headers: headers,
+            headers: headers(),
             body: JSON.stringify(seatType)
         }
     );
@@ -78,7 +78,7 @@ export async function deleteAirplaneSeatType(airplaneId, seatTypeId) {
         {
             method: 'DELETE',
             mode: 'cors',
-            headers: headers
+            headers: headers()
         }
     );
 
@@ -91,7 +91,33 @@ export async function getAirplaneSeats(airplaneId) {
         {
             method: 'GET',
             mode: 'cors',
-            headers: headers
+            headers: headers()
+        }
+    );
+
+    return await createRequestResult(response, RequestTypes.ContentExpected);
+}
+
+export async function getSeatById(seatId) {
+    const response = await fetch(
+        `${config.API_URL}/airplanes/seats/${seatId}`,
+        {
+            method: 'GET',
+            mode: 'cors',
+            headers: headers()
+        }
+    );
+
+    return await createRequestResult(response, RequestTypes.ContentExpected);
+}
+
+export async function getSeatTypeById(seatTypeId) {
+    const response = await fetch(
+        `${config.API_URL}/airplanes/seat-types/${seatTypeId}`,
+        {
+            method: 'GET',
+            mode: 'cors',
+            headers: headers()
         }
     );
 
@@ -104,7 +130,7 @@ export async function getAirplaneSeatTypes(airplaneId) {
         {
             method: 'GET',
             mode: 'cors',
-            headers: headers
+            headers: headers()
         }
     );
 
@@ -145,7 +171,7 @@ export async function searchWithParams(filter, nameSearchOnly) {
         {
             method: 'GET',
             mode: 'cors',
-            headers: headers
+            headers: headers()
         }
     );
 
