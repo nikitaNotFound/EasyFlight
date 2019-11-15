@@ -134,6 +134,7 @@
     <Content Include="dbo\Stored Procedures\SearchAirplanes.sql" />
     <Content Include="dbo\Stored Procedures\SearchAirportsByName.sql" />
     <Content Include="dbo\Stored Procedures\SearchCityAirportsByName.sql" />
+    <Content Include="dbo\Stored Procedures\UpdateAccountAvatar.sql" />
     <Content Include="dbo\Stored Procedures\UpdateAccountName.sql" />
     <Content Include="dbo\Tables\AccountUpdates.sql" />
     <Content Include="dbo\Tables\Airports.sql" />

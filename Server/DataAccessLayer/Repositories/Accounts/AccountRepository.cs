@@ -85,13 +85,25 @@ namespace DataAccessLayer.Repositories.Accounts
                 {
                     FirstName = firstName,
                     SecondName = secondName,
-                    AccountId = accountId
+                    AccountId = accountId,
+                    AvatarUpdatingIntervalInSeconds = _accountUpdatingSettings.AvatarUpdatingInterval.TotalSeconds
                 },
                 commandType: CommandType.StoredProcedure);
         }
 
         public async Task UpdateAvatarAsync(int accountId, byte[] avatarByteArray)
         {
+            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
+
+            await db.ExecuteAsync(
+                "UpdateAccountAvatar",
+                new
+                {
+                    AccountId = accountId,
+                    NameUpdatingIntervalInSeconds = _accountUpdatingSettings.NameUpdatingInterval.TotalSeconds
+                },
+                commandType: CommandType.StoredProcedure);
+
             await File.WriteAllBytesAsync(
                 _filesUploadingSettings.StoragePath + accountId + ".txt",
                 avatarByteArray
