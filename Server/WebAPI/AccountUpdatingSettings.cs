@@ -6,15 +6,15 @@ namespace WebAPI
 {
     public class AccountUpdatingSettings : IAccountUpdatingSettings
     {
-        public TimeSpan NameUpdatingInterval => TimeSpan.Parse(_config[nameof(NameUpdatingInterval)]);
-        public TimeSpan AvatarUpdatingInterval => TimeSpan.Parse(_config[nameof(AvatarUpdatingInterval)]);
+        private readonly IConfiguration _configuration;
 
-        private readonly IConfiguration _config;
+        public TimeSpan NameUpdatingInterval => TimeSpan.Parse(_configuration[nameof(NameUpdatingInterval)]);
+        public TimeSpan AvatarUpdatingInterval => TimeSpan.Parse(_configuration[nameof(AvatarUpdatingInterval)]);
 
 
         public AccountUpdatingSettings(IConfiguration configuration)
         {
-            _config = configuration.GetSection(nameof(AccountUpdatingSettings));
+            _configuration = configuration.GetSection(nameof(AccountUpdatingSettings));
         }
     }
 }
