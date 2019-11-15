@@ -25,7 +25,6 @@
   background: #bdc3c7;
   color: white;
   text-align: center;
-  border: solid 2px #95a5a6;
 }
 
 .update-name-btn {
@@ -35,9 +34,9 @@
   text-transform: uppercase;
   border-radius: 20px;
   font-size: 26px;
-  background: #95a5a6;
+  background: #b6c6c7;
   color: white;
-  border: solid 2px #95a5a6;
+  border: solid 2px #b7c6c7;
   transition: 0.2s;
 }
 
