@@ -143,3 +143,15 @@
   text-align: center;
   font-size: 14px;
 }
+
+@media screen and (max-width: 1366px) {
+  .user-photo {
+    width: 200px;
+    height: 200px;
+  }
+
+  .user-photo img {
+    width: 200px;
+    height: 200px;
+  }
+}

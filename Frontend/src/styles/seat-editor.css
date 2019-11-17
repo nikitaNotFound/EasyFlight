@@ -169,10 +169,3 @@
 .seat-booked {
     background: gray;
 }
-
-@media screen and (max-width: 1366px) {
-    .seat {
-        width: 12px;
-        height: 12px;
-    }
-}
