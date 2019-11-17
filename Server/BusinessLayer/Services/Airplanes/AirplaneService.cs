@@ -23,11 +23,12 @@ namespace BusinessLayer.Services.Airplanes
         }
 
 
-        public async Task<IReadOnlyCollection<Airplane>> GetAllAsync()
+        public async Task<ItemsPage<Airplane>> GetAllAsync(int currentPage, int pageLimit)
         {
-            IReadOnlyCollection<AirplaneEntity> airplanesDal = await _airplaneRepository.GetAllAsync();
+            ItemsPageEntity<AirplaneEntity> airplanesDal =
+                await _airplaneRepository.GetAllAsync(currentPage, pageLimit);
 
-            IReadOnlyCollection<Airplane> airplanes = airplanesDal.Select(_mapper.Map<Airplane>).ToList();
+            ItemsPage<Airplane> airplanes = _mapper.Map<ItemsPage<Airplane>>(airplanesDal);
 
             return airplanes;
         }
@@ -62,14 +63,14 @@ namespace BusinessLayer.Services.Airplanes
             return seatTypes;
         }
 
-        public async Task<IReadOnlyCollection<Airplane>> SearchAirplanesAsync(AirplaneFilter filter)
+        public async Task<ItemsPage<Airplane>> SearchAirplanesAsync(AirplaneFilter filter)
         {
             AirplaneFilterEntity filterDal = _mapper.Map<AirplaneFilterEntity>(filter);
 
-            IReadOnlyCollection<AirplaneEntity> airplanesDal =
+            ItemsPageEntity<AirplaneEntity> airplanesDal =
                 await _airplaneRepository.SearchAirplanesAsync(filterDal);
 
-            IReadOnlyCollection<Airplane> airplanes = airplanesDal.Select(_mapper.Map<Airplane>).ToList();
+            ItemsPage<Airplane> airplanes = _mapper.Map<ItemsPage<Airplane>>(airplanesDal);
 
             return airplanes;
         }

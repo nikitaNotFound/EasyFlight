@@ -26,10 +26,9 @@ namespace BusinessLogicTests.Mocks
             new AirplaneSeatEntity() { Id = 2 },
             new AirplaneSeatEntity() { Id = 3 }
         };
-
-    public async Task<IReadOnlyCollection<AirplaneEntity>> GetAllAsync()
+        public Task<ItemsPageEntity<AirplaneEntity>> GetAllAsync(int currentPage, int pageLimit)
         {
-            return _airplaneData;
+            throw new System.NotImplementedException();
         }
 
         public async Task<AirplaneEntity> GetByIdAsync(int id)
@@ -57,9 +56,9 @@ namespace BusinessLogicTests.Mocks
             return _airplaneSeatTypeData.Select(x => x).Where(x => x.AirplaneId == airplaneId).ToList();
         }
 
-        public async Task<IReadOnlyCollection<AirplaneEntity>> SearchAirplanesAsync(AirplaneFilterEntity filter)
+        public async Task<ItemsPageEntity<AirplaneEntity>> SearchAirplanesAsync(AirplaneFilterEntity filter)
         {
-            return _airplaneData;
+            return new ItemsPageEntity<AirplaneEntity>(_airplaneData, _airplaneData.Count);
         }
 
         public async Task<int> AddAsync(AirplaneEntity airplane)

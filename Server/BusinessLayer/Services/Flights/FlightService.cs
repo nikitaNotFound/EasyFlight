@@ -35,11 +35,11 @@ namespace BusinessLayer.Services.Flights
         }
 
 
-        public async Task<IReadOnlyCollection<Flight>> GetAllAsync()
+        public async Task<ItemsPage<Flight>> GetAllAsync(int currentPage, int pageLimit)
         {
-            IReadOnlyCollection<FlightEntity> flightsDal = await _flightRepository.GetAllAsync();
+            ItemsPageEntity<FlightEntity> flightsDal = await _flightRepository.GetAllAsync(currentPage, pageLimit);
 
-            IReadOnlyCollection<Flight> flights = flightsDal.Select(_mapper.Map<Flight>).ToList();
+            ItemsPage<Flight> flights = _mapper.Map<ItemsPage<Flight>>(flightsDal);
 
             return flights;
         }
@@ -111,11 +111,11 @@ namespace BusinessLayer.Services.Flights
             return ResultTypes.Ok;
         }
 
-        public async Task<IReadOnlyCollection<Flight>> SearchFlightsAsync(FlightFilter filter)
+        public async Task<ItemsPage<Flight>> SearchFlightsAsync(FlightFilter filter)
         {
             FlightFilterEntity filterDal = _mapper.Map<FlightFilterEntity>(filter);
 
-            IReadOnlyCollection<FlightEntity> flightsDal =
+            ItemsPageEntity<FlightEntity> flightsDal =
                 await _flightRepository.SearchFlightsAsync(filterDal);
 
             if (filter.SearchFlightsBack)
@@ -128,13 +128,13 @@ namespace BusinessLayer.Services.Flights
                 filterDal.FromAirportId = filterDal.ToAirportId;
                 filterDal.ToAirportId = fromAirportIdBuff;
 
-                IReadOnlyCollection<FlightEntity> flightsBackDal =
+                ItemsPageEntity<FlightEntity> flightsBackDal =
                     await _flightRepository.SearchFlightsAsync(filterDal);
 
-                flightsDal = flightsDal.Concat(flightsBackDal).ToList();
+                flightsDal.Content = flightsDal.Content.Concat(flightsBackDal.Content).ToList();
             }
 
-            return flightsDal.Select(_mapper.Map<Flight>).ToList();
+            return _mapper.Map<ItemsPage<Flight>>(flightsDal);
         }
 
         public async Task<IReadOnlyCollection<FlightSeatTypeCost>> GetFlightSeatTypesCost(int flightId)

@@ -15,7 +15,9 @@ using BlAirplane = BusinessLayer.Models.Airplane;
 using BlAirplaneFilter = BusinessLayer.Models.AirplaneFilter;
 using BlAirplaneSeatType = BusinessLayer.Models.AirplaneSeatType;
 using BlAirplaneSeat = BusinessLayer.Models.AirplaneSeat;
+using BlItemsPage = BusinessLayer.Models.ItemsPage<BusinessLayer.Models.Airplane>;
 using WebAPI.Models;
+using WebAPI.Settings;
 
 namespace WebAPI.Controllers
 {
@@ -26,12 +28,18 @@ namespace WebAPI.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IAirplaneService _airplaneService;
+        private readonly IPaginationSettings _paginationSettings;
 
 
-        public AirplanesController(IMapper mapper, IAirplaneService airplaneService)
+        public AirplanesController(
+            IMapper mapper,
+            IAirplaneService airplaneService,
+            IPaginationSettings paginationSettings
+        )
         {
             _mapper = mapper;
             _airplaneService = airplaneService;
+            _paginationSettings = paginationSettings;
         }
 
 
@@ -42,10 +50,15 @@ namespace WebAPI.Controllers
             int? minCarryingKg,
             int? maxCarryingKg,
             int? minSeatCount,
-            int? maxSeatCount
+            int? maxSeatCount,
+            int? currentPage,
+            int? pageLimit
         )
         {
-            IReadOnlyCollection<BlAirplane> airplanesBl;
+            currentPage ??= _paginationSettings.DefaultPage;
+            pageLimit ??= _paginationSettings.MaxPageLimit;
+
+            BlItemsPage airplanesBl;
 
             if (!string.IsNullOrEmpty(nameFilter)
                 || minCarryingKg != null
@@ -59,7 +72,9 @@ namespace WebAPI.Controllers
                     minCarryingKg,
                     maxCarryingKg,
                     minSeatCount,
-                    maxSeatCount);
+                    maxSeatCount,
+                    currentPage.Value,
+                    pageLimit.Value);
 
                 BlAirplaneFilter airplaneFilterBl = _mapper.Map<BlAirplaneFilter>(airplaneFilter);
 
@@ -67,10 +82,10 @@ namespace WebAPI.Controllers
             }
             else
             {
-                airplanesBl = await _airplaneService.GetAllAsync();
+                airplanesBl = await _airplaneService.GetAllAsync(currentPage.Value, pageLimit.Value);
             }
 
-            IEnumerable<Airplane> airplanes = airplanesBl.Select(_mapper.Map<Airplane>);
+            ItemsPage<Airplane> airplanes = _mapper.Map<ItemsPage<Airplane>>(airplanesBl);
 
             return Ok(airplanes);
         }

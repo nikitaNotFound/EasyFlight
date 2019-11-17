@@ -5,7 +5,7 @@ using System.Security.Claims;
 using BusinessLayer;
 using Microsoft.AspNetCore.Http;
 
-namespace WebAPI
+namespace WebAPI.Settings
 {
     public class UserInfo : IUserInfo
     {

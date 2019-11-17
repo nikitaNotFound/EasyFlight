@@ -12,6 +12,8 @@ namespace WebAPI.Models
         public DateTime? ArrivalDate { get; set; }
         public int? TicketCount { get; set; }
         public bool SearchFlightsBack { get; set; }
+        public int CurrentPage { get; set; }
+        public int PageLimit { get; set; }
 
 
         public FlightFilter(
@@ -22,7 +24,9 @@ namespace WebAPI.Models
             DateTime? departureDate,
             DateTime? arrivalDate,
             int? ticketCount,
-            bool searchFlightsBack
+            bool searchFlightsBack,
+            int currentPage,
+            int pageLimit
         )
         {
             FromAirportId = fromAirportId;
@@ -33,6 +37,8 @@ namespace WebAPI.Models
             ArrivalDate = arrivalDate;
             TicketCount = ticketCount;
             SearchFlightsBack = searchFlightsBack;
+            CurrentPage = currentPage;
+            PageLimit = pageLimit;
         }
     }
 }

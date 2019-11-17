@@ -104,10 +104,9 @@ namespace BusinessLogicTests.Mocks
             _bookingSettings = bookingSettings;
         }
 
-
-        public async Task<IReadOnlyCollection<FlightEntity>> GetAllAsync()
+        public Task<ItemsPageEntity<FlightEntity>> GetAllAsync(int currentPage, int pageLimit)
         {
-            return _flightData;
+            throw new NotImplementedException();
         }
 
         public async Task<FlightEntity> GetByIdAsync(int id)
@@ -125,9 +124,9 @@ namespace BusinessLogicTests.Mocks
             // implementation
         }
 
-        public async Task<IReadOnlyCollection<FlightEntity>> SearchFlightsAsync(FlightFilterEntity filter)
+        public Task<ItemsPageEntity<FlightEntity>> SearchFlightsAsync(FlightFilterEntity filter)
         {
-            return _flightData;
+            throw new NotImplementedException();
         }
 
         public async Task<IReadOnlyCollection<FlightSeatTypeCostEntity>> GetFlightSeatTypesCostAsync(int flightId)

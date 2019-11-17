@@ -28,6 +28,7 @@ namespace BusinessLayer
             config.CreateMap<AirplaneSeatEntity, AirplaneSeat>();
             config.CreateMap<AirplaneSeatType, AirplaneSeatTypeEntity>();
             config.CreateMap<AirplaneSeatTypeEntity, AirplaneSeatType>();
+            config.CreateMap<ItemsPageEntity<AirplaneEntity>, ItemsPage<Airplane>>();
 
             config.CreateMap<Flight, FlightEntity>();
             config.CreateMap<FlightEntity, Flight>();
@@ -39,6 +40,7 @@ namespace BusinessLayer
             config.CreateMap<FlightBookInfoEntity, FlightBookInfo>();
             config.CreateMap<SeatBook, SeatBookEntity>();
             config.CreateMap<SeatBookEntity, SeatBook>();
+            config.CreateMap<ItemsPageEntity<FlightEntity>, ItemsPage<Flight>>();
         }
     }
 }

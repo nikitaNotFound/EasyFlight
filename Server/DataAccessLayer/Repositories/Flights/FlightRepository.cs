@@ -23,16 +23,25 @@ namespace DataAccessLayer.Repositories.Flights
         }
 
 
-        public async Task<IReadOnlyCollection<FlightEntity>> GetAllAsync()
+        public async Task<ItemsPageEntity<FlightEntity>> GetAllAsync(int currentPage, int pageLimit)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
-            IEnumerable<FlightEntity> flights = await db.QueryAsync<FlightEntity>(
+            SqlMapper.GridReader queryResult = await db.QueryMultipleAsync(
                 "GetAllFlights",
-                null,
+                new
+                {
+                    CurrentPage = currentPage,
+                    PageLimit = pageLimit
+                },
                 commandType: CommandType.StoredProcedure);
 
-            return flights.ToList();
+            ItemsPageEntity<FlightEntity> flights = new ItemsPageEntity<FlightEntity>(
+                queryResult.Read<FlightEntity>().ToList(),
+                queryResult.Read<int>().First()
+            );
+
+            return flights;
         }
 
         public async Task<FlightEntity> GetByIdAsync(int id)
@@ -90,11 +99,11 @@ namespace DataAccessLayer.Repositories.Flights
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<IReadOnlyCollection<FlightEntity>> SearchFlightsAsync(FlightFilterEntity filter)
+        public async Task<ItemsPageEntity<FlightEntity>> SearchFlightsAsync(FlightFilterEntity filter)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
-            IEnumerable<FlightEntity> flights = await db.QueryAsync<FlightEntity>(
+            SqlMapper.GridReader queryResult = await db.QueryMultipleAsync(
                 "SearchFlights",
                 new
                 {
@@ -107,11 +116,18 @@ namespace DataAccessLayer.Repositories.Flights
                     TicketCount = filter.TicketCount,
                     FinalBookType = BookType.Payed,
                     BookExpirationTimeInSeconds = _bookingSettings.ExpirationTime.TotalSeconds,
-                    TimeUntilBookingAvailableInSeconds = _bookingSettings.TimeUntilBookingAvailable.TotalSeconds
+                    TimeUntilBookingAvailableInSeconds = _bookingSettings.TimeUntilBookingAvailable.TotalSeconds,
+                    CurrentPage = filter.CurrentPage,
+                    PageLimit = filter.PageLimit
                 },
                 commandType: CommandType.StoredProcedure);
 
-            return flights.ToList();
+            ItemsPageEntity<FlightEntity> flights = new ItemsPageEntity<FlightEntity>(
+                queryResult.Read<FlightEntity>().ToList(),
+                queryResult.Read<int>().First()
+            );
+
+            return flights;
         }
 
         public async Task<IReadOnlyCollection<FlightSeatTypeCostEntity>> GetFlightSeatTypesCostAsync(int flightId)

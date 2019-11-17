@@ -167,16 +167,25 @@ namespace DataAccessLayer.Repositories.Airplanes
             return seatTypes.ToList();
         }
 
-        public async Task<IReadOnlyCollection<AirplaneEntity>> GetAllAsync()
+        public async Task<ItemsPageEntity<AirplaneEntity>> GetAllAsync(int currentPage, int pageLimit)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
-            IEnumerable<AirplaneEntity> airplanes = await db.QueryAsync<AirplaneEntity>(
+            SqlMapper.GridReader queryResult = await db.QueryMultipleAsync(
                 "GetAllAirplanes",
-                null,
+                new
+                {
+                    CurrentPage = currentPage,
+                    PageLimit = pageLimit
+                },
                 commandType: CommandType.StoredProcedure);
 
-            return airplanes.ToList();
+            ItemsPageEntity<AirplaneEntity> pageAirplanes = new ItemsPageEntity<AirplaneEntity>(
+                queryResult.Read<AirplaneEntity>().ToList(),
+                queryResult.Read<int>().First()
+            );
+
+            return pageAirplanes;
         }
 
         public async Task<AirplaneEntity> GetByIdAsync(int id)
@@ -189,16 +198,21 @@ namespace DataAccessLayer.Repositories.Airplanes
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<IReadOnlyCollection<AirplaneEntity>> SearchAirplanesAsync(AirplaneFilterEntity filter)
+        public async Task<ItemsPageEntity<AirplaneEntity>> SearchAirplanesAsync(AirplaneFilterEntity filter)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
-            IEnumerable<AirplaneEntity> airplanes = await db.QueryAsync<AirplaneEntity>(
+            SqlMapper.GridReader queryResult  = await db.QueryMultipleAsync(
                 "SearchAirplanes",
                 filter,
                 commandType: CommandType.StoredProcedure);
 
-            return airplanes.ToList();
+            ItemsPageEntity<AirplaneEntity> pageAirplanes = new ItemsPageEntity<AirplaneEntity>(
+                queryResult.Read<AirplaneEntity>().ToList(),
+                queryResult.Read<int>().First()
+            );
+
+            return pageAirplanes;
         }
     }
 }
