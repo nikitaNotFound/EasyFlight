@@ -122,6 +122,7 @@
     <Build Include="dbo\Stored Procedures\AddAccountFlightInfo.sql" />
     <Build Include="dbo\Tables\FlightBooksInfo.sql" />
     <Build Include="dbo\Tables\BookTypes.sql" />
+    <Build Include="dbo\Stored Procedures\CanUpdateAccountAvatar.sql" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="dbo\Stored Procedures\CanUpdateAccountName.sql" />

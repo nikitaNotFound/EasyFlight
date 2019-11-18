@@ -1,5 +1,7 @@
+using System;
 using System.Threading.Tasks;
 using AutoMapper;
+using BusinessLayer;
 using BusinessLayer.Models;
 using BusinessLayer.Services.Accounts;
 using BusinessLogicTests.Mocks;
@@ -80,6 +82,26 @@ namespace BusinessLogicTests
 
             // Assert
             Assert.AreEqual(registerAccount.Email, registeredAccount.Email);
+        }
+
+        [TestMethod]
+        public async Task UpdatingNameBeforeIntervalExpirationReturnsInvalidDataResult()
+        {
+            // Act
+            ResultTypes updateResult = await _accountService.UpdateNameAsync("Big", "Bob");
+
+            // Assert
+            Assert.AreEqual(ResultTypes.InvalidData, updateResult);
+        }
+
+        [TestMethod]
+        public async Task UpdatingAvatarBeforeIntervalExpirationReturnsInvalidDataResult()
+        {
+            // Act
+            ResultTypes updateResult = await _accountService.UpdateAvatarAsync(Array.Empty<byte>());
+
+            // Assert
+            Assert.AreEqual(ResultTypes.InvalidData, updateResult);
         }
     }
 }

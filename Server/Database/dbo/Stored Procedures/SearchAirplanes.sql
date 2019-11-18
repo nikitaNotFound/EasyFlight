@@ -3,9 +3,7 @@
     @minCarryingKg as int = null,
     @maxCarryingKg as int = null,
     @minSeatCount as int = null,
-    @maxSeatCount as int = null,
-    @page as int,
-    @pageLimit as int
+    @maxSeatCount as int = null
 as
     select row_number() over(order by Id) as row, A1.*
     from Airplanes A1
