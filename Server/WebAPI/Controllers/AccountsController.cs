@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using BusinessLayer;
 using BusinessLayer.Services.Accounts;
+using DataAccessLayer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
@@ -24,13 +25,20 @@ namespace WebAPI.Controllers
         private readonly IAccountService _accountService;
         private readonly IMapper _mapper;
         private readonly IJwtService _jwtService;
+        private readonly IFilesUploadingSettings _filesUploadingSettings;
 
 
-        public AccountsController(IAccountService accountService, IMapper mapper, IJwtService jwtService)
+        public AccountsController(
+            IAccountService accountService,
+            IMapper mapper,
+            IJwtService jwtService,
+            IFilesUploadingSettings filesUploadingSettings
+        )
         {
             _accountService = accountService;
             _mapper = mapper;
             _jwtService = jwtService;
+            _filesUploadingSettings = filesUploadingSettings;
         }
 
 
@@ -123,6 +131,13 @@ namespace WebAPI.Controllers
         [Route("my/avatar")]
         public async Task<IActionResult> UpdateAvatarAsync(IFormFile file)
         {
+            string fileExtension = Path.GetExtension(file.FileName);
+
+            if (!_filesUploadingSettings.AllowedExtensions.Contains(fileExtension))
+            {
+                return BadRequest();
+            }
+
             Stream fileStream = file.OpenReadStream();
             MemoryStream fileMemoryStream = new MemoryStream();
 
