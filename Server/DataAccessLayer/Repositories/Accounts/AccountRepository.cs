@@ -54,7 +54,11 @@ namespace DataAccessLayer.Repositories.Accounts
 
             return await db.QuerySingleOrDefaultAsync<AccountEntity>(
                 "GetAccount",
-                new { email = account.Email, passwordHash = account.PasswordHash },
+                new
+                {
+                    email = account.Email,
+                    passwordHash = account.PasswordHash
+                },
                 commandType: CommandType.StoredProcedure);
         }
 
@@ -64,7 +68,8 @@ namespace DataAccessLayer.Repositories.Accounts
 
             return await db.QuerySingleOrDefaultAsync<AccountEntity>(
                 "CreateAccount",
-                new {
+                new
+                {
                     firstName = account.FirstName,
                     secondName = account.SecondName,
                     email = account.Email,
@@ -131,7 +136,8 @@ namespace DataAccessLayer.Repositories.Accounts
 
             return !await db.ExecuteScalarAsync<bool>(
                 "CanUpdateAccountName",
-                new {
+                new
+                {
                     AccountId = accountId,
                     AccountNameUpdatingIntervalInSeconds = _accountUpdatingSettings.NameUpdatingInterval.TotalSeconds
                 },
@@ -144,7 +150,8 @@ namespace DataAccessLayer.Repositories.Accounts
 
             return !await db.ExecuteScalarAsync<bool>(
                 "CanUpdateAccountAvatar",
-                new {
+                new
+                {
                     AccountId = accountId,
                     AccountAvatarUpdatingIntervalInSeconds =
                         _accountUpdatingSettings.AvatarUpdatingInterval.TotalSeconds

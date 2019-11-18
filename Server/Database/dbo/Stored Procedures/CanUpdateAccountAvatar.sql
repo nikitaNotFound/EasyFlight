@@ -1,4 +1,4 @@
-﻿CREATE procedure CanUpdateAccountAvatar
+﻿create procedure CanUpdateAccountAvatar
     @accountId as int,
     @accountAvatarUpdatingIntervalInSeconds as int
 as
