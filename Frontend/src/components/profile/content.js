@@ -39,7 +39,7 @@ function Content(props) {
                 if (!accountAvatar.image) {
                     changeAvatar(AddImage);
                 } else {
-                    changeAvatar('data:image/png;base64,' + accountAvatar.image);
+                    changeAvatar(accountAvatar.image);
                 }
 
                 changeAccountFlights(userFlights);
@@ -80,7 +80,7 @@ function Content(props) {
 
             const imageResult = await UserService.updateAvatar(avatar);
 
-            changeAvatar('data:image/png;base64,' + imageResult.image);
+            changeAvatar(imageResult.image);
 
             changeMessageBoxValue(saved());
         } catch (ex) {

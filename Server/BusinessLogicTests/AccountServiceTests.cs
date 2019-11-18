@@ -23,12 +23,18 @@ namespace BusinessLogicTests
             {
                 config.CreateMap<Account, AccountEntity>();
                 config.CreateMap<AccountEntity, Account>();
+                config.CreateMap<AccountUpdatesEntity, AccountUpdates>();
             });
             mappingConfig.CompileMappings();
 
             IMapper mapper = mappingConfig.CreateMapper();
 
-            _accountService = new AccountService(mapper, new AccountRepositoryMock(), new UserInfoMock(1));
+            _accountService = new AccountService(
+                mapper,
+                new AccountRepositoryMock(),
+                new UserInfoMock(1),
+                new AccountUpdatingSettingsMock()
+            );
         }
 
 

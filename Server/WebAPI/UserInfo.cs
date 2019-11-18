@@ -15,12 +15,7 @@ namespace WebAPI
         {
             get
             {
-                string nameIdentifier = _claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
-
-                if (nameIdentifier == null)
-                {
-                    return 0;
-                }
+                string nameIdentifier = _claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value;
 
                 return int.Parse(nameIdentifier);
             }

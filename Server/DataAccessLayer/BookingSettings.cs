@@ -2,7 +2,7 @@
 using DataAccessLayer;
 using Microsoft.Extensions.Configuration;
 
-namespace WebAPI
+namespace DataAccessLayer
 {
     public class BookingSettings : IBookingSettings
     {

@@ -125,7 +125,7 @@ namespace WebAPI.Controllers
             return Ok();
         }
 
-        // PUT api/accounts/my/avatar{?firstName}{?secondName}
+        // PUT api/accounts/my/avatar
         [HttpPut]
         [AllowAnonymous]
         [Route("my/avatar")]
@@ -138,8 +138,8 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
 
-            Stream fileStream = file.OpenReadStream();
-            MemoryStream fileMemoryStream = new MemoryStream();
+            using Stream fileStream = file.OpenReadStream();
+            using MemoryStream fileMemoryStream = new MemoryStream();
 
             fileStream.CopyTo(fileMemoryStream);
 
@@ -155,7 +155,7 @@ namespace WebAPI.Controllers
             return Ok(new { Image = Convert.ToBase64String(fileByteArray) });
         }
 
-        // PUT api/accounts/my/avatar{?firstName}{?secondName}
+        // GET api/accounts/my/avatar
         [HttpGet]
         [AllowAnonymous]
         [Route("my/avatar")]

@@ -115,6 +115,16 @@ namespace DataAccessLayer.Repositories.Accounts
             );
         }
 
+        public async Task<AccountUpdatesEntity> GetAccountUpdatesAsync(int accountId)
+        {
+            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
+
+            return await db.QuerySingleOrDefaultAsync<AccountUpdatesEntity>(
+                "GetAccountUpdates",
+                new {AccountId = accountId},
+                commandType: CommandType.StoredProcedure);
+        }
+
         public async Task<string> GetAvatarAsync(int accountId)
         {
             string path = _filesUploadingSettings.StoragePath + accountId + ".txt";
@@ -128,35 +138,6 @@ namespace DataAccessLayer.Repositories.Accounts
                 await File.ReadAllBytesAsync(path);
 
             return Convert.ToBase64String(byteArrayImage);
-        }
-
-        public async Task<bool> CanUpdateNameAsync(int accountId)
-        {
-            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
-
-            return !await db.ExecuteScalarAsync<bool>(
-                "CanUpdateAccountName",
-                new
-                {
-                    AccountId = accountId,
-                    AccountNameUpdatingIntervalInSeconds = _accountUpdatingSettings.NameUpdatingInterval.TotalSeconds
-                },
-                commandType: CommandType.StoredProcedure);
-        }
-
-        public async Task<bool> CanUpdateAvatarAsync(int accountId)
-        {
-            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
-
-            return !await db.ExecuteScalarAsync<bool>(
-                "CanUpdateAccountAvatar",
-                new
-                {
-                    AccountId = accountId,
-                    AccountAvatarUpdatingIntervalInSeconds =
-                        _accountUpdatingSettings.AvatarUpdatingInterval.TotalSeconds
-                },
-                commandType: CommandType.StoredProcedure);
         }
     }
 }

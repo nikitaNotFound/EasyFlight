@@ -1,20 +1,26 @@
 create procedure UpdateAccountName
     @firstName as nvarchar(50),
     @secondName as nvarchar(50),
-    @accountId as int
+    @accountId as int,
+    @avatarUpdatingIntervalInSeconds as int
 as
-    update Accounts
-    set FirstName = @firstName,
-        SecondName = @secondName
-    where Id = @accountId
-
-    update AccountUpdates
-    set LastNameUpdateTime = sysdatetimeoffset()
-    where AccountId = @accountId
-
-    if @@rowcount = 0
-    begin
-        insert into AccountUpdates
+    merge AccountUpdates as target
+    using
+        (
+            select
+                @accountId,
+                sysdatetimeoffset(),
+                sysdatetimeoffset() - @avatarUpdatingIntervalInSeconds
+        )
+    as source
+        (AccountId, LastNameUpdateTime, LastAvatarUpdateTime)
+    on (target.AccountId = source.AccountId)
+    when matched then
+        update set
+            target.LastNameUpdateTime = source.LastNameUpdateTime,
+            target.LastAvatarUpdateTime = source.LastAvatarUpdateTime
+    when not matched
+        insert
         (
             AccountId,
             LastNameUpdateTime,
@@ -22,8 +28,13 @@ as
         )
         values
         (
-            @accountId,
-            sysdatetimeoffset(),
-            ''
+            source.AccountId,
+            source.LastNameUpdateTime,
+            source.LastAvatarUpdateTime
         )
-    end
+
+    update Accounts
+    set
+        FirstName = @firstName,
+        SecondName = @secondName
+    where Id = @accountId

@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using DataAccessLayer;
 using Microsoft.Extensions.Configuration;
 
@@ -8,7 +10,13 @@ namespace WebAPI
         private readonly IConfiguration _configuration;
 
         public string StoragePath => _configuration[nameof(StoragePath)];
-        public string[] AllowedExtensions => _configuration.GetSection(nameof(AllowedExtensions)).Get<string[]>();
+        public IReadOnlyCollection<string> AllowedExtensions =>
+            new HashSet<string>(
+                _configuration.GetSection(nameof(AllowedExtensions)).Get<string[]>(),
+                StringComparer.OrdinalIgnoreCase
+            );
+
+        public int MaxMbSize => int.Parse(_configuration[nameof(MaxMbSize)]);
 
 
         public FilesUploadingSettings(IConfiguration configuration)

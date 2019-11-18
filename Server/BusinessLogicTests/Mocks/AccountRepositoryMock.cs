@@ -22,6 +22,16 @@ namespace BusinessLogicTests.Mocks
             }
         };
 
+        private readonly List<AccountUpdatesEntity> _accountUpdates = new List<AccountUpdatesEntity>()
+        {
+            new AccountUpdatesEntity()
+            {
+                AccountId = 1,
+                LastAvatarUpdateTime = DateTimeOffset.Now,
+                LastNameUpdateTime = DateTimeOffset.Now
+            }
+        };
+
         public async Task<AccountEntity> GetByEmailAsync(string email)
         {
             return _accountData.FirstOrDefault(x => x.Email == email);
@@ -54,29 +64,14 @@ namespace BusinessLogicTests.Mocks
             // implementation
         }
 
-        public async Task<bool> CanUpdateNameAsync(int accountId)
+        public async Task<AccountUpdatesEntity> GetAccountUpdatesAsync(int accountId)
         {
-            if (accountId == 1)
-            {
-                return false;
-            }
-
-            return true;
+            return _accountUpdates.FirstOrDefault(x => x.AccountId == accountId);
         }
 
-        public async Task<bool> CanUpdateAvatarAsync(int accountId)
+        public async Task<string> GetAvatarAsync(int accountId)
         {
-            if (accountId == 1)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        public Task<string> GetAvatarAsync(int accountId)
-        {
-            throw new NotImplementedException();
+            return "";
         }
     }
 }

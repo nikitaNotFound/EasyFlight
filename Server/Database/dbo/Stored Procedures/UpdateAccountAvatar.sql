@@ -2,13 +2,18 @@ create procedure UpdateAccountAvatar
     @accountId as int,
     @avatarUpdatingIntervalInSeconds as int
 as
-    update AccountUpdates
-        set AccountUpdates.LastAvatarUpdateTime = sysdatetimeoffset()
-        where AccountId = @accountId
-
-    if @@rowcount = 0
-    begin
-        insert into AccountUpdates
+    merge AccountUpdates as target
+    using
+        (select @accountId, sysdatetimeoffset(), sysdatetimeoffset() - @avatarUpdatingIntervalInSeconds)
+            as source
+            (AccountId, LastAvatarUpdateTime, LastNameUpdateTime)
+    on (target.AccountId = source.AccountId)
+    when matched then
+        update set
+                   target.LastAvatarUpdateTime = source.LastAvatarUpdateTime,
+                   target.LastNameUpdateTime = source.LastNameUpdateTime
+    when not matched then
+        insert
         (
             AccountId,
             LastNameUpdateTime,
@@ -16,8 +21,7 @@ as
         )
         values
         (
-            @accountId,
-            sysdatetimeoffset(),
-            dateadd(second, -@avatarUpdatingIntervalInSeconds, sysdatetimeoffset())
-        )
-    end
+            source.AccountId,
+            source.LastNameUpdateTime,
+            source.LastAvatarUpdateTime
+        );

@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using BusinessLayer.Models;
 using DataAccessLayer.Repositories.Accounts;
 using AutoMapper;
+using DataAccessLayer;
+using DataAccessLayer.Models;
 using AccountEntity = DataAccessLayer.Models.AccountEntity;
 
 namespace BusinessLayer.Services.Accounts
@@ -15,14 +17,21 @@ namespace BusinessLayer.Services.Accounts
     {
         private readonly IMapper _mapper;
         private readonly IAccountRepository _accountRepository;
-        private readonly int _accountId;
+        private readonly IUserInfo _userInfo;
+        private readonly IAccountUpdatingSettings _accountUpdatingSettings;
 
 
-        public AccountService(IMapper mapper, IAccountRepository repository, IUserInfo userInfo)
+        public AccountService(
+            IMapper mapper,
+            IAccountRepository repository,
+            IUserInfo userInfo,
+            IAccountUpdatingSettings accountUpdatingSettings
+        )
         {
             _mapper = mapper;
             _accountRepository = repository;
-            _accountId = userInfo.AccountId;
+            _userInfo = userInfo;
+            _accountUpdatingSettings = accountUpdatingSettings;
         }
 
 
@@ -70,35 +79,53 @@ namespace BusinessLayer.Services.Accounts
 
         public async Task<ResultTypes> UpdateNameAsync(string firstName, string secondName)
         {
-            bool canUpdate = await _accountRepository.CanUpdateNameAsync(_accountId);
+            AccountUpdatesEntity accountUpdatesDal =
+                await _accountRepository.GetAccountUpdatesAsync(_userInfo.AccountId);
 
-            if (!canUpdate)
+            if (accountUpdatesDal != null)
             {
-                return ResultTypes.InvalidData;
+                AccountUpdates accountUpdates = _mapper.Map<AccountUpdates>(accountUpdatesDal);
+
+                DateTimeOffset whenCanUpdateName =
+                    accountUpdates.LastNameUpdateTime + _accountUpdatingSettings.NameUpdatingInterval;
+
+                if (whenCanUpdateName > DateTimeOffset.Now)
+                {
+                    return ResultTypes.InvalidData;
+                }
             }
 
-            await _accountRepository.UpdateNameAsync(_accountId, firstName, secondName);
+            await _accountRepository.UpdateNameAsync(_userInfo.AccountId, firstName, secondName);
 
             return ResultTypes.Ok;
         }
 
         public async Task<ResultTypes> UpdateAvatarAsync(byte[] avatarByteArray)
         {
-            bool canUpdate = await _accountRepository.CanUpdateAvatarAsync(_accountId);
+            AccountUpdatesEntity accountUpdatesDal =
+                await _accountRepository.GetAccountUpdatesAsync(_userInfo.AccountId);
 
-            if (!canUpdate)
+            if (accountUpdatesDal != null)
             {
-                return ResultTypes.InvalidData;
+                AccountUpdates accountUpdates = _mapper.Map<AccountUpdates>(accountUpdatesDal);
+
+                DateTimeOffset whenCanUpdateAvatar =
+                    accountUpdates.LastAvatarUpdateTime + _accountUpdatingSettings.AvatarUpdatingInterval;
+
+                if (whenCanUpdateAvatar > DateTimeOffset.Now)
+                {
+                    return ResultTypes.InvalidData;
+                }
             }
 
-            await _accountRepository.UpdateAvatarAsync(_accountId, avatarByteArray);
+            await _accountRepository.UpdateAvatarAsync(_userInfo.AccountId, avatarByteArray);
 
             return ResultTypes.Ok;
         }
 
         public async Task<string> GetAvatarAsync()
         {
-            return await _accountRepository.GetAvatarAsync(_accountId);
+            return await _accountRepository.GetAvatarAsync(_userInfo.AccountId);
         }
     }
 }

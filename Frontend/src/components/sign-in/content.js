@@ -44,6 +44,7 @@ function Content(props) {
     }
 
     function onGoogleSuccess(info) {
+        console.log(info);
         const profile = info.getBasicProfile();
 
         login(profile.getEmail(), profile.getId());
