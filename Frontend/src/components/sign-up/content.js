@@ -24,13 +24,7 @@ function Content(props) {
     const [confirmPassword, changeConfirmPassword] = useState();
     const [messageBoxValue, changeMessageBoxValue] = useState();
 
-    async function register(
-        name,
-        surname,
-        email,
-        password,
-        confirmPassword
-    ) {
+    async function onRegister() {
         if (!name
             || !surname
             || !email
@@ -65,18 +59,18 @@ function Content(props) {
         }
     }
 
-    function onRegister() {
-        register(name, surname, email, password, confirmPassword);
-    }
-
-    function onGoogleSuccess(info) {
-        const profile = info.getBasicProfile();
-
-        const [name, surname] = profile.getName().split(' ');
-        const email = profile.getEmail();
-        const password = profile.getId();
-
-        register(name, surname, email, password, password);
+    async function onGoogleSuccess(info) {
+        try {
+            const userInfo = await UserService.registerWithGoogle(info.tokenId);
+            changeUserInfo(userInfo);
+            props.history.push('/');
+        } catch (ex) {
+            if (ex instanceof BadRequestError) {
+                changeMessageBoxValue(duplicate("Account"));
+            } else {
+                changeMessageBoxValue(defaultErrorMessage());
+            }
+        }
     }
 
     function showMessageBox() {

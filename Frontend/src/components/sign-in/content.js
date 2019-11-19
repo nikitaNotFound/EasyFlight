@@ -20,7 +20,7 @@ function Content(props) {
 
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
-    async function login(email, password) {
+    async function onLogin() {
         if (!email || !password) {
             changeMessageBoxValue(invalidInput());
             return;
@@ -39,15 +39,18 @@ function Content(props) {
         }
     }
 
-    function onLogin() {
-        login(email, password);
-    }
-
-    function onGoogleSuccess(info) {
-        console.log(info);
-        const profile = info.getBasicProfile();
-
-        login(profile.getEmail(), profile.getId());
+    async function onGoogleSuccess(info) {
+        try {
+            const userInfo = await UserService.loginWithGoogle(info.tokenId);
+            changeUserInfo(userInfo);
+            props.history.push('/');
+        } catch (ex) {
+            if (ex instanceof BadRequestError) {
+                changeMessageBoxValue(badLoginData());
+            } else {
+                changeMessageBoxValue(defaultErrorMessage());
+            }
+        }
     }
 
     function showMessageBox() {

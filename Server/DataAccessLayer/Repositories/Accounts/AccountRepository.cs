@@ -48,20 +48,6 @@ namespace DataAccessLayer.Repositories.Accounts
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<AccountEntity> GetAccountAsync(AccountEntity account)
-        {
-            using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
-
-            return await db.QuerySingleOrDefaultAsync<AccountEntity>(
-                "GetAccount",
-                new
-                {
-                    email = account.Email,
-                    passwordHash = account.PasswordHash
-                },
-                commandType: CommandType.StoredProcedure);
-        }
-
         public async Task<AccountEntity> CreateAccountAsync(AccountEntity account)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
@@ -96,7 +82,7 @@ namespace DataAccessLayer.Repositories.Accounts
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task UpdateAvatarAsync(int accountId, byte[] avatarByteArray)
+        public async Task UpdateAvatarAsync(int accountId, byte[] avatarByteArray, string fileExtension)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
@@ -109,8 +95,18 @@ namespace DataAccessLayer.Repositories.Accounts
                 },
                 commandType: CommandType.StoredProcedure);
 
+            foreach (string extension in _filesUploadingSettings.AllowedExtensions)
+            {
+                string path = Path.Combine(_filesUploadingSettings.StoragePath, accountId + extension);
+
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
+            }
+
             await File.WriteAllBytesAsync(
-                _filesUploadingSettings.StoragePath + accountId + ".txt",
+                Path.Combine(_filesUploadingSettings.StoragePath, accountId + fileExtension),
                 avatarByteArray
             );
         }
@@ -127,17 +123,28 @@ namespace DataAccessLayer.Repositories.Accounts
 
         public async Task<string> GetAvatarAsync(int accountId)
         {
-            string path = _filesUploadingSettings.StoragePath + accountId + ".txt";
-
-            if (!File.Exists(path))
+            string path = string.Empty;
+            foreach (string extension in _filesUploadingSettings.AllowedExtensions)
             {
-                return null;
+                path = Path.Combine(_filesUploadingSettings.StoragePath, accountId + extension);
+
+                if (!File.Exists(path))
+                {
+                    path = string.Empty;
+                    continue;
+                }
+                else
+                {
+                    break;
+                }
             }
 
-            byte[] byteArrayImage =
-                await File.ReadAllBytesAsync(path);
+            if (string.IsNullOrEmpty(path))
+            {
+                return string.Empty;
+            }
 
-            return Convert.ToBase64String(byteArrayImage);
+            return Path.GetFileName(path);
         }
     }
 }

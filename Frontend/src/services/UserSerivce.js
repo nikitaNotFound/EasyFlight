@@ -69,6 +69,63 @@ export async function register(user) {
     return userInfo;
 }
 
+export async function loginWithGoogle(accessToken) {
+    const response = await fetch(
+        `${config.API_URL}/accounts/login/google?tokenId=${accessToken}`,
+        {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+    );
+
+    const result = await createRequestResult(response, RequestTypes.ContentExpected);
+
+    const token = result.token;
+    AuthTokenProvider.saveToken(token);
+
+    const userInfo = new User(
+        result.firstName,
+        result.secondName,
+        result.email,
+        null,
+        result.role
+    );
+
+    return userInfo;
+}
+
+export async function registerWithGoogle(accessToken) {
+    const response = await fetch(
+        `${config.API_URL}/accounts/register/google?tokenId=${accessToken}`,
+        {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+    );
+        
+    const result = await createRequestResult(response, RequestTypes.ContentExpected);
+
+    const token = result.token;
+
+    AuthTokenProvider.saveToken(token);
+
+    const userInfo = new User(
+        result.firstName,
+        result.secondName,
+        result.email,
+        null,
+        result.role
+    );
+
+    return userInfo;
+}
+
 export async function logout() {
     AuthTokenProvider.saveToken(null);
 }

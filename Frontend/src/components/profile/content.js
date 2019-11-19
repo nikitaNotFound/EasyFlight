@@ -120,7 +120,7 @@ function Content(props) {
                     <div className="col-2">
                         <div className="user-photo">
                             <label htmlFor="photo">
-                                <img src={avatar} alt="add user avatar" />
+                                <img src={avatar} alt="add user avatar" onError={() => changeAvatar(AddImage)}/>
                             </label>
                             <input type="file" onChange={onAvatarUpdate} id="photo" accept=".png,.jpg,.jpeg"/>
                         </div>

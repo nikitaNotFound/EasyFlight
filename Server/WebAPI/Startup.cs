@@ -104,7 +104,7 @@ namespace WebAPI
             services.Configure<FormOptions>(options =>
             {
                 // converting to bytes
-                options.MultipartBodyLengthLimit = filesUploadingSettings.MaxMbSize / 1024 / 1024;
+                options.MultipartBodyLengthLimit = filesUploadingSettings.MaxMbSize * 1024 * 1024;
             });
         }
 
@@ -128,7 +128,7 @@ namespace WebAPI
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(filesUploadingSettings.StoragePath),
-                RequestPath = "/files"
+                RequestPath = "/" + filesUploadingSettings.StaticFilesCatalogName
             });
         }
     }

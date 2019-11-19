@@ -10,9 +10,10 @@ namespace BusinessLayer.Services.Accounts
     public interface IAccountService
     {
         Task<Account> LoginAsync(Account account);
+        Task<Account> ExternalLoginAsync(Account account);
         Task<Account> RegisterAsync(Account account);
         Task<ResultTypes> UpdateNameAsync(string firstName, string secondName);
-        Task<ResultTypes> UpdateAvatarAsync(byte[] avatarByteArray);
+        Task<AddResult> UpdateAvatarAsync(byte[] avatarByteArray, string fileExtension);
         Task<string> GetAvatarAsync();
     }
 }

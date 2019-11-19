@@ -15,8 +15,9 @@ namespace WebAPI
                 _configuration.GetSection(nameof(AllowedExtensions)).Get<string[]>(),
                 StringComparer.OrdinalIgnoreCase
             );
-
         public int MaxMbSize => int.Parse(_configuration[nameof(MaxMbSize)]);
+        public string StaticFilesCatalogName => _configuration[nameof(StaticFilesCatalogName)];
+        public string StaticFilesHost => _configuration[nameof(StaticFilesHost)];
 
 
         public FilesUploadingSettings(IConfiguration configuration)

@@ -57,6 +57,18 @@ namespace BusinessLayer.Services.Accounts
             return _mapper.Map<Account>(dalAccount);
         }
 
+        public async Task<Account> ExternalLoginAsync(Account account)
+        {
+            AccountEntity dalAccount = await _accountRepository.GetByEmailAsync(account.Email);
+
+            if (dalAccount == null)
+            {
+                return null;
+            }
+
+            return _mapper.Map<Account>(dalAccount);
+        }
+
         public async Task<Account> RegisterAsync(Account account)
         {
             AccountEntity dalAccount = _mapper.Map<AccountEntity>(account);
@@ -68,9 +80,12 @@ namespace BusinessLayer.Services.Accounts
                 return null;
             }
 
-            byte[] saltForNewAccount = PasswordHasher.GenerateSalt();
-            dalAccount.Salt = saltForNewAccount;
-            dalAccount.PasswordHash = PasswordHasher.GenerateHash(account.Password, saltForNewAccount);
+            if (account.Password != null)
+            {
+                byte[] saltForNewAccount = PasswordHasher.GenerateSalt();
+                dalAccount.Salt = saltForNewAccount;
+                dalAccount.PasswordHash = PasswordHasher.GenerateHash(account.Password, saltForNewAccount);
+            }
 
             AccountEntity newAccount = await _accountRepository.CreateAccountAsync(dalAccount);
 
@@ -100,7 +115,7 @@ namespace BusinessLayer.Services.Accounts
             return ResultTypes.Ok;
         }
 
-        public async Task<ResultTypes> UpdateAvatarAsync(byte[] avatarByteArray)
+        public async Task<AddResult> UpdateAvatarAsync(byte[] avatarByteArray, string fileExtension)
         {
             AccountUpdatesEntity accountUpdatesDal =
                 await _accountRepository.GetAccountUpdatesAsync(_userInfo.AccountId);
@@ -114,13 +129,14 @@ namespace BusinessLayer.Services.Accounts
 
                 if (whenCanUpdateAvatar > DateTimeOffset.Now)
                 {
-                    return ResultTypes.InvalidData;
+                    return new AddResult(ResultTypes.InvalidData, null);
                 }
             }
 
-            await _accountRepository.UpdateAvatarAsync(_userInfo.AccountId, avatarByteArray);
+            await _accountRepository.UpdateAvatarAsync(_userInfo.AccountId, avatarByteArray, fileExtension);
 
-            return ResultTypes.Ok;
+            // account id as created item id because image has the same name as member id
+            return new AddResult(ResultTypes.Ok, _userInfo.AccountId);
         }
 
         public async Task<string> GetAvatarAsync()

@@ -104,7 +104,8 @@ namespace BusinessLogicTests
         public async Task UpdatingAvatarBeforeIntervalExpirationReturnsInvalidDataResult()
         {
             // Act
-            ResultTypes updateResult = await _accountService.UpdateAvatarAsync(Array.Empty<byte>());
+            AddResult updateResult =
+                await _accountService.UpdateAvatarAsync(Array.Empty<byte>(), string.Empty);
 
             // Assert
             Assert.AreEqual(ResultTypes.InvalidData, updateResult);

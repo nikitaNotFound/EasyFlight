@@ -37,11 +37,6 @@ namespace BusinessLogicTests.Mocks
             return _accountData.FirstOrDefault(x => x.Email == email);
         }
 
-        public async Task<AccountEntity> GetAccountAsync(AccountEntity account)
-        {
-            return _accountData.FirstOrDefault(x => x.Email == account.Email && x.PasswordHash == account.PasswordHash);
-        }
-
         public async Task<bool> CheckDuplicateAsync(AccountEntity account)
         {
             AccountEntity duplicate = _accountData.FirstOrDefault(x => x.Email == account.Email);
@@ -59,7 +54,7 @@ namespace BusinessLogicTests.Mocks
             // implementation
         }
 
-        public async Task UpdateAvatarAsync(int accountId, byte[] avatarByteArray)
+        public async Task UpdateAvatarAsync(int accountId, byte[] avatarByteArray, string fileExtension)
         {
             // implementation
         }
