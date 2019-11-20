@@ -9,6 +9,7 @@ namespace WebAPI.Settings
 
         public int MaxPageLimit => int.Parse(_configuration[nameof(MaxPageLimit)]);
         public int DefaultPage => int.Parse(_configuration[nameof(DefaultPage)]);
+        public int DefaultPageSize => int.Parse(_configuration[nameof(DefaultPageSize)]);
 
 
         public PaginationSettings(IConfiguration configuration)

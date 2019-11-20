@@ -65,7 +65,12 @@ namespace WebAPI.Controllers
         )
         {
             currentPage ??= _paginationSettings.DefaultPage;
-            pageLimit ??= _paginationSettings.MaxPageLimit;
+            pageLimit ??= _paginationSettings.DefaultPageSize;
+
+            if (pageLimit > _paginationSettings.MaxPageLimit)
+            {
+                return BadRequest();
+            }
 
             BlItemsPage flightsBl;
 

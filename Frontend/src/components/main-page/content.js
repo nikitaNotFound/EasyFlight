@@ -8,7 +8,6 @@ import '../../styles/flight-list.scss';
 import MessageBox from '../common/message-box';
 import { defaultErrorMessage } from '../common/message-box-messages';
 import ItemsPageSwitcher from '../common/items-page-switcher';
-import * as config from '../../config.json';
 
 function Content() {
     const [flights, changeFlights] = useState(null);
@@ -17,7 +16,6 @@ function Content() {
 
     const [totalItemsCount, changeTotalItemsCount] = useState(null);
     const [currentPage, changeCurrentPage] = useState(1);
-    const PAGE_LIMIT = config.DEFAULT_PAGE_LIMIT;
 
     const layoutMode = {
         List: 'list-only',
@@ -47,7 +45,6 @@ function Content() {
 
     async function onFilterApply(searchOptions, newCurrentPage = 1, swapFilter = true) {
         searchOptions.currentPage = newCurrentPage;
-        searchOptions.pageLimit = PAGE_LIMIT;
         changeFilterOptions(searchOptions);
 
         try {

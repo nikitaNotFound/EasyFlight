@@ -4,5 +4,6 @@
     {
         int MaxPageLimit { get; }
         int DefaultPage { get; }
+        int DefaultPageSize { get; }
     }
 }
