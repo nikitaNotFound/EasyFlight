@@ -196,5 +196,11 @@ export async function searchWithParams(filter, nameSearchOnly) {
         }
     );
 
-    return await createRequestResult(response, RequestTypes.ContentExpected);
+    const requestResult = await createRequestResult(response, RequestTypes.ContentExpected);
+
+    if (nameSearchOnly === true) {
+        return requestResult.content;
+    }
+
+    return requestResult;
 }

@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Common;
 using Dapper;
 using DataAccessLayer.Models;
@@ -14,12 +15,14 @@ namespace DataAccessLayer.Repositories.Flights
     {
         private readonly IDalSettings _dalSettings;
         private readonly IBookingSettings _bookingSettings;
+        private readonly IMapper _mapper;
 
 
-        public FlightRepository(IDalSettings dalSettings, IBookingSettings bookingSettings)
+        public FlightRepository(IDalSettings dalSettings, IBookingSettings bookingSettings, IMapper mapper)
         {
             _dalSettings = dalSettings;
             _bookingSettings = bookingSettings;
+            _mapper = mapper;
         }
 
 
@@ -27,7 +30,7 @@ namespace DataAccessLayer.Repositories.Flights
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
-            SqlMapper.GridReader queryResult = await db.QueryMultipleAsync(
+            IEnumerable<PaginationFlightEntity> queryResult = await db.QueryAsync<PaginationFlightEntity>(
                 "GetAllFlights",
                 new
                 {
@@ -36,12 +39,22 @@ namespace DataAccessLayer.Repositories.Flights
                 },
                 commandType: CommandType.StoredProcedure);
 
-            ItemsPageEntity<FlightEntity> flights = new ItemsPageEntity<FlightEntity>(
-                queryResult.Read<FlightEntity>().ToList(),
-                queryResult.Read<int>().First()
-            );
+            if (!queryResult.Any())
+            {
+                return new ItemsPageEntity<FlightEntity>(
+                    new List<FlightEntity>(),
+                    0
+                );
+            }
 
-            return flights;
+            int totalCount = queryResult.First().TotalCount;
+
+            List<FlightEntity> flights = queryResult.Select(_mapper.Map<FlightEntity>).ToList();
+
+            return new ItemsPageEntity<FlightEntity>(
+                flights,
+                totalCount
+            );
         }
 
         public async Task<FlightEntity> GetByIdAsync(int id)
@@ -103,7 +116,7 @@ namespace DataAccessLayer.Repositories.Flights
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
-            SqlMapper.GridReader queryResult = await db.QueryMultipleAsync(
+            IEnumerable<PaginationFlightEntity> queryResult = await db.QueryAsync<PaginationFlightEntity>(
                 "SearchFlights",
                 new
                 {
@@ -122,12 +135,22 @@ namespace DataAccessLayer.Repositories.Flights
                 },
                 commandType: CommandType.StoredProcedure);
 
-            ItemsPageEntity<FlightEntity> flights = new ItemsPageEntity<FlightEntity>(
-                queryResult.Read<FlightEntity>().ToList(),
-                queryResult.Read<int>().First()
-            );
+            if (!queryResult.Any())
+            {
+                return new ItemsPageEntity<FlightEntity>(
+                    new List<FlightEntity>(),
+                    0
+                );
+            }
 
-            return flights;
+            int totalCount = queryResult.First().TotalCount;
+
+            List<FlightEntity> flights = queryResult.Select(_mapper.Map<FlightEntity>).ToList();
+
+            return new ItemsPageEntity<FlightEntity>(
+                flights,
+                totalCount
+            );
         }
 
         public async Task<IReadOnlyCollection<FlightSeatTypeCostEntity>> GetFlightSeatTypesCostAsync(int flightId)

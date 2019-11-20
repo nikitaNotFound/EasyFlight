@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -114,6 +115,11 @@ namespace BusinessLayer.Services.Flights
         public async Task<ItemsPage<Flight>> SearchFlightsAsync(FlightFilter filter)
         {
             FlightFilterEntity filterDal = _mapper.Map<FlightFilterEntity>(filter);
+
+            if (filter.SearchFlightsBack)
+            {
+                filterDal.PageLimit = (int) Math.Floor(Convert.ToDecimal(filter.PageLimit / 2));
+            }
 
             ItemsPageEntity<FlightEntity> flightsDal =
                 await _flightRepository.SearchFlightsAsync(filterDal);

@@ -17,9 +17,10 @@ export default function FlightList() {
     const [currentPage, changeCurrentPage] = useState(1);
     const PAGE_LIMIT = 2;
 
-    async function onFilterApply(newFilterOptions, newCurrentPage = currentPage) {
+    async function onFilterApply(newFilterOptions, newCurrentPage = 1) {
+        console.log(newFilterOptions);
         newFilterOptions.currentPage = newCurrentPage;
-        newFilterOptions = PAGE_LIMIT;
+        newFilterOptions.pageLimit = PAGE_LIMIT;
         changeFilterOptions(newFilterOptions);
 
         try {

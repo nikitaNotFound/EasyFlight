@@ -1,4 +1,4 @@
-﻿namespace WebAPI.Settings
+﻿namespace Common
 {
     public interface IPaginationSettings
     {

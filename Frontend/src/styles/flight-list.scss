@@ -18,11 +18,20 @@
   display: none;
 }
 
+.list-only .items-page-switcher {
+  width: 100%;
+}
+
 .list-only .list {
   width: 100%;
 }
 
 .filter-only .list {
+  width: 0%;
+  display: none;
+}
+
+.filter-only .items-page-switcher {
   width: 0%;
   display: none;
 }
