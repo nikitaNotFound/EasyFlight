@@ -68,7 +68,7 @@ Here you need to define origins of trusted client' applications that can use ser
 
 + ### Jwt settings ###
 `Secret` | define your own secret key for creating jwt tokens.  
-`ExpirationTime` | time before jwt token becomes non-valid  
+`ExpirationTime` | time after jwt token becomes non-valid  
 `Issuer` | address of your server
 
 + ### Booking settings ###
@@ -76,8 +76,8 @@ Here you need to define origins of trusted client' applications that can use ser
 `TimeUntilBookingAvailable` | the time until user can book a flight' seat
 
 + ### Account updating settings ###
-`NameUpdatingInterval` | the time before user can update it' name again  
-`AvatarUpdatingInterval` | the time before user can update it' avatar again  
+`NameUpdatingInterval` | the time after user can update it' name again  
+`AvatarUpdatingInterval` | the time after user can update it' avatar again  
 
 + ### Files uploading settings ###
 `StoragePath` | path on yout local machine where files will be storing  
@@ -92,8 +92,8 @@ Here you need to define origins of trusted client' applications that can use ser
 `DefaultPageSize` | default page size that uses if user don't define it in request
 
 + ### Profile caching settings ###
-`CachingTime` | the time user info caching for  
-`PhotoKey` | the key application uses to save and load path to user' image
+`CachingTime` | the time of user info caching  
+`PhotoKey` | the key application uses to save and load path to user' image  
 `FlightHistoryKey` | the key application uses to save and load user' flight history  
 
 + ### Serilog ###
