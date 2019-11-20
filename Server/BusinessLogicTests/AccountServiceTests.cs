@@ -1,5 +1,7 @@
+using System;
 using System.Threading.Tasks;
 using AutoMapper;
+using BusinessLayer;
 using BusinessLayer.Models;
 using BusinessLayer.Services.Accounts;
 using BusinessLogicTests.Mocks;
@@ -21,12 +23,18 @@ namespace BusinessLogicTests
             {
                 config.CreateMap<Account, AccountEntity>();
                 config.CreateMap<AccountEntity, Account>();
+                config.CreateMap<AccountUpdatesEntity, AccountUpdates>();
             });
             mappingConfig.CompileMappings();
 
             IMapper mapper = mappingConfig.CreateMapper();
 
-            _accountService = new AccountService(mapper, new AccountRepositoryMock());
+            _accountService = new AccountService(
+                mapper,
+                new AccountRepositoryMock(),
+                new UserInfoMock(1),
+                new AccountUpdatingSettingsMock()
+            );
         }
 
 
@@ -80,6 +88,27 @@ namespace BusinessLogicTests
 
             // Assert
             Assert.AreEqual(registerAccount.Email, registeredAccount.Email);
+        }
+
+        [TestMethod]
+        public async Task UpdatingNameBeforeIntervalExpirationReturnsInvalidDataResult()
+        {
+            // Act
+            ResultTypes updateResult = await _accountService.UpdateNameAsync("Big", "Bob");
+
+            // Assert
+            Assert.AreEqual(ResultTypes.InvalidData, updateResult);
+        }
+
+        [TestMethod]
+        public async Task UpdatingAvatarBeforeIntervalExpirationReturnsInvalidDataResult()
+        {
+            // Act
+            AddResult updateResult =
+                await _accountService.UpdateAvatarAsync(Array.Empty<byte>(), string.Empty);
+
+            // Assert
+            Assert.AreEqual(ResultTypes.InvalidData, updateResult);
         }
     }
 }

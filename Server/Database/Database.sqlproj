@@ -126,6 +126,7 @@
   <ItemGroup>
     <Content Include="dbo\Stored Procedures\CheckFlightSeatTypeCostDuplicate.sql" />
     <Content Include="dbo\Stored Procedures\CreateAccount.sql" />
+    <Content Include="dbo\Stored Procedures\GetAccountUpdates.sql" />
     <Content Include="dbo\Stored Procedures\GetAirplaneSeatTypeById.sql" />
     <Content Include="dbo\Stored Procedures\GetBookStatus.sql" />
     <Content Include="dbo\Stored Procedures\GetCityAirports.sql" />
@@ -133,6 +134,9 @@
     <Content Include="dbo\Stored Procedures\SearchAirplanes.sql" />
     <Content Include="dbo\Stored Procedures\SearchAirportsByName.sql" />
     <Content Include="dbo\Stored Procedures\SearchCityAirportsByName.sql" />
+    <Content Include="dbo\Stored Procedures\UpdateAccountAvatar.sql" />
+    <Content Include="dbo\Stored Procedures\UpdateAccountName.sql" />
+    <Content Include="dbo\Tables\AccountUpdates.sql" />
     <Content Include="dbo\Tables\Airports.sql" />
     <Content Include="dbo\Tables\Cities.sql" />
     <Content Include="dbo\Tables\FlightSeatTypesCost.sql" />

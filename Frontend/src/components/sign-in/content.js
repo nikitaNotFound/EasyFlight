@@ -2,17 +2,17 @@ import React, { useState } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 
 import MessageBox from '../common/message-box';
+import GoogleLogin from 'react-google-login';
 
 import * as UserService from '../../services/UserSerivce';
-
-import googleIcon from '../../icons/google-icon.png';
-import facebookIcon from '../../icons/facebook-icon.png';
 
 import '../../styles/registration.css';
 import { BadRequestError } from '../../services/RequestErrors';
 import { invalidInput, defaultErrorMessage, badLoginData } from '../common/message-box-messages';
 
 import { changeUserInfo } from '../../store/actions/UserInfoActions';
+
+import * as config from '../../config.json';
 
 function Content(props) {
     const [email, changeEmail] = useState(null);
@@ -28,6 +28,20 @@ function Content(props) {
 
         try {
             const userInfo = await UserService.login({email: email, password: password});
+            changeUserInfo(userInfo);
+            props.history.push('/');
+        } catch (ex) {
+            if (ex instanceof BadRequestError) {
+                changeMessageBoxValue(badLoginData());
+            } else {
+                changeMessageBoxValue(defaultErrorMessage());
+            }
+        }
+    }
+
+    async function onGoogleSuccess(info) {
+        try {
+            const userInfo = await UserService.loginWithGoogle(info.tokenId);
             changeUserInfo(userInfo);
             props.history.push('/');
         } catch (ex) {
@@ -57,25 +71,26 @@ function Content(props) {
                 <input
                     className="form-control"
                     placeholder="Email"
+                    value={email}
                     onChange={(event) => changeEmail(event.target.value)}
                 />
                 <input
                     className="form-control"
                     placeholder="Password"
                     type="password"
+                    value={password}
                     onChange={(event) => changePassword(event.target.value)}
                 />
                 <button className="btn btn-primary button-dark main-button" onClick={onLogin}>
                     Sign in
                 </button>
 
-                <div className="input-group-btn">
-                    <button className="btn btn-primary button-dark sec-button">
-                        <img src={googleIcon} className="login-item-img" alt="google-icon"/>
-                    </button>
-                    <button className="btn btn-primary button-dark sec-button">
-                        <img src={facebookIcon} className="login-item-img" alt="facebook-icon"/>
-                    </button>
+                <div className="social-networks">
+                    <GoogleLogin
+                        clientId={config.GOOGLE_CLIENT_ID}
+                        onSuccess={onGoogleSuccess}
+                        onFailure={() => changeMessageBoxValue(defaultErrorMessage())}
+                    />
                 </div>
                 
                 <div className="sign-up-option">

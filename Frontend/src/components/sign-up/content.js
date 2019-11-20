@@ -2,19 +2,19 @@ import React, {useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import MessageBox from '../common/message-box';
+import GoogleLogin from 'react-google-login';
 
 import * as UserService from '../../services/UserSerivce';
 
 import User from '../../services/user-models/user';
-
-import googleIcon from '../../icons/google-icon.png';
-import facebookIcon from '../../icons/facebook-icon.png';
 
 import '../../styles/registration.css';
 import { BadRequestError } from '../../services/RequestErrors';
 import { invalidInput, defaultErrorMessage, duplicate } from '../common/message-box-messages';
 
 import { changeUserInfo } from '../../store/actions/UserInfoActions';
+
+import * as config from '../../config.json';
 
 function Content(props) {
     const [name, changeName] = useState();
@@ -53,6 +53,20 @@ function Content(props) {
         } catch (ex) {
             if (ex instanceof BadRequestError) {
                 changeMessageBoxValue(duplicate(email));
+            } else {
+                changeMessageBoxValue(defaultErrorMessage());
+            }
+        }
+    }
+
+    async function onGoogleSuccess(info) {
+        try {
+            const userInfo = await UserService.registerWithGoogle(info.tokenId);
+            changeUserInfo(userInfo);
+            props.history.push('/');
+        } catch (ex) {
+            if (ex instanceof BadRequestError) {
+                changeMessageBoxValue(duplicate("Account"));
             } else {
                 changeMessageBoxValue(defaultErrorMessage());
             }
@@ -104,13 +118,13 @@ function Content(props) {
                 />
                 <button onClick={onRegister} className="btn btn-primary button-dark main-button">Sign up</button>
 
-                <div className="input-group-btn">
-                    <button className="btn btn-primary button-dark sec-button">
-                        <img src={googleIcon} className="login-item-img" alt="google-icon"/>
-                    </button>
-                    <button className="btn btn-primary button-dark sec-button">
-                        <img src={facebookIcon} className="login-item-img" alt="facebook-icon"/>
-                    </button>
+                <div className="social-networks">
+                    <GoogleLogin
+                        clientId={config.GOOGLE_CLIENT_ID}
+                        onSuccess={onGoogleSuccess}
+                        onFailure={() => changeMessageBoxValue(defaultErrorMessage())}
+                        buttonText="Sign up with Google"
+                    />
                 </div>
             </div>
         </main>

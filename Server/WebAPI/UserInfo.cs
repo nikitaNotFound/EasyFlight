@@ -11,7 +11,15 @@ namespace WebAPI
     {
         private readonly IEnumerable<Claim> _claims;
 
-        public int AccountId => int.Parse(_claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value);
+        public int AccountId
+        {
+            get
+            {
+                string nameIdentifier = _claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value;
+
+                return int.Parse(nameIdentifier);
+            }
+        }
 
 
         public UserInfo(IHttpContextAccessor httpContextAccessor)

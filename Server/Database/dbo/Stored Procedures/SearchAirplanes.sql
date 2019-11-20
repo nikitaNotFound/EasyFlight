@@ -5,7 +5,7 @@
     @minSeatCount as int = null,
     @maxSeatCount as int = null
 as
-    select *
+    select A1.*
     from Airplanes A1
         cross apply (
             select COUNT(Seats.Id) as SeatCount

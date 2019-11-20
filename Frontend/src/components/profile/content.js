@@ -5,25 +5,42 @@ import AddImage from '../../icons/add-image.png';
 import '../../styles/profile.css';
 
 import * as FlightService from '../../services/FlightService';
+import * as UserService from '../../services/UserSerivce';
 
 import Spinner from '../common/spinner';
 import Flights from './flights';
 import MessageBox from '../common/message-box';
-import { defaultErrorMessage } from '../common/message-box-messages';
+import { defaultErrorMessage, tooMuchUpdates, saved } from '../common/message-box-messages';
 
 import ComponentHeadline from '../common/component-headline';
 
 import { connect } from 'react-redux';
+import { BadRequestError } from '../../services/RequestErrors';
+
+import { changeUserInfo } from '../../store/actions/UserInfoActions';
 
 function Content(props) {
     const [isLoading, changeLoadingMode] = useState(true);
     const [accountFlights, changeAccountFlights] = useState([]);
     const [messageBoxValue, changeMessageBoxValue] = useState();
 
+    const [firstName, changeFirstName] = useState(props.firstName);
+    const [secondName, changeSecondName] = useState(props.secondName);
+
+    const [avatar, changeAvatar] = useState();
+
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const userFlights = await FlightService.getAccountFlights();
+
+                const accountAvatar = await UserService.getAvatar();
+
+                if (!accountAvatar.image) {
+                    changeAvatar(AddImage);
+                } else {
+                    changeAvatar(accountAvatar.image);
+                }
 
                 changeAccountFlights(userFlights);
                 changeLoadingMode(false);
@@ -33,6 +50,47 @@ function Content(props) {
         }
         fetchData();
     }, []);
+
+    async function onNameSave() {
+        try {
+            await UserService.updateName(firstName, secondName);
+            changeUserInfo(
+                {
+                    firstName: firstName,
+                    secondName: secondName,
+                    email: props.email,
+                    password: props.password,
+                    role: props.role
+                }
+            )
+            changeMessageBoxValue(saved());
+        } catch (ex) {
+            if (ex instanceof BadRequestError) {
+                changeMessageBoxValue(tooMuchUpdates());
+            } else {
+                changeMessageBoxValue(defaultErrorMessage());
+            }
+        }
+    }
+
+    async function onAvatarUpdate(event) {
+        try {
+            let avatar = new FormData();
+            avatar.append('file', event.target.files[0]);
+
+            const imageResult = await UserService.updateAvatar(avatar);
+
+            changeAvatar(imageResult.image);
+
+            changeMessageBoxValue(saved());
+        } catch (ex) {
+            if (ex instanceof BadRequestError) {
+                changeMessageBoxValue(tooMuchUpdates());
+            } else {
+                changeMessageBoxValue(defaultErrorMessage());
+            }
+        }
+    }
 
     function showMessageBoxValue() {
         if (messageBoxValue) {
@@ -62,13 +120,28 @@ function Content(props) {
                     <div className="col-2">
                         <div className="user-photo">
                             <label htmlFor="photo">
-                                <img src={AddImage} alt="add user avatar" />
+                                <img src={avatar} alt="add user avatar" onError={() => changeAvatar(AddImage)}/>
                             </label>
-                            <input type="file" id="photo" />
+                            <input type="file" onChange={onAvatarUpdate} id="photo" accept=".png,.jpg,.jpeg"/>
                         </div>
                     </div>
                     <div className="col-10">
-                        <input type="text" className="name-input" value={props.firstName}/>
+                        <input
+                            type="text"
+                            className="name-input"
+                            value={firstName}
+                            onChange={(event) => changeFirstName(event.target.value)}
+                        />
+                        <input
+                            type="text"
+                            className="name-input"
+                            value={secondName}
+                            onChange={(event) => changeSecondName(event.target.value)}
+                        />
+
+                        <button className="update-name-btn" onClick={onNameSave}>
+                            <div className="text">Save</div>
+                        </button>
                     </div>
                 </div>
             </div>

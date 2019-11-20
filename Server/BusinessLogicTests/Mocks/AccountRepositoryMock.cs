@@ -22,14 +22,19 @@ namespace BusinessLogicTests.Mocks
             }
         };
 
+        private readonly List<AccountUpdatesEntity> _accountUpdates = new List<AccountUpdatesEntity>()
+        {
+            new AccountUpdatesEntity()
+            {
+                AccountId = 1,
+                LastAvatarUpdateTime = DateTimeOffset.Now,
+                LastNameUpdateTime = DateTimeOffset.Now
+            }
+        };
+
         public async Task<AccountEntity> GetByEmailAsync(string email)
         {
             return _accountData.FirstOrDefault(x => x.Email == email);
-        }
-
-        public async Task<AccountEntity> GetAccountAsync(AccountEntity account)
-        {
-            return _accountData.FirstOrDefault(x => x.Email == account.Email && x.PasswordHash == account.PasswordHash);
         }
 
         public async Task<bool> CheckDuplicateAsync(AccountEntity account)
@@ -42,6 +47,26 @@ namespace BusinessLogicTests.Mocks
         public async Task<AccountEntity> CreateAccountAsync(AccountEntity account)
         {
             return account;
+        }
+
+        public async Task UpdateNameAsync(int accountId, string firstName, string secondName)
+        {
+            // implementation
+        }
+
+        public async Task UpdateAvatarAsync(int accountId, byte[] avatarByteArray, string fileExtension)
+        {
+            // implementation
+        }
+
+        public async Task<AccountUpdatesEntity> GetAccountUpdatesAsync(int accountId)
+        {
+            return _accountUpdates.FirstOrDefault(x => x.AccountId == accountId);
+        }
+
+        public async Task<string> GetAvatarAsync(int accountId)
+        {
+            return "";
         }
     }
 }

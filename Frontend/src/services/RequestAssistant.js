@@ -28,9 +28,20 @@ export const RequestTypes = {
     NoContentExpected: 1
 }
 
-export const headers = () => {
+export const headers = (headersType = HeadersTypes.All) => {
+    if (headersType === HeadersTypes.AuthOnly) {
+        return {
+            'Authorization': `Bearer ${AuthTokenProvider.getToken()}`
+        }
+    }
+
     return {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${AuthTokenProvider.getToken()}`
     }
+}
+
+export const HeadersTypes = {
+    AuthOnly: 0,
+    All: 1
 }

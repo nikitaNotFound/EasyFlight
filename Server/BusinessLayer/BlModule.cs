@@ -16,10 +16,10 @@ namespace BusinessLayer
             services.AddSingleton<ICityService, CityService>();
             services.AddSingleton<ICountryService, CountryService>();
             services.AddSingleton<IAirportService, AirportService>();
-            services.AddSingleton<IAccountService, AccountService>();
+            services.AddTransient<IAccountService, AccountService>();
             services.AddSingleton<IAirplaneService, AirplaneService>();
             services.AddSingleton<IFlightService, FlightService>();
-            services.AddSingleton<IBookingService, BookingService>();
+            services.AddTransient<IBookingService, BookingService>();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System.IO;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -10,6 +11,8 @@ using Microsoft.Extensions.Logging;
 using WebAPI.Services;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.Extensions.FileProviders;
 
 namespace WebAPI
 {
@@ -29,15 +32,19 @@ namespace WebAPI
             services.AddSingleton<IDalSettings, DalSettings>();
             services.AddSingleton<IBookingSettings, BookingSettings>();
             services.AddTransient<IUserInfo, UserInfo>();
+            services.AddSingleton<IAccountUpdatingSettings, AccountUpdatingSettings>();
 
-            CorsSettings settings = new CorsSettings(Configuration);
+            FilesUploadingSettings filesUploadingSettings = new FilesUploadingSettings(Configuration);
+            services.AddSingleton<IFilesUploadingSettings, FilesUploadingSettings>();
+
+            CorsSettings corsSettings = new CorsSettings(Configuration);
 
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
                     builder =>
                     {
-                        builder.WithOrigins(settings.AllowedOrigins)
+                        builder.WithOrigins(corsSettings.AllowedOrigins)
                             .AllowAnyHeader()
                             .AllowAnyMethod();
                     });
@@ -88,14 +95,20 @@ namespace WebAPI
                     ValidateIssuer = true,
                     ValidIssuer = jwtSettings.Issuer,
                     ValidateAudience = true,
-                    ValidAudiences = settings.AllowedOrigins
+                    ValidAudiences = corsSettings.AllowedOrigins
                 };
             });
 
             services.AddHttpContextAccessor();
+
+            services.Configure<FormOptions>(options =>
+            {
+                // converting to bytes
+                options.MultipartBodyLengthLimit = filesUploadingSettings.MaxMbSize * 1024 * 1024;
+            });
         }
 
-        public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IFilesUploadingSettings filesUploadingSettings)
         {
             app.UseExceptionLogger();
 
@@ -110,6 +123,12 @@ namespace WebAPI
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(filesUploadingSettings.StoragePath),
+                RequestPath = "/" + filesUploadingSettings.StaticFilesCatalogName
             });
         }
     }

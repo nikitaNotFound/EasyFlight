@@ -1,4 +1,5 @@
 ﻿using System;
+using DataAccessLayer;
 using Microsoft.Extensions.Configuration;
 
 namespace DataAccessLayer
