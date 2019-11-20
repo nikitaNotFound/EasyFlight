@@ -13,6 +13,8 @@ using WebAPI.Models;
 using WebAPI.Services.JWT;
 using AccountBl = BusinessLayer.Models.Account;
 using Google.Apis.Auth;
+using Microsoft.Extensions.Caching.Memory;
+using WebAPI.Settings;
 
 namespace WebAPI.Controllers
 {
@@ -25,19 +27,28 @@ namespace WebAPI.Controllers
         private readonly IMapper _mapper;
         private readonly IJwtService _jwtService;
         private readonly IFilesUploadingSettings _filesUploadingSettings;
+        private readonly IMemoryCache _memoryCache;
+        private readonly IProfileCachingSettings _profileCachingSettings;
+        private readonly IUserInfo _userInfo;
 
 
         public AccountsController(
             IAccountService accountService,
             IMapper mapper,
             IJwtService jwtService,
-            IFilesUploadingSettings filesUploadingSettings
+            IFilesUploadingSettings filesUploadingSettings,
+            IMemoryCache memoryCache,
+            IProfileCachingSettings profileCachingSettings,
+            IUserInfo userInfo
         )
         {
             _accountService = accountService;
             _mapper = mapper;
             _jwtService = jwtService;
             _filesUploadingSettings = filesUploadingSettings;
+            _memoryCache = memoryCache;
+            _profileCachingSettings = profileCachingSettings;
+            _userInfo = userInfo;
         }
 
 
@@ -260,6 +271,15 @@ namespace WebAPI.Controllers
                 updateResult.ItemId + fileExtension
             );
 
+            _memoryCache.Set(
+                _profileCachingSettings.PhotoKey + _userInfo.AccountId,
+                imagePath,
+                new MemoryCacheEntryOptions()
+                {
+                    AbsoluteExpirationRelativeToNow = _profileCachingSettings.CachingTime
+                }
+            );
+
             return Ok(new { Image = imagePath });
         }
 
@@ -269,13 +289,27 @@ namespace WebAPI.Controllers
         [Route("my/avatar")]
         public async Task<IActionResult> GetAvatarAsync()
         {
-            string imageName = await _accountService.GetAvatarAsync();
+            string imagePath = string.Empty;
 
-            string imagePath = Path.Combine(
-                _filesUploadingSettings.StaticFilesHost,
-                _filesUploadingSettings.StaticFilesCatalogName,
-                imageName
-            );
+            if (!_memoryCache.TryGetValue(_profileCachingSettings.PhotoKey + _userInfo.AccountId, out imagePath))
+            {
+                string imageName = await _accountService.GetAvatarAsync();
+
+                imagePath = Path.Combine(
+                    _filesUploadingSettings.StaticFilesHost,
+                    _filesUploadingSettings.StaticFilesCatalogName,
+                    imageName
+                );
+
+                _memoryCache.Set(
+                    _profileCachingSettings.PhotoKey + _userInfo.AccountId,
+                    imagePath,
+                    new MemoryCacheEntryOptions()
+                    {
+                        AbsoluteExpirationRelativeToNow = _profileCachingSettings.CachingTime
+                    }
+                );
+            }
 
             return Ok(new { Image = imagePath });
         }
