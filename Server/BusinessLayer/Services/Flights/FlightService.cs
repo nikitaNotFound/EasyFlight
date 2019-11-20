@@ -134,6 +134,9 @@ namespace BusinessLayer.Services.Flights
                 filterDal.FromAirportId = filterDal.ToAirportId;
                 filterDal.ToAirportId = fromAirportIdBuff;
 
+                filterDal.DepartureDate = filter.DepartureBackDate;
+                filterDal.ArrivalDate = filter.ArrivalBackDate;
+
                 ItemsPageEntity<FlightEntity> flightsBackDal =
                     await _flightRepository.SearchFlightsAsync(filterDal);
 
