@@ -12,6 +12,8 @@ namespace WebAPI.Models
         public DateTime? ArrivalDate { get; set; }
         public int? TicketCount { get; set; }
         public bool SearchFlightsBack { get; set; }
+        public DateTime? DepartureBackDate { get; set; }
+        public DateTime? ArrivalBackDate { get; set; }
         public int CurrentPage { get; set; }
         public int PageLimit { get; set; }
 
@@ -25,6 +27,8 @@ namespace WebAPI.Models
             DateTime? arrivalDate,
             int? ticketCount,
             bool searchFlightsBack,
+            DateTime? departureBackDate,
+            DateTime? arrivalBackDate,
             int currentPage,
             int pageLimit
         )
@@ -37,6 +41,8 @@ namespace WebAPI.Models
             ArrivalDate = arrivalDate;
             TicketCount = ticketCount;
             SearchFlightsBack = searchFlightsBack;
+            DepartureBackDate = departureBackDate;
+            ArrivalBackDate = arrivalBackDate;
             CurrentPage = currentPage;
             PageLimit = pageLimit;
         }

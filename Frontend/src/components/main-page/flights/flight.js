@@ -96,7 +96,7 @@ function Flight(props) {
                 </div>
             </div>
             <div className="col-sm-2" name="item-buy">
-                <Link to={`/booking/${props.flight.id}`} className="non-dec-link">
+                <Link to={`/booking/${props.flight.id}`} target="_blank" className="non-dec-link">
                     <div className="btn btn-primary button-buy">
                         <img src={buyIcon} alt="icon-book"/>
                         Book

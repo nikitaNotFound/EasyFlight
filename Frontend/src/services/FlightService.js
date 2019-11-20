@@ -99,7 +99,9 @@ export async function searchWithParams(filter, searchByName) {
             ticketCount,
             searchBack,
             currentPage,
-            pageLimit
+            pageLimit,
+            departureBackDate,
+            arrivalBackDate
         } = filter;
     }
 
@@ -151,7 +153,15 @@ export async function searchWithParams(filter, searchByName) {
     }
 
     if (searchBack === true) {
-        parameteres += `searchBack=${searchBack}`;
+        parameteres += `searchBack=${searchBack}&`;
+
+        if (departureBackDate) {
+            parameteres += `departureBackDate=${departureBackDate}&`;
+        }
+
+        if (arrivalBackDate) {
+            parameteres += `arrivalBackDate=${arrivalBackDate}&`;
+        }
     }
 
     const response = await fetch(

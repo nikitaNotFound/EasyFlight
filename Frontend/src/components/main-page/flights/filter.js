@@ -15,8 +15,11 @@ function Filter(props) {
     const [fromAirport, changeFromAirport] = useState(props.filterOptions.fromAirport);
     const [toAirport, changeToAirport] = useState(props.filterOptions.toAirport);
 
-    const [departureDate, changeDepartureDate] = useState(props.filterOptions.departureTime);
-    const [arrivalDate, changeArrivalDate] = useState(props.filterOptions.departureBackTime);
+    const [departureDate, changeDepartureDate] = useState(props.filterOptions.departureDate);
+    const [arrivalDate, changeArrivalDate] = useState(props.filterOptions.arrivalDate);
+
+    const [departureBackDate, changeDepartureBackDate] = useState(props.filterOptions.departureBackDate);
+    const [arrivalBackDate, changeArrivalBackDate] = useState(props.filterOptions.arrivalBackDate);
 
     const [ticketCount, changeTicketsCount] = useState(props.filterOptions.ticketCount);
     const [searchToAndBack, changeSearchToAndBack] = useState(props.filterOptions.searchToAndBack);
@@ -44,7 +47,9 @@ function Filter(props) {
             departureDate,
             arrivalDate,
             ticketCount,
-            searchToAndBack
+            searchToAndBack,
+            departureBackDate,
+            arrivalBackDate
         );
 
         props.onFilterApplied(newOptions);
@@ -74,6 +79,41 @@ function Filter(props) {
                     hideFunc={changeMessageBoxValue}
                     message={messageBoxValue}
                 />
+            );
+        }
+    }
+
+    function showBackFlightsTimeOptions() {
+        if (searchToAndBack === true) {
+            return (
+                <div className="row filter-item">
+                    <div className="filter-col">
+                        <label htmlFor="departure">
+                            Departure back
+                        </label>
+                        <input
+                            className="filter-control"
+                            type="date"
+                            id="departure"
+                            placeholder="Date"
+                            value={departureBackDate}
+                            onChange={(event) => changeDepartureBackDate(event.target.value)}
+                        />
+                    </div>
+                    <div className="filter-col">
+                        <label htmlFor="arrival">
+                            Arrival back
+                        </label>
+                        <input
+                            className="filter-control"
+                            id="arrival"
+                            type="date"
+                            placeholder="Date"
+                            value={arrivalBackDate}
+                            onChange={(event) => changeArrivalBackDate(event.target.value)}
+                        />
+                    </div>
+                </div>
             );
         }
     }
@@ -171,6 +211,8 @@ function Filter(props) {
                     />
                     Search flights to place and back
                 </div>
+
+                {showBackFlightsTimeOptions()}
 
                 <div className="row filter-item">
                     <button className="btn btn-primary button-filter" onClick={onFilterApplied}>

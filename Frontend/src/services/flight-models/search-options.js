@@ -9,8 +9,10 @@ export default class SearchOptions {
     searchBack;
     currentPage;
     pageLimit;
+    departureBackDate;
+    arrivalBackDate;
 
-    constructor(fromAirportId, toAirportId, fromCityId, toCityId, departureDate, arrivalDate, ticketCount, searchBack, currentPage = null, pageLimit = null) {
+    constructor(fromAirportId, toAirportId, fromCityId, toCityId, departureDate, arrivalDate, ticketCount, searchBack, departureBackDate, arrivalBackDate, currentPage = null, pageLimit = null) {
         this.fromAirportId = fromAirportId;
         this.toAirportId = toAirportId;
         this.fromCityId = fromCityId;
@@ -19,6 +21,8 @@ export default class SearchOptions {
         this.arrivalDate = arrivalDate;
         this.searchBack = searchBack;
         this.ticketCount = ticketCount;
+        this.departureBackDate =departureBackDate;
+        this.arrivalBackDate = arrivalBackDate;
         this.currentPage = currentPage;
         this.pageLimit = pageLimit;
     }

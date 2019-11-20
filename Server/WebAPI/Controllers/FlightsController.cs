@@ -71,7 +71,9 @@ namespace WebAPI.Controllers
             int? ticketCount,
             bool searchBack,
             int? currentPage,
-            int? pageLimit
+            int? pageLimit,
+            DateTime? departureBackDate,
+            DateTime? arrivalBackDate
         )
         {
             currentPage ??= _paginationSettings.DefaultPage;
@@ -102,6 +104,8 @@ namespace WebAPI.Controllers
                     arrivalTime,
                     ticketCount,
                     searchBack,
+                    departureBackDate,
+                    arrivalBackDate,
                     currentPage.Value,
                     pageLimit.Value
                 );
