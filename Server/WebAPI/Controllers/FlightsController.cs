@@ -43,7 +43,8 @@ namespace WebAPI.Controllers
             IMapper mapper,
             IPaginationSettings paginationSettings,
             IMemoryCache memoryCache,
-            IProfileCachingSettings profileCachingSettings
+            IProfileCachingSettings profileCachingSettings,
+            IUserInfo userInfo
         )
         {
             _flightService = flightService;
@@ -52,6 +53,7 @@ namespace WebAPI.Controllers
             _paginationSettings = paginationSettings;
             _memoryCache = memoryCache;
             _profileCachingSettings = profileCachingSettings;
+            _userInfo = userInfo;
         }
 
 
@@ -361,7 +363,8 @@ namespace WebAPI.Controllers
 
             if (infoInCache)
             {
-                IReadOnlyCollection<BlFlightBookInfo> accountFlightsBl = await _bookingService.GetAccountFlightsInfoAsync();
+                IReadOnlyCollection<BlFlightBookInfo> accountFlightsBl =
+                    await _bookingService.GetAccountFlightsInfoAsync();
 
                 accountFlights = accountFlightsBl.Select(_mapper.Map<FlightBookInfo>).ToList();
 
