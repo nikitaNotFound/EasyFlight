@@ -43,7 +43,7 @@ namespace WebAPI.Controllers
         }
 
 
-        // POST api/accounts/login/google{?authToken}
+        // POST api/accounts/login/google{?tokenId}
         [HttpPost]
         [AllowAnonymous]
         [Route("login/google")]
@@ -57,9 +57,7 @@ namespace WebAPI.Controllers
             GoogleJsonWebSignature.Payload payload;
             try
             {
-                payload = await GoogleJsonWebSignature.ValidateAsync(
-                    tokenId
-                );
+                payload = await GoogleJsonWebSignature.ValidateAsync(tokenId);
             }
             catch
             {
@@ -94,6 +92,7 @@ namespace WebAPI.Controllers
             return Ok(accountResponse);
         }
 
+        // POST api/accounts/register/google{?tokenId}
         [HttpPost]
         [AllowAnonymous]
         [Route("register/google")]
@@ -107,9 +106,7 @@ namespace WebAPI.Controllers
             GoogleJsonWebSignature.Payload payload;
             try
             {
-                payload = await GoogleJsonWebSignature.ValidateAsync(
-                    tokenId
-                );
+                payload = await GoogleJsonWebSignature.ValidateAsync(tokenId);
             }
             catch
             {
@@ -147,6 +144,7 @@ namespace WebAPI.Controllers
             return Ok(accountResponse);
         }
 
+        // POST api/accounts/login
         [HttpPost]
         [AllowAnonymous]
         [Route("login")]
@@ -178,6 +176,7 @@ namespace WebAPI.Controllers
             return Ok(accountResponse);
         }
 
+        // POST api/accounts/register
         [HttpPost]
         [AllowAnonymous]
         [Route("register")]

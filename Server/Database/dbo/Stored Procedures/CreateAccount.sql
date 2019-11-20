@@ -20,5 +20,4 @@ as
     select *
     from Accounts
     where Id = SCOPE_IDENTITY();
-go
 

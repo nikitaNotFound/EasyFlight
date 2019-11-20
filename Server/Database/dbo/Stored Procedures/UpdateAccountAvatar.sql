@@ -10,8 +10,8 @@ as
     on (target.AccountId = source.AccountId)
     when matched then
         update set
-                   target.LastAvatarUpdateTime = source.LastAvatarUpdateTime,
-                   target.LastNameUpdateTime = source.LastNameUpdateTime
+            target.LastAvatarUpdateTime = source.LastAvatarUpdateTime,
+            target.LastNameUpdateTime = source.LastNameUpdateTime
     when not matched then
         insert
         (

@@ -4,3 +4,4 @@ as
     select *
     from AccountUpdates
     where AccountId = @accountId
+

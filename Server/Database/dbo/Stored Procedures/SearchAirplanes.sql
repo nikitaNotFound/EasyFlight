@@ -5,7 +5,7 @@
     @minSeatCount as int = null,
     @maxSeatCount as int = null
 as
-    select row_number() over(order by Id) as row, A1.*
+    select A1.*
     from Airplanes A1
         cross apply (
             select COUNT(Seats.Id) as SeatCount
