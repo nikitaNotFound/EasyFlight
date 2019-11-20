@@ -5,16 +5,18 @@ import ArrowIcon from '../../icons/arrow-icon.png';
 
 import '../../styles/items-page-switcher.css';
 
-function canShowNext(props) {
-    if ((props.currentPage + 1) * props.pageLimit >= props.totalItemsCount + props.pageLimit) {
+import * as config from '../../config.json';
+
+function canShowNext({currentPage, pageLimit = config.DEFAULT_PAGE_LIMIT, totalItemsCount}) {
+    if ((currentPage + 1) * pageLimit >= totalItemsCount + pageLimit) {
         return false;
     }
 
     return true;
 }
 
-function canShowPervious(props) {
-    if ((props.currentPage - 1) === 0) {
+function canShowPervious({currentPage}) {
+    if ((currentPage - 1) === 0) {
         return false;
     }
 
