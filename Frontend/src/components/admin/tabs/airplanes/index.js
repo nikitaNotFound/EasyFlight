@@ -17,12 +17,10 @@ export default function AirplaneList() {
     const [messageBoxValue, changeMessageBoxValue] = useState();
 
     const [currentPage, changeCurrentPage] = useState(1);
-    const PAGE_LIMIT = 2;
     const [totalItemsCount, changeTotalItemsCount] = useState(null);
 
     async function onFilterApply(newFilterOptions, newCurrentPage = currentPage) {
         newFilterOptions.currentPage = newCurrentPage;
-        newFilterOptions.pageLimit = PAGE_LIMIT;
         changeFilterOptions(newFilterOptions);
 
         try {
@@ -63,7 +61,6 @@ export default function AirplaneList() {
                     currentPage={currentPage}
                     onNext={onNext}
                     onPervious={onPervious}
-                    pageLimit={PAGE_LIMIT}
                     totalItemsCount={totalItemsCount}
                 />
             );

@@ -15,12 +15,10 @@ export default function FlightList() {
 
     const [totalItemsCount, changeTotalItemsCount] = useState(null);
     const [currentPage, changeCurrentPage] = useState(1);
-    const PAGE_LIMIT = 2;
 
     async function onFilterApply(newFilterOptions, newCurrentPage = 1) {
         console.log(newFilterOptions);
         newFilterOptions.currentPage = newCurrentPage;
-        newFilterOptions.pageLimit = PAGE_LIMIT;
         changeFilterOptions(newFilterOptions);
 
         try {
@@ -61,7 +59,6 @@ export default function FlightList() {
                     currentPage={currentPage}
                     onNext={onNext}
                     onPervious={onPervious}
-                    pageLimit={PAGE_LIMIT}
                     totalItemsCount={totalItemsCount}
                 />
             );

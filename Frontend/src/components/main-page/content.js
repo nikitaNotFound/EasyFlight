@@ -88,7 +88,6 @@ function Content() {
                     currentPage={currentPage}
                     onNext={onNext}
                     onPervious={onPervious}
-                    pageLimit={PAGE_LIMIT}
                     totalItemsCount={totalItemsCount}
                 />
             );
