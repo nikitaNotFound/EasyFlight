@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
+using Common;
 using DataAccessLayer;
 using Microsoft.Extensions.Configuration;
 
-namespace WebAPI
+namespace WebAPI.Settings
 {
     public class FilesUploadingSettings : IFilesUploadingSettings
     {

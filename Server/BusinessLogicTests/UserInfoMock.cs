@@ -1,4 +1,5 @@
 using BusinessLayer;
+using Common;
 
 namespace BusinessLogicTests
 {

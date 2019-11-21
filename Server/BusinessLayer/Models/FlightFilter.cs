@@ -12,5 +12,7 @@ namespace BusinessLayer.Models
         public DateTime? ArrivalDate { get; set; }
         public int? TicketCount { get; set; }
         public bool SearchFlightsBack { get; set; }
+        public int CurrentPage { get; set; }
+        public int PageLimit { get; set; }
     }
 }

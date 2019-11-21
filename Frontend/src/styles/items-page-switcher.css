@@ -1,0 +1,45 @@
+.items-page-switcher {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.items-page-switcher button {
+    border: 0;
+    background: none;
+}
+
+.items-page-switcher button {
+    width: 35px;
+    transition: 0.2s;
+}
+
+.items-page-switcher button img {
+    width: 35px;
+    transition: 0.2s;
+}
+
+.items-page-switcher .visible-false img {
+    display: none;
+}
+
+.items-page-switcher .visible-false {
+    height: 0px;
+}
+
+.items-page-switcher button:hover img {
+    width: 35px;
+    transform: scale(1.15);
+}
+
+.items-page-switcher .pervious-page {
+    transform: rotate(180deg);
+    margin-right: 20%;
+}
+
+.items-page-switcher .current-page {
+    margin-right: 20%;
+    font-size: 38px;
+    color: black;
+    font-weight: 600;
+}

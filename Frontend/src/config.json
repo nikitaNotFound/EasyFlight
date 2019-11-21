@@ -4,5 +4,6 @@
         "AwaitingPayment" : 1,
         "Payed" : 2
     },
-    "GOOGLE_CLIENT_ID": "259272355014-gs064l1kpuurf3luc9r3b54ak9lim6sj.apps.googleusercontent.com"
+    "GOOGLE_CLIENT_ID": "259272355014-gs064l1kpuurf3luc9r3b54ak9lim6sj.apps.googleusercontent.com",
+    "DEFAULT_PAGE_LIMIT": 4
 }

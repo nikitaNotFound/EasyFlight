@@ -3,9 +3,13 @@
     @minCarryingKg as int = null,
     @maxCarryingKg as int = null,
     @minSeatCount as int = null,
-    @maxSeatCount as int = null
+    @maxSeatCount as int = null,
+    @currentPage as int,
+    @pageLimit as int
 as
-    select A1.*
+    select
+        count(*) over ()  as TotalCount,
+        A1.*
     from Airplanes A1
         cross apply (
             select COUNT(Seats.Id) as SeatCount
@@ -18,3 +22,7 @@ as
         and (@maxCarryingKg is null or A1.CarryingKg <= @maxCarryingKg)
         and (@minSeatCount is null or AirplanesWithSeatCount.SeatCount >= @minSeatCount)
         and (@maxSeatCount is null or AirplanesWithSeatCount.SeatCount <= @maxSeatCount)
+    order by Id
+    offset (@currentPage - 1) * @pageLimit rows
+    fetch next @pageLimit rows only
+

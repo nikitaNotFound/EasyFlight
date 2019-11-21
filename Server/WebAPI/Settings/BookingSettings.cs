@@ -1,8 +1,9 @@
 ﻿using System;
+using Common;
 using DataAccessLayer;
 using Microsoft.Extensions.Configuration;
 
-namespace DataAccessLayer
+namespace WebAPI.Settings
 {
     public class BookingSettings : IBookingSettings
     {

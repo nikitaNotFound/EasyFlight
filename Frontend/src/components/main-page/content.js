@@ -3,15 +3,19 @@ import Filter from './flights/filter';
 import Flights from './flights/flights';
 import Switcher from './flights/switcher';
 import SearchOptions from '../../services/flight-models/search-options';
-import * as FlightsService from '../../services/FlightService';
+import * as FlightService from '../../services/FlightService';
 import '../../styles/flight-list.scss';
 import MessageBox from '../common/message-box';
 import { defaultErrorMessage } from '../common/message-box-messages';
+import ItemsPageSwitcher from '../common/items-page-switcher';
 
 function Content() {
     const [flights, changeFlights] = useState(null);
     const [filterOptions, changeFilterOptions] = useState(new SearchOptions());
     const [messageBoxValue, changeMessageBoxValue] = useState();
+
+    const [totalItemsCount, changeTotalItemsCount] = useState(null);
+    const [currentPage, changeCurrentPage] = useState(1);
 
     const layoutMode = {
         List: 'list-only',
@@ -39,16 +43,30 @@ function Content() {
         changeMode(newMode);
     }
 
-    async function onFilterApplied(searchOptions) {
+    async function onFilterApply(searchOptions, newCurrentPage = 1, swapFilter = true) {
+        searchOptions.currentPage = newCurrentPage;
         changeFilterOptions(searchOptions);
 
         try {
-            const flights = await FlightsService.searchWithParams(searchOptions);
-            changeFlights(flights);
-            swapFilterList();
+            const foundFlights = await FlightService.searchWithParams(searchOptions);
+            changeTotalItemsCount(foundFlights.totalItemsCount);
+            changeFlights(foundFlights.content);
+            if (swapFilter === true){
+                swapFilterList();
+            }
         } catch {
             changeMessageBoxValue(defaultErrorMessage());
         }
+    }
+
+    function onNext() {
+        changeCurrentPage(currentPage + 1);
+        onFilterApply(filterOptions, currentPage + 1, false);
+    }
+
+    function onPervious() {
+        changeCurrentPage(currentPage - 1);
+        onFilterApply(filterOptions, currentPage - 1, false);
     }
 
     function showMessageBox() {
@@ -62,13 +80,28 @@ function Content() {
         }
     }
 
+    function showItemsPageSwitcher() {
+        // if search started and gave a result
+        if (flights && flights.length > 0) {
+            return (
+                <ItemsPageSwitcher
+                    currentPage={currentPage}
+                    onNext={onNext}
+                    onPervious={onPervious}
+                    totalItemsCount={totalItemsCount}
+                />
+            );
+        }
+    }
+
     return (
         <main className={`rounded ${mode}`}>
             {showMessageBox()}
             <Switcher switcher={swapFilterList} value={switcherValue}/>
             <Flights flights={flights}/>
+            {showItemsPageSwitcher()}
             <Filter
-                onFilterApplied={onFilterApplied}
+                onFilterApplied={onFilterApply}
                 filterOptions={filterOptions}
             />
         </main>

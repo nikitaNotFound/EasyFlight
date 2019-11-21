@@ -97,11 +97,26 @@ export async function searchWithParams(filter, searchByName) {
             departureDate,
             arrivalDate,
             ticketCount,
-            searchBack
+            searchBack,
+            currentPage,
+            pageLimit
         } = filter;
     }
 
     let parameteres = '?';
+
+    if (!currentPage) {
+        // first page
+        currentPage = 1;
+    }
+
+    parameteres += `currentPage=${currentPage}&`;
+
+    if (!pageLimit) {
+        pageLimit = config.DEFAULT_PAGE_LIMIT;
+    }
+
+    parameteres += `pageLimit=${pageLimit}&`;
 
     if (nameFilter) {
         parameteres += `nameFilter=${nameFilter}&`;

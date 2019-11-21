@@ -11,5 +11,7 @@ namespace DataAccessLayer.Models
         public DateTime? DepartureDate { get; set; }
         public DateTime? ArrivalDate { get; set; }
         public int? TicketCount { get; set; }
+        public int CurrentPage { get; set; }
+        public int PageLimit { get; set; }
     }
 }

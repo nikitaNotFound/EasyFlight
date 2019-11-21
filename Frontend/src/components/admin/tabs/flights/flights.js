@@ -4,6 +4,23 @@ import PropsTypes from 'prop-types';
 import '../../../../styles/items-list.css';
 
 function Flights(props) {
+    // before user press search
+    if (props.flights == null) {
+        return (
+            <div className="items-list">
+            </div>
+        );
+    }
+
+    // when search doesnt give any result
+    if (props.flights.length === 0) {
+        return (
+            <div className="items-list">
+                No result
+            </div>
+        );
+    }
+
     return (
         <div className="items-list">
                 {props.flights.map(

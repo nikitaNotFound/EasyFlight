@@ -133,12 +133,12 @@ function Filter(props) {
                         />
                     </div>
                     <div className="filter-col">
-                        <label htmlFor="departure-back">
-                            Departure back
+                        <label htmlFor="arrival">
+                            Arrival
                         </label>
                         <input
                             className="filter-control"
-                            id="departure-back"
+                            id="arrival"
                             type="date"
                             placeholder="Date"
                             value={arrivalDate}

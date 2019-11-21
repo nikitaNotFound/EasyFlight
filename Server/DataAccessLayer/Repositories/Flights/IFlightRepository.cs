@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Common;
 using DataAccessLayer.Models;
+using Microsoft.VisualBasic.CompilerServices;
 
 namespace DataAccessLayer.Repositories.Flights
 {
     public interface IFlightRepository
     {
-        Task<IReadOnlyCollection<FlightEntity>> GetAllAsync();
+        Task<ItemsPageEntity<FlightEntity>> GetAllAsync(int currentPage, int pageLimit);
         Task<FlightEntity> GetByIdAsync(int id);
         Task<int> AddAsync(FlightEntity flight);
         Task UpdateAsync(FlightEntity newFlight);
-        Task<IReadOnlyCollection<FlightEntity>> SearchFlightsAsync(FlightFilterEntity filter);
+        Task<ItemsPageEntity<FlightEntity>> SearchFlightsAsync(FlightFilterEntity filter);
         Task<IReadOnlyCollection<FlightSeatTypeCostEntity>> GetFlightSeatTypesCostAsync(int flightId);
         Task AddFlightSeatTypeCostAsync(FlightSeatTypeCostEntity seatTypeCost);
         Task UpdateFlightSeatTypeCostAsync(FlightSeatTypeCostEntity seatTypeCost);

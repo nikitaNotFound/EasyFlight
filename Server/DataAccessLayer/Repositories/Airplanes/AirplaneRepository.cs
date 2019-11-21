@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using Dapper;
 using DataAccessLayer.Models;
 
@@ -13,11 +14,13 @@ namespace DataAccessLayer.Repositories.Airplanes
     public class AirplaneRepository : IAirplaneRepository
     {
         private readonly IDalSettings _dalSettings;
+        private readonly IMapper _mapper;
 
 
-        public AirplaneRepository(IDalSettings dalSettings)
+        public AirplaneRepository(IDalSettings dalSettings, IMapper mapper)
         {
             _dalSettings = dalSettings;
+            _mapper = mapper;
         }
 
 
@@ -167,16 +170,35 @@ namespace DataAccessLayer.Repositories.Airplanes
             return seatTypes.ToList();
         }
 
-        public async Task<IReadOnlyCollection<AirplaneEntity>> GetAllAsync()
+        public async Task<ItemsPageEntity<AirplaneEntity>> GetAllAsync(int currentPage, int pageLimit)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
-            IEnumerable<AirplaneEntity> airplanes = await db.QueryAsync<AirplaneEntity>(
+            IEnumerable<PaginationAirplaneEntity> queryResult = await db.QueryAsync<PaginationAirplaneEntity>(
                 "GetAllAirplanes",
-                null,
+                new
+                {
+                    CurrentPage = currentPage,
+                    PageLimit = pageLimit
+                },
                 commandType: CommandType.StoredProcedure);
 
-            return airplanes.ToList();
+            if (!queryResult.Any())
+            {
+                return new ItemsPageEntity<AirplaneEntity>(
+                    new List<AirplaneEntity>(),
+                    0
+                );
+            }
+
+            int totalCount = queryResult.First().TotalCount;
+
+            List<AirplaneEntity> airplanes = queryResult.Select(_mapper.Map<AirplaneEntity>).ToList();
+
+            return new ItemsPageEntity<AirplaneEntity>(
+                airplanes,
+                totalCount
+            );
         }
 
         public async Task<AirplaneEntity> GetByIdAsync(int id)
@@ -189,16 +211,31 @@ namespace DataAccessLayer.Repositories.Airplanes
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<IReadOnlyCollection<AirplaneEntity>> SearchAirplanesAsync(AirplaneFilterEntity filter)
+        public async Task<ItemsPageEntity<AirplaneEntity>> SearchAirplanesAsync(AirplaneFilterEntity filter)
         {
             using SqlConnection db = new SqlConnection(_dalSettings.ConnectionString);
 
-            IEnumerable<AirplaneEntity> airplanes = await db.QueryAsync<AirplaneEntity>(
-                "SearchAirplanes",
-                filter,
-                commandType: CommandType.StoredProcedure);
+            IEnumerable<PaginationAirplaneEntity> queryResult = await db.QueryAsync<PaginationAirplaneEntity>(
+                    "SearchAirplanes",
+                    filter,
+                    commandType: CommandType.StoredProcedure);
 
-            return airplanes.ToList();
+            if (!queryResult.Any())
+            {
+                return new ItemsPageEntity<AirplaneEntity>(
+                    new List<AirplaneEntity>(),
+                    0
+                );
+            }
+
+            int totalCount = queryResult.First().TotalCount;
+
+            List<AirplaneEntity> airplanes = queryResult.Select(_mapper.Map<AirplaneEntity>).ToList();
+
+            return new ItemsPageEntity<AirplaneEntity>(
+                airplanes,
+                totalCount
+            );
         }
     }
 }

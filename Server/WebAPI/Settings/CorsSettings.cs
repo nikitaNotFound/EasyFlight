@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using DataAccessLayer;
 using Newtonsoft.Json;
 
-namespace WebAPI
+namespace WebAPI.Settings
 {
     public class CorsSettings
     {

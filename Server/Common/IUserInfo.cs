@@ -1,4 +1,4 @@
-namespace BusinessLayer
+namespace Common
 {
     public interface IUserInfo
     {

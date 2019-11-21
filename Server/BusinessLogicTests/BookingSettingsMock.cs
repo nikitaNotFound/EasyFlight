@@ -1,5 +1,6 @@
 ﻿using System;
 using BusinessLayer;
+using Common;
 using DataAccessLayer;
 
 namespace BusinessLogicTests

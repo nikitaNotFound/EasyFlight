@@ -18,11 +18,20 @@
   display: none;
 }
 
+.list-only .items-page-switcher {
+  width: 100%;
+}
+
 .list-only .list {
   width: 100%;
 }
 
 .filter-only .list {
+  width: 0%;
+  display: none;
+}
+
+.filter-only .items-page-switcher {
   width: 0%;
   display: none;
 }
@@ -169,12 +178,12 @@
 
 @media screen and (max-width: 1366px) {
   .button-buy {
-      font-size: 9px;
+      font-size: 14px;
   }
   
   .button-buy img {
-      width: 15px;
-      height: 15px;
+      width: 25px;
+      height: 25px;
   }
 
   .list-item {

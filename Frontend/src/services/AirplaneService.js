@@ -139,15 +139,36 @@ export async function getAirplaneSeatTypes(airplaneId) {
 
 export async function searchWithParams(filter, nameSearchOnly) {
     if (nameSearchOnly === true) {
-        var name = filter;
+        var nameFilter = filter;
     } else {
-        var {name, carryingMaxKg, carryingMinKg, seatCountMax, seatCountMin} = filter;
+        var {
+            nameFilter,
+            carryingMaxKg,
+            carryingMinKg,
+            seatCountMax,
+            seatCountMin,
+            currentPage,
+            pageLimit
+        } = filter;
     }
 
     let parameteres = '?';
 
-    if (name) {
-        parameteres += `nameFilter=${name}&`;
+    if (!currentPage) {
+        // first page
+        currentPage = 1;
+    }
+
+    parameteres += `currentPage=${currentPage}&`;
+
+    if (!pageLimit) {
+        pageLimit = config.DEFAULT_PAGE_LIMIT;
+    }
+
+    parameteres += `pageLimit=${pageLimit}&`;
+
+    if (nameFilter) {
+        parameteres += `nameFilter=${nameFilter}&`;
     }
 
     if (carryingMinKg) {
@@ -175,5 +196,11 @@ export async function searchWithParams(filter, nameSearchOnly) {
         }
     );
 
-    return await createRequestResult(response, RequestTypes.ContentExpected);
+    const requestResult = await createRequestResult(response, RequestTypes.ContentExpected);
+
+    if (nameSearchOnly === true) {
+        return requestResult.content;
+    }
+
+    return requestResult;
 }

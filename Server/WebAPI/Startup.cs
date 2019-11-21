@@ -7,12 +7,13 @@ using DataAccessLayer;
 using BusinessLayer;
 using AutoMapper;
 using Serilog;
-using Microsoft.Extensions.Logging;
 using WebAPI.Services;
 using System.Text;
+using Common;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.FileProviders;
+using WebAPI.Settings;
 
 namespace WebAPI
 {
@@ -36,6 +37,7 @@ namespace WebAPI
 
             FilesUploadingSettings filesUploadingSettings = new FilesUploadingSettings(Configuration);
             services.AddSingleton<IFilesUploadingSettings, FilesUploadingSettings>();
+            services.AddSingleton<IPaginationSettings, PaginationSettings>();
 
             CorsSettings corsSettings = new CorsSettings(Configuration);
 
@@ -54,6 +56,7 @@ namespace WebAPI
             {
                 WebAPIMapping.Initialize(config);
                 BlMapping.Initialize(config);
+                DalMapping.Initialize(config);
             });
             mappingConfig.CompileMappings();
 

@@ -15,7 +15,9 @@ using BlFlightFilter = BusinessLayer.Models.FlightFilter;
 using BlFlightSeatTypeCost = BusinessLayer.Models.FlightSeatTypeCost;
 using BlFlightBookInfo = BusinessLayer.Models.FlightBookInfo;
 using BlSeatBook = BusinessLayer.Models.SeatBook;
+using BlItemsPage = BusinessLayer.Models.ItemsPage<BusinessLayer.Models.Flight>;
 using WebAPI.Models;
+using WebAPI.Settings;
 
 namespace WebAPI.Controllers
 {
@@ -28,13 +30,20 @@ namespace WebAPI.Controllers
         private readonly IFlightService _flightService;
         private readonly IBookingService _bookingService;
         private readonly IMapper _mapper;
+        private readonly IPaginationSettings _paginationSettings;
 
 
-        public FlightsController(IFlightService flightService, IBookingService bookingService, IMapper mapper)
+        public FlightsController(
+            IFlightService flightService,
+            IBookingService bookingService,
+            IMapper mapper,
+            IPaginationSettings paginationSettings
+        )
         {
             _flightService = flightService;
             _bookingService = bookingService;
             _mapper = mapper;
+            _paginationSettings = paginationSettings;
         }
 
 
@@ -50,10 +59,20 @@ namespace WebAPI.Controllers
             DateTime? departureTime,
             DateTime? arrivalTime,
             int? ticketCount,
-            bool searchBack
+            bool searchBack,
+            int? currentPage,
+            int? pageLimit
         )
         {
-            IReadOnlyCollection<BlFlight> flightsBl;
+            currentPage ??= _paginationSettings.DefaultPage;
+            pageLimit ??= _paginationSettings.DefaultPageSize;
+
+            if (pageLimit > _paginationSettings.MaxPageLimit)
+            {
+                return BadRequest();
+            }
+
+            BlItemsPage flightsBl;
 
             if (fromAirportId != null
                 || toAirportId != null
@@ -72,7 +91,9 @@ namespace WebAPI.Controllers
                     departureTime,
                     arrivalTime,
                     ticketCount,
-                    searchBack
+                    searchBack,
+                    currentPage.Value,
+                    pageLimit.Value
                 );
 
                 BlFlightFilter filterBl = _mapper.Map<BlFlightFilter>(filter);
@@ -81,10 +102,10 @@ namespace WebAPI.Controllers
             }
             else
             {
-                flightsBl = await _flightService.GetAllAsync();
+                flightsBl = await _flightService.GetAllAsync(currentPage.Value, pageLimit.Value);
             }
 
-            IReadOnlyCollection<Flight> flights = flightsBl.Select(_mapper.Map<Flight>).ToList();
+            ItemsPage<Flight> flights = _mapper.Map<ItemsPage<Flight>>(flightsBl);
 
             return Ok(flights);
         }

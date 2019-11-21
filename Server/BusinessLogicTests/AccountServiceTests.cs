@@ -108,7 +108,7 @@ namespace BusinessLogicTests
                 await _accountService.UpdateAvatarAsync(Array.Empty<byte>(), string.Empty);
 
             // Assert
-            Assert.AreEqual(ResultTypes.InvalidData, updateResult);
+            Assert.AreEqual(ResultTypes.InvalidData, updateResult.ResultType);
         }
     }
 }
