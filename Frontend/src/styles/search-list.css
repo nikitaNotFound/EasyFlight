@@ -29,6 +29,13 @@
   background: white;
 }
 
+.search-item:hover {
+  cursor: pointer;
+  background: rgb(0, 0, 0);
+  color: white;
+}
+
+
 .search-item-hide {
   display: none;
 }

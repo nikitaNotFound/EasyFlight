@@ -34,7 +34,7 @@ function SearchList(props) {
         }
 
         setupData();
-    });
+    }, [props]);
 
     function openList() {
         changeMode(true);
@@ -44,6 +44,8 @@ function SearchList(props) {
         if (currentItem) {
             changeInputValue(await props.getItemName(currentItem));
         } else {
+            changeList([]);
+            changeLoading(true);
             changeInputValue('');
         }
         changeMode(false);
