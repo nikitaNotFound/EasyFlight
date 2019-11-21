@@ -10,6 +10,8 @@
   border-radius: 7px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+  height: 250px;
+  overflow-y: scroll;
 }
 
 .search-list-input {
