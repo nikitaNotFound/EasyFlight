@@ -28,11 +28,8 @@ as
         cross apply (
             select COUNT(fsi.SeatId) as SeatCount
             from FlightSeatsInfo fsi
-                cross apply (
-                    select BookType, BookTime, FlightId
-                    from FlightBooksInfo fbi
-                    where fsi.FlightBookInfoId = fbi.Id
-                ) fbi
+                inner join FlightBooksInfo fbi
+                    on fbi.Id = fsi.FlightBookInfoId
             where fbi.FlightId = f.Id
                 and (fbi.BookType = @finalBookType
                     or datediff(second, fbi.BookTime, SYSDATETIMEOFFSET()) < @bookExpirationTimeInSeconds)
