@@ -10,6 +10,7 @@ using Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using BlFlight = BusinessLayer.Models.Flight;
 using BlFlightFilter = BusinessLayer.Models.FlightFilter;
 using BlFlightSeatTypeCost = BusinessLayer.Models.FlightSeatTypeCost;
@@ -31,19 +32,28 @@ namespace WebAPI.Controllers
         private readonly IBookingService _bookingService;
         private readonly IMapper _mapper;
         private readonly IPaginationSettings _paginationSettings;
+        private readonly IMemoryCache _memoryCache;
+        private readonly IProfileCachingSettings _profileCachingSettings;
+        private readonly IUserInfo _userInfo;
 
 
         public FlightsController(
             IFlightService flightService,
             IBookingService bookingService,
             IMapper mapper,
-            IPaginationSettings paginationSettings
+            IPaginationSettings paginationSettings,
+            IMemoryCache memoryCache,
+            IProfileCachingSettings profileCachingSettings,
+            IUserInfo userInfo
         )
         {
             _flightService = flightService;
             _bookingService = bookingService;
             _mapper = mapper;
             _paginationSettings = paginationSettings;
+            _memoryCache = memoryCache;
+            _profileCachingSettings = profileCachingSettings;
+            _userInfo = userInfo;
         }
 
 
@@ -280,6 +290,19 @@ namespace WebAPI.Controllers
                     return NotFound();
             }
 
+            IReadOnlyCollection<BlFlightBookInfo> flightInfoBl = await _bookingService.GetAccountFlightsInfoAsync();
+            List<FlightBookInfo> flightInfo =
+                flightInfoBl.Select(_mapper.Map<FlightBookInfo>).ToList();
+
+            _memoryCache.Set(
+                _profileCachingSettings.FlightHistoryKey + _userInfo.AccountId,
+                flightInfo,
+                new MemoryCacheEntryOptions()
+                {
+                    AbsoluteExpirationRelativeToNow = _profileCachingSettings.CachingTime
+                }
+            );
+
             return Ok();
         }
 
@@ -331,10 +354,29 @@ namespace WebAPI.Controllers
         [Route("books/my")]
         public async Task<IActionResult> GetAccountFlightsInfoAsync()
         {
-            IReadOnlyCollection<BlFlightBookInfo> accountFlightsBl =
-                await _bookingService.GetAccountFlightsInfoAsync();
+            IReadOnlyCollection<FlightBookInfo> accountFlights;
 
-            IEnumerable<FlightBookInfo> accountFlights = accountFlightsBl.Select(_mapper.Map<FlightBookInfo>);
+            bool infoInCache = !_memoryCache.TryGetValue(
+                _profileCachingSettings.FlightHistoryKey + _userInfo.AccountId,
+                out accountFlights
+            );
+
+            if (infoInCache)
+            {
+                IReadOnlyCollection<BlFlightBookInfo> accountFlightsBl =
+                    await _bookingService.GetAccountFlightsInfoAsync();
+
+                accountFlights = accountFlightsBl.Select(_mapper.Map<FlightBookInfo>).ToList();
+
+                _memoryCache.Set(
+                    _profileCachingSettings.FlightHistoryKey + _userInfo.AccountId,
+                    accountFlights,
+                    new MemoryCacheEntryOptions()
+                    {
+                        AbsoluteExpirationRelativeToNow = _profileCachingSettings.CachingTime
+                    }
+                );
+            }
 
             return Ok(accountFlights);
         }

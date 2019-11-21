@@ -34,6 +34,7 @@ namespace WebAPI
             services.AddSingleton<IBookingSettings, BookingSettings>();
             services.AddTransient<IUserInfo, UserInfo>();
             services.AddSingleton<IAccountUpdatingSettings, AccountUpdatingSettings>();
+            services.AddSingleton<IProfileCachingSettings, ProfileCachingSettings>();
 
             FilesUploadingSettings filesUploadingSettings = new FilesUploadingSettings(Configuration);
             services.AddSingleton<IFilesUploadingSettings, FilesUploadingSettings>();
@@ -109,6 +110,8 @@ namespace WebAPI
                 // converting to bytes
                 options.MultipartBodyLengthLimit = filesUploadingSettings.MaxMbSize * 1024 * 1024;
             });
+
+            services.AddMemoryCache();
         }
 
         public void Configure(IApplicationBuilder app, IFilesUploadingSettings filesUploadingSettings)
