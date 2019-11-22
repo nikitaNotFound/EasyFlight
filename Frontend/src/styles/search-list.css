@@ -5,13 +5,14 @@
   z-index: 999;
   background: rgb(139, 139, 139);
   padding: 3px;
-  padding-top: 0px;
+  padding-top: 5px;
   margin-top: -12px;
   border-radius: 7px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
   height: 250px;
   overflow-y: scroll;
+  margin-left: 0 !important;
 }
 
 .search-list-input {

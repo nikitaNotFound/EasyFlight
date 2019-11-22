@@ -117,7 +117,7 @@ function Content(props) {
             {showMessageBoxValue()}
             <div className="main-info">
                 <div className="row">
-                    <div className="col-2">
+                    <div className="col-2 col-sm-4">
                         <div className="user-photo">
                             <label htmlFor="photo">
                                 <img src={avatar} alt="add user avatar" onError={() => changeAvatar(AddImage)}/>
@@ -125,7 +125,7 @@ function Content(props) {
                             <input type="file" onChange={onAvatarUpdate} id="photo" accept=".png,.jpg,.jpeg"/>
                         </div>
                     </div>
-                    <div className="col-10">
+                    <div className="col-10 col-sm-8">
                         <input
                             type="text"
                             className="name-input"

@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {withRouter} from 'react-router-dom';
+import React, { useState } from 'react';
+import { withRouter, Link } from 'react-router-dom';
 
 import MessageBox from '../common/message-box';
 import GoogleLogin from 'react-google-login';
@@ -125,6 +125,12 @@ function Content(props) {
                         onFailure={() => changeMessageBoxValue(defaultErrorMessage())}
                         buttonText="Sign up with Google"
                     />
+                </div>
+
+                <div className="sign-option">
+                    <Link to="/signin">
+                        Sign in
+                    </Link>
                 </div>
             </div>
         </main>

@@ -22,12 +22,16 @@ export default function ParamField(props) {
         if (valueType == valueTypes.NumberType) {
             const newValueNumber = Number(event.target.value);
             if (newValueNumber && newValueNumber >= 0) {
-                console.log(1)
                 props.onChange(newValueNumber);
             } else if (!event.target.value) {
                 props.onChange(0);
             }
         } else {
+            if (!props.value && event.target.value === ' ') {
+                props.onChange('');
+                return;
+            }
+
             const newValueString = event.target.value;
             props.onChange(newValueString);
         }

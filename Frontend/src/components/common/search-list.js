@@ -63,8 +63,14 @@ function SearchList(props) {
             changeLoading(true);
             changeCurrentItem(null);
             props.onValueChange(null);
+            changeInputValue('');
             return;
         } else {
+            if (!inputValue && event.target.value === ' ') {
+                changeInputValue('');
+                return;
+            }
+
             changeInputValue(event.target.value);
         }
 
