@@ -7,7 +7,7 @@ import SearchList from '../../../common/search-list';
 import MessageBox from '../../../common/message-box';
 import TicketsCostEditor from './tickets-cost-editor';
 import Flight from '../../../../services/flight-models/flight';
-import ParamField from './param-field';
+import ParamField from '../../../common/param-field';
 
 import { invalidInput, defaultErrorMessage, added, flightTimeError } from '../../../common/message-box-messages';
 import ConfirmActionButton from '../../../common/confirm-action-button';
@@ -100,16 +100,14 @@ export default function Add() {
     }
 
     function showTicketsCostEditor() {
-        if (!airplane) {
-            return;
+        if (airplane) {
+            return (
+                <TicketsCostEditor
+                    airplaneId={airplane.id}
+                    onTypeCostChange={changeTicketsCost}
+                />
+            );
         }
-
-        return (
-            <TicketsCostEditor
-                airplaneId={airplane.id}
-                onTypeCostChange={changeTicketsCost}
-            />
-        );
     }
 
     function showMessageBox() {

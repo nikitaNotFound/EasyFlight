@@ -11,11 +11,12 @@ import * as AirplaneService from '../../../../services/AirplaneService';
 import { invalidInput, defaultErrorMessage, saved, seatTypeInUse, duplicate } from '../../../common/message-box-messages';
 import ConfirmActionButton from '../../../common/confirm-action-button';
 import { NotFoundError, BadRequestError } from '../../../../services/RequestErrors';
+import ParamField from '../../../common/param-field';
 
 export default function Edit(props) {
     const [loading, changeLoading] = useState(true);
     const [id, changeId] = useState();
-    const [name, changeName] = useState('');
+    const [name, changeName] = useState();
     const [carryingKg, changeCarryingKg] = useState(0);
     const [seats, changeSeats] = useState();
     const [seatTypes, changeSeatTypes] = useState();
@@ -118,8 +119,16 @@ export default function Edit(props) {
         for (let floor = 0, len = scheme.length; floor < len; floor++) {
             const floorArray = scheme[floor];
 
+            if (!floorArray) {
+                continue;
+            }
+
             for (let section = 0, len = floorArray.length; section < len; section++) {
                 const sectionArray = floorArray[section];
+
+                if (!sectionArray) {
+                    continue;
+                }
 
                 for (let zone = 0, len = sectionArray.length; zone < len; zone++) {
                     const zoneArray = sectionArray[zone];
@@ -207,16 +216,13 @@ export default function Edit(props) {
         changeSeatsChangedMode(true);
     }
 
-    function onCarryingChange(event) {
-        const newCarrying = Number(event.target.value);
-        if (newCarrying > 0) {
-            changeCarryingKg(newCarrying);
-            changeAirplaneChangedMode(true);
-        }
+    function onCarryingChange(newCarrying) {
+        changeCarryingKg(newCarrying);
+        changeAirplaneChangedMode(true);
     }
 
-    function onNameChange(event) {
-        changeName(event.target.value);
+    function onNameChange(newName) {
+        changeName(newName);
         changeAirplaneChangedMode(true);
     }
 
@@ -240,27 +246,18 @@ export default function Edit(props) {
                     <div className="col-12">
                         <div className="editing-params-form">
                             <div className="row">
-                                <div className="form-item">
-                                    <label htmlFor="airplane-name">
-                                        Airplane name
-                                    </label>
-                                    <input
-                                        id="airplane-name"
-                                        type="text"
-                                        value={name}
-                                        onChange={onNameChange}
-                                    />
-                                </div>
-                                <div className="form-item">
-                                    <label htmlFor="airplane-max-mass">
-                                        Max mass
-                                    </label>
-                                    <input
-                                        id="airplane-max-mass"
-                                        value={carryingKg}
-                                        onChange={onCarryingChange}
-                                    />
-                                </div>
+                                <ParamField
+                                    name="Airplane name"
+                                    value={name}
+                                    onChange={onNameChange}
+                                    inputType="text"
+                                />
+                                <ParamField
+                                    name="Max mass"
+                                    value={carryingKg}
+                                    onChange={onCarryingChange}
+                                    inputType="text"
+                                />
                             </div>
                         </div>
                         <br/>
