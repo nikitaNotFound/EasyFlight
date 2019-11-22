@@ -6,6 +6,7 @@ import ComponentHeadline from '../../../common/component-headline';
 import MessageBox from '../../../common/message-box';
 import SearchList from '../../../common/search-list';
 import ConfirmActionButton from '../../../common/confirm-action-button';
+import ParamField from '../../../common/param-field';
 
 import * as CountryService from '../../../../services/CountryService';
 
@@ -26,14 +27,6 @@ export default function Filter(props) {
             : null;
 
         props.onFilterApply({name: name, countryId: countryId});
-    }
-
-    function onNameChanged(event) {
-        if (!event.target.value) {
-            changeName(null);
-        }
-
-        changeName(event.target.value);
     }
 
     function showMessageBox() {
@@ -68,11 +61,11 @@ export default function Filter(props) {
             </div>
             <div className="filter-row">
                 <div className="filter-arg">
-                    <label htmlFor="">Name</label>
-                    <input
-                        type="text"
+                    <ParamField
+                        name="Name"
                         value={name}
-                        onChange={onNameChanged}
+                        onChange={changeName}
+                        inputType="text"
                     />
                 </div>
             </div>

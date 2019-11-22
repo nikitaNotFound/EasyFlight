@@ -5,8 +5,7 @@ import ParamField from '../../../common/param-field';
 function SeatTypeCost(props) {
     const [cost, changeCost] = useState(props.cost);
 
-    function onCostChange(event){
-        let newCost = Number(event.target.value);
+    function onCostChange(newCost){
         changeCost(newCost);
         props.onCostInfoChange(props.typeId, newCost);
     }

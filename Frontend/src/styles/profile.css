@@ -155,3 +155,23 @@
     height: 200px;
   }
 }
+
+@media screen and (max-width: 960px) {
+  .user-photo {
+    width: 150px;
+    height: 150px;
+  }
+
+  .user-photo img {
+    width: 150px;
+    height: 150px;
+  }
+
+  .name-input {
+    width: 50%;
+    font-size: 26px;
+    background: #bdc3c7;
+    color: white;
+    text-align: center;
+  }
+}

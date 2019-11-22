@@ -93,7 +93,7 @@ function Content(props) {
                     />
                 </div>
                 
-                <div className="sign-up-option">
+                <div className="sign-option">
                     <Link to="/signup">
                         Sign up
                     </Link>

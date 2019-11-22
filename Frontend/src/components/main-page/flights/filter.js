@@ -118,6 +118,62 @@ function Filter(props) {
         }
     }
 
+    function showToCityPicker() {
+        if (!toAirport) {
+            return (
+                <SearchList
+                    searchFunc={CityService.searchByName}
+                    placeholder="To city"
+                    currentItem={toCity}
+                    getItemName={buildCityName}
+                    onValueChange={changeToCity}
+                />
+            );
+        }
+    }
+
+    function showFromCityPicker() {
+        if (!fromAirport) {
+            return (
+                <SearchList
+                    searchFunc={CityService.searchByName}
+                    placeholder="From city"
+                    currentItem={fromCity}
+                    getItemName={buildCityName}
+                    onValueChange={changeFromCity}
+                />
+            );
+        }
+    }
+
+    function showToAirportPicker() {
+        if (!toCity) {
+            return (
+                <SearchList
+                    searchFunc={AirportService.searchByName}
+                    placeholder="To airport"
+                    currentItem={toAirport}
+                    getItemName={getAirportName}
+                    onValueChange={changeToAirport}
+                />
+            );
+        }
+    }
+
+    function showFromAirportPicker() {
+        if (!fromCity) {
+            return (
+                <SearchList
+                    searchFunc={AirportService.searchByName}
+                    placeholder="From airport"
+                    currentItem={fromAirport}
+                    getItemName={getAirportName}
+                    onValueChange={changeFromAirport}
+                />
+            );
+        }
+    }
+
     return (
         <main className="list-filter rounded">
             {showMessageBox()}
@@ -125,37 +181,13 @@ function Filter(props) {
 
             <div className="filter-area">
                 <div className="row filter-item">
-                    <SearchList
-                        searchFunc={CityService.searchByName}
-                        placeholder="From city"
-                        currentItem={fromCity}
-                        getItemName={buildCityName}
-                        onValueChange={changeFromCity}
-                    />
-                    <SearchList
-                        searchFunc={CityService.searchByName}
-                        placeholder="To city"
-                        currentItem={toCity}
-                        getItemName={buildCityName}
-                        onValueChange={changeToCity}
-                    />
+                    {showFromCityPicker()}
+                    {showFromAirportPicker()}
                 </div>
 
                 <div className="row filter-item">
-                    <SearchList
-                        searchFunc={AirportService.searchByName}
-                        placeholder="From airport"
-                        currentItem={fromAirport}
-                        getItemName={getAirportName}
-                        onValueChange={changeFromAirport}
-                    />
-                    <SearchList
-                        searchFunc={AirportService.searchByName}
-                        placeholder="To airport"
-                        currentItem={toAirport}
-                        getItemName={getAirportName}
-                        onValueChange={changeToAirport}
-                    />
+                    {showToCityPicker()}
+                    {showToAirportPicker()}
                 </div>
 
                 <div className="row filter-item">

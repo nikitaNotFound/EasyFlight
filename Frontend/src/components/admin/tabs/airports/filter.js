@@ -9,6 +9,7 @@ import ConfirmActionButton from '../../../common/confirm-action-button';
 import SearchOptions from '../../../../services/airport-models/search-options';
 import * as CityService from '../../../../services/CityService';
 import * as CountryService from '../../../../services/CountryService';
+import ParamField from '../../../common/param-field';
 
 export default function Filter(props) {
     const [name, changeName] = useState(props.filterOptions.name);
@@ -66,11 +67,11 @@ export default function Filter(props) {
             <ComponentHeadline content="Filter"/>
             <div className="filter-row">
                 <div className="filter-arg">
-                    <label htmlFor="">Name</label>
-                    <input
-                        type="text"
+                    <ParamField
+                        name="Name"
                         value={name}
-                        onChange={onNameChanged}
+                        onChange={changeName}
+                        inputType="text"
                     />
                 </div>
             </div>
