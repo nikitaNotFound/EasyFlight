@@ -5,9 +5,9 @@ import SearchOptions from '../../../../services/airport-models/search-options';
 import ComponentHeadline from '../../../common/component-headline';
 import MessageBox from '../../../common/message-box';
 import SearchList from '../../../common/search-list';
+import ConfirmActionButton from '../../../common/confirm-action-button';
 
 import * as CountryService from '../../../../services/CountryService';
-
 
 export default function Filter(props) {
     const [name, changeName] = useState(props.filterOptions.name);
@@ -76,9 +76,7 @@ export default function Filter(props) {
                     />
                 </div>
             </div>
-            <button className="filter-apply rounded" onClick={onFilterApply}>
-                apply
-            </button>
+            <ConfirmActionButton onClick={onFilterApply} buttonContent="Search"/>
         </div>
     );
 }

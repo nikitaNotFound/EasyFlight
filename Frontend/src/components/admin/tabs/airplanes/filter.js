@@ -4,15 +4,17 @@ import ComponentHeadline from '../../../common/component-headline';
 import MessageBox from '../../../common/message-box';
 import '../../../../styles/admin-filter.css';
 import SearchOptions from '../../../../services/airplane-models/search-options';
+import ConfirmActionButton from '../../../common/confirm-action-button';
+import ParamField from '../../../common/param-field';
 
 function Filter(props) {
-    const [name, changeName] = useState(props.filterOptions.name);
+    const [name, changeName] = useState();
 
-    const [carryingMax, changeCarryingMax] = useState(props.filterOptions.carryingMax);
-    const [carryingMin, changeCarryingMin] = useState(props.filterOptions.carryingMin);
+    const [carryingMax, changeCarryingMax] = useState(0);
+    const [carryingMin, changeCarryingMin] = useState(0);
 
-    const [seatCountMax, changeSeatCountMax] = useState(props.filterOptions.seatCountMax);
-    const [seatCountMin, changeSeatCountMin] = useState(props.filterOptions.seatCountMin);
+    const [seatCountMax, changeSeatCountMax] = useState(0);
+    const [seatCountMin, changeSeatCountMin] = useState(0);
 
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
@@ -39,20 +41,14 @@ function Filter(props) {
         props.onFilterApply(newFilterOptions);
     }
 
-    function onNameChanged(event) {
-        if (event.target.value) {
-            changeName(null);
-        }
-
-        changeName(event.target.value);
-    }
-
     function showMessageBox() {
         if (messageBoxValue) {
-            return <MessageBox
-                        hideFunc={changeMessageBoxValue}
-                        message={messageBoxValue}
-                    />
+            return (
+                <MessageBox
+                    hideFunc={changeMessageBoxValue}
+                    message={messageBoxValue}
+                />
+            );
         }
     }
 
@@ -62,53 +58,51 @@ function Filter(props) {
             <ComponentHeadline content="Filter"/>
             <div className="filter-row">
                 <div className="filter-arg">
-                    <label htmlFor="">Name</label>
-                    <input
-                        type="text"
+                    <ParamField
+                        name="Name"
                         value={name}
-                        onChange={onNameChanged}
+                        onChange={changeName}
+                        type="text"
                     />
                 </div>
 
                 <div className="filter-arg">
-                    <label htmlFor="">Min carrying</label>
-                    <input
-                        type="text"
+                    <ParamField
+                        name="Min carrying"
                         value={carryingMin}
-                        onChange={(event) => changeCarryingMin(event.target.value)}
+                        onChange={changeCarryingMin}
+                        type="text"
                     />
                 </div>
                 
                 <div className="filter-arg">
-                    <label htmlFor="">Max carrying</label>
-                    <input
-                        type="text"
+                    <ParamField
+                        name="Max carrying"
                         value={carryingMax}
-                        onChange={(event) => changeCarryingMax(event.target.value)}
+                        onChange={changeCarryingMax}
+                        type="text"
                     />
                 </div>
 
                 <div className="filter-arg">
-                    <label htmlFor="">Min seat count</label>
-                    <input
-                        type="text"
+                    <ParamField
+                        name="Min seat count"
                         value={seatCountMin}
-                        onChange={(event) => changeSeatCountMin(event.target.value)}
+                        onChange={changeSeatCountMin}
+                        type="text"
                     />
                 </div>
 
                 <div className="filter-arg">
-                    <label htmlFor="">Max seat count</label>
-                    <input
-                        type="text"
+                    <ParamField
+                        name="Max seat count"
                         value={seatCountMax}
-                        onChange={(event) => changeSeatCountMax(event.target.value)}
+                        onChange={changeSeatCountMax}
+                        type="text"
                     />
                 </div>
-
-                <button className="filter-apply rounded" onClick={onFilterApply}>
-                    apply
-                </button>
+                
+                <ConfirmActionButton onClick={onFilterApply} buttonContent="Search"/>
             </div>
         </div>
     );

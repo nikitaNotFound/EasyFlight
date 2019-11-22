@@ -7,6 +7,7 @@ import MessageBox from '../../../common/message-box';
 import * as AirportService from '../../../../services/AirportService';
 import * as CountryService from '../../../../services/CountryService';
 import * as CityService from '../../../../services/CityService';
+import ConfirmActionButton from '../../../common/confirm-action-button';
 
 function Filter(props) {
     const [fromAirport, changeFromAirport] = useState(props.filterOptions.fromAirport);
@@ -135,9 +136,7 @@ function Filter(props) {
                 </div>
             </div>
 
-            <button className="filter-apply rounded" onClick={onFilterApply}>
-                apply
-            </button>
+            <ConfirmActionButton onClick={onFilterApply} buttonContent="Search"/>
         </div>
     );
 }

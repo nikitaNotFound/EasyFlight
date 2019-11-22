@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import PropsTypes from 'prop-types';
+import ParamField from '../../../common/param-field';
 
 function SeatTypeCost(props) {
     const [cost, changeCost] = useState(props.cost);
@@ -11,17 +12,12 @@ function SeatTypeCost(props) {
     }
 
     return (
-        <div className="form-item">
-            <label htmlFor={props.name}>
-                {props.name}
-            </label>
-            <input
-                id={props.name}
-                onChange={onCostChange}
-                value={cost}
-                type="text"
-            />
-        </div>
+        <ParamField
+            name={props.name + ' (cost)'}
+            value={cost}
+            onChange={onCostChange}
+            inputType="text"
+        />
     );
 }
 

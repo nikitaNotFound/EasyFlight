@@ -4,6 +4,7 @@ import PropsTypes from 'prop-types';
 import ComponentHeadline from '../../../common/component-headline';
 import MessageBox from '../../../common/message-box';
 import SearchList from '../../../common/search-list';
+import ConfirmActionButton from '../../../common/confirm-action-button';
 
 import SearchOptions from '../../../../services/airport-models/search-options';
 import * as CityService from '../../../../services/CityService';
@@ -85,9 +86,7 @@ export default function Filter(props) {
                     />
                 </div>
 
-                <button className="filter-apply rounded" onClick={onFilterApply}>
-                    apply
-                </button>
+                <ConfirmActionButton onClick={onFilterApply} buttonContent="Search"/>
             </div>
         </div>
     );
