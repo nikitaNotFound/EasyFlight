@@ -102,9 +102,10 @@ export default function Flight(props) {
             </div>
             <div className="row books">
                 <div className="col-12">
-                    {props.books.map(book => 
+                    {props.books.map((book, index) => 
                         <Book
                             book={book}
+                            key={index}
                         />
                     )}
                 </div>

@@ -15,7 +15,7 @@ export default function Airports(props) {
     }
 
     // when search doesnt give any result
-    if (props.airports.length == 0) {
+    if (props.airports.length === 0) {
         return (
             <div className="items-list">
                 No result

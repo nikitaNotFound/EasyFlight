@@ -19,7 +19,7 @@ export default function ParamField(props) {
     const [valueType, changeValueType] = useState(GetValueType(props));
 
     function onValueChange(event) {
-        if (valueType == valueTypes.NumberType) {
+        if (valueType === valueTypes.NumberType) {
             const newValueNumber = Number(event.target.value);
             if (newValueNumber && newValueNumber >= 0) {
                 props.onChange(newValueNumber);
@@ -47,7 +47,7 @@ export default function ParamField(props) {
                 onChange={onValueChange}
                 value={props.value}
                 type={props.inputType}
-                autocomplete="off"
+                autoComplete="off"
             />
         </div>
     );

@@ -15,7 +15,7 @@ export default function Cities(props) {
     }
 
     // when search doesnt give any result
-    if (props.cities.length == 0) {
+    if (props.cities.length === 0) {
         return (
             <div className="items-list">
                 No result

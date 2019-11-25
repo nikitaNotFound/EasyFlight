@@ -8,7 +8,7 @@ import LayoutHeadline from '../layout-headline';
 export default function ChoosenSeats(props) {
     function getSeatType(seat) {
         for (let i = 0, len = props.seatTypes.length; i < len; i++) {
-            if (seat.typeId == props.seatTypes[i].id) {
+            if (seat.typeId === props.seatTypes[i].id) {
                 return props.seatTypes[i];
             }
         }

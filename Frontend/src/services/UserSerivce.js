@@ -1,5 +1,3 @@
-import { userFlights } from './DataBase';
-import { isArray } from 'util';
 import User from './user-models/user';
 
 import { createRequestResult, RequestTypes, headers, HeadersTypes } from './RequestAssistant';
@@ -137,7 +135,7 @@ export function checkLogin(userInfo) {
         return { authorized: false, admin: false};
     }
 
-    return { authorized: true, admin: userInfo.role == AccountRole.Admin ? true : false };
+    return { authorized: true, admin: userInfo.role === AccountRole.Admin ? true : false };
 }
 
 export async function updateName(firstName, secondName) {

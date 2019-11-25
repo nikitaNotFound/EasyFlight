@@ -13,7 +13,7 @@ import CostLayout from './cost-layout';
 import FlightInfo from './flight-info';
 import MessageBox from '../common/message-box';
 import WaitingForPayment from './waiting-for-payment';
-import { defaultErrorMessage, booked, alreadyBooked } from '../common/message-box-messages';
+import { defaultErrorMessage, alreadyBooked } from '../common/message-box-messages';
 
 import * as AirplaneService from '../../services/AirplaneService';
 import * as FlightService from '../../services/FlightService';
@@ -204,26 +204,32 @@ function Content(props) {
                 airplaneName={airplane.name}
                 flight={flight}
             />
-            <SeatScheme
-                seatInfo={seats}
-                seatTypes={seatTypes}
-                onSeatChoosen={onSeatChoosen}
-                onSeatUnchoosen={onSeatUnchoosen}
-                choosenSeats={choosenSeats}
-                bookedSeats={bookedSeats}
-            />
-            <div className="seat-types-baggage-container">
-                <SeatTypes seatTypes={seatTypes} flightId={flight.id}/>
-                <BaggageController
-                    changeSuitcaseCount={changeSuitcaseCount}
-                    suitcaseMass={flight.suitcaseMassKg}
-                    suitcaseCount={flight.suitcaseCount}
-                    suitcaseCountValue={suitcaseCount}
-                    changeHandLuggageCount={changeHandLuggageCount}
-                    handLuggageCount={flight.handLuggageCount}
-                    handLuggageMass={flight.handLuggageMassKg}
-                    handLuggageCountValue={handLuggageCount}
-                />
+            <div className="row">
+                <div className="col-lg-9 col-sm-12">
+                    <SeatScheme
+                        seatInfo={seats}
+                        seatTypes={seatTypes}
+                        onSeatChoosen={onSeatChoosen}
+                        onSeatUnchoosen={onSeatUnchoosen}
+                        choosenSeats={choosenSeats}
+                        bookedSeats={bookedSeats}
+                    />
+                </div>
+                <div className="col-lg-3 col-sm-12">
+                    <div className="seat-types-baggage-container">
+                        <SeatTypes seatTypes={seatTypes} flightId={flight.id}/>
+                        <BaggageController
+                            changeSuitcaseCount={changeSuitcaseCount}
+                            suitcaseMass={flight.suitcaseMassKg}
+                            suitcaseCount={flight.suitcaseCount}
+                            suitcaseCountValue={suitcaseCount}
+                            changeHandLuggageCount={changeHandLuggageCount}
+                            handLuggageCount={flight.handLuggageCount}
+                            handLuggageMass={flight.handLuggageMassKg}
+                            handLuggageCountValue={handLuggageCount}
+                        />
+                    </div>
+                </div>
             </div>
             <ChoosenSeats
                 choosenSeats={choosenSeats}

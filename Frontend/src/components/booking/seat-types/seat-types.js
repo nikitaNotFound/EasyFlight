@@ -25,7 +25,7 @@ export default function SeatTypes(props) {
                     for (let i = 0, len = seatTypesCost.length; i < len; i++) {
                         const seatTypeCost = seatTypesCost[i];
 
-                        if (seatType.id == seatTypeCost.seatTypeId) {
+                        if (seatType.id === seatTypeCost.seatTypeId) {
                             seatType.cost = seatTypeCost.cost;
                             break;
                         }
@@ -39,7 +39,7 @@ export default function SeatTypes(props) {
             }
         }
         fetchData();
-    }, [props.flightId])
+    }, [props.flightId, props.seatTypes])
 
     function showMessageBox() {
         if (messageBoxValue) {

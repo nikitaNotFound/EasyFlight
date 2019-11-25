@@ -11,13 +11,14 @@ import * as AirplaneService from '../../../../services/AirplaneService';
 
 export default function Airplane(props) {
     const [seatCount, changeSeatCount] = useState();
-    const [loading, changeLoading] = useState();
+    const [loading, changeLoading] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
             const seats = await AirplaneService.getAirplaneSeats(props.airplane.id);
 
             changeSeatCount(seats.length);
+            changeLoading(false);
         }
         fetchData();
     }, [props.airplane.id]);
