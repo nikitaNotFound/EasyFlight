@@ -49,7 +49,7 @@ export default function ItemsPageSwithcer(props) {
     }
 
     return (
-        <div className="items-page-switcher">
+        <div className="items-page-switcher non-selectable">
             <button className={`pervious-page visible-${showPervious}`} onClick={onPervious}>
                 <img src={ArrowIcon} alt="pervious page"/>
             </button>

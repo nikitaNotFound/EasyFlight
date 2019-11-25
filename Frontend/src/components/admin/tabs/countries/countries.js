@@ -7,7 +7,7 @@ import '../../../../styles/items-list.css';
 
 export default function Countries(props) {
     // before user press search
-    if (props.countries == null) {
+    if (props.countries === null) {
         return (
             <div className="items-list">
             </div>
@@ -15,7 +15,7 @@ export default function Countries(props) {
     }
 
     // when search doesnt give any result
-    if (props.countries.length == 0) {
+    if (props.countries.length === 0) {
         return (
             <div className="items-list">
                 No result

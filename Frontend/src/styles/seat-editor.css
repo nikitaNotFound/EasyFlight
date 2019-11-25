@@ -73,6 +73,26 @@
     outline: none;
 }
 
+@media screen and (max-width: 720px) {
+    .add-row-button {
+        width: 100%;
+    }
+
+    .seat-editor-number {
+        font-size: 13px;
+    }
+
+    .circle-picker {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .form-item {
+        padding: 2%;
+    }
+}
+
 .big {
     border-radius: 10px;
     height: 60px;

@@ -120,24 +120,6 @@ function SearchList(props) {
         }
     }
 
-    function getList() {
-        if (loading) {
-            return <Spinner headline="Waiting..."/>
-        }
-
-        return (
-            list.map(
-                (item, key) => 
-                    <Item
-                        item={item}
-                        getItemName={props.getItemName}
-                        onValueChange={searchItemChosen}
-                        key={key}
-                    />
-            )
-        );
-    }
-
     return (
         <div className="form-item">
             {showMessageBox()}

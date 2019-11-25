@@ -4,16 +4,19 @@ import '../../styles/message-box.css';
 
 function MessageBox(props) {
     return (
-        <div className="message-box">
-            <div className="message-body">
-                {props.message}
+        <div>
+            <div className="overlay"/>
+            <div className="message-box">
+                <div className="message-body">
+                    {props.message}
+                </div>
+                <button
+                    className="close-button non-selectable"
+                    onClick={() => props.hideFunc(null)}
+                >
+                    Close
+                </button>
             </div>
-            <button
-                className="close-button non-selectable"
-                onClick={() => props.hideFunc(null)}
-            >
-                Close
-            </button>
         </div>
     );
 }
