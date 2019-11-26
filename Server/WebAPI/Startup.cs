@@ -36,6 +36,9 @@ namespace WebAPI
             services.AddSingleton<IAccountUpdatingSettings, AccountUpdatingSettings>();
             services.AddSingleton<IProfileCachingSettings, ProfileCachingSettings>();
 
+            FrontendFilesSettings frontendFilesSettings = new FrontendFilesSettings(Configuration);
+            services.AddSingleton<IFrontendFilesSettings>(frontendFilesSettings);
+
             FilesUploadingSettings filesUploadingSettings = new FilesUploadingSettings(Configuration);
             services.AddSingleton<IFilesUploadingSettings, FilesUploadingSettings>();
             services.AddSingleton<IPaginationSettings, PaginationSettings>();
@@ -112,9 +115,18 @@ namespace WebAPI
             });
 
             services.AddMemoryCache();
+
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = Path.Combine(frontendFilesSettings.StoragePath);
+            });
         }
 
-        public void Configure(IApplicationBuilder app, IFilesUploadingSettings filesUploadingSettings)
+        public void Configure(
+            IApplicationBuilder app,
+            IFilesUploadingSettings filesUploadingSettings,
+            IFrontendFilesSettings frontendFilesSettings
+        )
         {
             app.UseExceptionLogger();
 
@@ -135,6 +147,17 @@ namespace WebAPI
             {
                 FileProvider = new PhysicalFileProvider(filesUploadingSettings.StoragePath),
                 RequestPath = "/" + filesUploadingSettings.StaticFilesCatalogName
+            });
+
+            app.UseFileServer(new FileServerOptions()
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(frontendFilesSettings.StoragePath)),
+                RequestPath = ""
+            });
+
+            app.UseSpa(spa =>
+            {
+                spa.Options.SourcePath = Path.Combine(frontendFilesSettings.StoragePath);
             });
         }
     }
