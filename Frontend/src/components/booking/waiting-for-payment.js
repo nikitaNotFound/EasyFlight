@@ -70,7 +70,7 @@ export default function WaitingForPayment(props) {
                         Payed!
                     </div>
                     <div className="option-buttons">
-                        <Link to="" className="non-dec-link">
+                        <Link to="/" className="non-dec-link">
                             <button className="another-book">
                                 Make another book
                             </button>
