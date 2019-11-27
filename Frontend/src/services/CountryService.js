@@ -17,7 +17,7 @@ export async function getById(id) {
 
 export async function searchByName(nameFilter) {
     const response = await fetch(
-        `${config.API_URL}/countries?nameFilter=${nameFilter}`,
+        `${config.API_URL}/countries?nameFilter=${encodeURIComponent(nameFilter)}`,
         {
             method: 'GET',
             mode: 'cors',
@@ -71,7 +71,7 @@ export async function getCountryCities(countryId) {
 
 export async function searchCountryCitiesByName(countryId, nameFilter) {
     const response = await fetch(
-        `${config.API_URL}/countries/${countryId}/cities?nameFilter=${nameFilter}`,
+        `${config.API_URL}/countries/${countryId}/cities?nameFilter=${encodeURIComponent(nameFilter)}`,
         {
             method: 'GET',
             mode: 'cors',

@@ -19,7 +19,9 @@ function Header(state) {
             <div className="row">
                 <div className="col-sm-12 col-lg-9">
                     <Link to="/" className="non-dec-link">
-                        <h1 className="display-4 company-icon">easy flight</h1>
+                        <div className="main-logo">
+                            <h1 className="display-4 company-icon">easy flight</h1>
+                        </div>
                     </Link>
                 </div>
 

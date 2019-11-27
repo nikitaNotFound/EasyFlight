@@ -7,9 +7,8 @@ import SearchList from '../../../common/search-list';
 import MessageBox from '../../../common/message-box';
 import Spinner from '../../../common/spinner';
 import TicketsCostEditor from './tickets-cost-editor';
-import ParamField from './param-field';
+import ParamField from '../../../common/param-field';
 import ConfirmActionButton from '../../../common/confirm-action-button';
-
 
 import Flight from '../../../../services/flight-models/flight';
 import { invalidInput, defaultErrorMessage, flightTimeError, saved } from '../../../common/message-box-messages';

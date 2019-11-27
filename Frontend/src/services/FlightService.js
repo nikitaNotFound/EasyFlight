@@ -84,78 +84,79 @@ export async function updateTicketCost(flightId, ticketCost) {
     return await createRequestResult(response, RequestTypes.NoContentExpected);
 }
 
-export async function searchWithParams(filter, searchByName) {
-    if (searchByName === true) {
-        var nameFilter = filter;
-    } else {
-        var {
-            nameFilter,
-            fromAirportId,
-            toAirportId,
-            fromCityId,
-            toCityId,
-            departureDate,
-            arrivalDate,
-            ticketCount,
-            searchBack,
-            currentPage,
-            pageLimit
-        } = filter;
-    }
+export async function searchWithParams(filter) {
+    var {
+        fromAirportId,
+        toAirportId,
+        fromCityId,
+        toCityId,
+        departureDate,
+        arrivalDate,
+        ticketCount,
+        searchBack,
+        currentPage,
+        pageLimit,
+        departureBackDate,
+        arrivalBackDate
+    } = filter;
 
-    let parameteres = '?';
+    let parameteres = new URLSearchParams();
 
     if (!currentPage) {
         // first page
         currentPage = 1;
     }
 
-    parameteres += `currentPage=${currentPage}&`;
+    parameteres.append('currentPage', currentPage);
 
     if (!pageLimit) {
         pageLimit = config.DEFAULT_PAGE_LIMIT;
     }
 
-    parameteres += `pageLimit=${pageLimit}&`;
-
-    if (nameFilter) {
-        parameteres += `nameFilter=${nameFilter}&`;
-    }
+    parameteres.append('pageLimit', pageLimit);
 
     if (fromAirportId) {
-        parameteres += `fromAirportId=${fromAirportId}&`;
+        parameteres.append('fromAirportId', fromAirportId);
     }
 
     if (toAirportId) {
-        parameteres += `toAirportId=${toAirportId}&`;
+        parameteres.append('toAirportId', toAirportId);
     }
 
     if (fromCityId) {
-        parameteres += `fromCityId=${fromCityId}&`;
+        parameteres.append('fromCityId', fromCityId);
     }
 
     if (toCityId) {
-        parameteres += `toCityId=${toCityId}&`;
+        parameteres.append('toCityId', toCityId);
     }
 
     if (departureDate) {
-        parameteres += `departureTime=${departureDate}&`;
+        parameteres.append('departureTime', departureDate);
     }
 
     if (arrivalDate) {
-        parameteres += `arrivalTime=${arrivalDate}&`;
+        parameteres.append('arrivalTime', arrivalDate);
     }
 
     if (ticketCount) {
-        parameteres += `ticketCount=${ticketCount}&`;
+        parameteres.append('ticketCount', ticketCount);
     }
 
     if (searchBack === true) {
-        parameteres += `searchBack=${searchBack}`;
+        parameteres.append('searchBack', searchBack);
+
+        if (departureBackDate) {
+            parameteres.append('departureBackDate', departureBackDate);
+        }
+
+        if (arrivalBackDate) {
+            parameteres.append('arrivalBackDate', arrivalBackDate);
+        }
     }
 
     const response = await fetch(
-        `${config.API_URL}/flights${parameteres}`,
+        `${config.API_URL}/flights?${parameteres.toString()}`,
         {
             method: 'get',
             mode: 'cors',

@@ -15,8 +15,11 @@ function Filter(props) {
     const [fromAirport, changeFromAirport] = useState(props.filterOptions.fromAirport);
     const [toAirport, changeToAirport] = useState(props.filterOptions.toAirport);
 
-    const [departureDate, changeDepartureDate] = useState(props.filterOptions.departureTime);
-    const [arrivalDate, changeArrivalDate] = useState(props.filterOptions.departureBackTime);
+    const [departureDate, changeDepartureDate] = useState(props.filterOptions.departureDate);
+    const [arrivalDate, changeArrivalDate] = useState(props.filterOptions.arrivalDate);
+
+    const [departureBackDate, changeDepartureBackDate] = useState(props.filterOptions.departureBackDate);
+    const [arrivalBackDate, changeArrivalBackDate] = useState(props.filterOptions.arrivalBackDate);
 
     const [ticketCount, changeTicketsCount] = useState(props.filterOptions.ticketCount);
     const [searchToAndBack, changeSearchToAndBack] = useState(props.filterOptions.searchToAndBack);
@@ -44,7 +47,9 @@ function Filter(props) {
             departureDate,
             arrivalDate,
             ticketCount,
-            searchToAndBack
+            searchToAndBack,
+            departureBackDate,
+            arrivalBackDate
         );
 
         props.onFilterApplied(newOptions);
@@ -78,6 +83,97 @@ function Filter(props) {
         }
     }
 
+    function showBackFlightsTimeOptions() {
+        if (searchToAndBack === true) {
+            return (
+                <div className="row filter-item">
+                    <div className="filter-col">
+                        <label htmlFor="departure">
+                            Departure back
+                        </label>
+                        <input
+                            className="filter-control"
+                            type="date"
+                            id="departure"
+                            placeholder="Date"
+                            value={departureBackDate}
+                            onChange={(event) => changeDepartureBackDate(event.target.value)}
+                        />
+                    </div>
+                    <div className="filter-col">
+                        <label htmlFor="arrival">
+                            Arrival back
+                        </label>
+                        <input
+                            className="filter-control"
+                            id="arrival"
+                            type="date"
+                            placeholder="Date"
+                            value={arrivalBackDate}
+                            onChange={(event) => changeArrivalBackDate(event.target.value)}
+                        />
+                    </div>
+                </div>
+            );
+        }
+    }
+
+    function showToCityPicker() {
+        if (!toAirport) {
+            return (
+                <SearchList
+                    searchFunc={CityService.searchByName}
+                    placeholder="To city"
+                    currentItem={toCity}
+                    getItemName={buildCityName}
+                    onValueChange={changeToCity}
+                />
+            );
+        }
+    }
+
+    function showFromCityPicker() {
+        if (!fromAirport) {
+            return (
+                <SearchList
+                    searchFunc={CityService.searchByName}
+                    placeholder="From city"
+                    currentItem={fromCity}
+                    getItemName={buildCityName}
+                    onValueChange={changeFromCity}
+                />
+            );
+        }
+    }
+
+    function showToAirportPicker() {
+        if (!toCity) {
+            return (
+                <SearchList
+                    searchFunc={AirportService.searchByName}
+                    placeholder="To airport"
+                    currentItem={toAirport}
+                    getItemName={getAirportName}
+                    onValueChange={changeToAirport}
+                />
+            );
+        }
+    }
+
+    function showFromAirportPicker() {
+        if (!fromCity) {
+            return (
+                <SearchList
+                    searchFunc={AirportService.searchByName}
+                    placeholder="From airport"
+                    currentItem={fromAirport}
+                    getItemName={getAirportName}
+                    onValueChange={changeFromAirport}
+                />
+            );
+        }
+    }
+
     return (
         <main className="list-filter rounded">
             {showMessageBox()}
@@ -85,37 +181,13 @@ function Filter(props) {
 
             <div className="filter-area">
                 <div className="row filter-item">
-                    <SearchList
-                        searchFunc={CityService.searchByName}
-                        placeholder="From city"
-                        currentItem={fromCity}
-                        getItemName={buildCityName}
-                        onValueChange={changeFromCity}
-                    />
-                    <SearchList
-                        searchFunc={CityService.searchByName}
-                        placeholder="To city"
-                        currentItem={toCity}
-                        getItemName={buildCityName}
-                        onValueChange={changeToCity}
-                    />
+                    {showFromCityPicker()}
+                    {showFromAirportPicker()}
                 </div>
 
                 <div className="row filter-item">
-                    <SearchList
-                        searchFunc={AirportService.searchByName}
-                        placeholder="From airport"
-                        currentItem={fromAirport}
-                        getItemName={getAirportName}
-                        onValueChange={changeFromAirport}
-                    />
-                    <SearchList
-                        searchFunc={AirportService.searchByName}
-                        placeholder="To airport"
-                        currentItem={toAirport}
-                        getItemName={getAirportName}
-                        onValueChange={changeToAirport}
-                    />
+                    {showToCityPicker()}
+                    {showToAirportPicker()}
                 </div>
 
                 <div className="row filter-item">
@@ -171,6 +243,8 @@ function Filter(props) {
                     />
                     Search flights to place and back
                 </div>
+
+                {showBackFlightsTimeOptions()}
 
                 <div className="row filter-item">
                     <button className="btn btn-primary button-filter" onClick={onFilterApplied}>

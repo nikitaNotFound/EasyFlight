@@ -5,7 +5,7 @@ import AuthTokenProvider from './AuthTokenProvider';
 
 export async function createRequestResult(response, requestType) {
     if (response.ok) {
-        if (requestType == RequestTypes.ContentExpected) {
+        if (requestType === RequestTypes.ContentExpected) {
             var result = await response.json();
         } else {
             var result = null;
@@ -13,9 +13,9 @@ export async function createRequestResult(response, requestType) {
 
         return result;
     } else {
-        if (response.status == HttpStatus.BAD_REQUEST) {
+        if (response.status === HttpStatus.BAD_REQUEST) {
             throw new BadRequestError();
-        } else if (response.status == HttpStatus.NOT_FOUND) {
+        } else if (response.status === HttpStatus.NOT_FOUND) {
             throw new NotFoundError();
         } else {
             throw new Error();

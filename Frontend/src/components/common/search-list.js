@@ -34,7 +34,7 @@ function SearchList(props) {
         }
 
         setupData();
-    });
+    }, [props]);
 
     function openList() {
         changeMode(true);
@@ -44,6 +44,8 @@ function SearchList(props) {
         if (currentItem) {
             changeInputValue(await props.getItemName(currentItem));
         } else {
+            changeList([]);
+            changeLoading(true);
             changeInputValue('');
         }
         changeMode(false);
@@ -61,8 +63,14 @@ function SearchList(props) {
             changeLoading(true);
             changeCurrentItem(null);
             props.onValueChange(null);
+            changeInputValue('');
             return;
         } else {
+            if (!inputValue && event.target.value === ' ') {
+                changeInputValue('');
+                return;
+            }
+
             changeInputValue(event.target.value);
         }
 
@@ -110,24 +118,6 @@ function SearchList(props) {
                 />
             );
         }
-    }
-
-    function getList() {
-        if (loading) {
-            return <Spinner headline="Waiting..."/>
-        }
-
-        return (
-            list.map(
-                (item, key) => 
-                    <Item
-                        item={item}
-                        getItemName={props.getItemName}
-                        onValueChange={searchItemChosen}
-                        key={key}
-                    />
-            )
-        );
     }
 
     return (

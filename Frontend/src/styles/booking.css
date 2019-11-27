@@ -39,7 +39,7 @@
 }
 
 .seat-types-baggage-container {
-    width: 18%;
+    width: 100%;
     display: inline-block;
     vertical-align: top;
 }
@@ -118,7 +118,7 @@
 
 .seat-scheme {
     background: rgb(211, 211, 211);
-    width: 80%;
+    width: 100%;
     margin-right: 2%;
     padding: 0.5%;
     display: inline-block;

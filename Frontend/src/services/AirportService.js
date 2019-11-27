@@ -45,7 +45,7 @@ export async function update(airport) {
 
 export async function searchByName(nameFilter) {
     const response = await fetch(
-        `${config.API_URL}/airports?nameFilter=${nameFilter}`,
+        `${config.API_URL}/airports?nameFilter=${encodeURIComponent(nameFilter)}`,
         {
             method: 'GET',
             mode: 'cors',

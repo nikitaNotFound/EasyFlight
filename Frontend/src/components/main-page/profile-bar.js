@@ -24,11 +24,11 @@ function ProfileBar(props) {
             </div>
             <Link to="/profile" className="non-dec-link">
                 <button className="settings">
-                    <img src={SettingsIcon}/>
+                    <img src={SettingsIcon} alt="settings"/>
                 </button>
             </Link>
             <button className="logout non-selectable rounded-right" onClick={onLogout}>
-                <img src={LogoutIcon}/>
+                <img src={LogoutIcon} alt="logout"/>
             </button>
         </div>
     );

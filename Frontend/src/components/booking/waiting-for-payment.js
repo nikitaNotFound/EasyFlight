@@ -15,7 +15,7 @@ function startWaiting(callback, bookId) {
         try {
             const statusObject = await FlightService.getBookStatus(bookId);
 
-            if (statusObject.status == config.BOOK_TYPES.Payed) {
+            if (statusObject.status === config.BOOK_TYPES.Payed) {
                 callback(waitingModes.Payed);
             } else {
                 request();
@@ -41,7 +41,7 @@ export default function WaitingForPayment(props) {
 
     useEffect(() => {
         startWaiting(changeWaitingMode, props.bookId);
-    }, [])
+    }, [props.bookId])
 
     if (waitingMode === waitingModes.Error) {
         return (

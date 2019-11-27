@@ -13,6 +13,14 @@
   padding: 1%;
 }
 
+.filter-item .form-item label {
+  text-align: center;
+}
+
+.filter-item .form-item:last-child {
+  margin-left: 1%;
+}
+
 .list-only .list-filter {
   width: 0%;
   display: none;
@@ -81,8 +89,17 @@
 }
 
 .filter-item {
-  margin: 0% 1%;
   margin-top: 2%;
+  display: flex;
+  justify-content: center;
+}
+
+.filter-item .form-item {
+  margin: 0;
+}
+
+.filter-item .filter-col {
+  margin: 0;
 }
 
 .filter-control {
@@ -230,14 +247,15 @@
 
 @media screen and (max-width: 960px) {
   .button-buy {
-      font-size: 12px;
+      font-size: 18px;
       padding-right: 0%;
       padding-left: 0%;
+      padding: 5px;
   }
 
   .button-buy img {
-      width: 15px;
-      height: 15px;
+      width: 20px;
+      height: 20px;
   }
 
   .list-item {

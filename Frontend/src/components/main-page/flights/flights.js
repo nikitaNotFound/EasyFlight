@@ -17,7 +17,7 @@ function Flights(props) {
     }
 
     // when search doesnt give any result
-    if (props.flights.length == 0) {
+    if (props.flights.length === 0) {
         return (
             <div className="list rounded">
                 <ComponentHeadline content="Flights list"/>

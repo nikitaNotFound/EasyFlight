@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Headline from '../../../common/headline';
 import SeatEditor from './seat-editor';
 import MessageBox from '../../../common/message-box';
+import ParamField from '../../../common/param-field';
 
 import Airplane from '../../../../services/airplane-models/airplane';
 
@@ -12,7 +13,7 @@ import ConfirmActionButton from '../../../common/confirm-action-button';
 import { BadRequestError } from '../../../../services/RequestErrors';
 
 export default function Add() {
-    const [name, changeName] = useState('');
+    const [name, changeName] = useState();
     const [carryingKg, changeCarryingKg] = useState(0);
     const [seats, changeSeats] = useState();
     const [seatTypes, changeSeatTypes] = useState([]);
@@ -78,8 +79,16 @@ export default function Add() {
         for (let floor = 0, len = scheme.length; floor < len; floor++) {
             const floorArray = scheme[floor];
 
+            if (!floorArray) {
+                continue;
+            }
+
             for (let section = 0, len = floorArray.length; section < len; section++) {
                 const sectionArray = floorArray[section];
+
+                if (!sectionArray) {
+                    continue;
+                }
 
                 for (let zone = 0, len = sectionArray.length; zone < len; zone++) {
                     const zoneArray = sectionArray[zone];
@@ -149,13 +158,6 @@ export default function Add() {
         changeSeats(seatList);
     }
 
-    function onCarryingChange(event) {
-        const newCarrying = Number(event.target.value);
-        if (newCarrying > 0) {
-            changeCarryingKg(newCarrying);
-        }
-    }
-
     function showMessageBox() {
         if (messageBoxValue) {
             return (
@@ -176,27 +178,18 @@ export default function Add() {
                     <div className="col-12">
                         <div className="editing-params-form">
                             <div className="row">
-                                <div className="form-item">
-                                    <label htmlFor="airplane-name">
-                                        Airplane name
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="airplane-name"
-                                        onChange={(event) => changeName(event.target.value)}
-                                        value={name}
-                                    />
-                                </div>
-                                <div className="form-item">
-                                    <label htmlFor="airplane-max-mass">
-                                        Max mass
-                                    </label>
-                                    <input
-                                        id="airplane-max-mass"
-                                        onChange={onCarryingChange}
-                                        value={carryingKg}
-                                    />
-                                </div>
+                                <ParamField
+                                    name="Airplane name"
+                                    value={name}
+                                    onChange={changeName}
+                                    inputType="text"
+                                />
+                                <ParamField
+                                    name="Max mass"
+                                    value={carryingKg}
+                                    onChange={changeCarryingKg}
+                                    inputType="text"
+                                />
                             </div>
                         </div>
                         <br/>

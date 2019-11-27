@@ -55,7 +55,7 @@
 .form-item label {
     font-size: 18px;
     margin-bottom: 0.3%;
-    width: 194px;
+    min-width: 170px;
     display: inherit;
 }
 
