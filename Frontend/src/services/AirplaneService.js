@@ -152,43 +152,43 @@ export async function searchWithParams(filter, nameSearchOnly) {
         } = filter;
     }
 
-    let parameteres = '?';
+    let parameteres = new URLSearchParams();
 
     if (!currentPage) {
         // first page
         currentPage = 1;
     }
 
-    parameteres += `&currentPage=${currentPage}`;
+    parameteres.append('currentPage', currentPage);
 
     if (!pageLimit) {
         pageLimit = config.DEFAULT_PAGE_LIMIT;
     }
 
-    parameteres += `&pageLimit=${pageLimit}`;
+    parameteres.append('pageLimit', pageLimit);
 
     if (nameFilter) {
-        parameteres += `&nameFilter=${nameFilter}`;
+        parameteres.append('nameFilter', nameFilter);
     }
 
     if (carryingMinKg) {
-        parameteres += `&minCarryingKg=${carryingMinKg}`;
+        parameteres.append('minCarryingKg', carryingMinKg);
     }
     
     if (carryingMaxKg) {
-        parameteres += `&maxCarryingKg=${carryingMaxKg}`;
+        parameteres.append('maxCarryingKg', carryingMaxKg);
     }
 
     if (seatCountMax) {
-        parameteres += `&maxSeatCount=${seatCountMax}`;
+        parameteres.append('maxSeatCount', seatCountMax);
     }
 
     if (seatCountMin) {
-        parameteres += `&minSeatCount=${seatCountMin}`;
+        parameteres.append('minSeatCount', seatCountMin);
     }
 
     const response = await fetch(
-        `${config.API_URL}/airplanes${parameteres}`,
+        `${config.API_URL}/airplanes?${parameteres.toString()}`,
         {
             method: 'GET',
             mode: 'cors',

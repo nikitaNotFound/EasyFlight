@@ -127,7 +127,7 @@ function Filter(props) {
                 </div>
 
                 <div className="filter-arg">
-                    <label htmlFor="">Departure back date</label>
+                    <label htmlFor="">Arrival date</label>
                     <input
                         type="date"
                         value={arrivalDate}

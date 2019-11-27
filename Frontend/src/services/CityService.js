@@ -45,7 +45,7 @@ export async function update(city) {
 
 export async function searchByName(nameFilter) {
     const response = await fetch(
-        `${config.API_URL}/cities?nameFilter=${nameFilter}`,
+        `${config.API_URL}/cities?nameFilter=${encodeURIComponent(nameFilter)}`,
         {
             method: 'GET',
             mode: 'cors',
@@ -70,7 +70,7 @@ export async function getCityAirports(cityId) {
 
 export async function searchCityAirportsByName(cityId, nameFilter) {
     const response = await fetch(
-        `${config.API_URL}/cities/${cityId}/airports?nameFilter=${nameFilter}`,
+        `${config.API_URL}/cities/${cityId}/airports?nameFilter=${encodeURIComponent(nameFilter)}`,
         {
             method: 'GET',
             mode: 'cors',
