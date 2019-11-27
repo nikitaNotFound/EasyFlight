@@ -159,32 +159,32 @@ export async function searchWithParams(filter, nameSearchOnly) {
         currentPage = 1;
     }
 
-    parameteres += `currentPage=${currentPage}&`;
+    parameteres += `&currentPage=${currentPage}`;
 
     if (!pageLimit) {
         pageLimit = config.DEFAULT_PAGE_LIMIT;
     }
 
-    parameteres += `pageLimit=${pageLimit}&`;
+    parameteres += `&pageLimit=${pageLimit}`;
 
     if (nameFilter) {
-        parameteres += `nameFilter=${nameFilter}&`;
+        parameteres += `&nameFilter=${nameFilter}`;
     }
 
     if (carryingMinKg) {
-        parameteres += `minCarryingKg=${carryingMinKg}&`;
+        parameteres += `&minCarryingKg=${carryingMinKg}`;
     }
     
     if (carryingMaxKg) {
-        parameteres += `maxCarryingKg=${carryingMaxKg}&`;
+        parameteres += `&maxCarryingKg=${carryingMaxKg}`;
     }
 
     if (seatCountMax) {
-        parameteres += `maxSeatCount=${seatCountMax}&`;
+        parameteres += `&maxSeatCount=${seatCountMax}`;
     }
 
     if (seatCountMin) {
-        parameteres += `minSeatCount=${seatCountMin}&`;
+        parameteres += `&minSeatCount=${seatCountMin}`;
     }
 
     const response = await fetch(

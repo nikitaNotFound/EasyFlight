@@ -112,55 +112,55 @@ export async function searchWithParams(filter, searchByName) {
         currentPage = 1;
     }
 
-    parameteres += `currentPage=${currentPage}&`;
+    parameteres += `currentPage=${currentPage}`;
 
     if (!pageLimit) {
         pageLimit = config.DEFAULT_PAGE_LIMIT;
     }
 
-    parameteres += `pageLimit=${pageLimit}&`;
+    parameteres += `&pageLimit=${pageLimit}`;
 
     if (nameFilter) {
-        parameteres += `nameFilter=${nameFilter}&`;
+        parameteres += `&nameFilter=${nameFilter}`;
     }
 
     if (fromAirportId) {
-        parameteres += `fromAirportId=${fromAirportId}&`;
+        parameteres += `&fromAirportId=${fromAirportId}`;
     }
 
     if (toAirportId) {
-        parameteres += `toAirportId=${toAirportId}&`;
+        parameteres += `&toAirportId=${toAirportId}`;
     }
 
     if (fromCityId) {
-        parameteres += `fromCityId=${fromCityId}&`;
+        parameteres += `&fromCityId=${fromCityId}`;
     }
 
     if (toCityId) {
-        parameteres += `toCityId=${toCityId}&`;
+        parameteres += `&toCityId=${toCityId}`;
     }
 
     if (departureDate) {
-        parameteres += `departureTime=${departureDate}&`;
+        parameteres += `&departureTime=${departureDate}`;
     }
 
     if (arrivalDate) {
-        parameteres += `arrivalTime=${arrivalDate}&`;
+        parameteres += `&arrivalTime=${arrivalDate}`;
     }
 
     if (ticketCount) {
-        parameteres += `ticketCount=${ticketCount}&`;
+        parameteres += `&ticketCount=${ticketCount}`;
     }
 
     if (searchBack === true) {
-        parameteres += `searchBack=${searchBack}&`;
+        parameteres += `&searchBack=${searchBack}`;
 
         if (departureBackDate) {
-            parameteres += `departureBackDate=${departureBackDate}&`;
+            parameteres += `&departureBackDate=${departureBackDate}`;
         }
 
         if (arrivalBackDate) {
-            parameteres += `arrivalBackDate=${arrivalBackDate}&`;
+            parameteres += `&arrivalBackDate=${arrivalBackDate}`;
         }
     }
 

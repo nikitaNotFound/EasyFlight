@@ -27,7 +27,7 @@ export default function ParamField(props) {
                 props.onChange(0);
             }
         } else {
-            if (!props.value && event.target.value === ' ') {
+            if (event.target.value === ' ') {
                 props.onChange('');
                 return;
             }
