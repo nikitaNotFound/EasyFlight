@@ -133,5 +133,5 @@
     <Content Include="dbo\Tables\Cities.sql" />
     <Content Include="dbo\Tables\FlightSeatTypesCost.sql" />
   </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
-<Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
