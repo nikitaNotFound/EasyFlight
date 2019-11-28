@@ -242,36 +242,41 @@ export default function Edit(props) {
             <div className="list-item-action editing">
                 <Headline name="Editing airplane"/>
 
-                <div className="row">
-                    <div className="col-12">
-                        <div className="editing-params-form">
-                            <div className="row">
-                                <ParamField
-                                    name="Airplane name"
-                                    value={name}
-                                    onChange={onNameChange}
-                                    inputType="text"
-                                />
-                                <ParamField
-                                    name="Max mass"
-                                    value={carryingKg}
-                                    onChange={onCarryingChange}
-                                    inputType="text"
+                <form onSubmit={onDataSave}>
+                    <div className="row">
+                            <div className="col-12">
+                                <div className="editing-params-form">
+                                    <div className="row">
+                                        <ParamField
+                                            name="Airplane name"
+                                            value={name}
+                                            onChange={onNameChange}
+                                            inputType="text"
+                                            required
+                                        />
+                                        <ParamField
+                                            name="Max mass"
+                                            value={carryingKg}
+                                            onChange={onCarryingChange}
+                                            inputType="number"
+                                            required
+                                            min={1}
+                                        />
+                                    </div>
+                                </div>
+                                <br/>
+                                <SeatEditor 
+                                    seatInfo={seats}
+                                    seatTypes={seatTypes}
+                                    onSeatsChange={onSeatsChange}
+                                    onSeatTypesChange={changeSeatTypes}
+                                    onTypeAdded={onTypeAdded}
+                                    onTypeDeleted={onTypeDeleted}
                                 />
                             </div>
-                        </div>
-                        <br/>
-                        <SeatEditor 
-                            seatInfo={seats}
-                            seatTypes={seatTypes}
-                            onSeatsChange={onSeatsChange}
-                            onSeatTypesChange={changeSeatTypes}
-                            onTypeAdded={onTypeAdded}
-                            onTypeDeleted={onTypeDeleted}
-                        />
+                            <ConfirmActionButton buttonContent="Save"/>
                     </div>
-                </div>
-                <ConfirmActionButton onClick={onDataSave} buttonContent="Save"/>
+                </form>
                 {showMessageBox()}
             </div>
         );

@@ -8,7 +8,7 @@ import * as UserService from '../../services/UserSerivce';
 
 import '../../styles/registration.css';
 import { BadRequestError } from '../../services/RequestErrors';
-import { invalidInput, defaultErrorMessage, badLoginData } from '../common/message-box-messages';
+import { defaultErrorMessage, badLoginData } from '../common/message-box-messages';
 
 import { changeUserInfo } from '../../store/actions/UserInfoActions';
 
@@ -20,9 +20,9 @@ function Content(props) {
 
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
-    async function onLogin() {
+    async function onLogin(event) {
+        event.preventDefault();
         if (!email || !password) {
-            changeMessageBoxValue(invalidInput());
             return;
         }
 
@@ -68,22 +68,27 @@ function Content(props) {
         <main className="rounded">
             {showMessageBox()}
             <div className="form-block form-sign-up">
-                <input
-                    className="form-control"
-                    placeholder="Email"
-                    value={email}
-                    onChange={(event) => changeEmail(event.target.value)}
-                />
-                <input
-                    className="form-control"
-                    placeholder="Password"
-                    type="password"
-                    value={password}
-                    onChange={(event) => changePassword(event.target.value)}
-                />
-                <button className="btn btn-primary button-dark main-button" onClick={onLogin}>
-                    Sign in
-                </button>
+                <form onSubmit={onLogin}>
+                    <input
+                        className="form-control"
+                        placeholder="Email"
+                        type="email"
+                        value={email}
+                        onChange={(event) => changeEmail(event.target.value)}
+                        required
+                    />
+                    <input
+                        className="form-control"
+                        placeholder="Password"
+                        type="password"
+                        value={password}
+                        onChange={(event) => changePassword(event.target.value)}
+                        required
+                    />
+                    <button type="submit" className="btn btn-primary button-dark main-button">
+                        Sign in
+                    </button>
+                </form>
 
                 <div className="social-networks">
                     <GoogleLogin

@@ -7,6 +7,7 @@ import SearchOptions from '../../../services/flight-models/search-options';
 import MessageBox from '../../common/message-box';
 import SearchList from '../../common/search-list';
 import PropsTypes from 'prop-types';
+import ParamField from '../../common/param-field';
 
 function Filter(props) {
     const [fromCity, changeFromCity] = useState(props.filterOptions.fromCity);
@@ -21,7 +22,11 @@ function Filter(props) {
     const [departureBackDate, changeDepartureBackDate] = useState(props.filterOptions.departureBackDate);
     const [arrivalBackDate, changeArrivalBackDate] = useState(props.filterOptions.arrivalBackDate);
 
-    const [ticketCount, changeTicketsCount] = useState(props.filterOptions.ticketCount);
+    const [ticketCount, changeTicketsCount] = useState(
+        props.filterOptions.ticketCount
+        ? props.filterOptions.ticketCount
+        : 0
+    );
     const [searchToAndBack, changeSearchToAndBack] = useState(props.filterOptions.searchToAndBack);
 
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
@@ -180,17 +185,17 @@ function Filter(props) {
             <ComponentHeadline content="Filter" />
 
             <div className="filter-area">
-                <div className="row filter-item">
+                <div className="filter-item">
                     {showFromCityPicker()}
                     {showFromAirportPicker()}
                 </div>
 
-                <div className="row filter-item">
+                <div className="filter-item">
                     {showToCityPicker()}
                     {showToAirportPicker()}
                 </div>
 
-                <div className="row filter-item">
+                <div className="filter-item">
                     <div className="filter-col">
                         <label htmlFor="departure">
                             Departure
@@ -219,22 +224,15 @@ function Filter(props) {
                     </div>
                 </div>
 
-                <div className="row filter-item">
-                    <div className="filter-col">
-                        <label htmlFor="tickets">
-                            Amount of tickets
-                        </label>
-                        <input
-                            className="filter-control"
-                            id="tickets"
-                            placeholder="Count"
-                            value={ticketCount}
-                            onChange={(event) => changeTicketsCount(event.target.value)}
-                        />
-                    </div>
+                <div className="filter-item">
+                    <ParamField
+                        name="Amount of tickets"
+                        value={ticketCount}
+                        onChange={changeTicketsCount}
+                    />
                 </div>
 
-                <div className="row filter-item">
+                <div className="filter-item">
                     <input
                         type="checkbox"
                         className="form-control checkbox-control"
@@ -246,9 +244,9 @@ function Filter(props) {
 
                 {showBackFlightsTimeOptions()}
 
-                <div className="row filter-item">
+                <div className="filter-item">
                     <button className="btn btn-primary button-filter" onClick={onFilterApplied}>
-                        Apply filter
+                        Search
                     </button>
                 </div>
             </div>

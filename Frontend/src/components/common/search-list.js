@@ -8,41 +8,41 @@ import MessageBox from '../common/message-box';
 import '../../styles/search-list.css';
 import { defaultErrorMessage } from './message-box-messages';
 
-async function getStartItemName(props) {
-    if (!props.currentItem) {
+async function getStartItemName(currentItem, getItemName) {
+    if (!currentItem) {
         return;
     }
 
-    const startItemName = await props.getItemName(props.currentItem);
+    const startItemName = await getItemName(currentItem);
 
     return startItemName;
 }
 
-function SearchList(props) {
+function SearchList({searchFunc, searchArgs, currentItem, placeholder, getItemName, onValueChange, ...other}) {
     const [loading, changeLoading] = useState(true);
     const [mode, changeMode] = useState(false);
     const [list, changeList] = useState([]);
     const [inputValue, changeInputValue] = useState();
-    const [currentItem, changeCurrentItem] = useState(props.currentItem);
+    const [item, changeItem] = useState(currentItem);
     const [messageBoxValue, changeMessageBoxValue] = useState(null);
 
     useEffect(() => {
         const setupData = async () => {
-            const startItemName = await getStartItemName(props);
+            const startItemName = await getStartItemName(currentItem, getItemName);
 
             changeInputValue(startItemName)
         }
 
         setupData();
-    }, [props]);
+    }, [currentItem]);
 
     function openList() {
         changeMode(true);
     }
 
     async function closeList() {
-        if (currentItem) {
-            changeInputValue(await props.getItemName(currentItem));
+        if (item) {
+            changeInputValue(await getItemName(item));
         } else {
             changeList([]);
             changeLoading(true);
@@ -53,16 +53,16 @@ function SearchList(props) {
 
     async function searchItemChosen(item) {
         changeList([]);
-        changeCurrentItem(item);
-        changeInputValue(await props.getItemName(item));
-        props.onValueChange(item);
+        changeItem(item);
+        changeInputValue(await getItemName(item));
+        onValueChange(item);
     }
 
     async function onSearchPhraseChange(event) {
         if (!event.target.value) {
             changeLoading(true);
-            changeCurrentItem(null);
-            props.onValueChange(null);
+            changeItem(null);
+            onValueChange(null);
             changeInputValue('');
             return;
         } else {
@@ -77,10 +77,10 @@ function SearchList(props) {
         try {
             let newListResult = null;
 
-            if (props.searchArgs) {
-                newListResult = await props.searchFunc(event.target.value, ...props.searchArgs);
+            if (searchArgs) {
+                newListResult = await searchFunc(event.target.value, ...searchArgs);
             } else {
-                newListResult = await props.searchFunc(event.target.value);
+                newListResult = await searchFunc(event.target.value);
             }
 
             changeList(newListResult);
@@ -101,7 +101,7 @@ function SearchList(props) {
                 (item, key) => 
                     <Item
                         item={item}
-                        getItemName={props.getItemName}
+                        getItemName={getItemName}
                         onValueChange={searchItemChosen}
                         key={key}
                     />
@@ -123,18 +123,19 @@ function SearchList(props) {
     return (
         <div className="form-item">
             {showMessageBox()}
-            <label htmlFor={props.placeholder}>{props.placeholder}</label>
+            <label htmlFor={placeholder}>{placeholder}</label>
             <input
-                id={props.placeholder}
+                id={placeholder}
                 className="search-list-input"
                 type="text"
                 value={inputValue}
                 autoComplete="off"
-                name={props.placeholder}
-                placeholder={props.placeholder}
+                name={placeholder}
+                placeholder={placeholder}
                 onFocus={openList}
                 onBlur={closeList}
                 onChange={onSearchPhraseChange}
+                {...other}
             />
 
             <div className={`search-list non-selectable 

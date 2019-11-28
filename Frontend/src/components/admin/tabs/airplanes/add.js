@@ -19,7 +19,8 @@ export default function Add() {
     const [seatTypes, changeSeatTypes] = useState([]);
     const [messageBoxValue, changeMessageBoxValue] = useState();
 
-    async function onDataSave() {
+    async function onDataSave(event) {
+        event.preventDefault();
         if (!name
             || !carryingKg
             || !seats
@@ -28,7 +29,6 @@ export default function Add() {
             changeMessageBoxValue(invalidInput());
             return;
         }
-
 
         const airplane = new Airplane(null, name, carryingKg);
 
@@ -51,7 +51,7 @@ export default function Add() {
                 for (let seatIndex = 0, len = newSeats.length; seatIndex < len; seatIndex++) {
                     const seat = newSeats[seatIndex];
 
-                    if (seat.typeId == seatTypeName) {
+                    if (seat.typeId === seatTypeName) {
                         seat.typeId = seatTypeId;
                         seat.airplaneId = addedAirplaneId;
                     }
@@ -131,7 +131,7 @@ export default function Add() {
 
         seatTypesStorage.splice(index, 1);
 
-        if (seatTypesStorage.length == 0) {
+        if (seatTypesStorage.length === 0) {
             seatTypesStorage = [];
         }
 
@@ -174,37 +174,42 @@ export default function Add() {
             <Headline name="Adding new airplane"/>
 
             <div className="adding-form">
-                <div className="row">
-                    <div className="col-12">
-                        <div className="editing-params-form">
-                            <div className="row">
-                                <ParamField
-                                    name="Airplane name"
-                                    value={name}
-                                    onChange={changeName}
-                                    inputType="text"
-                                />
-                                <ParamField
-                                    name="Max mass"
-                                    value={carryingKg}
-                                    onChange={changeCarryingKg}
-                                    inputType="text"
-                                />
+                <form onSubmit={onDataSave}>
+                    <div className="row">
+                        <div className="col-12">
+                            <div className="editing-params-form">
+                                <div className="row">
+                                    <ParamField
+                                        name="Airplane name"
+                                        value={name}
+                                        onChange={changeName}
+                                        inputType="text"
+                                        required
+                                    />
+                                    <ParamField
+                                        name="Max mass"
+                                        value={carryingKg}
+                                        onChange={changeCarryingKg}
+                                        inputType="number"
+                                        min={1}
+                                        required
+                                    />
+                                </div>
                             </div>
+                            <br/>
+                            <SeatEditor 
+                                seatInfo={seats}
+                                seatTypes={seatTypes}
+                                onSeatsChange={onSeatsChange}
+                                onSeatTypesChange={changeSeatTypes}
+                                onTypeAdded={onTypeAdded}
+                                onTypeDeleted={onTypeDeleted}
+                            />
                         </div>
-                        <br/>
-                        <SeatEditor 
-                            seatInfo={seats}
-                            seatTypes={seatTypes}
-                            onSeatsChange={onSeatsChange}
-                            onSeatTypesChange={changeSeatTypes}
-                            onTypeAdded={onTypeAdded}
-                            onTypeDeleted={onTypeDeleted}
-                        />
                     </div>
-                </div>
+                    <ConfirmActionButton buttonContent="Add"/>
+                </form>
             </div>
-            <ConfirmActionButton onClick={onDataSave} buttonContent="Add"/>
             {showMessageBox()}
         </div>
     );
