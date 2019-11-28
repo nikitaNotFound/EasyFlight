@@ -36,6 +36,9 @@ namespace WebAPI
             services.AddSingleton<IAccountUpdatingSettings, AccountUpdatingSettings>();
             services.AddSingleton<IProfileCachingSettings, ProfileCachingSettings>();
 
+            FrontendFilesSettings frontendFilesSettings = new FrontendFilesSettings(Configuration);
+            services.AddSingleton<IFrontendFilesSettings>(frontendFilesSettings);
+
             FilesUploadingSettings filesUploadingSettings = new FilesUploadingSettings(Configuration);
             services.AddSingleton<IFilesUploadingSettings, FilesUploadingSettings>();
             services.AddSingleton<IPaginationSettings, PaginationSettings>();
@@ -112,11 +115,32 @@ namespace WebAPI
             });
 
             services.AddMemoryCache();
+
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = Path.Combine(frontendFilesSettings.StoragePath);
+            });
         }
 
-        public void Configure(IApplicationBuilder app, IFilesUploadingSettings filesUploadingSettings)
+        public void Configure(
+            IApplicationBuilder app,
+            IFilesUploadingSettings filesUploadingSettings,
+            IFrontendFilesSettings frontendFilesSettings
+        )
         {
             app.UseExceptionLogger();
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(filesUploadingSettings.StoragePath)),
+                RequestPath = "/" + filesUploadingSettings.StaticFilesCatalogName
+            });
+
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(frontendFilesSettings.StoragePath)),
+                RequestPath = ""
+            });
 
             app.UseRouting();
             app.UseCors("CorsPolicy");
@@ -131,10 +155,9 @@ namespace WebAPI
                 endpoints.MapControllers();
             });
 
-            app.UseStaticFiles(new StaticFileOptions
+            app.UseSpa(spa =>
             {
-                FileProvider = new PhysicalFileProvider(filesUploadingSettings.StoragePath),
-                RequestPath = "/" + filesUploadingSettings.StaticFilesCatalogName
+                spa.Options.SourcePath = Path.Combine(frontendFilesSettings.StoragePath);
             });
         }
     }

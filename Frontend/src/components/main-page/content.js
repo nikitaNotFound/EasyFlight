@@ -54,18 +54,17 @@ function Content() {
             if (swapFilter === true){
                 swapFilterList();
             }
+            changeCurrentPage(newCurrentPage);
         } catch {
             changeMessageBoxValue(defaultErrorMessage());
         }
     }
 
     function onNext() {
-        changeCurrentPage(currentPage + 1);
         onFilterApply(filterOptions, currentPage + 1, false);
     }
 
     function onPervious() {
-        changeCurrentPage(currentPage - 1);
         onFilterApply(filterOptions, currentPage - 1, false);
     }
 
