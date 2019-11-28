@@ -84,7 +84,8 @@ export default function Edit(props) {
         fetchData();
     }, [props.match.params.id]);
 
-    async function onDataSave() {
+    async function onDataSave(event) {
+        event.preventDefault();
         if (!departureDate
             || !departureTime
             || !fromAirport
@@ -168,115 +169,128 @@ export default function Edit(props) {
             <Headline name="Editing flight" />
 
             <div className="adding-form">
-                <div className="row">
-                    <div className="col-12">
-                        <div className="editing-params-form flight-editor">
-                            <div className="row">
-                            <div className="adding-form-section date-time">
-                                    <div className="row">
-                                        <ParamField
-                                            name="Departure time"
-                                            value={departureTime}
-                                            onChange={changeDepartureTime}
-                                            inputType="time"
-                                        />
-                                        <ParamField
-                                            name="Departure date"
-                                            value={departureDate}
-                                            onChange={changeDepartureDate}
-                                            inputType="date"
-                                        />
+                <form onSubmit={onDataSave}>
+                    <div className="row">
+                        <div className="col-12">
+                            <div className="editing-params-form flight-editor">
+                                <div className="row">
+                                <div className="adding-form-section date-time">
+                                        <div className="row">
+                                            <ParamField
+                                                name="Departure time"
+                                                value={departureTime}
+                                                onChange={changeDepartureTime}
+                                                inputType="time"
+                                                required
+                                            />
+                                            <ParamField
+                                                name="Departure date"
+                                                value={departureDate}
+                                                onChange={changeDepartureDate}
+                                                inputType="date"
+                                                required
+                                            />
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div className="adding-form-section date-time arrival">
-                                    <div className="row">
-                                        <ParamField
-                                            name="Arrival time"
-                                            value={arrivalTime}
-                                            onChange={changeArrivalTime}
-                                            inputType="time"
-                                        />
-                                        <ParamField
-                                            name="Arrival date"
-                                            value={arrivalDate}
-                                            onChange={changeArrivalDate}
-                                            inputType="date"
-                                        />
+                                    <div className="adding-form-section date-time arrival">
+                                        <div className="row">
+                                            <ParamField
+                                                name="Arrival time"
+                                                value={arrivalTime}
+                                                onChange={changeArrivalTime}
+                                                inputType="time"
+                                                required
+                                            />
+                                            <ParamField
+                                                name="Arrival date"
+                                                value={arrivalDate}
+                                                onChange={changeArrivalDate}
+                                                inputType="date"
+                                                required
+                                            />
+                                        </div>
                                     </div>
-                                </div>
 
-                                <SearchList
-                                    searchFunc={AirportService.searchByName}
-                                    getItemName={getAirportName}
-                                    onValueChange={changeFromAirport}
-                                    currentItem={fromAirport}
-                                    placeholder="From"
-                                />
-                                <div className="form-item">
-                                    <label htmlFor={"airplane"}>Airplane</label>
-                                    <input
-                                        id="airplane"
-                                        className="search-list-input"
-                                        type="text"
-                                        value={airplane.name}
-                                        readOnly
+                                    <SearchList
+                                        searchFunc={AirportService.searchByName}
+                                        getItemName={getAirportName}
+                                        onValueChange={changeFromAirport}
+                                        currentItem={fromAirport}
+                                        placeholder="From"
+                                        required
                                     />
-                                </div>
-                                <SearchList
-                                    searchFunc={AirportService.searchByName}
-                                    getItemName={getAirportName}
-                                    onValueChange={changeToAirport}
-                                    currentItem={toAirport}
-                                    placeholder="To"
-                                />
-
-                                {showTicketsCostEditor()}
-
-                                <div className="adding-form-section">
-                                    <div className="row">
-                                        <ParamField
-                                            name="Suitcase mass"
-                                            value={suitcaseMassKg}
-                                            onChange={changeSuitcaseMassKg}
-                                        />
-                                        <ParamField
-                                            name="Suitcase count"
-                                            value={suitcaseCount}
-                                            onChange={changeSuitcaseCount}
+                                    <div className="form-item">
+                                        <label htmlFor={"airplane"}>Airplane</label>
+                                        <input
+                                            id="airplane"
+                                            className="search-list-input"
+                                            type="text"
+                                            value={airplane.name}
+                                            readOnly
                                         />
                                     </div>
-                                </div>
+                                    <SearchList
+                                        searchFunc={AirportService.searchByName}
+                                        getItemName={getAirportName}
+                                        onValueChange={changeToAirport}
+                                        currentItem={toAirport}
+                                        placeholder="To"
+                                        required
+                                    />
 
-                                <div className="adding-form-section">
-                                    <div className="row">
-                                        <ParamField
-                                            name="Hand luggage mass"
-                                            value={handLuggageMassKg}
-                                            onChange={changeHandLuggageMassKg}
-                                        />
-                                        <ParamField
-                                            name="Hand luggage count"
-                                            value={handLuggageCount}
-                                            onChange={changeHandLuggageCount}
-                                        />
+                                    {showTicketsCostEditor()}
+
+                                    <div className="adding-form-section">
+                                        <div className="row">
+                                            <ParamField
+                                                name="Suitcase mass"
+                                                value={suitcaseMassKg}
+                                                onChange={changeSuitcaseMassKg}
+                                                required
+                                            />
+                                            <ParamField
+                                                name="Suitcase count"
+                                                value={suitcaseCount}
+                                                onChange={changeSuitcaseCount}
+                                                required
+                                            />
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div className="adding-form-section">
-                                    <div className="row">
-                                        <ParamField
-                                            name="Overload kg cost"
-                                            value={overloadKgCost}
-                                            onChange={changeOverloadKgCost}
-                                        />
+                                    <div className="adding-form-section">
+                                        <div className="row">
+                                            <ParamField
+                                                name="Hand luggage mass"
+                                                value={handLuggageMassKg}
+                                                onChange={changeHandLuggageMassKg}
+                                                required
+                                            />
+                                            <ParamField
+                                                name="Hand luggage count"
+                                                value={handLuggageCount}
+                                                onChange={changeHandLuggageCount}
+                                                required
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className="adding-form-section">
+                                        <div className="row">
+                                            <ParamField
+                                                name="Overload kg cost"
+                                                value={overloadKgCost}
+                                                onChange={changeOverloadKgCost}
+                                                required
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <ConfirmActionButton onClick={onDataSave} buttonContent="Save"/>
+                    <ConfirmActionButton buttonContent="Save"/>
+                </form>
             </div>
             {showMessageBox()}
         </div>

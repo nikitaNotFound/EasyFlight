@@ -24,7 +24,8 @@ function Content(props) {
     const [confirmPassword, changeConfirmPassword] = useState();
     const [messageBoxValue, changeMessageBoxValue] = useState();
 
-    async function onRegister() {
+    async function onRegister(event) {
+        event.preventDefault();
         if (!name
             || !surname
             || !email
@@ -34,7 +35,7 @@ function Content(props) {
             changeMessageBoxValue(invalidInput());
         }
         
-        if (password != confirmPassword) {
+        if (password !== confirmPassword) {
             changeMessageBoxValue("Passwords do not match!");
             return;
         }
@@ -88,35 +89,43 @@ function Content(props) {
         <main className="rounded">
             {showMessageBox()}
             <div className="form-block form-sign-up">
-                <input
-                    className="form-control"
-                    placeholder="Name"
-                    onChange={(event) => changeName(event.target.value)}
-                />
-                <input
-                    className="form-control"
-                    placeholder="Surname"
-                    onChange={(event) => changeSurname(event.target.value)}
-                />
-                <input 
-                    className="form-control"
-                    type="email"
-                    placeholder="Email"
-                    onChange={(event) => changeEmail(event.target.value)}
-                />
-                <input
-                    className="form-control"
-                    type="password"
-                    placeholder="Password"
-                    onChange={(event) => changePassword(event.target.value)}
-                />
-                <input
-                    className="form-control"
-                    type="password"
-                    placeholder="Confirm password"
-                    onChange={(event) => changeConfirmPassword(event.target.value)}
-                />
-                <button onClick={onRegister} className="btn btn-primary button-dark main-button">Sign up</button>
+                <form onSubmit={onRegister}>
+                    <input
+                        className="form-control"
+                        placeholder="Name"
+                        onChange={(event) => changeName(event.target.value)}
+                        required
+                    />
+                    <input
+                        className="form-control"
+                        placeholder="Surname"
+                        onChange={(event) => changeSurname(event.target.value)}
+                        required
+                    />
+                    <input 
+                        className="form-control"
+                        type="email"
+                        placeholder="Email"
+                        onChange={(event) => changeEmail(event.target.value)}
+                        required
+                    />
+                    <input
+                        className="form-control"
+                        type="password"
+                        placeholder="Password"
+                        onChange={(event) => changePassword(event.target.value)}
+                        pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                        title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+                        required
+                    />
+                    <input
+                        className="form-control"
+                        type="password"
+                        placeholder="Confirm password"
+                        onChange={(event) => changeConfirmPassword(event.target.value)}
+                    />
+                    <button type="submit" className="btn btn-primary button-dark main-button">Sign up</button>
+                </form>
 
                 <div className="social-networks">
                     <GoogleLogin
