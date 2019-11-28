@@ -130,6 +130,18 @@ namespace WebAPI
         {
             app.UseExceptionLogger();
 
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(filesUploadingSettings.StoragePath)),
+                RequestPath = "/" + filesUploadingSettings.StaticFilesCatalogName
+            });
+
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(frontendFilesSettings.StoragePath)),
+                RequestPath = ""
+            });
+
             app.UseRouting();
             app.UseCors("CorsPolicy");
 
@@ -141,18 +153,6 @@ namespace WebAPI
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-            });
-
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = new PhysicalFileProvider(filesUploadingSettings.StoragePath),
-                RequestPath = "/" + filesUploadingSettings.StaticFilesCatalogName
-            });
-
-            app.UseFileServer(new FileServerOptions()
-            {
-                FileProvider = new PhysicalFileProvider(Path.Combine(frontendFilesSettings.StoragePath)),
-                RequestPath = ""
             });
 
             app.UseSpa(spa =>
